@@ -17,8 +17,4 @@
     <PackageReference Include="WebDriverManager" Version="2.17.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Components\" />
-  </ItemGroup>
-
 </Project>
