@@ -16,6 +16,7 @@ public class ComponentAdapter : IComponent
     private Actions Actions => new Actions(WrappedDriver);
     public FindStrategy FindStrategy { get; internal set; }
     public IWebDriver WrappedDriver { get; internal set; }
+    public IJavaScriptExecutor JavaScriptExecutor => (IJavaScriptExecutor)WrappedDriver;
 
     public bool? Enabled => _webElement?.Enabled;
 
