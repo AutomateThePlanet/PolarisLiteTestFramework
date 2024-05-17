@@ -2,5 +2,5 @@
 
 public interface IComponentValue : IComponent
 {
-    public string Value => GetAttribute("value");
+    string Value { get; }
 }

@@ -31,6 +31,8 @@ public class Date : ComponentAdapter, IComponentDisabled, IComponentValue
         SetAttribute("value", valueToBeSet);
     }
 
+    // TODO: add properties for step, min, max
+
     public virtual bool? IsAutoComplete => GetAttribute("autocomplete") == "on";
 
     public virtual bool IsReadonly => !string.IsNullOrEmpty(GetAttribute("readonly"));
@@ -39,5 +41,7 @@ public class Date : ComponentAdapter, IComponentDisabled, IComponentValue
 
     public virtual string Placeholder => string.IsNullOrEmpty(GetAttribute("placeholder")) ? null : GetAttribute("placeholder");
 
-    // step, min, max
+    public new bool IsDisabled => base.IsDisabled;
+
+    public new string Value => base.Value;
 }

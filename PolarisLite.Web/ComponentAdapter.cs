@@ -68,4 +68,21 @@ public class ComponentAdapter : IComponent
 
         return components;
     }
+
+    protected void Click()
+    {
+        WrappedElement?.Click();
+    }
+
+    protected void TypeText(string text)
+    {
+        WrappedElement?.Clear();
+        WrappedElement?.SendKeys(text);
+    }
+
+    protected bool IsDisabled => bool.Parse(GetAttribute("disabled"));
+    protected string Href => GetAttribute("href");
+    protected string InnerHtml => GetAttribute("innerHTML");
+    protected string Text => WrappedElement?.Text;
+    protected string Value => GetAttribute("value");
 }

@@ -2,5 +2,5 @@
 
 public interface IComponentInnerText : IComponent
 {
-    public string Text => WrappedElement?.Text;
+    string Text { get; }
 }

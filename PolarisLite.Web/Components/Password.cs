@@ -22,4 +22,8 @@ public class Password : ComponentAdapter, IComponentDisabled, IComponentValue
     public virtual bool IsRequired => !string.IsNullOrEmpty(GetAttribute("required"));
 
     public virtual string Placeholder => string.IsNullOrEmpty(GetAttribute("placeholder")) ? null : GetAttribute("placeholder");
+
+    public new bool IsDisabled => base.IsDisabled;
+
+    public new string Value => base.Value;
 }

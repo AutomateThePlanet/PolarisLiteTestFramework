@@ -50,4 +50,6 @@ public class Select : ComponentAdapter, IComponentDisabled
     public virtual bool IsReadonly => !string.IsNullOrEmpty(GetAttribute("readonly"));
 
     public virtual bool IsRequired => !string.IsNullOrEmpty(GetAttribute("required"));
+
+    public new bool IsDisabled => base.IsDisabled;
 }

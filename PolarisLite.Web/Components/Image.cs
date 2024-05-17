@@ -10,4 +10,6 @@ public class Image : ComponentAdapter, IComponentClick
     public virtual int? Height => string.IsNullOrEmpty(GetAttribute("height")) ? null : int.Parse(GetAttribute("height"));
 
     public virtual int? Width => string.IsNullOrEmpty(GetAttribute("width")) ? null : int.Parse(GetAttribute("width"));
+
+    public new void Click() => base.Click();
 }

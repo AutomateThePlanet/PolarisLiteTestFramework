@@ -16,6 +16,10 @@ public class CheckBox : ComponentAdapter, IComponentValue, IComponentDisabled
 
     public virtual bool IsChecked => WrappedElement.Selected;
 
+    public new string Value => base.Value;
+
+    public new bool IsDisabled => base.IsDisabled;
+
     protected virtual void DefaultCheck(bool isChecked = true)
     {
         if (isChecked && !WrappedElement.Selected || !isChecked && WrappedElement.Selected)

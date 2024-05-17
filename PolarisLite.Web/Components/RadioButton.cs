@@ -7,4 +7,10 @@ public class RadioButton : ComponentAdapter, IComponentDisabled, IComponentValue
 {
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     public virtual bool IsChecked => WrappedElement.Selected;
+
+    public new bool IsDisabled => base.IsDisabled;
+
+    public new string Value => base.Value;
+
+    public new void Click() => base.Click();
 }

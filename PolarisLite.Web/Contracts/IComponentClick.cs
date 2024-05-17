@@ -1,8 +1,5 @@
 ﻿namespace PolarisLite.Web.Contracts;
-internal interface IComponentClick : IComponent
+public interface IComponentClick : IComponent
 {
-    public void Click()
-    {
-        WrappedElement?.Click();
-    }
+    public void Click();
 }
