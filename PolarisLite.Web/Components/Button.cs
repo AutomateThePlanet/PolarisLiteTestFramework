@@ -2,13 +2,6 @@
 
 namespace PolarisLite.Web;
 
-public class Button : ComponentAdapter, IComponentClick
+public class Button : ComponentAdapter, IComponentClick, IComponentDisabled, IComponentValue
 {
-    //public void Click()
-    //{
-    //    base.Click(waitToBeClickable:true);
-    //}
-    //public string Value => GetAttribute("value");
-
-    //public bool IsDisabled => bool.Parse(GetAttribute("disabled"));
 }

@@ -17,44 +17,26 @@ public class ComponentAdapter : IComponent
     public FindStrategy FindStrategy { get; internal set; }
     public IWebDriver WrappedDriver { get; internal set; }
 
-    //public string Text => _webElement?.Text;
-
     public bool? Enabled => _webElement?.Enabled;
 
     public bool? Displayed => _webElement?.Displayed;
 
     public IWebElement WrappedElement { get; set; }
 
-    //protected void Click(bool waitToBeClickable = false)
-    //{
-    //    if (waitToBeClickable)
-    //    {
-    //       WaitToBeClickable(FindStrategy);
-    //    }
-
-    //    _webElement?.Click();
-    //}
-
-    //public string GetAttribute(string attributeName)
-    //{
-    //    return _webElement?.GetAttribute(attributeName);
-    //}
-
-    //protected void TypeText(string text)
-    //{
-    //    _webElement?.Clear();
-    //    _webElement?.SendKeys(text);
-    //}
-
     public void Hover()
     {
         Actions.MoveToElement(_webElement).Perform();
     }
 
-    //private void WaitToBeClickable(FindStrategy findStrategy)
-    //{
-    //    Wait.To.BeClickable().WaitUntil(WrappedElement, WrappedDriver, findStrategy.Convert());
-    //}
+    public string GetAttribute(string attributeName)
+    {
+        return WrappedElement?.GetAttribute(attributeName);
+    }
+
+    public void SetAttribute(string name, string value)
+    {
+        ((IJavaScriptExecutor)WrappedDriver).ExecuteScript($"arguments[0].setAttribute('{name}', '{value}');", WrappedElement);
+    }
 
     public TComponent FindComponent<TComponent>(FindStrategy findStrategy)
       where TComponent : ComponentAdapter
@@ -85,39 +67,4 @@ public class ComponentAdapter : IComponent
 
         return components;
     }
-
-    //protected string GetInnerHtmlAttribute()
-    //{
-    //    return WrappedElement.GetAttribute("innerHTML");
-    //}
 }
-
-
-
-//public TComponent FindComponent<TComponent>(By locator)
-//   where TComponent : ComponentAdapter
-//{
-//    var nativeWebElement = WrappedDriver.FindElement(locator);
-//    var component = InstanceFactory.Create<TComponent>();
-//    component.FindStrategy = locator;
-//    component.WrappedDriver = WrappedDriver;
-//    component.WrappedElement = nativeWebElement;
-//    return component;
-//}
-
-//public List<TComponent> FindComponents<TComponent>(By locator)
-//    where TComponent : ComponentAdapter
-//{
-//    var nativeWebElements = WrappedDriver.FindElements(locator);
-//    var components = new List<TComponent>();
-//    foreach (var nativeWebElement in nativeWebElements)
-//    {
-//        var component = InstanceFactory.Create<TComponent>();
-//        component.FindStrategy = locator;
-//        component.WrappedDriver = WrappedDriver;
-//        component.WrappedElement = nativeWebElement;
-//        components.Add(component);
-//    }
-
-//    return components;
-//}

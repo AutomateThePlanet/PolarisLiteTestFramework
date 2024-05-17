@@ -54,36 +54,6 @@ public class DriverAdapter
         _webDriver.Navigate().GoToUrl(url);
     }
 
-    //public TComponent FindComponent<TComponent>(By locator)
-    //    where TComponent : ComponentAdapter
-    //{
-    //    IWebElement nativeWebElement = 
-    //        _webDriverWait.Until(ExpectedConditions.ElementExists(locator));
-    //    var component = InstanceFactory.Create<TComponent>();
-    //    component.By = locator;
-    //    component.WrappedDriver = _webDriver;
-    //    component.WrappedElement = nativeWebElement;
-    //    return component;
-    //}
-
-    //public List<TComponent> FindComponents<TComponent>(By locator)
-    //    where TComponent : ComponentAdapter
-    //{
-    //    ReadOnlyCollection<IWebElement> nativeWebElements = 
-    //        _webDriverWait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(locator));
-    //    var components = new List<TComponent>();
-    //    foreach (var nativeWebElement in nativeWebElements)
-    //    {
-    //        var component = InstanceFactory.Create<TComponent>();
-    //        component.By = locator;
-    //        component.WrappedDriver = _webDriver;
-    //        component.WrappedElement = nativeWebElement;
-    //        components.Add(component);
-    //    }
-
-    //    return components;
-    //}
-
     public TComponent FindComponent<TComponent>(FindStrategy findStrategy)
         where TComponent : ComponentAdapter
     {

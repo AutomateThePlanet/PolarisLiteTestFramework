@@ -1,9 +1,8 @@
 ﻿using PolarisLite.Web.Contracts;
-using System.Diagnostics;
 
 namespace PolarisLite.Web;
 
-public class CheckBox : ComponentAdapter, IComponentValue
+public class CheckBox : ComponentAdapter, IComponentValue, IComponentDisabled
 {
     public void Check(bool isChecked = true)
     {
@@ -15,17 +14,13 @@ public class CheckBox : ComponentAdapter, IComponentValue
         DefaultUncheck();
     }
 
-    //public string Value => this.GetValue(WrappedElement);
-
-    //public bool IsDisabled => bool.Parse(GetAttribute("disabled"));
-
     public virtual bool IsChecked => WrappedElement.Selected;
 
     protected virtual void DefaultCheck(bool isChecked = true)
     {
         if (isChecked && !WrappedElement.Selected || !isChecked && WrappedElement.Selected)
         {
-            //Click(true);
+            WrappedElement.Click();
         }
     }
 
@@ -33,7 +28,7 @@ public class CheckBox : ComponentAdapter, IComponentValue
     {
         if (WrappedElement.Selected)
         {
-            //Click(true);
+            WrappedElement.Click();
         }
     }
 }
