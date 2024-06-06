@@ -7,7 +7,13 @@ namespace PolarisLite.Web.Core.MSTest;
 public class WebTest : BaseTest
 {
     private static bool _arePluginsAlreadyInitialized;
-    public DriverAdapter Driver { get; set; }
+
+    public WebTest()
+    {
+        App = new App();
+    }
+
+    public App App { get; set; }
 
     protected override void Configure()
     {

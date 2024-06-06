@@ -8,5 +8,8 @@ public abstract class WebPage
     public WebPage(DriverAdapter driver)
     {
         Driver = driver;
+        App = new App(driver);
     }
+
+    public App App { get; set; }
 }
