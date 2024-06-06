@@ -6,33 +6,33 @@ namespace PolarisLite.Web;
 
 public static class StyleAssertions
 {
-    public static void AssertBackgroundColor(this ComponentAdapter element, string expectedBackgroundColor)
+    public static void AssertBackgroundColor(this Component element, string expectedBackgroundColor)
     {
         var actualColor = element.WrappedElement.GetCssValue("background-color");
         Assert.That(actualColor, Is.EqualTo(expectedBackgroundColor));
     }
 
-    public static void AssertBorderColor(this ComponentAdapter element, string expectedBorderColor)
+    public static void AssertBorderColor(this Component element, string expectedBorderColor)
     {
         Assert.That(element.WrappedElement.GetCssValue("border-color"), Is.EqualTo(expectedBorderColor));
     }
 
-    public static void AssertColor(this ComponentAdapter element, string expectedColor)
+    public static void AssertColor(this Component element, string expectedColor)
     {
         Assert.That(element.WrappedElement.GetCssValue("color"), Is.EqualTo(expectedColor));
     }
 
-    public static void AssertFontFamily(this ComponentAdapter element, string expectedFontFamily)
+    public static void AssertFontFamily(this Component element, string expectedFontFamily)
     {
         Assert.That(element.WrappedElement.GetCssValue("font-family"), Is.EqualTo(expectedFontFamily));
     }
 
-    public static void AssertFontWeight(this ComponentAdapter element, string expectedFontWeight)
+    public static void AssertFontWeight(this Component element, string expectedFontWeight)
     {
         Assert.That(element.WrappedElement.GetCssValue("font-weight"), Is.EqualTo(expectedFontWeight));
     }
 
-    public static void AssertFontSize(this ComponentAdapter element, string expectedFontSize)
+    public static void AssertFontSize(this Component element, string expectedFontSize)
     {
         var elementCss = element.WrappedElement.GetCssValue("font-size");
 
@@ -40,17 +40,17 @@ public static class StyleAssertions
         Assert.That(ExtractMeasureUnit(expectedFontSize), Is.EqualTo(ExtractMeasureUnit(elementCss)));
     }
 
-    public static void AssertTextAlign(this ComponentAdapter element, string expectedTextAlign)
+    public static void AssertTextAlign(this Component element, string expectedTextAlign)
     {
         Assert.That(element.WrappedElement.GetCssValue("text-align"), Is.EqualTo(expectedTextAlign));
     }
 
-    public static void AssertVerticalAlign(this ComponentAdapter element, string expectedVerticalAlign)
+    public static void AssertVerticalAlign(this Component element, string expectedVerticalAlign)
     {
         Assert.That(element.WrappedElement.GetCssValue("vertical-align"), Is.EqualTo(expectedVerticalAlign));
     }
 
-    public static void AssertLineHeight(this ComponentAdapter element, string expectedLineHeight)
+    public static void AssertLineHeight(this Component element, string expectedLineHeight)
     {
         var elementCss = element.WrappedElement.GetCssValue("line-height");
 
@@ -58,7 +58,7 @@ public static class StyleAssertions
         Assert.That(ExtractMeasureUnit(expectedLineHeight), Is.EqualTo(ExtractMeasureUnit(elementCss)));
     }
 
-    public static void AssertLetterSpacing(this ComponentAdapter element, string expectedLetterSpacing)
+    public static void AssertLetterSpacing(this Component element, string expectedLetterSpacing)
     {
         var elementCss = element.WrappedElement.GetCssValue("letter-spacing");
 
@@ -66,7 +66,7 @@ public static class StyleAssertions
         Assert.That(ExtractMeasureUnit(expectedLetterSpacing), Is.EqualTo(ExtractMeasureUnit(elementCss)));
     }
 
-    public static void AssertMarginTop(this ComponentAdapter element, string expectedMarginTop)
+    public static void AssertMarginTop(this Component element, string expectedMarginTop)
     {
         var elementCss = element.WrappedElement.GetCssValue("margin-top");
 
@@ -74,7 +74,7 @@ public static class StyleAssertions
         Assert.That(ExtractMeasureUnit(expectedMarginTop), Is.EqualTo(ExtractMeasureUnit(elementCss)));
     }
 
-    public static void AssertMarginBottom(this ComponentAdapter element, string expectedMarginBottom)
+    public static void AssertMarginBottom(this Component element, string expectedMarginBottom)
     {
         var elementCss = element.WrappedElement.GetCssValue("margin-bottom");
 
@@ -82,7 +82,7 @@ public static class StyleAssertions
         Assert.That(ExtractMeasureUnit(expectedMarginBottom), Is.EqualTo(ExtractMeasureUnit(elementCss)));
     }
 
-    public static void AssertMarginLeft(this ComponentAdapter element, string expectedMarginLeft)
+    public static void AssertMarginLeft(this Component element, string expectedMarginLeft)
     {
         var elementCss = element.WrappedElement.GetCssValue("margin-left");
 
@@ -90,7 +90,7 @@ public static class StyleAssertions
         Assert.That(ExtractMeasureUnit(expectedMarginLeft), Is.EqualTo(ExtractMeasureUnit(elementCss)));
     }
 
-    public static void AssertMarginRight(this ComponentAdapter element, string expectedMarginRight)
+    public static void AssertMarginRight(this Component element, string expectedMarginRight)
     {
         var elementCss = element.WrappedElement.GetCssValue("margin-right");
 
@@ -98,7 +98,7 @@ public static class StyleAssertions
         Assert.That(ExtractMeasureUnit(expectedMarginRight), Is.EqualTo(ExtractMeasureUnit(elementCss)));
     }
 
-    public static void AssertPaddingTop(this ComponentAdapter element, string expectedPaddingTop)
+    public static void AssertPaddingTop(this Component element, string expectedPaddingTop)
     {
         var elementCss = element.WrappedElement.GetCssValue("padding-top");
 
@@ -106,7 +106,7 @@ public static class StyleAssertions
         Assert.That(ExtractMeasureUnit(expectedPaddingTop), Is.EqualTo(ExtractMeasureUnit(elementCss)));
     }
 
-    public static void AssertPaddingBottom(this ComponentAdapter element, string expectedPaddingBottom)
+    public static void AssertPaddingBottom(this Component element, string expectedPaddingBottom)
     {
         var elementCss = element.WrappedElement.GetCssValue("padding-bottom");
 
@@ -114,7 +114,7 @@ public static class StyleAssertions
         Assert.That(ExtractMeasureUnit(expectedPaddingBottom), Is.EqualTo(ExtractMeasureUnit(elementCss)));
     }
 
-    public static void AssertPaddingLeft(this ComponentAdapter element, string expectedPaddingLeft)
+    public static void AssertPaddingLeft(this Component element, string expectedPaddingLeft)
     {
         var elementCss = element.WrappedElement.GetCssValue("padding-left");
 
@@ -122,7 +122,7 @@ public static class StyleAssertions
         Assert.That(ExtractMeasureUnit(expectedPaddingLeft), Is.EqualTo(ExtractMeasureUnit(elementCss)));
     }
 
-    public static void AssertPaddingRight(this ComponentAdapter element, string expectedPaddingRight)
+    public static void AssertPaddingRight(this Component element, string expectedPaddingRight)
     {
         var elementCss = element.WrappedElement.GetCssValue("padding-right");
 
@@ -130,12 +130,12 @@ public static class StyleAssertions
         Assert.That(ExtractMeasureUnit(expectedPaddingRight), Is.EqualTo(ExtractMeasureUnit(elementCss)));
     }
 
-    public static void AssertPosition(this ComponentAdapter element, string expectedPosition)
+    public static void AssertPosition(this Component element, string expectedPosition)
     {
         Assert.That(element.WrappedElement.GetCssValue("position"), Is.EqualTo(expectedPosition));
     }
 
-    public static void AssertHeight(this ComponentAdapter element, string expectedHeight)
+    public static void AssertHeight(this Component element, string expectedHeight)
     {
         var elementCss = element.WrappedElement.GetCssValue("height");
 
@@ -143,7 +143,7 @@ public static class StyleAssertions
         Assert.That(ExtractMeasureUnit(expectedHeight), Is.EqualTo(ExtractMeasureUnit(elementCss)));
     }
 
-    public static void AssertWidth(this ComponentAdapter element, string expectedWidth)
+    public static void AssertWidth(this Component element, string expectedWidth)
     {
         var elementCss = element.WrappedElement.GetCssValue("width");
 

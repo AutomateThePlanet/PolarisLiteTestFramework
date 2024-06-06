@@ -3,7 +3,7 @@ using PolarisLite.Web.Contracts;
 
 namespace PolarisLite.Web;
 
-public class Date : ComponentAdapter, IComponentDisabled, IComponentValue
+public class Date : Component, IComponentDisabled, IComponentValue
 {
     public virtual string GetDate()
     {

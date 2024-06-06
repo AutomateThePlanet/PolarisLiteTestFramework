@@ -5,7 +5,7 @@ namespace PolarisLite.Web.Services;
 public partial class DriverAdapter : IJavaScriptService
 {
     public object Execute<TComponent>(string script, TComponent element, params object[] args) 
-        where TComponent : ComponentAdapter
+        where TComponent : Component
     {
         return ((IJavaScriptExecutor)_webDriver).ExecuteScript(script, element.WrappedElement, args);
     }

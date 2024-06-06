@@ -7,12 +7,12 @@ namespace PolarisLite.Web.Core.NUnit;
 public class WebTest : BaseTest
 {
     private static bool _arePluginsAlreadyInitialized;
-    public WebTest()
-    {
-        App = new App();
-    }
+    //public WebTest()
+    //{
+    //    App = new App();
+    //}
 
-    public App App { get; set; }
+    public App App => new App();
 
     protected override void Configure()
     {

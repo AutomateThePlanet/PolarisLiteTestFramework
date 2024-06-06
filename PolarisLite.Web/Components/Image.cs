@@ -5,7 +5,7 @@ using System.Web;
 
 namespace PolarisLite.Web;
 
-public class Image : ComponentAdapter, IComponentClick
+public class Image : Component, IComponentClick
 {
     public virtual string Src => HttpUtility.HtmlDecode(HttpUtility.UrlDecode(GetAttribute("src")));
     public virtual int? Height => string.IsNullOrEmpty(GetAttribute("height")) ? null : int.Parse(GetAttribute("height"));

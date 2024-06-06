@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PolarisLite.Web;
 
-public class KendoGrid : ComponentAdapter
+public class KendoGrid : Component
 {
     private readonly string _gridId;
     private readonly WebDriverWait _wait;

@@ -3,11 +3,6 @@
 namespace PolarisLite.Web;
 public abstract class NavigatablePage : WebPage
 {
-    public NavigatablePage(DriverAdapter driver)
-        : base(driver)
-    {
-    }
-
     public abstract string Url { get; }
 
     public void Open()

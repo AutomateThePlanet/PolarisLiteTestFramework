@@ -2,9 +2,9 @@
 using PolarisLite.Web.Components;
 
 namespace PolarisLite.Web.ComponentsJS.CKEditor;
-public class CkEditorComponent : ComponentAdapter
+public class CkEditorComponent : Component
 {
-    public ComponentAdapter TextArea => FindComponent<ComponentAdapter>(new XPathFindStrategy(".//div[contains(@class, 'ck-content ck-editor__editable')]"));
+    public Component TextArea => FindComponent<Component>(new XPathFindStrategy(".//div[contains(@class, 'ck-content ck-editor__editable')]"));
 
     public void ExecuteCommand(EditorCommands command, string arg)
     {

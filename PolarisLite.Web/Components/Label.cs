@@ -3,7 +3,7 @@ using PolarisLite.Web.Contracts;
 
 namespace PolarisLite.Web;
 
-public class Div : Component, IComponentInnerText, IComponentInnerHtml
+public class Label : Component, IComponentInnerText, IComponentInnerHtml
 {
     public new string Text => base.Text;
 

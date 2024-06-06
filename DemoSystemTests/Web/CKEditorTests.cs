@@ -2,7 +2,7 @@ using PolarisLite.Web.ComponentsJS.CKEditor;
 using PolarisLite.Web.Core.NUnit;
 using PolarisLite.Web.Plugins;
 
-namespace DemoSystemTests;
+namespace DemoSystemTests.Web;
 
 [Browser(Browser.Chrome, Lifecycle.RestartEveryTime)]
 public class CKEditorTests : WebTest

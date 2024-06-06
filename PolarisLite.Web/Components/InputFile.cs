@@ -2,7 +2,7 @@
 
 namespace PolarisLite.Web;
 
-public class InputFile : ComponentAdapter
+public class InputFile : Component
 {
     public virtual bool? IsRequired => string.IsNullOrEmpty(GetAttribute("required")) ? null : bool.Parse(GetAttribute("required"));
 

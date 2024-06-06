@@ -3,12 +3,12 @@ using PolarisLite.Web.Contracts;
 
 namespace PolarisLite.Web;
 
-public class Select : ComponentAdapter, IComponentDisabled
+public class Select : Component, IComponentDisabled, IComponentClick
 {
-    public  ComponentAdapter GetSelected()
+    public  Component GetSelected()
     {
         var nativeSelect = new SelectElement(WrappedElement);
-        var optionNativeElement = new ComponentAdapter
+        var optionNativeElement = new Component
         {
             FindStrategy = base.FindStrategy,
             WrappedElement = nativeSelect.SelectedOption,
@@ -16,13 +16,13 @@ public class Select : ComponentAdapter, IComponentDisabled
         return optionNativeElement;
     }
 
-    public virtual List<ComponentAdapter> GetAllOptions()
+    public virtual List<Component> GetAllOptions()
     {
         var nativeSelect = new SelectElement(WrappedElement);
-        var options = new List<ComponentAdapter>();
+        var options = new List<Component>();
         foreach (var option in nativeSelect.Options)
         {
-            var optionNativeElement = new ComponentAdapter
+            var optionNativeElement = new Component
             {
                 FindStrategy = this.FindStrategy,
                 WrappedElement = option,
@@ -47,6 +47,8 @@ public class Select : ComponentAdapter, IComponentDisabled
         nativeSelect.SelectByIndex(index);
         WrappedElement = null;
     }
+
+    public new void Click() => base.Click();
 
     public virtual bool IsReadonly => !string.IsNullOrEmpty(GetAttribute("readonly"));
 

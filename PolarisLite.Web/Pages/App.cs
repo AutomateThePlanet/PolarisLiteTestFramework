@@ -25,20 +25,17 @@ public class App
     }
 
     public TPage Create<TPage>()
-        where TPage : WebPage
+        where TPage : WebPage, new()
     {
-        var constructor = typeof(TPage).GetConstructor(new[] { typeof(DriverAdapter) });
-
-        return (TPage)constructor.Invoke(new object[] { _driver });
+        TPage pageInstance = new TPage();
+        return pageInstance;
     }
 
     public TPage GoTo<TPage>()
-       where TPage : NavigatablePage
+       where TPage : NavigatablePage, new()
     {
-        var constructor = typeof(TPage).GetConstructor(new[] { typeof(DriverAdapter) });
-
-        var page = (TPage)constructor.Invoke(new object[] { _driver });
-        page.Open();
-        return page;
+        TPage pageInstance = new TPage();
+        pageInstance.Open();
+        return pageInstance;
     }
 }

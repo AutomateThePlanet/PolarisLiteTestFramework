@@ -1,7 +1,7 @@
 ﻿using PolarisLite.Web.Components;
 
 namespace PolarisLite.Web;
-public class GaugeNeedle : ComponentAdapter
+public class GaugeNeedle : Component
 {
     public void SetValue(int value)
     {
