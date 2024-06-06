@@ -7,6 +7,13 @@ public sealed class ConfigurationService
 {
     private static readonly IConfigurationRoot Root = InitializeConfiguration();
 
+    public static TSection GetSection<TSection>()
+          where TSection : class, new()
+    {
+        string sectionName = typeof(TSection).Name.MakeFirstLetterToLower();
+        return Root.GetSection(sectionName).Get<TSection>();
+    }
+
     private static IConfigurationRoot InitializeConfiguration()
     {
         var filesInExecutionDir = Directory.GetFiles(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
