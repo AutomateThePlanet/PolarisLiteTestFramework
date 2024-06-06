@@ -4,7 +4,7 @@ using PolarisLite.Web.Contracts;
 
 namespace PolarisLite.Web.Components;
 
-public class ComponentAdapter : IComponent
+public class ComponentAdapter : IComponent, IComponentVisible
 {
     private readonly IWebElement _webElement;
 
@@ -79,6 +79,7 @@ public class ComponentAdapter : IComponent
         WrappedElement?.SendKeys(text);
     }
 
+    public bool IsVisible => WrappedElement.Displayed;
     protected bool IsDisabled => bool.Parse(GetAttribute("disabled"));
     protected string Href => GetAttribute("href");
     protected string InnerHtml => GetAttribute("innerHTML");

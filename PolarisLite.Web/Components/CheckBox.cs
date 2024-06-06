@@ -3,7 +3,7 @@ using PolarisLite.Web.Contracts;
 
 namespace PolarisLite.Web;
 
-public class CheckBox : ComponentAdapter, IComponentValue, IComponentDisabled
+public class CheckBox : ComponentAdapter, IComponentValue, IComponentDisabled, IComponentChecked
 {
     public void Check(bool isChecked = true)
     {
