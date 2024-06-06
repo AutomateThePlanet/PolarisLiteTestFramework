@@ -1,6 +1,7 @@
 ﻿using PolarisLite.Core;
 using PolarisLite.Core.Infrastructure.NUnit;
 using PolarisLite.Web.Plugins;
+using PolarisLite.Web.Services;
 
 namespace PolarisLite.Web.Core.NUnit;
 public class WebTest : BaseTest

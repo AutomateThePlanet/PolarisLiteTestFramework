@@ -1,4 +1,6 @@
-﻿namespace PolarisLite.Web;
+﻿using PolarisLite.Web.Components;
+
+namespace PolarisLite.Web;
 public class FullCalendar : ComponentAdapter
 {
     private readonly string _fullCalendarMethodJqueryExpression = "$('#{0}').fullCalendar('{1}')";

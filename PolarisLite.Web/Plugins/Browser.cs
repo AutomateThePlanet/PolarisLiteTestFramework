@@ -1,4 +1,4 @@
-﻿namespace PolarisLite.Web;
+﻿namespace PolarisLite.Web.Plugins;
 
 public enum Browser
 {

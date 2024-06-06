@@ -1,4 +1,6 @@
-﻿namespace PolarisLite.Web;
+﻿using PolarisLite.Web.Services;
+
+namespace PolarisLite.Web;
 public class App
 {
     private readonly DriverAdapter _driver;

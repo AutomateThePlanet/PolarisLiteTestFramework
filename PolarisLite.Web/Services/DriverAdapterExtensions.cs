@@ -1,4 +1,4 @@
-﻿namespace PolarisLite.Web.Extensions;
+﻿namespace PolarisLite.Web.Services;
 
 public static class DriverAdapterExtensions
 {

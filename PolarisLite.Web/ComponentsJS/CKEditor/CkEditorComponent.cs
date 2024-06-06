@@ -1,4 +1,5 @@
 ﻿using PolarisLite.Locators;
+using PolarisLite.Web.Components;
 
 namespace PolarisLite.Web.ComponentsJS.CKEditor;
 public class CkEditorComponent : ComponentAdapter

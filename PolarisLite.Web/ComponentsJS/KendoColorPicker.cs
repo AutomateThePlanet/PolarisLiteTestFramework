@@ -1,4 +1,6 @@
-﻿namespace PolarisLite.Web;
+﻿using PolarisLite.Web.Components;
+
+namespace PolarisLite.Web;
 public class KendoColorPicker : ComponentAdapter
 {
     private readonly string _colorPickerSetColorExpression = "$('#{0}').data('kendoColorPicker').value('#{1}');";

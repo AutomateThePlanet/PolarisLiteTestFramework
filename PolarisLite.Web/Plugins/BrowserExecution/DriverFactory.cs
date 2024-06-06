@@ -2,7 +2,6 @@
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Safari;
-using PolarisLite.Core;
 using WebDriverManager.DriverConfigs.Impl;
 
 namespace PolarisLite.Web.Plugins.BrowserExecution;

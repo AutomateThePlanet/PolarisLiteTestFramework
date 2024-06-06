@@ -1,6 +1,4 @@
-﻿using OpenQA.Selenium;
-
-namespace PolarisLite.Web.Contracts;
+﻿namespace PolarisLite.Web.Contracts;
 
 public interface IComponentInnerHtml : IComponent
 {

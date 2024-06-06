@@ -1,6 +1,6 @@
 ﻿using PolarisLite.Locators;
 
-namespace PolarisLite.Web;
+namespace PolarisLite.Web.Services;
 
 public class NativeElementFindService
 {

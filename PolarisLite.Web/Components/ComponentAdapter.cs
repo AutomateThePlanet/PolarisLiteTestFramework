@@ -1,9 +1,8 @@
-﻿using OpenQA.Selenium;
-using PolarisLite.Core.Infrastructure;
+﻿using PolarisLite.Core.Infrastructure;
 using PolarisLite.Locators;
 using PolarisLite.Web.Contracts;
 
-namespace PolarisLite.Web;
+namespace PolarisLite.Web.Components;
 
 public class ComponentAdapter : IComponent
 {
