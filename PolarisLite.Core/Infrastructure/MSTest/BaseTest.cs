@@ -20,6 +20,7 @@ public abstract class BaseTest
             _thrownException = eventArgs.Exception;
         };
 
+        Configure();
         var testClassType = GetCurrentTestClassType();
         var testMethod = GetCurrentTestMethod();
         if (!InitializedTestClasses.Contains(TestContext.FullyQualifiedTestClassName))
@@ -43,6 +44,10 @@ public abstract class BaseTest
         PluginExecutionEngine.OnBeforeTestCleanup((TestOutcome)TestContext.CurrentTestOutcome, testMethod);
         PerformTestInitialize();
         PluginExecutionEngine.OnAfterTestCleanup((TestOutcome)TestContext.CurrentTestOutcome, testMethod, _thrownException);
+    }
+
+    protected virtual void Configure()
+    {
     }
 
     protected virtual void PerformClassInitialize()

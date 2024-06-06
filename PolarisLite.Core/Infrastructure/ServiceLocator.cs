@@ -1,5 +1,6 @@
 ﻿using Unity;
 using System;
+using Unity.Lifetime;
 
 namespace PolarisLite.Core;
 
@@ -18,7 +19,13 @@ public class ServiceLocator
 
     public void RegisterInstance<T>(T service)
     {
-        _container.RegisterInstance(typeof(T), Guid.NewGuid().ToString(), service);
+        _container.RegisterInstance(typeof(T), Guid.NewGuid().ToString(), service, new ContainerControlledLifetimeManager());
+    }
+
+    public void UnregisterInstance<TFrom>()
+    {
+        var registration = _container.Registrations.FirstOrDefault(r => r.RegisteredType.Equals(typeof(TFrom)));
+        registration?.LifetimeManager?.RemoveValue();
     }
 
     public void Register<TInterface, TImplementation>()
@@ -28,12 +35,27 @@ public class ServiceLocator
     }
 
     public IEnumerable<T> GetAllServices<T>()
+         where T : class
     {
         return _container.ResolveAll<T>();
     }
 
     public T GetService<T>()
+        where T : class
     {
-        return _container.Resolve<T>();
+        try
+        {
+            return _container.Resolve<T>();
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+        //if (!_container.Registrations.Any(r => r.RegisteredType.Equals(typeof(T))))
+        //{
+        //    return null;
+        //}
+
+        
     }
 }

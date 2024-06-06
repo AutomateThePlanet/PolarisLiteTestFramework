@@ -14,9 +14,10 @@ public abstract class BaseTest
     [OneTimeSetUp]
     public void OneTimeSetup()
     {
+        Configure();
         var testClassType = GetType();
         PluginExecutionEngine.OnBeforeTestClassInitialize(testClassType);
-        PerformClassInitialize();
+        ClassInitialize();
         PluginExecutionEngine.OnAfterTestClassInitialize(testClassType);
     }
 
@@ -30,7 +31,7 @@ public abstract class BaseTest
 
         var testMethod = GetCurrentTestMethod();
         PluginExecutionEngine.OnBeforeTestInitialize(testMethod);
-        PerformTestInitialize();
+        TestInitialize();
         PluginExecutionEngine.OnAfterTestInitialize(testMethod);
     }
 
@@ -39,7 +40,7 @@ public abstract class BaseTest
     {
         var testMethod = GetCurrentTestMethod();
         PluginExecutionEngine.OnBeforeTestCleanup((TestOutcome)TestContext.Result.Outcome.Status, testMethod);
-        PerformTestCleanup();
+        TestCleanup();
         PluginExecutionEngine.OnAfterTestCleanup((TestOutcome)TestContext.Result.Outcome.Status, testMethod, _thrownException);
     }
 
@@ -48,26 +49,30 @@ public abstract class BaseTest
     {
         var testClassType = GetType();
         PluginExecutionEngine.OnBeforeTestClassCleanup(testClassType);
-        PerformClassCleanup();
+        ClassCleanup();
         PluginExecutionEngine.OnAfterTestClassCleanup(testClassType);
     }
 
-    protected virtual void PerformClassInitialize()
+    protected virtual void Configure()
+    {
+    }
+
+    protected virtual void ClassInitialize()
     {
         // Custom class initialization logic
     }
 
-    protected virtual void PerformClassCleanup()
+    protected virtual void ClassCleanup()
     {
         // Custom class cleanup logic
     }
 
-    protected virtual void PerformTestInitialize()
+    protected virtual void TestInitialize()
     {
         // Custom test initialization logic
     }
 
-    protected virtual void PerformTestCleanup()
+    protected virtual void TestCleanup()
     {
         // Custom test cleanup logic
     }

@@ -8,13 +8,13 @@ public class CkEditorComponent : ComponentAdapter
     public void ExecuteCommand(EditorCommands command, string arg)
     {
         var commandText = $"arguments[0].ckeditorInstance.commands.get('{command.GetValue()}').execute({arg});";
-        JavaScriptExecutor.ExecuteScript(commandText, this);
+        JavaScriptExecutor.ExecuteScript(commandText, TextArea.WrappedElement);
     }
 
     public void ExecuteCommand(EditorCommands command)
     {
         var commandText = $"arguments[0].ckeditorInstance.commands.get('{command.GetValue()}').execute();";
-        JavaScriptExecutor.ExecuteScript(commandText, this);
+        JavaScriptExecutor.ExecuteScript(commandText, TextArea.WrappedElement);
     }
 
     public CkEditorComponent SetText(string text)
@@ -43,8 +43,8 @@ public class CkEditorComponent : ComponentAdapter
 
     public string GetHtml()
     {
-        string command = GetEditorInstanceCommand("getData();");
-        var result = JavaScriptExecutor.ExecuteScript($"return {command}", this);
+        string command = GetEditorInstanceCommand("getData");
+        var result = JavaScriptExecutor.ExecuteScript($"return {command}", TextArea.WrappedElement);
         return result?.ToString();
     }
 
@@ -62,12 +62,12 @@ public class CkEditorComponent : ComponentAdapter
     public void ExecuteAgainstEditorInstance(string command)
     {
         var commandText = $"arguments[0].ckeditorInstance.{command}";
-        JavaScriptExecutor.ExecuteScript(commandText, this);
+        JavaScriptExecutor.ExecuteScript(commandText, WrappedElement);
     }
 
     public string GetEditorInstanceCommand(string command)
     {
-        return $"arguments[0].editor.{command}();";
+        return $"arguments[0].ckeditorInstance.{command}();";
     }
 
     public CkEditorComponent Enter()
