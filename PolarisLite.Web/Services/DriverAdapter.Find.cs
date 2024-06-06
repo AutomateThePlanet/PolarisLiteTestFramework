@@ -94,4 +94,15 @@ public partial class DriverAdapter : IElementFindService
 
         return components;
     }
+
+    public TComponent FindByTag<TComponent>(string tag) where TComponent : ComponentAdapter => throw new NotImplementedException();
+    public TComponent FindByLinkText<TComponent>(string linkText) where TComponent : ComponentAdapter => throw new NotImplementedException();
+    public List<TComponent> FindAllById<TComponent>(string id) where TComponent : ComponentAdapter => throw new NotImplementedException();
+    public List<TComponent> FindAllByXPath<TComponent>(string xpath) where TComponent : ComponentAdapter => throw new NotImplementedException();
+    public List<TComponent> FindAllByTag<TComponent>(string tag) where TComponent : ComponentAdapter => throw new NotImplementedException();
+    public List<TComponent> FindAllByClass<TComponent>(string cssClass) where TComponent : ComponentAdapter => throw new NotImplementedException();
+    public List<TComponent> FindAllByCss<TComponent>(string css) where TComponent : ComponentAdapter => throw new NotImplementedException();
+    public List<TComponent> FindAllByLinkText<TComponent>(string linkText) where TComponent : ComponentAdapter => throw new NotImplementedException();
+    public List<TComponent> FindAll<TComponent>(FindStrategy findStrategy) where TComponent : ComponentAdapter => throw new NotImplementedException();
+    public TComponent Create<TComponent>(FindStrategy findStrategy) where TComponent : ComponentAdapter => throw new NotImplementedException();
 }

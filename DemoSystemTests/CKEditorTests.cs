@@ -9,13 +9,13 @@ public class CKEditorTests : WebTest
 {
     protected override void TestInitialize()
     {
-        Driver.GoToUrl("https://ckeditor.com/ckeditor-5/demo/feature-rich/");
+        App.Navigation.GoToUrl("https://ckeditor.com/ckeditor-5/demo/feature-rich/");
     }
 
     [Test]
     public void AllTextSelected_When_CallSelectAllMethodCkEditorComponent()
     {
-        var editor = Driver.FindById<CkEditorComponent>("b-demo-editor");
+        var editor = App.Elements.FindById<CkEditorComponent>("b-demo-editor");
 
         editor.SelectAll();
     }
@@ -23,7 +23,7 @@ public class CKEditorTests : WebTest
     [Test]
     public void AllTextSelectedBolded_When_CallSelectAllMethod_And_SendBoldCommand()
     {
-        var editor = Driver.FindById<CkEditorComponent>("b-demo-editor");
+        var editor = App.Elements.FindById<CkEditorComponent>("b-demo-editor");
 
         editor.SelectAll();
         editor.ExecuteCommand(EditorCommands.Bold);
@@ -32,7 +32,7 @@ public class CKEditorTests : WebTest
     [Test]
     public void ReturnCorrectText_When_CallGetTextMethodCkEditorComponent()
     {
-        var editor = Driver.FindById<CkEditorComponent>("b-demo-editor");
+        var editor = App.Elements.FindById<CkEditorComponent>("b-demo-editor");
 
         var currentText = editor.GetText();
 
@@ -42,7 +42,7 @@ public class CKEditorTests : WebTest
     [Test]
     public void ReturnCorrectHtml_When_CallGetHtmlMethodCkEditorComponent()
     {
-        var editor = Driver.FindById<CkEditorComponent>("b-demo-editor");
+        var editor = App.Elements.FindById<CkEditorComponent>("b-demo-editor");
 
         var currentText = editor.GetHtml();
 
