@@ -1,4 +1,6 @@
-﻿namespace PolarisLite.Web.Plugins;
+﻿using PolarisLite.Web.Plugins.BrowserExecution;
+
+namespace PolarisLite.Web.Plugins;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
 public class BrowserAttribute : Attribute

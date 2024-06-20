@@ -6,10 +6,6 @@ using System.Reflection;
 namespace PolarisLite.Web.Plugins;
 public class BrowserLifecyclePlugin : Plugin
 {
-    // TODO: refactor DriverAdapter later to move logic to initialize the driver
-    // especially when we have LambdaTest logic and more complex stuff there.
-    //private DriverAdapter _driverAdapter;
-
     private readonly DriverFactory _driverFactory;
     private BrowserConfiguration _currentBrowserConfiguration;
     private BrowserConfiguration _previousBrowserConfiguration;
@@ -35,10 +31,14 @@ public class BrowserLifecyclePlugin : Plugin
     {
         _driverFactory.Dispose();
         
-        _driverFactory.Start(_currentBrowserConfiguration.Browser);
-        //_driverAdapter = ServiceLocator.Instance.GetService<DriverAdapter>();
-
-        //ServiceLocator.Instance.RegisterInstance(_driverAdapter);
+        if (_currentBrowserConfiguration.ExecutionType == ExecutionType.Regular)
+        {
+            _driverFactory.Start(_currentBrowserConfiguration.Browser);
+        } 
+        else
+        {
+            _driverFactory.StartGrid();
+        }
     }
 
     private void ShutdownBrowser()
@@ -77,6 +77,13 @@ public class BrowserLifecyclePlugin : Plugin
         var classBrowser = GetExecutionBrowserClassLevel(testMethod.DeclaringType);
         var methodBrowser = GetExecutionBrowserMethodLevel(testMethod);
         BrowserConfiguration browserConfiguration = methodBrowser != null ? methodBrowser : classBrowser;
+
+        var webSettings = ConfigurationService.GetSection<WebSettings>();
+        if (browserConfiguration == null)
+        {
+            browserConfiguration = new BrowserConfiguration(webSettings.DefaultBrowser, webSettings.DefaultLifeCycle, webSettings.ExecutionType);
+        }
+        
         return browserConfiguration;
     }
 

@@ -1,6 +1,7 @@
 using PolarisLite.Web;
 using PolarisLite.Web.Core.MSTest;
 using PolarisLite.Web.Plugins;
+using PolarisLite.Web.Plugins.BrowserExecution;
 
 namespace DemoSystemTests.Web;
 

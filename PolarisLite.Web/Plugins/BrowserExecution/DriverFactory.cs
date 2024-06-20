@@ -2,7 +2,16 @@
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Safari;
+using System.Net.Sockets;
+using System.Net;
 using WebDriverManager.DriverConfigs.Impl;
+using System.Drawing;
+using OpenQA.Selenium.Remote;
+using PolarisLite.Core;
+using System.Text;
+using PolarisLite.Secrets;
+using OpenQA.Selenium.IE;
+using Microsoft.Extensions.Options;
 
 namespace PolarisLite.Web.Plugins.BrowserExecution;
 public class DriverFactory : IDisposable
@@ -36,25 +45,33 @@ public class DriverFactory : IDisposable
         set { _wrappedDriver.Value = value; }
     }
 
-    // TODO: add methods for LambdaTest + ConfigurationService
     public void Start(Browser browser)
     {
+        var webSettings = ConfigurationService.GetSection<WebSettings>();
+        var options = InitializeOptionsFromConfig(webSettings);
+        var gridSettings = webSettings.GridSettings.First(x => x.ProviderName == webSettings.ExecutionType);
+        AddGridOptions(options, gridSettings);
+        if (browser == Browser.NotSet)
+        {
+            browser = (Browser)Enum.Parse(typeof(Browser), webSettings.DefaultBrowser);
+        }
+
         switch (browser)
         {
             case Browser.Chrome:
                 new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig());
-                WrappedDriver = new ChromeDriver();
+                WrappedDriver = new ChromeDriver(options as ChromeOptions);
                 break;
             case Browser.Firefox:
                 new WebDriverManager.DriverManager().SetUpDriver(new FirefoxConfig());
-                WrappedDriver = new FirefoxDriver();
+                WrappedDriver = new FirefoxDriver(options as FirefoxOptions);
                 break;
             case Browser.Edge:
                 new WebDriverManager.DriverManager().SetUpDriver(new EdgeConfig());
-                WrappedDriver = new EdgeDriver();
+                WrappedDriver = new EdgeDriver(options as EdgeOptions);
                 break;
             case Browser.Safari:
-                WrappedDriver = new SafariDriver();
+                WrappedDriver = new SafariDriver(options as SafariOptions);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(browser), browser, null);
@@ -62,16 +79,86 @@ public class DriverFactory : IDisposable
 
         WrappedDriver.Manage().Window.Maximize();
         Disposed = false;
-        //ServiceLocator.Instance.RegisterInstance((IWebDriver)_wrappedDriver);
-
-        //// resolve in DriverAdapter?
-        //ServiceLocator.Instance.RegisterInstance(new WebDriverWait(WrappedDriver, TimeSpan.FromSeconds(30)));
-        //ServiceLocator.Instance.RegisterInstance(new NativeElementFindService(WrappedDriver, WrappedDriver));
-        ////
-        ////_webDriverWait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(30));
-        ////_nativeElementFindService = new NativeElementFindService(_webDriver, _webDriver);
     }
 
+    public void StartGrid()
+    {
+        var webSettings = ConfigurationService.GetSection<WebSettings>();
+        var options = InitializeOptionsFromConfig(webSettings);
+        var gridSettings = webSettings.GridSettings.First(x => x.ProviderName == webSettings.ExecutionType);
+        options.AddAdditionalOption(gridSettings.OptionsName, gridSettings);
+        var gridUrl = gridSettings.Url;
+
+        WrappedDriver = new RemoteWebDriver(new Uri(gridUrl), options);
+    }
+
+    private static DriverOptions InitializeOptionsFromConfig(WebSettings webSettings)
+    {
+        Browser browserType = (Browser)Enum.Parse(typeof(Browser), webSettings.DefaultBrowser);
+        DriverOptions options = default;
+        switch (browserType)
+        {
+            case Browser.Chrome:
+                options = new ChromeOptions();
+                break;
+            case Browser.Firefox:
+                options = new FirefoxOptions();
+                break;
+
+            case Browser.Edge:
+                options = new EdgeOptions();
+                break;
+
+            case Browser.Safari:
+                options = new SafariOptions();
+                break;
+        }
+
+        options.BrowserVersion = webSettings.BrowserVersion;
+        return options;
+    }
+
+    private static void AddGridOptions<TOptions>(TOptions options, GridSettings gridSettings) 
+        where TOptions : DriverOptions
+    {
+        foreach (var entry in gridSettings.Arguments)
+        {
+            foreach (var c in entry)
+            {
+                if (c.Value is string value && value.StartsWith("{env_"))
+                {
+                    var envValue = SecretsResolver.GetSecret(value);
+                    options.AddAdditionalOption(c.Key, envValue);
+                }
+                else
+                {
+                    options.AddAdditionalOption(c.Key, c.Value);
+                }
+            }
+        }
+    }
+
+    private static void ChangeWindowSize(Size windowSize, IWebDriver wrappedWebDriver)
+    {
+        if (windowSize != default)
+        {
+            wrappedWebDriver.Manage().Window.Size = windowSize;
+        }
+        else
+        {
+            wrappedWebDriver.Manage().Window.Maximize();
+        }
+    }
+
+    private static int GetFreeTcpPort()
+    {
+        Thread.Sleep(100);
+        var tcpListener = new TcpListener(IPAddress.Loopback, 0);
+        tcpListener.Start();
+        int port = ((IPEndPoint)tcpListener.LocalEndpoint).Port;
+        tcpListener.Stop();
+        return port;
+    }
 
     public void Dispose()
     {

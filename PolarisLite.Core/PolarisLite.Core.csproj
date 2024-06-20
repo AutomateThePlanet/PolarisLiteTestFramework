@@ -33,6 +33,9 @@
     <PackageReference Include="NUnit.Analyzers" Version="3.6.1" />
 
     <PackageReference Include="Unity" Version="5.11.10" />
+
+    <PackageReference Include="Azure.Identity" Version="1.10.4" />
+    <PackageReference Include="Azure.Security.KeyVault.Secrets" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,5 +1,6 @@
-﻿namespace PolarisLite.Web.Plugins;
-public enum BrowserType
+﻿namespace PolarisLite.Web.Plugins.BrowserExecution;
+
+public enum Browser
 {
     NotSet,
     Chrome,
@@ -8,5 +9,5 @@ public enum BrowserType
     FirefoxHeadless,
     Edge,
     EdgeHeadless,
-    Safari,
+    Safari
 }
