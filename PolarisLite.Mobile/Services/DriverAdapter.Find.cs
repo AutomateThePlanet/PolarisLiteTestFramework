@@ -94,4 +94,15 @@ public partial class DriverAdapter : IElementFindService
     public List<TComponent> FindAllByTag<TComponent>(string tag) where TComponent : AndroidComponent => throw new NotImplementedException();
     public List<TComponent> FindAllByClass<TComponent>(string cssClass) where TComponent : AndroidComponent => throw new NotImplementedException();
     public List<TComponent> FindAll<TComponent>(FindStrategy findStrategy) where TComponent : AndroidComponent => throw new NotImplementedException();
+    public TComponent FindByTextContaining<TComponent>(string text) 
+        where TComponent : AndroidComponent
+    {
+        return FindComponent<TComponent>(new TextContainingFindStrategy(text));
+    }
+
+    public List<TComponent> FindComponentsByTextContaining<TComponent>(string text)
+        where TComponent : AndroidComponent
+    {
+        return FindComponents<TComponent>(new TextContainingFindStrategy(text));
+    }
 }

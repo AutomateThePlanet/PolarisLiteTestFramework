@@ -1,4 +1,4 @@
-﻿namespace PolarisLite.Mobile.Plugins;
+﻿namespace PolarisLite.Mobile;
 public enum Lifecycle
 {
     NotSet = 0,

@@ -2,7 +2,7 @@
 
 namespace PolarisLite.Mobile.Services;
 
-public partial class DriverAdapter
+public partial class DriverAdapter : IWebService
 {
     public Web.IElementFindService Elements => _webDriverAdapter;
     public IBrowserService Browser => _webDriverAdapter;

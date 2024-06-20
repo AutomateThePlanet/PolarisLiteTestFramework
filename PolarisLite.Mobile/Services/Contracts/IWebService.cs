@@ -1,10 +1,15 @@
 ﻿using PolarisLite.Mobile.Components;
+using PolarisLite.Web;
 
 namespace PolarisLite.Mobile;
 
 public interface IWebService
 {
-    object Execute(string script, params object[] args);
-    object Execute<TComponent>(string script, TComponent element, params object[] args)
-        where TComponent : AndroidComponent;
+    Web.IElementFindService Elements { get; }
+    IBrowserService Browser { get; }
+    INavigationService Navigation { get; }
+    ICookiesService Cookies { get; }
+    IDialogService Dialog { get; }
+    IInteractionsService InteractionsService { get; }
+    IJavaScriptService JavaScriptService { get; }
 }

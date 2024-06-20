@@ -8,12 +8,14 @@ public interface IElementFindService
     TComponent FindByIdContaining<TComponent>(string id) where TComponent : AndroidComponent;
     TComponent FindByXPath<TComponent>(string xpath) where TComponent : AndroidComponent;
     TComponent FindByDescriptionContaining<TComponent>(string description) where TComponent : AndroidComponent;
+    TComponent FindByTextContaining<TComponent>(string text) where TComponent : AndroidComponent;
     TComponent FindByClass<TComponent>(string className) where TComponent : AndroidComponent;
     TComponent FindByAndroidUIAutomator<TComponent>(string uiAutomatorExpression) where TComponent : AndroidComponent;
 
     List<TComponent> FindComponentsById<TComponent>(string id) where TComponent : AndroidComponent;
     List<TComponent> FindComponentsByXPath<TComponent>(string xpath) where TComponent : AndroidComponent;
     List<TComponent> FindComponentsByDescriptionContaining<TComponent>(string description) where TComponent : AndroidComponent;
+    List<TComponent> FindComponentsByTextContaining<TComponent>(string description) where TComponent : AndroidComponent;
     List<TComponent> FindComponentsByAndroidUIAutomator<TComponent>(string uiAutomatorExpression) where TComponent : AndroidComponent;
 
     TComponent FindComponent<TComponent>(FindStrategy findStrategy) where TComponent : AndroidComponent;

@@ -18,6 +18,7 @@ public class App
     public IFileSystemService FileSystem => _driver;
     public IAppService AppService => _driver;
     public ITouchActionsService TouchActions => _driver;
+    public IWebService Web => _driver;
 
     public void AddBrowserOptions(string option, string value)
     {
