@@ -54,5 +54,62 @@
         ]
       }
     ]
+  },
+  "androidSettings": {
+    "serviceUrl": "http://127.0.0.1:4722/wd/hub",
+    "executionType": "regular",
+    "defaultLifeCycle": "restart everytime time",
+    "defaultDeviceName": "pixel5-test-device-13-new",
+    "defaultAndroidVersion": "13.0",
+    "defaultBrowser": "Chrome",
+    "defaultAppPackage": "io.appium.android.apis",
+    "defaultAppActivity": ".ApiDemos",
+    "defaultAppPath": "ApiDemos-debug.apk",
+
+    "screenshotsOnFailEnabled": "false",
+    "screenshotsSaveLocation": "${user.home}/POLARIS/videos",
+    "videosOnFailEnabled": "false",
+    "videosSaveLocation": "${user.home}/POLARIS/videos",
+
+    "timeoutSettings": {
+      "implicitWaitTimeout": "5",
+      "elementWaitTimeout": "30",
+      "sleepInterval": "1",
+      "validationsTimeout": "30",
+      "elementToBeVisibleTimeout": "30",
+      "elementToExistTimeout": "30",
+      "elementToNotExistTimeout": "30",
+      "elementToBeClickableTimeout": "30",
+      "elementNotToBeVisibleTimeout": "30",
+      "elementToHaveContentTimeout": "15"
+    },
+    "gridSettings": [
+      {
+        "providerName": "lambda test",
+        "optionsName": "LT:Options",
+        "url": "https://{env_LT_USERNAME}:{env_LT_ACCESSKEY}@hub.lambdatest.com/wd/hub",
+        "arguments": [
+          {
+            "platformName": "android",
+            "deviceName": "Pixel 5",
+            "platformVersion": "13",
+            "isRealMobile": "false",
+            "build": "1.0",
+            "project": "POLARIS_ANDROID_RUN",
+            "username": "{env_LT_USERNAME}",
+            "accessKey": "{env_LT_ACCESSKEY}"
+          }
+        ]
+      },
+      {
+        "providerName": "grid",
+        "url": "http://127.0.0.1:4444/wd/hub",
+        "arguments": [
+          {
+            "name": "polaris_run"
+          }
+        ]
+      }
+    ]
   }
 }

@@ -2,14 +2,11 @@
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
 using PolarisLite.Core;
-using PolarisLite.Utilities;
+using PolarisLite.Secrets;
 
 namespace PolarisLite.Mobile.Plugins.AppExecution;
 public class DriverFactory : IDisposable
 {
-    // TODO: Move to settings
-    private const string SERVICE_URL = "";
-    private const string GRID_URL = "";
     private static readonly TimeSpan IMPLICIT_TIMEOUT = TimeSpan.FromSeconds(30);
     private static readonly ThreadLocal<bool> _disposed = new ThreadLocal<bool>(() => false);
     private static readonly ThreadLocal<AppConfiguration> _appConfiguration = new ThreadLocal<AppConfiguration>();
@@ -52,7 +49,7 @@ public class DriverFactory : IDisposable
         AndroidDriver driver;
         if (executionType.Equals("regular"))
         {
-            driver = InitializeDriverRegularMode(SERVICE_URL);
+            driver = InitializeDriverRegularMode();
         }
         else
         {
@@ -70,7 +67,12 @@ public class DriverFactory : IDisposable
 
     private AndroidDriver InitializeDriverGridMode(string testName)
     {
-        var caps = new AppiumOptions();
+        var androidSettings = ConfigurationService.GetSection<AndroidSettings>();
+        var gridSettings = androidSettings.GridSettings.First(x => x.ProviderName == androidSettings.ExecutionType);
+        
+        var gridUrl = ConstructGridUrl(gridSettings.Url);
+
+        var appiumOptions = new AppiumOptions();
         var options = new Dictionary<string, object>
         {
             { MobileCapabilityType.PlatformName, "Android" },
@@ -90,15 +92,12 @@ public class DriverFactory : IDisposable
         }
 
         options["name"] = testName;
-        //AddGridOptions(options, gridSettings);
-
-        // TODO: LT:
-        caps.AddAdditionalAppiumOption("LT:", options);
+        appiumOptions.AddAdditionalAppiumOption(gridSettings.OptionsName, gridSettings);
 
         AndroidDriver driver = null;
         try
         {
-            driver = new AndroidDriver(new Uri(GRID_URL), caps);
+            driver = new AndroidDriver(new Uri(gridUrl), appiumOptions);
             WrappedAndroidDriver = driver;
         }
         catch (Exception e)
@@ -109,8 +108,11 @@ public class DriverFactory : IDisposable
         return driver;
     }
 
-    private AndroidDriver InitializeDriverRegularMode(string serviceUrl)
+    private AndroidDriver InitializeDriverRegularMode()
     {
+        var androidSettings = ConfigurationService.GetSection<AndroidSettings>();
+        var gridSettings = androidSettings.GridSettings.First(x => x.ProviderName == "regular");
+        var gridUrl = ConstructGridUrl(gridSettings.Url);
         var caps = new AppiumOptions();
         caps.AddAdditionalAppiumOption(MobileCapabilityType.PlatformName, "Android");
         caps.AddAdditionalAppiumOption(MobileCapabilityType.PlatformVersion, AppConfiguration.AndroidVersion);
@@ -127,9 +129,8 @@ public class DriverFactory : IDisposable
             caps.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppActivity, AppConfiguration.AppActivity);
         }
 
-        //AddDriverConfigOptions(caps);
         AddCustomDriverOptions(caps);
-        var driver = new AndroidDriver(new Uri(serviceUrl), caps);
+        var driver = new AndroidDriver(new Uri(gridUrl), caps);
         WrappedAndroidDriver = driver;
         return driver;
     }
@@ -140,6 +141,33 @@ public class DriverFactory : IDisposable
         {
             caps.AddAdditionalAppiumOption(optionKey, _customDriverOptions.Value[optionKey]);
         }
+    }
+
+    private static string ConstructGridUrl(string url)
+    {
+        if (string.IsNullOrEmpty(url))
+        {
+            return url;
+        }
+
+        var resolvedUrl = url;
+        var startIndex = 0;
+        while ((startIndex = resolvedUrl.IndexOf("{env_", startIndex)) != -1)
+        {
+            var endIndex = resolvedUrl.IndexOf("}", startIndex);
+            if (endIndex == -1)
+            {
+                throw new ArgumentException($"Invalid placeholder in URL: {resolvedUrl.Substring(startIndex)}");
+            }
+
+            var placeholder = resolvedUrl.Substring(startIndex, endIndex - startIndex + 1);
+            var envVariable = placeholder.Substring(1, placeholder.Length - 2); // Removing { and }
+            var envValue = SecretsResolver.GetSecret(envVariable);
+
+            resolvedUrl = resolvedUrl.Replace(placeholder, envValue);
+        }
+
+        return resolvedUrl;
     }
 
     public void Dispose()

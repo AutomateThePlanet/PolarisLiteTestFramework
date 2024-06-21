@@ -7,10 +7,6 @@ using System.Reflection;
 namespace PolarisLite.Mobile.Plugins;
 public class AppLifecyclePlugin : Plugin
 {
-    // TODO: refactor DriverAdapter later to move logic to initialize the driver
-    // especially when we have LambdaTest logic and more complex stuff there.
-    //private DriverAdapter _driverAdapter;
-
     private readonly DriverFactory _driverFactory;
     private AppConfiguration _currentAppConfiguration;
     private AppConfiguration _previousBrowserConfiguration;
@@ -74,8 +70,16 @@ public class AppLifecyclePlugin : Plugin
     {
         var classBrowser = GetExecutionBrowserClassLevel(testMethod.DeclaringType);
         var methodBrowser = GetExecutionBrowserMethodLevel(testMethod);
-        AppConfiguration browserConfiguration = methodBrowser != null ? methodBrowser : classBrowser;
-        return browserConfiguration;
+        AppConfiguration appConfiguration = methodBrowser != null ? methodBrowser : classBrowser;
+   
+
+        if (appConfiguration == null)
+        {
+            var androidSettings = ConfigurationService.GetSection<AndroidSettings>();
+            appConfiguration = new AppConfiguration(androidSettings);
+        }
+
+        return appConfiguration;
     }
 
     private AppConfiguration GetExecutionBrowserMethodLevel(MemberInfo testMethod)

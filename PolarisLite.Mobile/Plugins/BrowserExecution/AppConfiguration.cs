@@ -33,6 +33,19 @@ public class AppConfiguration
         AppiumOptions = new Dictionary<string, string>();
     }
 
+    public AppConfiguration(AndroidSettings androidSettings)
+    {
+        ExecutionType = (ExecutionType)Enum.Parse(typeof(ExecutionType), androidSettings.ExecutionType.RemoveSpacesAndCapitalize());
+        AndroidVersion = androidSettings.DefaultAndroidVersion;
+        DeviceName = androidSettings.DefaultDeviceName;
+        AppPath = androidSettings.DefaultAppPath;
+        Lifecycle = (Lifecycle)Enum.Parse(typeof(Lifecycle), androidSettings.DefaultLifeCycle.RemoveSpacesAndCapitalize()); ;
+        AppPackage = androidSettings.DefaultAppPackage;
+        AppActivity = androidSettings.DefaultAppActivity;
+        IsMobileWebExecution = false;
+        AppiumOptions = new Dictionary<string, string>();
+    }
+
     public static AppConfiguration FromAttribute(ExecutionAppAttribute attribute)
     {
         return new AppConfiguration(
