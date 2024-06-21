@@ -31,7 +31,7 @@ public static class KeyVault
         if (_secretClient == null)
         {
             var settings = ConfigurationService.GetSection<KeyVaultSettings>();
-            if (settings.IsEnabled && !string.IsNullOrEmpty(settings.KeyVaultEndpoint))
+            if (settings != null && settings.IsEnabled && !string.IsNullOrEmpty(settings.KeyVaultEndpoint))
             {
                 // Create a new secret client using the default credential from Azure.Identity using environment variables previously set,
                 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.

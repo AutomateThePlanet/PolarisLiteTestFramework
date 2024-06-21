@@ -21,9 +21,9 @@ public class BrowserConfiguration
         string lifecycle,
         string executionType)
     {
-        Browser = (Browser)Enum.Parse(typeof(Browser), browser);
-        Lifecycle = (Lifecycle)Enum.Parse(typeof(Lifecycle), lifecycle);
-        ExecutionType = (ExecutionType)Enum.Parse(typeof(ExecutionType), executionType);
+        Browser = (Browser)Enum.Parse(typeof(Browser), browser.RemoveSpacesAndCapitalize());
+        Lifecycle = (Lifecycle)Enum.Parse(typeof(Lifecycle), lifecycle.RemoveSpacesAndCapitalize());
+        ExecutionType = (ExecutionType)Enum.Parse(typeof(ExecutionType), executionType.RemoveSpacesAndCapitalize());
     }
 
     public Browser Browser { get; set; }

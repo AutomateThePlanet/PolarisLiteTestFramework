@@ -49,11 +49,11 @@ public class DriverFactory : IDisposable
     {
         var webSettings = ConfigurationService.GetSection<WebSettings>();
         var options = InitializeOptionsFromConfig(webSettings);
-        var gridSettings = webSettings.GridSettings.First(x => x.ProviderName == webSettings.ExecutionType);
+        var gridSettings = webSettings.GridSettings.FirstOrDefault(x => x.ProviderName.ToLower() == webSettings.ExecutionType);
         AddGridOptions(options, gridSettings);
         if (browser == Browser.NotSet)
         {
-            browser = (Browser)Enum.Parse(typeof(Browser), webSettings.DefaultBrowser);
+            browser = (Browser)Enum.Parse(typeof(Browser), webSettings.DefaultBrowser.RemoveSpacesAndCapitalize());
         }
 
         switch (browser)
@@ -87,14 +87,14 @@ public class DriverFactory : IDisposable
         var options = InitializeOptionsFromConfig(webSettings);
         var gridSettings = webSettings.GridSettings.First(x => x.ProviderName == webSettings.ExecutionType);
         options.AddAdditionalOption(gridSettings.OptionsName, gridSettings);
-        var gridUrl = gridSettings.Url;
+        var gridUrl = ConstructGridUrl(gridSettings.Url);
 
         WrappedDriver = new RemoteWebDriver(new Uri(gridUrl), options);
     }
 
     private static DriverOptions InitializeOptionsFromConfig(WebSettings webSettings)
     {
-        Browser browserType = (Browser)Enum.Parse(typeof(Browser), webSettings.DefaultBrowser);
+        Browser browserType = (Browser)Enum.Parse(typeof(Browser), webSettings.DefaultBrowser.RemoveSpacesAndCapitalize());
         DriverOptions options = default;
         switch (browserType)
         {
@@ -121,7 +121,12 @@ public class DriverFactory : IDisposable
     private static void AddGridOptions<TOptions>(TOptions options, GridSettings gridSettings) 
         where TOptions : DriverOptions
     {
-        foreach (var entry in gridSettings.Arguments)
+        if(gridSettings == null)
+        {
+            return;
+        }
+
+        foreach (var entry in gridSettings?.Arguments)
         {
             foreach (var c in entry)
             {
@@ -136,6 +141,33 @@ public class DriverFactory : IDisposable
                 }
             }
         }
+    }
+
+    private static string ConstructGridUrl(string url)
+    {
+        if (string.IsNullOrEmpty(url))
+        {
+            return url;
+        }
+
+        var resolvedUrl = url;
+        var startIndex = 0;
+        while ((startIndex = resolvedUrl.IndexOf("{env_", startIndex)) != -1)
+        {
+            var endIndex = resolvedUrl.IndexOf("}", startIndex);
+            if (endIndex == -1)
+            {
+                throw new ArgumentException($"Invalid placeholder in URL: {resolvedUrl.Substring(startIndex)}");
+            }
+
+            var placeholder = resolvedUrl.Substring(startIndex, endIndex - startIndex + 1);
+            var envVariable = placeholder.Substring(1, placeholder.Length - 2); // Removing { and }
+            var envValue = SecretsResolver.GetSecret(envVariable);
+
+            resolvedUrl = resolvedUrl.Replace(placeholder, envValue);
+        }
+
+        return resolvedUrl;
     }
 
     private static void ChangeWindowSize(Size windowSize, IWebDriver wrappedWebDriver)

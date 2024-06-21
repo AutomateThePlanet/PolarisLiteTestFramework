@@ -2,7 +2,7 @@
   "webSettings": {
     "executionType": "regular",
     "defaultBrowser": "chrome",
-    "defaultLifeCycle": "restart everytime time",
+    "defaultLifeCycle": "restart every time",
 
     "shouldHighlightElements": "true",
     "shouldCaptureHttpTraffic": "false",
@@ -26,9 +26,9 @@
     },
     "gridSettings": [
       {
-        "providerName": "lambdatest",
+        "providerName": "lambda test",
         "optionsName": "LT:Options",
-        "url": "https://{env_lt_username}:{env_lt_access_key}@hub.lambdatest.com/wd/hub",
+        "url": "https://{env_LT_USERNAME}:{env_LT_ACCESSKEY}@hub.lambdatest.com/wd/hub",
         "arguments": [
           {
             "resolution": "1920x1080",
@@ -39,8 +39,8 @@
             "video": "true",
             "build": "1.0",
             "project": "POLARIS_RUN",
-            "username": "{env_lt_username}",
-            "accessKey": "{env_lt_access_key}"
+            "username": "{env_LT_USERNAME}",
+            "accessKey": "{env_LT_ACCESSKEY}"
           }
         ]
       },

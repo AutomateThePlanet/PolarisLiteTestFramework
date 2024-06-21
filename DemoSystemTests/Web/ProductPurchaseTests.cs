@@ -5,7 +5,7 @@ using PolarisLite.Web.Plugins.BrowserExecution;
 namespace DemoSystemTests.Web;
 
 [TestFixture]
-[Browser(Browser.Chrome, Lifecycle.RestartEveryTime)]
+//[Browser(Browser.Chrome, Lifecycle.RestartEveryTime)]
 public class ProductPurchaseTests : WebTest
 {
     public HomePage HomePage { get; private set; }
