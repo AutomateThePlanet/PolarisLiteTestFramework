@@ -1,5 +1,7 @@
 ﻿
 
+using PolarisLite.Web.Services;
+
 namespace PolarisLite.Web.Troubshoting;
 
 public class JavaScriptErrorsHandler : ExceptionAnalysationHandler

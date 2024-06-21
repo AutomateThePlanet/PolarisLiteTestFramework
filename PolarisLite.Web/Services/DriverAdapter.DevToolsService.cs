@@ -1,4 +1,7 @@
 ﻿using NUnit.Framework;
+using OpenQA.Selenium.DevTools.V126.Emulation;
+using OpenQA.Selenium.DevTools.V126.Network;
+using OpenQA.Selenium.DevTools.V126.Security;
 using PolarisLite.Web.Services.Contracts;
 
 namespace PolarisLite.Web.Services;

@@ -25,7 +25,7 @@ public class TodoTests
     [TearDown]
     public void TestCleanup()
     {
-        _driver.Quit();
+        _driver.Dispose();
     }
 
     [TestCase("Backbone.js")]

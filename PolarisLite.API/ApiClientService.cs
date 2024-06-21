@@ -15,7 +15,6 @@ public class ApiClientService : IDisposable
         var options = new RestClientOptions(baseUrl)
         {
             ThrowOnAnyError = true,
-            MaxTimeout = 1000,
             FollowRedirects = true,
             MaxRedirects = 10
         };

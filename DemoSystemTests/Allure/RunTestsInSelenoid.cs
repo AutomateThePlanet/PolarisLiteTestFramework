@@ -36,7 +36,7 @@ public class RunTestsInSelenoid
     [TearDown]
     public void TeardownTest()
     {
-        _driver.Quit();
+        _driver.Dispose();
     }
 
     [Test]
