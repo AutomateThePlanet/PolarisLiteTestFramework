@@ -38,6 +38,8 @@
             "visual": "true",
             "video": "true",
             "build": "1.0",
+            //"smartWait": 20,
+            //"autoHeal": "true",
             "project": "POLARIS_RUN",
             "username": "{env_LT_USERNAME}",
             "accessKey": "{env_LT_ACCESSKEY}"

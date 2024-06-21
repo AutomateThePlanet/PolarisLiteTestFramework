@@ -12,6 +12,7 @@ using System.Text;
 using PolarisLite.Secrets;
 using OpenQA.Selenium.IE;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 
 namespace PolarisLite.Web.Plugins.BrowserExecution;
 public class DriverFactory : IDisposable
@@ -126,11 +127,36 @@ public class DriverFactory : IDisposable
             return;
         }
 
+        //foreach (var entry in gridSettings?.Arguments)
+        //{
+        //    foreach (var c in entry)
+        //    {
+        //        if (c.Value is string value && value.StartsWith("{env_"))
+        //        {
+        //            var envValue = SecretsResolver.GetSecret(value);
+        //            options.AddAdditionalOption(c.Key, envValue);
+        //        }
+        //        else
+        //        {
+        //            options.AddAdditionalOption(c.Key, c.Value);
+        //        }
+        //    }
+        //}
+
         foreach (var entry in gridSettings?.Arguments)
         {
             foreach (var c in entry)
             {
-                if (c.Value is string value && value.StartsWith("{env_"))
+                // handle mask command for LambdaTest
+                if (c.Key.Equals("maskCommands", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (c.Value is JArray maskCommandsArray)
+                    {
+                        var maskCommands = maskCommandsArray.ToObject<string[]>();
+                        options.AddAdditionalOption(c.Key, maskCommands);
+                    }
+                }
+                else if (c.Value is string value && value.StartsWith("{env_"))
                 {
                     var envValue = SecretsResolver.GetSecret(value);
                     options.AddAdditionalOption(c.Key, envValue);
