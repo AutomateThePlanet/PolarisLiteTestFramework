@@ -1,7 +1,4 @@
-﻿using PolarisLite.Core.Infrastructure;
-using PolarisLite.Locators;
-using PolarisLite.Web.Components;
-using PolarisLite.Web.Plugins.BrowserExecution;
+﻿using PolarisLite.Web.Plugins.BrowserExecution;
 
 namespace PolarisLite.Web.Services;
 
@@ -19,6 +16,14 @@ public partial class DriverAdapter
         _nativeElementFindService = new NativeElementFindService(_webDriver, _webDriver);
         _waitStrategies = new List<WaitStrategy>();
         _waitStrategies.Add(new ToExistsWaitStrategy());
+
+        if (_webDriver is IDevTools)
+        {
+            DevToolsSession = ((IDevTools)_webDriver).GetDevToolsSession();
+            DevToolsSessionDomains = DevToolsSession.GetVersionSpecificDomains<DevToolsSessionDomains>();
+            RequestsHistory = new List<NetworkRequestSentEventArgs>();
+            ResponsesHistory = new List<NetworkResponseReceivedEventArgs>();
+        }    
     }
 
     public DriverAdapter(IWebDriver driver)

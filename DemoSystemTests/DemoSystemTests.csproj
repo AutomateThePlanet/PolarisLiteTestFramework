@@ -19,6 +19,8 @@
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
 
     <PackageReference Include="Appium.WebDriver" Version="5.0.0-rc.8" />
+
+    <PackageReference Include="Allure.NUnit" Version="2.9.5-preview.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,4 +45,11 @@
     </None>
   </ItemGroup>
 
+  <Target Name="CopyCategoriesToAllureFolder">
+    <Copy SourceFiles="@(Categories)" DestinationFolder="$(OutputPath)\allure-results" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <CallTarget Targets="CopyCategoriesToAllureFolder" />
+  </Target>
 </Project>

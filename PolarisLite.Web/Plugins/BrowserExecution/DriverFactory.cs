@@ -13,6 +13,7 @@ using PolarisLite.Secrets;
 using OpenQA.Selenium.IE;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
+using OpenQA.Selenium.DevTools;
 
 namespace PolarisLite.Web.Plugins.BrowserExecution;
 public class DriverFactory : IDisposable
@@ -222,6 +223,12 @@ public class DriverFactory : IDisposable
     {
         if (!Disposed)
         {
+            if (WrappedDriver is IDevTools)
+            {
+                var devToolsSession = (IDevTools)WrappedDriver;
+                devToolsSession.CloseDevToolsSession();
+            }
+
             WrappedDriver.Quit();
             GC.SuppressFinalize(this);
             Disposed = true;
