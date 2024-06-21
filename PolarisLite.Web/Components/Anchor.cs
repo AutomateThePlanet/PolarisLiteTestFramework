@@ -3,7 +3,7 @@ using PolarisLite.Web.Contracts;
 
 namespace PolarisLite.Web;
 
-public class Anchor : Component, IComponentInnerHtml, IComponentHref, IComponentClick
+public class Anchor : WebComponent, IComponentInnerHtml, IComponentHref, IComponentClick
 {
     public new string InnerHtml => base.InnerHtml;
 

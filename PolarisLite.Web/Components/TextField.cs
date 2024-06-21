@@ -3,7 +3,7 @@ using PolarisLite.Web.Contracts;
 
 namespace PolarisLite.Web;
 
-public class TextField : Component, IComponentText, IComponentDisabled, IComponentInnerText, IComponentInnerHtml, IComponentValue
+public class TextField : WebComponent, IComponentText, IComponentDisabled, IComponentInnerText, IComponentInnerHtml, IComponentValue
 {
     // size, minLength, maxLengt
     // TODO: move to interfaces

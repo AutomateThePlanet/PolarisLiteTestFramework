@@ -8,7 +8,7 @@ public interface ICookiesService
 
     void DeleteCookie(string cookieName);
 
-    List<Cookie> GetAllCookies();
+    List<OpenQA.Selenium.Cookie> GetAllCookies();
 
     string GetCookie(string cookieName);
 }

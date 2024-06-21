@@ -6,12 +6,12 @@ public interface IInteractionsService
 {
     IInteractionsService Release();
     IInteractionsService MoveToElement<TComponent>(TComponent component)
-        where TComponent : Component;
+        where TComponent : WebComponent;
     IInteractionsService DragAndDrop<TComponent>(TComponent sourceComponent, TComponent destinationElement)
-        where TComponent : Component;
+        where TComponent : WebComponent;
     IInteractionsService DoubleClick<TComponent>(TComponent element)
-        where TComponent : Component;
+        where TComponent : WebComponent;
     IInteractionsService ClickAndHold<TComponent>(TComponent element)
-        where TComponent : Component;
+        where TComponent : WebComponent;
     void Perform();
 }

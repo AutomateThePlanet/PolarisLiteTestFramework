@@ -3,12 +3,12 @@ using PolarisLite.Web.Contracts;
 
 namespace PolarisLite.Web;
 
-public class Select : Component, IComponentDisabled, IComponentClick
+public class Select : WebComponent, IComponentDisabled, IComponentClick
 {
-    public  Component GetSelected()
+    public  WebComponent GetSelected()
     {
         var nativeSelect = new SelectElement(WrappedElement);
-        var optionNativeElement = new Component
+        var optionNativeElement = new WebComponent
         {
             FindStrategy = base.FindStrategy,
             WrappedElement = nativeSelect.SelectedOption,
@@ -16,13 +16,13 @@ public class Select : Component, IComponentDisabled, IComponentClick
         return optionNativeElement;
     }
 
-    public virtual List<Component> GetAllOptions()
+    public virtual List<WebComponent> GetAllOptions()
     {
         var nativeSelect = new SelectElement(WrappedElement);
-        var options = new List<Component>();
+        var options = new List<WebComponent>();
         foreach (var option in nativeSelect.Options)
         {
-            var optionNativeElement = new Component
+            var optionNativeElement = new WebComponent
             {
                 FindStrategy = this.FindStrategy,
                 WrappedElement = option,

@@ -6,32 +6,32 @@ namespace PolarisLite.Web;
 public interface IElementFindService
 {
     TComponent FindById<TComponent>(string id)
-        where TComponent : Component;
+        where TComponent : WebComponent;
     TComponent FindByXPath<TComponent>(string xpath)
-        where TComponent : Component;
+        where TComponent : WebComponent;
     TComponent FindByTag<TComponent>(string tag)
-        where TComponent : Component;
+        where TComponent : WebComponent;
     TComponent FindByClass<TComponent>(string cssClass)
-        where TComponent : Component;
+        where TComponent : WebComponent;
     TComponent FindByCss<TComponent>(string css)
-        where TComponent : Component;
+        where TComponent : WebComponent;
     TComponent FindByLinkText<TComponent>(string linkText)
-        where TComponent : Component;
+        where TComponent : WebComponent;
     List<TComponent> FindAllById<TComponent>(string id)
-        where TComponent : Component;
+        where TComponent : WebComponent;
     List<TComponent> FindAllByXPath<TComponent>(string xpath)
-        where TComponent : Component;
+        where TComponent : WebComponent;
     List<TComponent> FindAllByTag<TComponent>(string tag)
-        where TComponent : Component;
+        where TComponent : WebComponent;
     List<TComponent> FindAllByClass<TComponent>(string cssClass)
-        where TComponent : Component;
+        where TComponent : WebComponent;
     List<TComponent> FindAllByCss<TComponent>(string css)
-        where TComponent : Component;
+        where TComponent : WebComponent;
     List<TComponent> FindAllByLinkText<TComponent>(string linkText)
-        where TComponent : Component;
+        where TComponent : WebComponent;
 
     List<TComponent> FindAll<TComponent>(FindStrategy findStrategy)
-        where TComponent : Component;
+        where TComponent : WebComponent;
     TComponent Create<TComponent>(FindStrategy findStrategy)
-        where TComponent : Component;
+        where TComponent : WebComponent;
 }

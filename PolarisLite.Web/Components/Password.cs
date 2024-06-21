@@ -3,7 +3,7 @@ using PolarisLite.Web.Contracts;
 
 namespace PolarisLite.Web;
 
-public class Password : Component, IComponentDisabled, IComponentValue
+public class Password : WebComponent, IComponentDisabled, IComponentValue
 {
     public virtual string GetPassword()
     {

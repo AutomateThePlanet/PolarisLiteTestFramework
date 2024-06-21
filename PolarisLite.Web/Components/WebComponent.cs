@@ -5,11 +5,11 @@ using PolarisLite.Web.Services;
 
 namespace PolarisLite.Web.Components;
 
-public class Component : IComponent, IComponentVisible
+public class WebComponent : IComponent, IComponentVisible
 {
     private readonly IWebElement _webElement;
 
-    public Component()
+    public WebComponent()
     {
     }
 
@@ -40,66 +40,66 @@ public class Component : IComponent, IComponentVisible
     }
 
     public TComponent FindById<TComponent>(string id)
-        where TComponent : Component
+        where TComponent : WebComponent
     {
         return FindComponent<TComponent>(new IdFindStrategy(id));
     }
 
     public TComponent FindByIdContaining<TComponent>(string id)
-       where TComponent : Component
+       where TComponent : WebComponent
     {
         return FindComponent<TComponent>(new IdContainingFindStrategy(id));
     }
 
     public TComponent FindByXPath<TComponent>(string xpath)
-      where TComponent : Component
+      where TComponent : WebComponent
     {
         return FindComponent<TComponent>(new XPathFindStrategy(xpath));
     }
 
     public TComponent FindByCss<TComponent>(string css)
-        where TComponent : Component
+        where TComponent : WebComponent
     {
         return FindComponent<TComponent>(new CssFindStrategy(css));
     }
 
     public TComponent FindByClass<TComponent>(string value)
-       where TComponent : Component
+       where TComponent : WebComponent
     {
         return FindComponent<TComponent>(new ClassFindStrategy(value));
     }
 
     public List<TComponent> FindComponentsById<TComponent>(string id)
-      where TComponent : Component
+      where TComponent : WebComponent
     {
         return FindComponents<TComponent>(new IdFindStrategy(id));
     }
 
     public List<TComponent> FindComponentsByXPath<TComponent>(string xpath)
-     where TComponent : Component
+     where TComponent : WebComponent
     {
         return FindComponents<TComponent>(new XPathFindStrategy(xpath));
     }
 
     public List<TComponent> FindComponentsByCss<TComponent>(string css)
-    where TComponent : Component
+    where TComponent : WebComponent
     {
         return FindComponents<TComponent>(new CssFindStrategy(css));
     }
 
-    public TComponent FindByTag<TComponent>(string tag) where TComponent : Component => throw new NotImplementedException();
-    public TComponent FindByLinkText<TComponent>(string linkText) where TComponent : Component => throw new NotImplementedException();
-    public List<TComponent> FindAllById<TComponent>(string id) where TComponent : Component => throw new NotImplementedException();
-    public List<TComponent> FindAllByXPath<TComponent>(string xpath) where TComponent : Component => throw new NotImplementedException();
-    public List<TComponent> FindAllByTag<TComponent>(string tag) where TComponent : Component => throw new NotImplementedException();
-    public List<TComponent> FindAllByClass<TComponent>(string cssClass) where TComponent : Component => throw new NotImplementedException();
-    public List<TComponent> FindAllByCss<TComponent>(string css) where TComponent : Component => throw new NotImplementedException();
-    public List<TComponent> FindAllByLinkText<TComponent>(string linkText) where TComponent : Component => throw new NotImplementedException();
-    public List<TComponent> FindAll<TComponent>(FindStrategy findStrategy) where TComponent : Component => throw new NotImplementedException();
-    public TComponent Create<TComponent>(FindStrategy findStrategy) where TComponent : Component => throw new NotImplementedException();
+    public TComponent FindByTag<TComponent>(string tag) where TComponent : WebComponent => throw new NotImplementedException();
+    public TComponent FindByLinkText<TComponent>(string linkText) where TComponent : WebComponent => throw new NotImplementedException();
+    public List<TComponent> FindAllById<TComponent>(string id) where TComponent : WebComponent => throw new NotImplementedException();
+    public List<TComponent> FindAllByXPath<TComponent>(string xpath) where TComponent : WebComponent => throw new NotImplementedException();
+    public List<TComponent> FindAllByTag<TComponent>(string tag) where TComponent : WebComponent => throw new NotImplementedException();
+    public List<TComponent> FindAllByClass<TComponent>(string cssClass) where TComponent : WebComponent => throw new NotImplementedException();
+    public List<TComponent> FindAllByCss<TComponent>(string css) where TComponent : WebComponent => throw new NotImplementedException();
+    public List<TComponent> FindAllByLinkText<TComponent>(string linkText) where TComponent : WebComponent => throw new NotImplementedException();
+    public List<TComponent> FindAll<TComponent>(FindStrategy findStrategy) where TComponent : WebComponent => throw new NotImplementedException();
+    public TComponent Create<TComponent>(FindStrategy findStrategy) where TComponent : WebComponent => throw new NotImplementedException();
 
     public TComponent FindComponent<TComponent>(FindStrategy findStrategy)
-      where TComponent : Component
+      where TComponent : WebComponent
     {
         var componentFindService = new NativeElementFindService(WrappedElement, WrappedDriver);
         var nativeWebElement = componentFindService.Find(findStrategy);
@@ -111,7 +111,7 @@ public class Component : IComponent, IComponentVisible
     }
 
     public List<TComponent> FindComponents<TComponent>(FindStrategy findStrategy)
-        where TComponent : Component
+        where TComponent : WebComponent
     {
         var componentFindService = new NativeElementFindService(WrappedElement, WrappedDriver);
         var nativeWebElements = componentFindService.FindAll(findStrategy);

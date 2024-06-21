@@ -1,7 +1,7 @@
 ﻿using PolarisLite.Web.Components;
 
 namespace PolarisLite.Web;
-public class KendoDatePicker : Component
+public class KendoDatePicker : WebComponent
 {
     public void SetDate(DateTime dateTime)
     {

@@ -12,6 +12,6 @@ public partial class DriverAdapter : ICookiesService
     }
 
     public void DeleteCookie(string cookieName) => throw new NotImplementedException();
-    public List<Cookie> GetAllCookies() => throw new NotImplementedException();
+    public List<OpenQA.Selenium.Cookie> GetAllCookies() => throw new NotImplementedException();
     public string GetCookie(string cookieName) => throw new NotImplementedException();
 }

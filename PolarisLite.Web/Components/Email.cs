@@ -3,7 +3,7 @@ using PolarisLite.Web.Contracts;
 
 namespace PolarisLite.Web;
 
-public class Email : Component, IComponentDisabled, IComponentValue
+public class Email : WebComponent, IComponentDisabled, IComponentValue
 {
     public virtual string GetEmail()
     {

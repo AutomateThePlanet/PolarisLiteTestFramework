@@ -3,7 +3,7 @@ using PolarisLite.Web.Contracts;
 
 namespace PolarisLite.Web;
 
-public class Button : Component, IComponentClick, IComponentDisabled, IComponentValue
+public class Button : WebComponent, IComponentClick, IComponentDisabled, IComponentValue
 {
     public new bool IsDisabled => base.IsDisabled;
 
