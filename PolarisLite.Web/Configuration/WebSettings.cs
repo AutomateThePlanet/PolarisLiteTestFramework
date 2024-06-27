@@ -13,6 +13,7 @@ public sealed class WebSettings
     public bool ShouldCaptureHttpTraffic { get; set; }
     public bool ToastNotificationBddLogging { get; set; }
     public long NotificationToastTimeout { get; set; }
+    public bool ReportPortalEnabled { get; set; }
 
     public bool ScreenshotsOnFailEnabled { get; set; }
     public string ScreenshotsSaveLocation { get; set; }

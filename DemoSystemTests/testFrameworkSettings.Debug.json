@@ -7,6 +7,8 @@
     "shouldHighlightElements": "true",
     "shouldCaptureHttpTraffic": "false",
 
+    "reportPortalEnabled": "false",
+
     "screenshotsOnFailEnabled": "true",
     "screenshotsSaveLocation": "${user.home}/POLARIS/Screenshots",
     "videosOnFailEnabled": "false",

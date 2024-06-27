@@ -39,6 +39,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="ReportPortal.config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\ApiDemos-debug.apk">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
