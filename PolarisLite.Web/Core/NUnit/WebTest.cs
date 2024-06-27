@@ -1,4 +1,5 @@
-﻿using PolarisLite.Core;
+﻿using Bellatrix.Web.Plugins.Browser;
+using PolarisLite.Core;
 using PolarisLite.Core.Infrastructure.NUnit;
 using PolarisLite.Web.Plugins;
 using PolarisLite.Web.Services;
@@ -7,10 +8,6 @@ namespace PolarisLite.Web.Core.NUnit;
 public class WebTest : BaseTest
 {
     private static bool _arePluginsAlreadyInitialized;
-    //public WebTest()
-    //{
-    //    App = new App();
-    //}
 
     public App App => new App();
 
@@ -18,6 +15,7 @@ public class WebTest : BaseTest
     {
         if (!_arePluginsAlreadyInitialized)
         {
+            PluginExecutionEngine.AddPlugin(new LambdaTestResultsPlugin());
             PluginExecutionEngine.AddPlugin(new BrowserLifecyclePlugin());
             _arePluginsAlreadyInitialized = true;
         }

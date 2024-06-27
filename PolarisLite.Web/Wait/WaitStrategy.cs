@@ -1,16 +1,20 @@
-﻿namespace PolarisLite;
+﻿using PolarisLite.Core;
+using PolarisLite.Web;
+
+namespace PolarisLite;
 
 public abstract class WaitStrategy
 {
     protected WaitStrategy(int? timeoutIntervalInSeconds = null, int? sleepIntervalInSeconds = null)
     {
-        TimeoutInterval = TimeSpan.FromSeconds(timeoutIntervalInSeconds ?? 30);
-        SleepInterval = TimeSpan.FromSeconds(sleepIntervalInSeconds ?? 2);
+        var webSettings = ConfigurationService.GetSection<WebSettings>();
+        TimeoutInterval = TimeSpan.FromSeconds(timeoutIntervalInSeconds ?? webSettings.TimeoutSettings.ElementToExistTimeout);
+        SleepInterval = TimeSpan.FromSeconds(sleepIntervalInSeconds ?? webSettings.TimeoutSettings.SleepInterval);
     }
 
-    protected TimeSpan TimeoutInterval { get; }
+    protected TimeSpan TimeoutInterval { get; set; }
 
-    protected TimeSpan SleepInterval { get; }
+    protected TimeSpan SleepInterval { get; set; }
 
     public abstract void WaitUntil(ISearchContext searchContext, IWebDriver driver, By by);
 

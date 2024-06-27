@@ -5,7 +5,7 @@ using PolarisLite.Web.Plugins.BrowserExecution;
 
 namespace DemoSystemTests.Web;
 
-[Browser(Browser.Chrome, Lifecycle.RestartEveryTime)]
+//[Browser(Browser.Chrome, Lifecycle.RestartEveryTime)]
 public class CKEditorTests : WebTest
 {
     protected override void TestInitialize()
@@ -16,7 +16,7 @@ public class CKEditorTests : WebTest
     [Test]
     public void AllTextSelected_When_CallSelectAllMethodCkEditorComponent()
     {
-        var editor = App.Elements.FindById<CkEditorComponent>("b-demo-editor");
+        var editor = App.Elements.FindById<CkEditorComponent>("demo");
 
         editor.SelectAll();
     }
@@ -24,7 +24,7 @@ public class CKEditorTests : WebTest
     [Test]
     public void AllTextSelectedBolded_When_CallSelectAllMethod_And_SendBoldCommand()
     {
-        var editor = App.Elements.FindById<CkEditorComponent>("b-demo-editor");
+        var editor = App.Elements.FindById<CkEditorComponent>("demo");
 
         editor.SelectAll();
         editor.ExecuteCommand(EditorCommands.Bold);
@@ -33,7 +33,7 @@ public class CKEditorTests : WebTest
     [Test]
     public void ReturnCorrectText_When_CallGetTextMethodCkEditorComponent()
     {
-        var editor = App.Elements.FindById<CkEditorComponent>("b-demo-editor");
+        var editor = App.Elements.FindById<CkEditorComponent>("demo");
 
         var currentText = editor.GetText();
 
@@ -43,7 +43,7 @@ public class CKEditorTests : WebTest
     [Test]
     public void ReturnCorrectHtml_When_CallGetHtmlMethodCkEditorComponent()
     {
-        var editor = App.Elements.FindById<CkEditorComponent>("b-demo-editor");
+        var editor = App.Elements.FindById<CkEditorComponent>("demo");
 
         var currentText = editor.GetHtml();
 

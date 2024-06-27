@@ -13,7 +13,7 @@ public class LambdaTestResultsPlugin : Plugin
         var driver = DriverFactory.WrappedDriver;
 
         var executionType = ConfigurationService.GetSection<WebSettings>().ExecutionType;
-        bool isLambdaTestRun = executionType.Equals("lambdatest", StringComparison.OrdinalIgnoreCase);
+        bool isLambdaTestRun = executionType.Equals("lambda test", StringComparison.OrdinalIgnoreCase);
 
         try
         {
@@ -23,8 +23,12 @@ public class LambdaTestResultsPlugin : Plugin
             }
             else if (isLambdaTestRun)
             {
-                // pass real exception to LambdaTest
-                driver.ExecuteJavaScript("lambda-exceptions", failedTestException);
+                // pass the real exception to LambdaTest
+                var exceptionCapture = new List<string>
+                {
+                    failedTestException.ToString()
+                };
+                driver.ExecuteJavaScript("lambda-exceptions", exceptionCapture);
                 driver.ExecuteJavaScript("lambda-status=failed");
             }
         }

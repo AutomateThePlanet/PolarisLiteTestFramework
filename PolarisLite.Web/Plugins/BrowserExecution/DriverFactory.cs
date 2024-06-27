@@ -52,7 +52,7 @@ public class DriverFactory : IDisposable
         var webSettings = ConfigurationService.GetSection<WebSettings>();
         var options = InitializeOptionsFromConfig(webSettings);
         var gridSettings = webSettings.GridSettings.FirstOrDefault(x => x.ProviderName.ToLower() == webSettings.ExecutionType);
-        AddGridOptions(options, gridSettings);
+        AddOptionsConfig(options, gridSettings);
         if (browser == Browser.NotSet)
         {
             browser = (Browser)Enum.Parse(typeof(Browser), webSettings.DefaultBrowser.RemoveSpacesAndCapitalize());
@@ -86,12 +86,16 @@ public class DriverFactory : IDisposable
     public void StartGrid()
     {
         var webSettings = ConfigurationService.GetSection<WebSettings>();
+        //var options = new ChromeOptions();
         var options = InitializeOptionsFromConfig(webSettings);
         var gridSettings = webSettings.GridSettings.First(x => x.ProviderName == webSettings.ExecutionType);
-        options.AddAdditionalOption(gridSettings.OptionsName, gridSettings);
+        AddGridOptionsConfig(options, gridSettings);
+        //options.AddAdditionalOption(gridSettings.OptionsName, args);
         var gridUrl = ConstructGridUrl(gridSettings.Url);
 
         WrappedDriver = new RemoteWebDriver(new Uri(gridUrl), options);
+        WrappedDriver.Manage().Window.Maximize();
+        Disposed = false;
     }
 
     private static DriverOptions InitializeOptionsFromConfig(WebSettings webSettings)
@@ -120,7 +124,7 @@ public class DriverFactory : IDisposable
         return options;
     }
 
-    private static void AddGridOptions<TOptions>(TOptions options, GridSettings gridSettings) 
+    private static void AddGridOptionsConfig<TOptions>(TOptions options, GridSettings gridSettings) 
         where TOptions : DriverOptions
     {
         if(gridSettings == null)
@@ -143,7 +147,7 @@ public class DriverFactory : IDisposable
         //        }
         //    }
         //}
-
+        Dictionary<string, object> args = new();
         foreach (var entry in gridSettings?.Arguments)
         {
             foreach (var c in entry)
@@ -154,10 +158,37 @@ public class DriverFactory : IDisposable
                     if (c.Value is JArray maskCommandsArray)
                     {
                         var maskCommands = maskCommandsArray.ToObject<string[]>();
-                        options.AddAdditionalOption(c.Key, maskCommands);
+                        args.Add(c.Key, maskCommands);
                     }
                 }
                 else if (c.Value is string value && value.StartsWith("{env_"))
+                {
+                    var envValue = SecretsResolver.GetSecret(value);
+                    args.Add(c.Key, envValue);
+                }
+                else
+                {
+                    args.Add(c.Key, c.Value);
+                }
+            }
+        }
+
+        options.AddAdditionalOption(gridSettings.OptionsName, args);
+    }
+
+    private static void AddOptionsConfig<TOptions>(TOptions options, GridSettings gridSettings)
+        where TOptions : DriverOptions
+    {
+        if (gridSettings == null)
+        {
+            return;
+        }
+
+        foreach (var entry in gridSettings?.Arguments)
+        {
+            foreach (var c in entry)
+            {
+                if (c.Value is string value && value.StartsWith("{env_"))
                 {
                     var envValue = SecretsResolver.GetSecret(value);
                     options.AddAdditionalOption(c.Key, envValue);
@@ -230,6 +261,8 @@ public class DriverFactory : IDisposable
             }
 
             WrappedDriver.Quit();
+            WrappedDriver.Dispose();
+            WrappedDriver = null;
             GC.SuppressFinalize(this);
             Disposed = true;
         }

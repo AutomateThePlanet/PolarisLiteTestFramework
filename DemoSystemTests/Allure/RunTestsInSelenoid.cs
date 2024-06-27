@@ -6,7 +6,7 @@ using OpenQA.Selenium.Support.UI;
 namespace DemoSystemTests.Allure;
 
 [TestFixture]
-[Parallelizable(ParallelScope.Children)]
+//[Parallelizable(ParallelScope.Children)]
 public class RunTestsInSelenoid
 {
     private IWebDriver _driver;

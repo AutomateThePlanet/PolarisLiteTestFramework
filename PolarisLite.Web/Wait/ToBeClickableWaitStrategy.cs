@@ -1,10 +1,15 @@
-﻿namespace PolarisLite;
+﻿using PolarisLite.Core;
+using PolarisLite.Web;
+
+namespace PolarisLite;
 
 public class ToBeClickableWaitStrategy : WaitStrategy
 {
     public ToBeClickableWaitStrategy(int? timeoutIntervalInSeconds = null, int? sleepIntervalInSeconds = null)
         : base(timeoutIntervalInSeconds, sleepIntervalInSeconds)
     {
+        var webSettings = ConfigurationService.GetSection<WebSettings>();
+        TimeoutInterval = TimeSpan.FromSeconds(webSettings.TimeoutSettings.ElementToBeClickableTimeout);
     }
 
     public override void WaitUntil(ISearchContext searchContext, IWebDriver driver, By by)

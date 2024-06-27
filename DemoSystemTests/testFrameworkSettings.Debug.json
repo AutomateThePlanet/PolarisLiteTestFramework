@@ -1,6 +1,6 @@
 ﻿{
   "webSettings": {
-    "executionType": "regular",
+    "executionType": "lambda test",
     "defaultBrowser": "chrome",
     "defaultLifeCycle": "restart every time",
 
@@ -34,12 +34,14 @@
             "resolution": "1920x1080",
             "platform": "Windows 10",
             "browser": "chrome",
-            "browserVersion": "114.0",
+            "browserVersion": "126.0",
             "visual": "true",
             "video": "true",
-            "build": "1.0",
+            "build": "1.2",
             //"smartWait": 20,
             //"autoHeal": "true",
+            "selenium_version": "4.21.0",
+            "seCdp": "true",
             "project": "POLARIS_RUN",
             "username": "{env_LT_USERNAME}",
             "accessKey": "{env_LT_ACCESSKEY}"

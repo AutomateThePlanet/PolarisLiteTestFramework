@@ -8,7 +8,10 @@ public class App
 
     public App()
     {
-        _driver = new DriverAdapter();
+        if (_driver == null || _driver.WrappedDriver == null)
+        {
+            _driver = new DriverAdapter();
+        }
     }
 
     public IElementFindService Elements => _driver;

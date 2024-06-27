@@ -1,4 +1,5 @@
-﻿using PolarisLite.Core;
+﻿using Bellatrix.Web.Plugins.Browser;
+using PolarisLite.Core;
 using PolarisLite.Core.Infrastructure.MSTest;
 using PolarisLite.Web.Plugins;
 
@@ -18,6 +19,7 @@ public class WebTest : BaseTest
     {
         if (!_arePluginsAlreadyInitialized)
         {
+            PluginExecutionEngine.AddPlugin(new LambdaTestResultsPlugin());
             PluginExecutionEngine.AddPlugin(new BrowserLifecyclePlugin());
             _arePluginsAlreadyInitialized = true;
         }

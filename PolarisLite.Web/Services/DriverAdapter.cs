@@ -23,8 +23,10 @@ public partial class DriverAdapter
             DevToolsSessionDomains = DevToolsSession.GetVersionSpecificDomains<DevToolsSessionDomains>();
             RequestsHistory = new List<NetworkRequestSentEventArgs>();
             ResponsesHistory = new List<NetworkResponseReceivedEventArgs>();
-        }    
+        }
     }
+
+    public IWebDriver WrappedDriver => _webDriver;
 
     public DriverAdapter(IWebDriver driver)
     {
