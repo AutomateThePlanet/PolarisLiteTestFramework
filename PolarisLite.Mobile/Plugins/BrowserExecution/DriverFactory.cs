@@ -47,7 +47,7 @@ public class DriverFactory : IDisposable
         var executionType = configuration.ExecutionType;
 
         AndroidDriver driver;
-        if (executionType.Equals("regular"))
+        if (executionType.ToString().ToLower().Equals("regular"))
         {
             driver = InitializeDriverRegularMode();
         }
@@ -77,7 +77,8 @@ public class DriverFactory : IDisposable
         {
             { MobileCapabilityType.PlatformName, "Android" },
             { MobileCapabilityType.PlatformVersion, AppConfiguration.AndroidVersion },
-            { MobileCapabilityType.DeviceName, AppConfiguration.DeviceName }
+            { MobileCapabilityType.DeviceName, AppConfiguration.DeviceName },
+            { MobileCapabilityType.AutomationName, "UiAutomator2"}
         };
 
         if (AppConfiguration.IsMobileWebExecution)
@@ -86,13 +87,18 @@ public class DriverFactory : IDisposable
         }
         else
         {
-            options[MobileCapabilityType.App] = AppConfiguration.AppPath.Replace("\\", "/");
+            string testAppPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", AppConfiguration.AppPath);
+            options[MobileCapabilityType.App] = testAppPath;
             options[AndroidMobileCapabilityType.AppPackage] = AppConfiguration.AppPackage;
             options[AndroidMobileCapabilityType.AppActivity] = AppConfiguration.AppActivity;
         }
 
         options["name"] = testName;
-        appiumOptions.AddAdditionalAppiumOption(gridSettings.OptionsName, gridSettings);
+
+        if (!string.IsNullOrEmpty(gridSettings.OptionsName))
+        {
+            appiumOptions.AddAdditionalAppiumOption(gridSettings.OptionsName, gridSettings);
+        }
 
         AndroidDriver driver = null;
         try
@@ -114,17 +120,19 @@ public class DriverFactory : IDisposable
         var gridSettings = androidSettings.GridSettings.First(x => x.ProviderName == "regular");
         var gridUrl = ConstructGridUrl(gridSettings.Url);
         var caps = new AppiumOptions();
-        caps.AddAdditionalAppiumOption(MobileCapabilityType.PlatformName, "Android");
-        caps.AddAdditionalAppiumOption(MobileCapabilityType.PlatformVersion, AppConfiguration.AndroidVersion);
-        caps.AddAdditionalAppiumOption(MobileCapabilityType.DeviceName, AppConfiguration.DeviceName);
+        caps.PlatformName = "Android";
+        caps.AutomationName = "UiAutomator2";
+        caps.PlatformVersion = AppConfiguration.AndroidVersion;
+        caps.DeviceName = AppConfiguration.DeviceName;
 
         if (AppConfiguration.IsMobileWebExecution)
         {
-            caps.AddAdditionalAppiumOption(MobileCapabilityType.BrowserName, AppConfiguration.DefaultBrowser);
+            caps.BrowserName = AppConfiguration.DefaultBrowser;
         }
         else
         {
-            caps.AddAdditionalAppiumOption(MobileCapabilityType.App, AppConfiguration.AppPath);
+            string testAppPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", AppConfiguration.AppPath);
+            caps.App = testAppPath;
             caps.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppPackage, AppConfiguration.AppPackage);
             caps.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppActivity, AppConfiguration.AppActivity);
         }

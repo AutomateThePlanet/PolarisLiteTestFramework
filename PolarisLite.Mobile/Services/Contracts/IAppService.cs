@@ -19,4 +19,5 @@ public interface IAppService
     void SwitchToWebViewTitleContains(string title);
     void SwitchToWebViewUrlContains(string url);
     void TerminateApp(string appId);
+    void TerminateApp();
 }

@@ -2,7 +2,7 @@
 
 namespace PolarisLite.Mobile.Services;
 
-public partial class DriverAdapter
+public partial class DriverAdapter : IWaitService
 {
     public void Wait<TWaitStrategy, TComponent>(TComponent element, TWaitStrategy waitStrategy)
          where TWaitStrategy : WaitStrategy

@@ -18,7 +18,7 @@ public class AppLifecyclePlugin : Plugin
 
     public override void OnBeforeTestInitialize(MethodInfo memberInfo)
     {
-        _currentAppConfiguration = GetBrowserConfiguration(memberInfo);
+        _currentAppConfiguration = GetAppConfiguration(memberInfo);
         bool shouldRestartBrowser = ShouldRestartBrowser(_currentAppConfiguration);
         if (shouldRestartBrowser)
         {
@@ -66,31 +66,35 @@ public class AppLifecyclePlugin : Plugin
         }
     }
 
-    private AppConfiguration GetBrowserConfiguration(MemberInfo testMethod)
+    private AppConfiguration GetAppConfiguration(MemberInfo testMethod)
     {
-        var classBrowser = GetExecutionBrowserClassLevel(testMethod.DeclaringType);
-        var methodBrowser = GetExecutionBrowserMethodLevel(testMethod);
-        AppConfiguration appConfiguration = methodBrowser != null ? methodBrowser : classBrowser;
-   
+        var classApp = GetExecutionAppClassLevel(testMethod.DeclaringType);
+        var methodApp = GetExecutionAppMethodLevel(testMethod);
+        var appAttribute = methodApp != null ? methodApp : classApp;
 
-        if (appConfiguration == null)
+        AppConfiguration appConfiguration = default;
+        if (appAttribute == null)
         {
             var androidSettings = ConfigurationService.GetSection<AndroidSettings>();
             appConfiguration = new AppConfiguration(androidSettings);
+        }
+        else
+        {
+            appConfiguration = AppConfiguration.FromAttribute(appAttribute);
         }
 
         return appConfiguration;
     }
 
-    private AppConfiguration GetExecutionBrowserMethodLevel(MemberInfo testMethod)
+    private ExecutionAppAttribute GetExecutionAppMethodLevel(MemberInfo testMethod)
     {
         var executionBrowserAttribute = testMethod.GetCustomAttribute<ExecutionAppAttribute>(true);
-        return AppConfiguration.FromAttribute(executionBrowserAttribute);
+        return executionBrowserAttribute;
     }
 
-    private AppConfiguration GetExecutionBrowserClassLevel(Type testClass)
+    private ExecutionAppAttribute GetExecutionAppClassLevel(Type testClass)
     {
         var executionBrowserAttribute = testClass.GetCustomAttribute<ExecutionAppAttribute>(true);
-        return AppConfiguration.FromAttribute(executionBrowserAttribute);
+        return executionBrowserAttribute;
     }
 }

@@ -42,6 +42,11 @@ public partial class DriverAdapter : IAppService
         _androidDriver.BackgroundApp(TimeSpan.FromSeconds(seconds));
     }
 
+    public void TerminateApp()
+    {
+        _androidDriver.TerminateApp(_androidDriver.CurrentPackage);
+    }
+
     public void TerminateApp(string appId)
     {
         _androidDriver.TerminateApp(appId);

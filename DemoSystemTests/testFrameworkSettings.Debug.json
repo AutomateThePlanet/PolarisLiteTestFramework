@@ -52,7 +52,7 @@
       },
       {
         "providerName": "grid",
-        "url": "http://127.0.0.1:4444/wd/hub",
+        "url": "http://127.0.0.1:4444/",
         "arguments": [
           {
             "name": "bellatrix_run"
@@ -62,10 +62,10 @@
     ]
   },
   "androidSettings": {
-    "serviceUrl": "http://127.0.0.1:4722/wd/hub",
+    "serviceUrl": "http://127.0.0.1:4722/wd/hub/",
     "executionType": "regular",
-    "defaultLifeCycle": "restart everytime time",
-    "defaultDeviceName": "pixel5-test-device-13-new",
+    "defaultLifeCycle": "restart every time",
+    "defaultDeviceName": "pixel5-test-device-13-3",
     "defaultAndroidVersion": "13.0",
     "defaultBrowser": "Chrome",
     "defaultAppPackage": "io.appium.android.apis",
@@ -108,11 +108,12 @@
         ]
       },
       {
-        "providerName": "grid",
-        "url": "http://127.0.0.1:4444/wd/hub",
+        "providerName": "regular",
+        "url": "http://127.0.0.1:4722/wd/hub/",
         "arguments": [
           {
-            "name": "polaris_run"
+            "unlockType": "unlockType",
+            "unlockKey": "1234"
           }
         ]
       }

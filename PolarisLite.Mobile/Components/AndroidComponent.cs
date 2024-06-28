@@ -27,6 +27,7 @@ public class AndroidComponent : IComponent, IComponentVisible
         AppService = new DriverAdapter();
         ComponentCreateService = new DriverAdapter();
         WrappedDriver = DriverFactory.WrappedAndroidDriver;
+        ComponentWaitService = new DriverAdapter();
     }
 
     public AppiumElement WrappedElement
