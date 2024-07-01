@@ -2,9 +2,9 @@
 
 public class WaitStrategyFactory
 {
-    public ToExistsWaitStrategy Exists(int? timeoutInterval = null, int? sleepInterval = null)
+    public ToExistWaitStrategy Exists(int? timeoutInterval = null, int? sleepInterval = null)
     {
-        return new ToExistsWaitStrategy(timeoutInterval, sleepInterval);
+        return new ToExistWaitStrategy(timeoutInterval, sleepInterval);
     }
 
     public ToBeVisibleWaitStrategy BeVisible(int? timeoutInterval = null, int? sleepInterval = null)

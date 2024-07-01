@@ -1,5 +1,5 @@
 using PolarisLite.Web;
-using PolarisLite.Web.Core.MSTest;
+using PolarisLite.Web.Core.NUnit;
 using PolarisLite.Web.Plugins;
 using PolarisLite.Web.Plugins.BrowserExecution;
 

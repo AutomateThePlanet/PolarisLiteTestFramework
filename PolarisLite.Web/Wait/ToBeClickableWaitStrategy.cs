@@ -1,4 +1,5 @@
 ﻿using PolarisLite.Core;
+using PolarisLite.Locators;
 using PolarisLite.Web;
 
 namespace PolarisLite;
@@ -12,28 +13,26 @@ public class ToBeClickableWaitStrategy : WaitStrategy
         TimeoutInterval = TimeSpan.FromSeconds(webSettings.TimeoutSettings.ElementToBeClickableTimeout);
     }
 
-    public override void WaitUntil(ISearchContext searchContext, IWebDriver driver, By by)
+    public override void WaitUntil<TBy>(TBy by)
     {
-        WaitUntil(ElementIsClickable(searchContext, by), driver);
+        WaitUntilInternal(d => ElementIsClickable(WrappedDriver, by));
     }
 
-    private Func<ISearchContext, bool> ElementIsClickable(ISearchContext searchContext, By by)
+    private bool ElementIsClickable<TBy>(ISearchContext searchContext, TBy by)
+      where TBy : FindStrategy
     {
-        return _ =>
+        var element = FindElement(searchContext, by.Convert());
+        try
         {
-            var element = FindElement(searchContext, by);
-            try
-            {
-                return element != null && element.Enabled;
-            }
-            catch (StaleElementReferenceException)
-            {
-                return false;
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-        };
+            return element != null && element.Enabled;
+        }
+        catch (StaleElementReferenceException)
+        {
+            return false;
+        }
+        catch (NoSuchElementException)
+        {
+            return false;
+        }
     }
 }

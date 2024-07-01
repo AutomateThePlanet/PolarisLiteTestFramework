@@ -71,7 +71,7 @@ public partial class DriverAdapter : IDevToolsService
     {
         var responseStatusCode = ResponsesHistory.ToList().Find(r => r.ResponseUrl.Contains(partialUrl)).ResponseStatusCode;
 
-        Assert.AreEqual(responseStatusCode, 404, "404 Error code not detected on the page.");
+        Assert.That(404, Is.EqualTo(responseStatusCode), "404 Error code not detected on the page.");
     }
 
     public void AssertNoErrorCodes()

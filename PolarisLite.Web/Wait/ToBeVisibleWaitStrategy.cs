@@ -1,4 +1,5 @@
 ﻿using PolarisLite.Core;
+using PolarisLite.Locators;
 using PolarisLite.Web;
 
 namespace PolarisLite;
@@ -12,28 +13,26 @@ public class ToBeVisibleWaitStrategy : WaitStrategy
         TimeoutInterval = TimeSpan.FromSeconds(webSettings.TimeoutSettings.ElementToBeVisibleTimeout);
     }
 
-    public override void WaitUntil(ISearchContext searchContext, IWebDriver driver, By by)
+    public override void WaitUntil<TBy>(TBy by)
     {
-        WaitUntil(ElementIsVisible(searchContext, by), driver);
+        WaitUntilInternal(d => ElementIsVisible(WrappedDriver, by));
     }
 
-    private Func<ISearchContext, bool> ElementIsVisible(ISearchContext searchContext, By by)
+    private bool ElementIsVisible<TBy>(ISearchContext searchContext, TBy by)
+         where TBy : FindStrategy
     {
-        return _ =>
+        try
         {
-            try
-            {
-                var element = FindElement(searchContext, by);
-                return element != null && element.Displayed;
-            }
-            catch (StaleElementReferenceException)
-            {
-                return false;
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-        };
+            var element = FindElement(searchContext, by.Convert());
+            return element != null && element.Displayed;
+        }
+        catch (StaleElementReferenceException)
+        {
+            return false;
+        }
+        catch (NoSuchElementException)
+        {
+            return false;
+        }
     }
 }

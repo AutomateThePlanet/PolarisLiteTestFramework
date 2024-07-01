@@ -20,7 +20,7 @@
       "sleepInterval": "1",
       "validationsTimeout": "30",
       "elementToBeVisibleTimeout": "30",
-      "elementToExistTimeout": "30",
+      "elementToExistTimeout": "60",
       "elementToNotExistTimeout": "30",
       "elementToBeClickableTimeout": "30",
       "elementNotToBeVisibleTimeout": "30",

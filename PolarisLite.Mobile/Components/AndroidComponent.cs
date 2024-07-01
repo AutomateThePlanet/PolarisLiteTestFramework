@@ -32,22 +32,15 @@ public class AndroidComponent : IComponent, IComponentVisible
 
     public AppiumElement WrappedElement
     {
-        get
+        get 
         {
-            try
+            if (_wrappedElement == null)
             {
-                if (_wrappedElement == null)
-                {
-                    return FindElement();
-                }
-                else
-                {
-                    return _wrappedElement;
-                }
+                return FindElement(FindStrategy);
             }
-            catch (StaleElementReferenceException)
+            else
             {
-                return FindElement();
+                return _wrappedElement;
             }
         }
         set => _wrappedElement = value;
@@ -121,28 +114,28 @@ public class AndroidComponent : IComponent, IComponentVisible
 
     public void WaitToBe()
     {
-        FindElement();
+        FindElement(FindStrategy);
     }
 
     public void Hover()
     {
         var action = new Actions(WrappedDriver);
-        action.MoveToElement(FindElement()).Perform();
+        action.MoveToElement(FindElement(FindStrategy)).Perform();
     }
 
     public Point GetLocation()
     {
-        return FindElement().Location;
+        return FindElement(FindStrategy).Location;
     }
 
     public Size GetSize()
     {
-        return FindElement().Size;
+        return FindElement(FindStrategy).Size;
     }
 
     public string GetAttribute(string name)
     {
-        return FindElement().GetAttribute(name);
+        return FindElement(FindStrategy).GetAttribute(name);
     }
 
     public void EnsureState(WaitStrategy waitStrategy)
@@ -150,7 +143,7 @@ public class AndroidComponent : IComponent, IComponentVisible
         waitStrategies.Add(waitStrategy);
     }
 
-    public AppiumElement FindElement()
+    public AppiumElement FindElement(FindStrategy findStrategy)
     {
         if (!waitStrategies.Any())
         {
@@ -162,8 +155,8 @@ public class AndroidComponent : IComponent, IComponentVisible
             ComponentWaitService.Wait(this, waitStrategy);
         }
 
-        _wrappedElement = FindNativeElement();
-        waitStrategies.Clear();
+        _wrappedElement = FindNativeElement(findStrategy);
+        //waitStrategies.Clear();
 
         return _wrappedElement;
     }
@@ -216,24 +209,24 @@ public class AndroidComponent : IComponent, IComponentVisible
     public TComponent FindComponent<TComponent>(FindStrategy findStrategy)
        where TComponent : AndroidComponent
     {
-        AppiumElement nativeWebElement = findStrategy.FindElement(WrappedElement);
+        AppiumElement nativeElement = findStrategy.FindElement(WrappedElement);
         var component = InstanceFactory.Create<TComponent>();
         component.FindStrategy = findStrategy;
         component.WrappedDriver = WrappedDriver;
-        component.WrappedElement = nativeWebElement;
+        component.WrappedElement = nativeElement;
         return component;
     }
 
     public List<TComponent> FindComponents<TComponent>(FindStrategy findStrategy) where TComponent : AndroidComponent
     {
-        IEnumerable<AppiumElement> nativeWebElements = findStrategy.FindAllElements(WrappedElement);
+        IEnumerable<AppiumElement> nativeElements = findStrategy.FindAllElements(WrappedElement);
         var components = new List<TComponent>();
-        foreach (var nativeWebElement in nativeWebElements)
+        foreach (var nativeElement in nativeElements)
         {
             var component = InstanceFactory.Create<TComponent>();
             component.FindStrategy = findStrategy;
             component.WrappedDriver = WrappedDriver;
-            component.WrappedElement = nativeWebElement;
+            component.WrappedElement = nativeElement;
             components.Add(component);
         }
 
@@ -259,15 +252,15 @@ public class AndroidComponent : IComponent, IComponentVisible
     public List<TComponent> FindAllByClass<TComponent>(string cssClass) where TComponent : AndroidComponent => throw new NotImplementedException();
     public List<TComponent> FindAll<TComponent>(FindStrategy findStrategy) where TComponent : AndroidComponent => throw new NotImplementedException();
 
-    private AppiumElement FindNativeElement()
+    private AppiumElement FindNativeElement(FindStrategy findStrategy)
     {
         if (ParentWrappedElement == null)
         {
-            return FindStrategy.FindAllElements(WrappedDriver).ElementAt(ElementIndex);
+            return findStrategy.FindAllElements(WrappedDriver).ElementAt(ElementIndex);
         }
         else
         {
-            return FindStrategy.FindElement(ParentWrappedElement);
+            return findStrategy.FindElement(ParentWrappedElement);
         }
     }
 }

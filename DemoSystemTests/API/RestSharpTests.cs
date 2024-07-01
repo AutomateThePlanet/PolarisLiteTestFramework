@@ -109,7 +109,7 @@ public class UtilitiesTests
 
         var response = await _restClient.GetAsync<List<Albums>>(request);
 
-        Assert.AreEqual(347, response.Response.Data.Count);
+        Assert.That(response.Response.Data.Count, Is.EqualTo(347));
     }
 
     [Test]
@@ -119,7 +119,7 @@ public class UtilitiesTests
 
         var response = await _restClient.GetAsync<Albums>(request);
 
-        Assert.AreEqual(10, response.Response.Data.AlbumId);
+        Assert.That(response.Response.Data.AlbumId, Is.EqualTo(10));
     }
 
     [Test]
@@ -203,7 +203,7 @@ public class UtilitiesTests
 
         var response = await _restClient.PostAsync<Genres>(request);
 
-        Assert.AreEqual(newAlbum.Name, response.Response.Data.Name);
+        Assert.That(response.Response.Data.Name, Is.EqualTo(newAlbum.Name));
     }
 
     [Test]

@@ -51,9 +51,8 @@ public class CheckoutPage : WebPage
     public void AgreeToTerms()
     {
         App.Browser.WaitForAjax();
-        // TODO: Move to Driver as addition to FindComponent as decoratr
-        // TODO: Add addtional decorator for highlighting element
-        //((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].scrollIntoView(true);", TermsAgreeCheckbox);
+        // TODO: Move to separate method in decorator
+        App.JavaScriptService.Execute("arguments[0].scrollIntoView(true);", TermsAgreeCheckbox);
         TermsAgreeCheckbox.Check(true);
     }
 

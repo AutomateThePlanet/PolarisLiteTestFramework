@@ -23,7 +23,7 @@ internal class CalculatorAddTests
 
         int actualResult = calculator.Add(2, 2);
 
-        Assert.AreEqual(4, actualResult);
+        Assert.That(actualResult, Is.EqualTo(4));
     }
 
     [Test(Description = "Add two integers and returns the sum")]
@@ -36,7 +36,7 @@ internal class CalculatorAddTests
 
         int actualResult = calculator.Add(0, 0);
 
-        Assert.AreEqual(0, actualResult);
+        Assert.That(actualResult, Is.EqualTo(0));
     }
 
     [Test(Description = "Add two integers and returns the sum")]
@@ -49,6 +49,6 @@ internal class CalculatorAddTests
 
         int actualResult = calculator.Add(0, 0);
 
-        Assert.AreEqual(1, actualResult);
+        Assert.That(actualResult, Is.EqualTo(1));
     }
 }

@@ -29,7 +29,7 @@ public class ProductPurchaseTests : WebTest
         var expectedProduct1 = new ProductDetails
         {
             Name = "iPod Touch",
-            Id = 32,
+            Id = 59,
             Price = "$194.00",
             Model = "Product 5",
             Brand = "Apple",
@@ -39,17 +39,17 @@ public class ProductPurchaseTests : WebTest
         var expectedProduct2 = new ProductDetails
         {
             Name = "iPod Shuffle",
-            Id = 34,
+            Id = 58,
             Price = "$182.00",
             Model = "Product 7",
             Brand = "Apple",
             Weight = "5.00kg"
         };
 
-        HomePage.SearchProduct("ip");
+        HomePage.SearchProduct("iPod Tou");
         ProductPage.SelectProductFromAutocomplete(expectedProduct1.Id);
         ProductPage.CompareLastProduct();
-        HomePage.SearchProduct("ip");
+        HomePage.SearchProduct("iPod Shuff");
         ProductPage.SelectProductFromAutocomplete(expectedProduct2.Id);
         ProductPage.CompareLastProduct();
 
@@ -65,7 +65,7 @@ public class ProductPurchaseTests : WebTest
         var expectedProduct1 = new ProductDetails
         {
             Name = "iPod Touch",
-            Id = 32,
+            Id = 59,
             Price = "$194.00",
             Model = "Product 5",
             Brand = "Apple",
@@ -97,7 +97,7 @@ public class ProductPurchaseTests : WebTest
             Region = "Alabama"
         };
 
-        HomePage.SearchProduct("ip");
+        HomePage.SearchProduct("iPod Tou");
         ProductPage.SelectProductFromAutocomplete(expectedProduct1.Id);
         ProductPage.AddToCart(expectedProduct1.Quantity);
         CartPage.ViewCart();

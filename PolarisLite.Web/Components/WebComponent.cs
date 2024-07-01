@@ -7,26 +7,50 @@ namespace PolarisLite.Web.Components;
 
 public class WebComponent : IComponent, IComponentVisible
 {
-    private readonly IWebElement _webElement;
+    private IWebElement _wrappedWebElement;
+    private readonly List<WaitStrategy> waitStrategies;
 
     public WebComponent()
     {
+        waitStrategies = new List<WaitStrategy>();
+        ComponentWaitService = new DriverAdapter();
     }
 
     private Actions Actions => new Actions(WrappedDriver);
+    protected IWaitService ComponentWaitService { get; private set; }
     public FindStrategy FindStrategy { get; internal set; }
     public IWebDriver WrappedDriver { get; internal set; }
     public IJavaScriptExecutor JavaScriptExecutor => (IJavaScriptExecutor)WrappedDriver;
 
-    public bool? Enabled => _webElement?.Enabled;
+    public bool? Enabled => _wrappedWebElement?.Enabled;
 
-    public bool? Displayed => _webElement?.Displayed;
+    public bool? Displayed => _wrappedWebElement?.Displayed;
+    public IWebElement ParentWrappedElement { get; set; }
 
-    public IWebElement WrappedElement { get; set; }
+    public IWebElement WrappedElement
+    {
+        get
+        {
+            if (_wrappedWebElement == null)
+            {
+                return FindElement(FindStrategy);
+            }
+            else
+            {
+                return _wrappedWebElement;
+            }
+        }
+        set => _wrappedWebElement = value;
+    }
+
+    public void EnsureState(WaitStrategy waitStrategy)
+    {
+        waitStrategies.Add(waitStrategy);
+    }
 
     public void Hover()
     {
-        Actions.MoveToElement(_webElement).Perform();
+        Actions.MoveToElement(_wrappedWebElement).Perform();
     }
 
     public string GetAttribute(string attributeName)
@@ -101,20 +125,17 @@ public class WebComponent : IComponent, IComponentVisible
     public TComponent FindComponent<TComponent>(FindStrategy findStrategy)
       where TComponent : WebComponent
     {
-        var componentFindService = new NativeElementFindService(WrappedElement, WrappedDriver);
-        var nativeWebElement = componentFindService.Find(findStrategy);
         var component = InstanceFactory.Create<TComponent>();
         component.FindStrategy = findStrategy;
         component.WrappedDriver = WrappedDriver;
-        component.WrappedElement = nativeWebElement;
+        component.WrappedElement = FindElement(findStrategy);
         return component;
     }
 
     public List<TComponent> FindComponents<TComponent>(FindStrategy findStrategy)
         where TComponent : WebComponent
     {
-        var componentFindService = new NativeElementFindService(WrappedElement, WrappedDriver);
-        var nativeWebElements = componentFindService.FindAll(findStrategy);
+        var nativeWebElements = FindNativeElements(findStrategy);
         var components = new List<TComponent>();
         foreach (var nativeWebElement in nativeWebElements)
         {
@@ -145,4 +166,50 @@ public class WebComponent : IComponent, IComponentVisible
     protected string InnerHtml => GetAttribute("innerHTML");
     protected string Text => WrappedElement?.Text;
     protected string Value => GetAttribute("value");
+
+    private IWebElement FindElement(FindStrategy findStrategy)
+    {
+        if (!waitStrategies.Any())
+        {
+            waitStrategies.Add(new ToExistWaitStrategy());
+        }
+
+        foreach (var waitStrategy in waitStrategies)
+        {
+            ComponentWaitService.Wait(this, waitStrategy);
+        }
+
+        _wrappedWebElement = FindNativeElements(findStrategy).FirstOrDefault();
+
+        return _wrappedWebElement;
+    }
+
+    private List<IWebElement> FindElements(FindStrategy findStrategy)
+    {
+        if (!waitStrategies.Any())
+        {
+            waitStrategies.Add(new ToExistWaitStrategy());
+        }
+
+        foreach (var waitStrategy in waitStrategies)
+        {
+            ComponentWaitService.Wait(this, waitStrategy);
+        }
+
+        return FindNativeElements(findStrategy);
+    }
+
+    private List<IWebElement> FindNativeElements(FindStrategy findStrategy)
+    {
+        if (ParentWrappedElement != null)
+        {
+            var elements = ParentWrappedElement.FindElements(findStrategy.Convert()).ToList();
+            return elements;
+        }
+        else
+        {
+            var elements = WrappedDriver.FindElements(findStrategy.Convert()).ToList();
+            return elements;
+        }
+    }
 }

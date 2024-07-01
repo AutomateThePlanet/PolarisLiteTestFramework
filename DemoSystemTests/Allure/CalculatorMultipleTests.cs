@@ -19,7 +19,7 @@ internal class CalculatorMultipleTests
 
         float actualResult = calculator.Division(2, 0);
 
-        Assert.AreEqual(4, actualResult);
+        Assert.That(actualResult, Is.EqualTo(4));
     }
 
     [Test(Description = "Performing Division on two float variables. ")]
@@ -32,6 +32,6 @@ internal class CalculatorMultipleTests
 
         float actualResult = calculator.Division(2, 1);
 
-        Assert.AreEqual(4, actualResult);
+        Assert.That(actualResult, Is.EqualTo(4));
     }
 }

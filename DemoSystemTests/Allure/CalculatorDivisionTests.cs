@@ -20,7 +20,7 @@ internal class CalculatorDivisionTests
 
         int actualResult = calculator.Multiply(2, 2);
 
-        Assert.AreEqual(4, actualResult);
+        Assert.That(actualResult, Is.EqualTo(4));
     }
 
     [Test(Description = "Multiply two integers and returns the result")]
@@ -33,7 +33,7 @@ internal class CalculatorDivisionTests
 
         int actualResult = calculator.Multiply(0, 0);
 
-        Assert.AreEqual(0, actualResult);
+        Assert.That(actualResult, Is.EqualTo(0));
     }
 
     [Test(Description = "Multiply two integers and returns the result")]
@@ -46,6 +46,6 @@ internal class CalculatorDivisionTests
 
         int actualResult = calculator.Multiply(5, -1);
 
-        Assert.AreEqual(0, actualResult);
+        Assert.That(actualResult, Is.EqualTo(0));
     }
 }

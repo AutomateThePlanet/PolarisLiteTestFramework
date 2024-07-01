@@ -1,10 +1,11 @@
-﻿using PolarisLite.Mobile.Components;
+﻿using PolarisLite.Locators;
+using PolarisLite.Web.Components;
 
-namespace PolarisLite.Mobile;
-
+namespace PolarisLite.Web;
 public interface IWaitService
 {
     void Wait<TWaitStrategy, TComponent>(TComponent element, TWaitStrategy waitStrategy)
       where TWaitStrategy : WaitStrategy
-      where TComponent : AndroidComponent;
+      where TComponent : WebComponent;
 }
+
