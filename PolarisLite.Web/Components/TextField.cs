@@ -5,8 +5,6 @@ namespace PolarisLite.Web;
 
 public class TextField : WebComponent, IComponentText, IComponentDisabled, IComponentInnerText, IComponentInnerHtml, IComponentValue
 {
-    // size, minLength, maxLengt
-    // TODO: move to interfaces
     public virtual bool? IsAutoComplete => GetAttribute("autocomplete") == "on";
 
     public virtual bool IsReadonly => !string.IsNullOrEmpty(GetAttribute("readonly"));

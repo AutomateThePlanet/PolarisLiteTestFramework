@@ -9,8 +9,7 @@ public class ToBeClickableWaitStrategy : WaitStrategy
     public ToBeClickableWaitStrategy(int? timeoutIntervalInSeconds = null, int? sleepIntervalInSeconds = null)
         : base(timeoutIntervalInSeconds, sleepIntervalInSeconds)
     {
-        var webSettings = ConfigurationService.GetSection<WebSettings>();
-        TimeoutInterval = TimeSpan.FromSeconds(webSettings.TimeoutSettings.ElementToBeClickableTimeout);
+        TimeoutInterval = TimeSpan.FromSeconds(60);
     }
 
     public override void WaitUntil<TBy>(TBy by)

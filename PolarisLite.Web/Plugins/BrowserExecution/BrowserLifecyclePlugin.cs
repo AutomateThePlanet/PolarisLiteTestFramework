@@ -9,6 +9,7 @@ public class BrowserLifecyclePlugin : Plugin
     private readonly DriverFactory _driverFactory;
     private BrowserConfiguration _currentBrowserConfiguration;
     private BrowserConfiguration _previousBrowserConfiguration;
+    private GridConfiguration _currentGridConfiguration;
 
     public BrowserLifecyclePlugin()
     {
@@ -18,6 +19,7 @@ public class BrowserLifecyclePlugin : Plugin
     public override void OnBeforeTestInitialize(MethodInfo memberInfo)
     {
         _currentBrowserConfiguration = GetBrowserConfiguration(memberInfo);
+        _currentGridConfiguration = GetGridSettingsConfiguration(memberInfo);
         bool shouldRestartBrowser = ShouldRestartBrowser(_currentBrowserConfiguration);
         if (shouldRestartBrowser)
         {
@@ -35,11 +37,11 @@ public class BrowserLifecyclePlugin : Plugin
 
             if (_currentBrowserConfiguration.ExecutionType == ExecutionType.Regular)
             {
-                _driverFactory.Start(_currentBrowserConfiguration.Browser);
+                _driverFactory.Start(_currentBrowserConfiguration);
             }
             else
             {
-                _driverFactory.StartGrid();
+                _driverFactory.StartGrid(_currentBrowserConfiguration, _currentGridConfiguration);
             }
         } catch (Exception ex)
         {
@@ -83,14 +85,17 @@ public class BrowserLifecyclePlugin : Plugin
         var classBrowser = GetExecutionBrowserClassLevel(testMethod.DeclaringType);
         var methodBrowser = GetExecutionBrowserMethodLevel(testMethod);
         BrowserConfiguration browserConfiguration = methodBrowser != null ? methodBrowser : classBrowser;
-
-        var webSettings = ConfigurationService.GetSection<WebSettings>();
-        if (browserConfiguration == null)
-        {
-            browserConfiguration = new BrowserConfiguration(webSettings.DefaultBrowser, webSettings.DefaultLifeCycle, webSettings.ExecutionType);
-        }
         
         return browserConfiguration;
+    }
+
+    private GridConfiguration GetGridSettingsConfiguration(MemberInfo testMethod)
+    {
+        var classGridSettings = GetLambdaTestClassLevel(testMethod.DeclaringType);
+        var methodGridSettings = GetLambdaTestMethodLevel(testMethod);
+        GridConfiguration gridSettings = methodGridSettings != null ? methodGridSettings : classGridSettings;
+
+        return gridSettings;
     }
 
     private BrowserConfiguration GetExecutionBrowserMethodLevel(MemberInfo testMethod)
@@ -103,5 +108,17 @@ public class BrowserLifecyclePlugin : Plugin
     {
         var executionBrowserAttribute = testClass.GetCustomAttribute<BrowserAttribute>(true);
         return executionBrowserAttribute?.BrowserConfiguration;
+    }
+
+    private GridConfiguration GetLambdaTestMethodLevel(MemberInfo testMethod)
+    {
+        var gridAttribute = testMethod.GetCustomAttribute<LambdaTestAttribute>(true);
+        return gridAttribute?.GridSettings;
+    }
+
+    private GridConfiguration GetLambdaTestClassLevel(Type testClass)
+    {
+        var gridAttribute = testClass.GetCustomAttribute<LambdaTestAttribute>(true);
+        return gridAttribute?.GridSettings;
     }
 }

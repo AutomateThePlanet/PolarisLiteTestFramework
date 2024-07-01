@@ -17,16 +17,31 @@ public class BrowserConfiguration
     }
 
     public BrowserConfiguration(
+    Browser browser,
+    Lifecycle lifecycle,
+    ExecutionType executionType,
+    string browserVersion = "latest")
+    {
+        Browser = browser;
+        Lifecycle = lifecycle;
+        ExecutionType = executionType;
+        BrowserVersion = browserVersion;
+    }
+
+    public BrowserConfiguration(
         string browser,
         string lifecycle,
-        string executionType)
+        string executionType,
+        string browserVersion = "latest")
     {
-        Browser = (Browser)Enum.Parse(typeof(Browser), browser.RemoveSpacesAndCapitalize());
-        Lifecycle = (Lifecycle)Enum.Parse(typeof(Lifecycle), lifecycle.RemoveSpacesAndCapitalize());
-        ExecutionType = (ExecutionType)Enum.Parse(typeof(ExecutionType), executionType.RemoveSpacesAndCapitalize());
+        Browser = (Browser)Enum.Parse(typeof(Browser), browser);
+        Lifecycle = (Lifecycle)Enum.Parse(typeof(Lifecycle), lifecycle);
+        ExecutionType = (ExecutionType)Enum.Parse(typeof(ExecutionType), executionType);
+        BrowserVersion = browserVersion;
     }
 
     public Browser Browser { get; set; }
+    public string BrowserVersion { get; set; }
     public Lifecycle Lifecycle { get; set; }
     public ExecutionType ExecutionType { get; set; }
 }

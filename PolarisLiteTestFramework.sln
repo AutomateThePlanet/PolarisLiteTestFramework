@@ -7,13 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoSystemTests", "DemoSyst
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolarisLite.Core", "PolarisLite.Core\PolarisLite.Core.csproj", "{8FBD87D7-2379-4D21-BC8C-AC46C6E4339A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolarisLite.Mobile", "PolarisLite.Mobile\PolarisLite.Mobile.csproj", "{89B9FB78-4A34-46CD-AA77-EE201CF3011C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolarisLite.Web", "PolarisLite.Web\PolarisLite.Web.csproj", "{5102EB7C-F0C3-41FC-824C-C8456A6D9E80}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolarisLite.API", "PolarisLite.API\PolarisLite.API.csproj", "{9A8E6465-2498-4748-9E2D-D3379DD0234C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolarisLite.Integrations", "PolarisLite.Integrations\PolarisLite.Integrations.csproj", "{2C025FC4-EC9E-4B06-A8B4-099462B55D89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,22 +23,10 @@ Global
 		{8FBD87D7-2379-4D21-BC8C-AC46C6E4339A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FBD87D7-2379-4D21-BC8C-AC46C6E4339A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FBD87D7-2379-4D21-BC8C-AC46C6E4339A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{89B9FB78-4A34-46CD-AA77-EE201CF3011C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{89B9FB78-4A34-46CD-AA77-EE201CF3011C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{89B9FB78-4A34-46CD-AA77-EE201CF3011C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{89B9FB78-4A34-46CD-AA77-EE201CF3011C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5102EB7C-F0C3-41FC-824C-C8456A6D9E80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5102EB7C-F0C3-41FC-824C-C8456A6D9E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5102EB7C-F0C3-41FC-824C-C8456A6D9E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5102EB7C-F0C3-41FC-824C-C8456A6D9E80}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A8E6465-2498-4748-9E2D-D3379DD0234C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A8E6465-2498-4748-9E2D-D3379DD0234C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A8E6465-2498-4748-9E2D-D3379DD0234C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A8E6465-2498-4748-9E2D-D3379DD0234C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2C025FC4-EC9E-4B06-A8B4-099462B55D89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C025FC4-EC9E-4B06-A8B4-099462B55D89}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C025FC4-EC9E-4B06-A8B4-099462B55D89}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C025FC4-EC9E-4B06-A8B4-099462B55D89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

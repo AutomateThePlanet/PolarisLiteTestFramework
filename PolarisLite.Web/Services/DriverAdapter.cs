@@ -14,14 +14,6 @@ public partial class DriverAdapter
         _webDriverWait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(30));
         _waitStrategies = new List<WaitStrategy>();
         _waitStrategies.Add(new ToExistWaitStrategy());
-
-        if (_webDriver is IDevTools)
-        {
-            DevToolsSession = ((IDevTools)_webDriver).GetDevToolsSession();
-            DevToolsSessionDomains = DevToolsSession.GetVersionSpecificDomains<DevToolsSessionDomains>();
-            RequestsHistory = new List<NetworkRequestSentEventArgs>();
-            ResponsesHistory = new List<NetworkResponseReceivedEventArgs>();
-        }
     }
 
     public IWebDriver WrappedDriver => _webDriver;

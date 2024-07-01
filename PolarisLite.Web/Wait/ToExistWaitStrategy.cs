@@ -9,8 +9,7 @@ public class ToExistWaitStrategy : WaitStrategy
     public ToExistWaitStrategy(int? timeoutIntervalInSeconds = null, int? sleepIntervalInSeconds = null)
         : base(timeoutIntervalInSeconds, sleepIntervalInSeconds)
     {
-        var webSettings = ConfigurationService.GetSection<WebSettings>();
-        TimeoutInterval = TimeSpan.FromSeconds(webSettings.TimeoutSettings.ElementToExistTimeout);
+        TimeoutInterval = TimeSpan.FromSeconds(60);
     }
 
     public override void WaitUntil<TBy>(TBy by)
