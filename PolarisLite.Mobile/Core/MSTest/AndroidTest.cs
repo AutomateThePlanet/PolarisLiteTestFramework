@@ -1,4 +1,5 @@
-﻿using PolarisLite.Core;
+﻿using Bellatrix.Mobile.Plugins;
+using PolarisLite.Core;
 using PolarisLite.Core.Infrastructure.MSTest;
 using PolarisLite.Mobile.Plugins;
 
@@ -7,17 +8,13 @@ public class AndroidTest : BaseTest
 {
     private static bool _arePluginsAlreadyInitialized;
 
-    public AndroidTest()
-    {
-        App = new App();
-    }
-
-    public App App { get; set; }
+    public App App => new App();
 
     protected override void Configure()
     {
         if (!_arePluginsAlreadyInitialized)
         {
+            PluginExecutionEngine.AddPlugin(new LambdaTestResultsPlugin());
             PluginExecutionEngine.AddPlugin(new AppLifecyclePlugin());
             _arePluginsAlreadyInitialized = true;
         }

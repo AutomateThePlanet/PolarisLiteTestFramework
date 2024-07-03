@@ -10,3 +10,13 @@ global using Newtonsoft.Json;
 global using OpenQA.Selenium.Interactions;
 global using OpenQA.Selenium.Support.UI;
 global using SeleniumExtras.WaitHelpers;
+
+global using OpenQA.Selenium.Appium;
+global using OpenQA.Selenium.Appium.Windows;
+global using OpenQA.Selenium.Remote;
+global using OpenQA.Selenium.Appium.Android;
+global using OpenQA.Selenium.Appium.Enums;
+global using OpenQA.Selenium.Appium.Service;
+global using OpenQA.Selenium.Appium.Service.Options;
+global using OpenQA.Selenium.Appium.MultiTouch;
+global using OpenQA.Selenium.Appium.Interfaces;
