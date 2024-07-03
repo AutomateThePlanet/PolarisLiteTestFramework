@@ -1,8 +1,11 @@
-﻿using OpenQA.Selenium.Appium;
+﻿using AngleSharp.Html.Parser;
+using Newtonsoft.Json.Linq;
+using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
 using PolarisLite.Core;
 using PolarisLite.Secrets;
+using static Unity.Storage.RegistrationSet;
 
 namespace PolarisLite.Mobile.Plugins.AppExecution;
 public class DriverFactory : IDisposable
@@ -12,7 +15,6 @@ public class DriverFactory : IDisposable
     private static readonly ThreadLocal<AppConfiguration> _appConfiguration = new ThreadLocal<AppConfiguration>();
     private static readonly ThreadLocal<Dictionary<string, string>> _customDriverOptions = new ThreadLocal<Dictionary<string, string>>(() => new Dictionary<string, string>());
     private static readonly ThreadLocal<AndroidDriver> _wrappedAndroidDriver = new ThreadLocal<AndroidDriver>();
-    //private static bool isBuildNameSet = false;
 
     public static bool Disposed
     {
@@ -46,23 +48,20 @@ public class DriverFactory : IDisposable
         //var androidSettings = ConfigurationService.Get<AndroidSettings>();
         var executionType = configuration.ExecutionType;
 
-        AndroidDriver driver;
         if (executionType.ToString().ToLower().Equals("regular"))
         {
-            driver = InitializeDriverRegularMode();
+            WrappedAndroidDriver = InitializeDriverRegularMode();
         }
         else
         {
             var testName = AppConfiguration.TestName;
             //var gridSettings = androidSettings.GridSettings.FirstOrDefault(g => g.ProviderName.Equals(executionType, StringComparison.OrdinalIgnoreCase));
 
-            driver = InitializeDriverGridMode(testName);
+            WrappedAndroidDriver = InitializeDriverGridMode(testName);
         }
 
-        driver.Manage().Timeouts().ImplicitWait = IMPLICIT_TIMEOUT;
-        _wrappedAndroidDriver.Value = driver;
-        WrappedAndroidDriver = driver;
-        return driver;
+        //WrappedAndroidDriver.Manage().Timeouts().ImplicitWait = IMPLICIT_TIMEOUT;
+        return WrappedAndroidDriver;
     }
 
     private AndroidDriver InitializeDriverGridMode(string testName)
@@ -75,55 +74,52 @@ public class DriverFactory : IDisposable
         var appiumOptions = new AppiumOptions();
         var options = new Dictionary<string, object>
         {
-            { MobileCapabilityType.PlatformName, "Android" },
-            { MobileCapabilityType.PlatformVersion, AppConfiguration.AndroidVersion },
-            { MobileCapabilityType.DeviceName, AppConfiguration.DeviceName },
-            { MobileCapabilityType.AutomationName, "UiAutomator2"}
+            { "platformName", "android" },
+            { "platformVersion", AppConfiguration.AndroidVersion },
+            { "deviceName", AppConfiguration.DeviceName },
+            { "automationName", "UiAutomator2"}
         };
 
         if (AppConfiguration.IsMobileWebExecution)
         {
-            options[MobileCapabilityType.BrowserName] = AppConfiguration.DefaultBrowser;
+            appiumOptions.BrowserName = AppConfiguration.DefaultBrowser;
         }
         else
         {
-            string testAppPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", AppConfiguration.AppPath);
-            options[MobileCapabilityType.App] = testAppPath;
-            options[AndroidMobileCapabilityType.AppPackage] = AppConfiguration.AppPackage;
-            options[AndroidMobileCapabilityType.AppActivity] = AppConfiguration.AppActivity;
+            if (AppConfiguration.AppPath.Contains("://"))
+            {
+                options.Add("app", AppConfiguration.AppPath);
+            }
+            else
+            {
+                string testAppPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", AppConfiguration.AppPath);
+                appiumOptions.App = testAppPath;
+            }
+
+            appiumOptions.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppPackage, AppConfiguration.AppPackage);
+            appiumOptions.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppActivity, AppConfiguration.AppActivity);
         }
 
-        options["name"] = testName;
+        appiumOptions.AddAdditionalAppiumOption("name", Guid.NewGuid().ToString());
 
-        if (!string.IsNullOrEmpty(gridSettings.OptionsName))
-        {
-            appiumOptions.AddAdditionalAppiumOption(gridSettings.OptionsName, gridSettings);
-        }
+        AddGridOptionsConfig(options, gridSettings);
+        appiumOptions.AddAdditionalAppiumOption(gridSettings.OptionsName, options);
 
-        AndroidDriver driver = null;
-        try
-        {
-            driver = new AndroidDriver(new Uri(gridUrl), appiumOptions);
-            WrappedAndroidDriver = driver;
-        }
-        catch (Exception e)
-        {
-            //DebugInformation.PrintStackTrace(e);
-        }
+        WrappedAndroidDriver = new AndroidDriver(new Uri(gridUrl), appiumOptions);
 
-        return driver;
+        return WrappedAndroidDriver;
     }
 
     private AndroidDriver InitializeDriverRegularMode()
     {
         var androidSettings = ConfigurationService.GetSection<AndroidSettings>();
         var gridSettings = androidSettings.GridSettings.First(x => x.ProviderName == "regular");
-        var gridUrl = ConstructGridUrl(gridSettings.Url);
+        var gridUrl = gridSettings.Url;
         var caps = new AppiumOptions();
         caps.PlatformName = "Android";
         caps.AutomationName = "UiAutomator2";
         caps.PlatformVersion = AppConfiguration.AndroidVersion;
-        caps.DeviceName = AppConfiguration.DeviceName;
+        //caps.DeviceName = gridSettings.Arguments["deviceName"];
 
         if (AppConfiguration.IsMobileWebExecution)
         {
@@ -148,6 +144,32 @@ public class DriverFactory : IDisposable
         foreach (var optionKey in _customDriverOptions.Value.Keys)
         {
             caps.AddAdditionalAppiumOption(optionKey, _customDriverOptions.Value[optionKey]);
+        }
+    }
+
+    private static void AddGridOptionsConfig(Dictionary<string, object> options, GridSettings gridSettings)
+    {
+        var arguments = gridSettings?.Arguments.First();
+        foreach (var entry in arguments)
+        {
+            // handle mask command for LambdaTest
+            if (entry.Key.Equals("maskCommands", StringComparison.OrdinalIgnoreCase))
+            {
+                if (entry.Value is JArray maskCommandsArray)
+                {
+                    var maskCommands = maskCommandsArray.ToObject<string[]>();
+                    options.Add(entry.Key, maskCommands);
+                }
+            }
+            else if (entry.Value is string value && value.StartsWith("{env_"))
+            {
+                var envValue = SecretsResolver.GetSecret(value);
+                options.Add(entry.Key, envValue);
+            }
+            else
+            {
+                options.Add(entry.Key, entry.Value);
+            }
         }
     }
 

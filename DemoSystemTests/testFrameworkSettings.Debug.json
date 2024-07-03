@@ -62,15 +62,17 @@
     ]
   },
   "androidSettings": {
-    "serviceUrl": "http://127.0.0.1:4722/wd/hub/",
-    "executionType": "regular",
+    "serviceUrl": "https://{env_LT_USERNAME}:{env_LT_ACCESSKEY}@hub.lambdatest.com/wd/hub",
+    "executionType": "lambda test",
     "defaultLifeCycle": "restart every time",
-    "defaultDeviceName": "pixel5-test-device-13-3",
+    "defaultDeviceName": "Pixel 6",
+    //"defaultDeviceName": "pixel5-test-device-13-3",
     "defaultAndroidVersion": "13.0",
     "defaultBrowser": "Chrome",
     "defaultAppPackage": "io.appium.android.apis",
     "defaultAppActivity": ".ApiDemos",
-    "defaultAppPath": "ApiDemos-debug.apk",
+    "defaultAppPath": "lt://APP10160522261719924644677200",
+    //"defaultAppPath": "ApiDemos-debug.apk",
 
     "screenshotsOnFailEnabled": "false",
     "screenshotsSaveLocation": "${user.home}/POLARIS/videos",
@@ -93,17 +95,22 @@
       {
         "providerName": "lambda test",
         "optionsName": "LT:Options",
-        "url": "https://{env_LT_USERNAME}:{env_LT_ACCESSKEY}@hub.lambdatest.com/wd/hub",
+        "url": "https://{env_LT_USERNAME}:{env_LT_ACCESSKEY}@mobile-hub.lambdatest.com/wd/hub",
         "arguments": [
           {
-            "platformName": "android",
-            "deviceName": "Pixel 5",
-            "platformVersion": "13",
-            "isRealMobile": "false",
+            //"platformName": "android",
+            //"deviceName": "Pixel 6",
+            //"platformVersion": "13",
+            "isRealMobile": "true",
+            //"autoGrantPermissions": "true",
+            //"video": "true",
+            //"visual": "true",
+            //"w3c": "true",
             "build": "1.0",
             "project": "POLARIS_ANDROID_RUN",
-            "username": "{env_LT_USERNAME}",
-            "accessKey": "{env_LT_ACCESSKEY}"
+            "user": "{env_LT_USERNAME}",
+            "accessKey": "{env_LT_ACCESSKEY}",
+            "appiumVersion": "1.22.0"
           }
         ]
       },
