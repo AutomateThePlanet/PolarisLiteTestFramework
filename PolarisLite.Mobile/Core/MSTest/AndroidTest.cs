@@ -7,12 +7,7 @@ public class AndroidTest : BaseTest
 {
     private static bool _arePluginsAlreadyInitialized;
 
-    public AndroidTest()
-    {
-        App = new App();
-    }
-
-    public App App { get; set; }
+    public App App => new App();
 
     protected override void Configure()
     {

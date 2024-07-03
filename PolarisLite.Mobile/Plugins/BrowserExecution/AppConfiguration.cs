@@ -4,6 +4,9 @@ namespace PolarisLite.Mobile.Plugins;
 public class AppConfiguration
 {
     public ExecutionType ExecutionType { get; private set; } = ExecutionType.Regular;
+
+    // TODO: refactor and remove later
+    public string Url { get; private set; } = "http://127.0.0.1:4722/wd/hub/";
     public string AppPath { get; private set; }
     public Lifecycle Lifecycle { get; private set; }
     public string DeviceName { get; private set; }
@@ -29,19 +32,6 @@ public class AppConfiguration
         Lifecycle = lifecycle;
         AppPackage = appPackage;
         AppActivity = appActivity;
-        IsMobileWebExecution = false;
-        AppiumOptions = new Dictionary<string, string>();
-    }
-
-    public AppConfiguration(AndroidSettings androidSettings)
-    {
-        ExecutionType = (ExecutionType)Enum.Parse(typeof(ExecutionType), androidSettings.ExecutionType.RemoveSpacesAndCapitalize());
-        AndroidVersion = androidSettings.DefaultAndroidVersion;
-        DeviceName = androidSettings.DefaultDeviceName;
-        AppPath = androidSettings.DefaultAppPath;
-        Lifecycle = (Lifecycle)Enum.Parse(typeof(Lifecycle), androidSettings.DefaultLifeCycle.RemoveSpacesAndCapitalize()); ;
-        AppPackage = androidSettings.DefaultAppPackage;
-        AppActivity = androidSettings.DefaultAppActivity;
         IsMobileWebExecution = false;
         AppiumOptions = new Dictionary<string, string>();
     }

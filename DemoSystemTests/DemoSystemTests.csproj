@@ -16,13 +16,25 @@
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
 
     <PackageReference Include="Selenium.WebDriver" Version="4.21.0" />
+    <PackageReference Include="Appium.WebDriver" Version="5.0.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PolarisLite.Mobile\PolarisLite.Mobile.csproj" />
     <ProjectReference Include="..\PolarisLite.Web\PolarisLite.Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Using Include="NUnit.Framework" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\ApiDemos-debug.apk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\TestApp.app.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

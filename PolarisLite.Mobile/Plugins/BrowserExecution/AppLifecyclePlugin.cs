@@ -73,15 +73,7 @@ public class AppLifecyclePlugin : Plugin
         var appAttribute = methodApp != null ? methodApp : classApp;
 
         AppConfiguration appConfiguration = default;
-        if (appAttribute == null)
-        {
-            var androidSettings = ConfigurationService.GetSection<AndroidSettings>();
-            appConfiguration = new AppConfiguration(androidSettings);
-        }
-        else
-        {
-            appConfiguration = AppConfiguration.FromAttribute(appAttribute);
-        }
+        appConfiguration = AppConfiguration.FromAttribute(appAttribute);
 
         return appConfiguration;
     }
