@@ -4,17 +4,17 @@ public partial class DriverAdapter : IBrowserService
 {
     public void Back()
     {
-        _webDriver.Navigate().Back();
+        WrappedDriver.Navigate().Back();
     }
 
     public void Forward()
     {
-        _webDriver.Navigate().Forward();
+        WrappedDriver.Navigate().Forward();
     }
 
     public void Refresh()
     {
-        _webDriver.Navigate().Refresh();
+        WrappedDriver.Navigate().Refresh();
     }
 
     public void WaitForAjax()

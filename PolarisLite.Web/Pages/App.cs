@@ -1,5 +1,4 @@
-﻿using PolarisLite.Web.Plugins.BrowserExecution;
-using PolarisLite.Web.Services;
+﻿using PolarisLite.Web.Services;
 
 namespace PolarisLite.Web;
 public class App
@@ -18,14 +17,13 @@ public class App
     public IBrowserService Browser => _driver;
     public INavigationService Navigation => _driver;
     public ICookiesService Cookies => _driver;
-    public IDialogService Dialog => _driver;
-    public IInteractionsService InteractionsService => _driver;
-    public IJavaScriptService JavaScriptService => _driver;
+    public IInteractionsService Interactions => _driver;
+    public IJavaScriptService JavaScript => _driver;
 
-    public void AddBrowserOptions(string option, string value)
-    {
-        DriverFactory.CustomDriverOptions.Add(option, value);
-    }
+    //public void AddBrowserOptions(string option, string value)
+    //{
+    //    DriverFactory.CustomDriverOptions.Add(option, value);
+    //}
 
     public TPage Create<TPage>()
         where TPage : WebPage, new()

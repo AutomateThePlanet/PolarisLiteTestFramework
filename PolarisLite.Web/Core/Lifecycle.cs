@@ -1,4 +1,4 @@
-﻿namespace PolarisLite.Web.Plugins;
+﻿namespace PolarisLite.Web.Core;
 public enum Lifecycle
 {
     NotSet = 0,

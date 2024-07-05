@@ -8,7 +8,7 @@ public partial class DriverAdapter : ICookiesService
 
     public void DeleteAllCookies()
     {
-        _webDriver.Manage().Cookies.DeleteAllCookies();
+        WrappedDriver.Manage().Cookies.DeleteAllCookies();
     }
 
     public void DeleteCookie(string cookieName) => throw new NotImplementedException();

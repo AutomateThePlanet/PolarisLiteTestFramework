@@ -2,10 +2,10 @@
 
 public partial class DriverAdapter : INavigationService
 {
-    public string Url => _webDriver.Url;
+    public string Url => WrappedDriver.Url;
 
     public void GoToUrl(string url)
     {
-        _webDriver.Navigate().GoToUrl(url);
+        WrappedDriver.Navigate().GoToUrl(url);
     }
 }

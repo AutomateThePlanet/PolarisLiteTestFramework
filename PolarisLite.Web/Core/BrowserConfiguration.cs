@@ -1,10 +1,10 @@
-﻿using PolarisLite.Web.Plugins.BrowserExecution;
-
-namespace PolarisLite.Web.Plugins;
+﻿namespace PolarisLite.Web.Core;
 public class BrowserConfiguration
 {
     public BrowserConfiguration()
     {
+        Browser = Browser.Chrome;
+        BrowserVersion = "latest";
     }
 
     public BrowserConfiguration(
@@ -13,7 +13,7 @@ public class BrowserConfiguration
     {
         Browser = browser;
         Lifecycle = lifecycle;
-        ExecutionType = ExecutionType.Regular;
+        ExecutionType = ExecutionType.Local;
     }
 
     public BrowserConfiguration(

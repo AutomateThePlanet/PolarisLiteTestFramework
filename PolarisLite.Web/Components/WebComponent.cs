@@ -13,18 +13,16 @@ public class WebComponent : IComponent, IComponentVisible
     public WebComponent()
     {
         waitStrategies = new List<WaitStrategy>();
-        ComponentWaitService = new DriverAdapter();
+        Interactions = new DriverAdapter();
+        JavaScriptService = new DriverAdapter();
     }
 
-    private Actions Actions => new Actions(WrappedDriver);
-    protected IWaitService ComponentWaitService { get; private set; }
     public FindStrategy FindStrategy { get; internal set; }
     public IWebDriver WrappedDriver { get; internal set; }
-    public IJavaScriptExecutor JavaScriptExecutor => (IJavaScriptExecutor)WrappedDriver;
+    public IJavaScriptService JavaScriptService { get; private set; }
+    protected IInteractionsService Interactions { get; private set; }
 
-    public bool? Enabled => _wrappedWebElement?.Enabled;
 
-    public bool? Displayed => _wrappedWebElement?.Displayed;
     public IWebElement ParentWrappedElement { get; set; }
 
     public IWebElement WrappedElement
@@ -33,14 +31,42 @@ public class WebComponent : IComponent, IComponentVisible
         {
             if (_wrappedWebElement == null)
             {
-                return FindElement(FindStrategy);
+                _wrappedWebElement = FindElement(FindStrategy);
             }
-            else
-            {
-                return _wrappedWebElement;
-            }
+
+            return _wrappedWebElement;
         }
         set => _wrappedWebElement = value;
+    }
+
+    private IWebElement FindElement(FindStrategy findStrategy)
+    {
+        if (!waitStrategies.Any())
+        {
+            waitStrategies.Add(new ToExistWaitStrategy());
+        }
+
+        foreach (var waitStrategy in waitStrategies)
+        {
+            waitStrategy.WaitUntil(FindStrategy);
+        }
+
+        _wrappedWebElement = FindNativeElements(findStrategy).FirstOrDefault();
+
+        return _wrappedWebElement;
+    }
+    private List<IWebElement> FindNativeElements(FindStrategy findStrategy)
+    {
+        if (ParentWrappedElement != null)
+        {
+            var elements = ParentWrappedElement.FindElements(findStrategy.Convert()).ToList();
+            return elements;
+        }
+        else
+        {
+            var elements = WrappedDriver.FindElements(findStrategy.Convert()).ToList();
+            return elements;
+        }
     }
 
     public void EnsureState(WaitStrategy waitStrategy)
@@ -48,9 +74,13 @@ public class WebComponent : IComponent, IComponentVisible
         waitStrategies.Add(waitStrategy);
     }
 
+    public bool? Enabled => WrappedElement?.Enabled;
+
+    public bool? Displayed => WrappedElement?.Displayed;
+
     public void Hover()
     {
-        Actions.MoveToElement(_wrappedWebElement).Perform();
+        Interactions.MoveToElement(this).Perform();
     }
 
     public string GetAttribute(string attributeName)
@@ -63,8 +93,37 @@ public class WebComponent : IComponent, IComponentVisible
         ((IJavaScriptExecutor)WrappedDriver).ExecuteScript($"arguments[0].setAttribute('{name}', '{value}');", WrappedElement);
     }
 
+    protected void Click()
+    {
+        WrappedElement?.Click();
+    }
+
+    protected void TypeText(string text)
+    {
+        WrappedElement?.Clear();
+        WrappedElement?.SendKeys(text);
+    }
+
+    public bool IsVisible => WrappedElement.Displayed;
+    protected bool IsDisabled => bool.Parse(GetAttribute("disabled"));
+    protected string Href => GetAttribute("href");
+    protected string InnerHtml => GetAttribute("innerHTML");
+    protected string Text => WrappedElement?.Text;
+    protected string Value => GetAttribute("value");
+
+
+
+
+
+
+
+
+
+
+
+
     public TComponent FindById<TComponent>(string id)
-        where TComponent : WebComponent
+    where TComponent : WebComponent
     {
         return FindComponent<TComponent>(new IdFindStrategy(id));
     }
@@ -149,40 +208,6 @@ public class WebComponent : IComponent, IComponentVisible
         return components;
     }
 
-    protected void Click()
-    {
-        WrappedElement?.Click();
-    }
-
-    protected void TypeText(string text)
-    {
-        WrappedElement?.Clear();
-        WrappedElement?.SendKeys(text);
-    }
-
-    public bool IsVisible => WrappedElement.Displayed;
-    protected bool IsDisabled => bool.Parse(GetAttribute("disabled"));
-    protected string Href => GetAttribute("href");
-    protected string InnerHtml => GetAttribute("innerHTML");
-    protected string Text => WrappedElement?.Text;
-    protected string Value => GetAttribute("value");
-
-    private IWebElement FindElement(FindStrategy findStrategy)
-    {
-        if (!waitStrategies.Any())
-        {
-            waitStrategies.Add(new ToExistWaitStrategy());
-        }
-
-        foreach (var waitStrategy in waitStrategies)
-        {
-            ComponentWaitService.Wait(this, waitStrategy);
-        }
-
-        _wrappedWebElement = FindNativeElements(findStrategy).FirstOrDefault();
-
-        return _wrappedWebElement;
-    }
 
     private List<IWebElement> FindElements(FindStrategy findStrategy)
     {
@@ -193,23 +218,11 @@ public class WebComponent : IComponent, IComponentVisible
 
         foreach (var waitStrategy in waitStrategies)
         {
-            ComponentWaitService.Wait(this, waitStrategy);
+            waitStrategy.WaitUntil(FindStrategy);
         }
 
         return FindNativeElements(findStrategy);
     }
 
-    private List<IWebElement> FindNativeElements(FindStrategy findStrategy)
-    {
-        if (ParentWrappedElement != null)
-        {
-            var elements = ParentWrappedElement.FindElements(findStrategy.Convert()).ToList();
-            return elements;
-        }
-        else
-        {
-            var elements = WrappedDriver.FindElements(findStrategy.Convert()).ToList();
-            return elements;
-        }
-    }
+
 }

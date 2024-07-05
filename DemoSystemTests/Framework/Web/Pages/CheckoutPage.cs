@@ -53,7 +53,7 @@ public class CheckoutPage : WebPage
     {
         App.Browser.WaitForAjax();
         // TODO: Move to separate method in decorator
-        App.JavaScriptService.Execute("arguments[0].scrollIntoView(true);", TermsAgreeCheckbox);
+        App.JavaScript.Execute("arguments[0].scrollIntoView(true);", TermsAgreeCheckbox);
         TermsAgreeCheckbox.Check(true);
     }
 
@@ -64,6 +64,7 @@ public class CheckoutPage : WebPage
 
     public void AssertTotalPrice(string expectedPrice)
     {
+        TermsAgreeCheckbox.ValidateIsChecked();
         Assert.That(TotalPrice.Text, Is.EqualTo(expectedPrice));
     }
 

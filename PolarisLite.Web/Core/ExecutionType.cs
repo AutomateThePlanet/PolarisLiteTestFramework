@@ -1,7 +1,7 @@
-﻿namespace PolarisLite.Web.Plugins;
+﻿namespace PolarisLite.Web.Core;
 public enum ExecutionType
 {
-    Regular,
+    Local,
     Grid,
     LambdaTest
 }

@@ -1,11 +1,11 @@
-﻿using PolarisLite.Web.Plugins.BrowserExecution;
+﻿using PolarisLite.Web.Core;
 
 namespace PolarisLite.Web.Plugins;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-public class BrowserAttribute : Attribute
+public class LocalExecutionAttribute : Attribute
 {
-    public BrowserAttribute(Browser browser, Lifecycle lifecycle)
+    public LocalExecutionAttribute(Browser browser, Lifecycle lifecycle)
     {
         BrowserConfiguration = new BrowserConfiguration(browser, lifecycle);
     }

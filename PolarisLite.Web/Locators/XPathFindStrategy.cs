@@ -8,6 +8,4 @@ public class XPathFindStrategy : FindStrategy
     }
 
     public override By Convert() => By.XPath(Value);
-
-    public override string ToString() => $"XPath = {Value}";
 }

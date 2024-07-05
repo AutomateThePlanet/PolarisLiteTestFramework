@@ -1,27 +1,38 @@
 ﻿using DemoSystemTests.Framework.Web.Pages;
 using DemoSystemTests.Framework.Web.Pages.Models;
+using PolarisLite.Web;
+using PolarisLite.Web.Core;
 using PolarisLite.Web.Core.NUnit;
-using PolarisLite.Web.Plugins;
-using PolarisLite.Web.Plugins.BrowserExecution;
 
 namespace DemoSystemTests.Framework.Web;
 
 [TestFixture]
-[LambdaTest(Browser.Chrome)]
-public class ProductPurchaseTests : WebTest
+//[LocalExecution(Browser.Chrome, Lifecycle.ReuseIfStarted)]
+public class ProductPurchaseTests
 {
     public HomePage HomePage { get; private set; }
     public ProductPage ProductPage { get; private set; }
     public CartPage CartPage { get; private set; }
     public CheckoutPage CheckoutPage { get; private set; }
+    public App App => new App();
 
-    protected override void TestInitialize()
+    [SetUp]
+    public void SetUp()
     {
+        DriverFactory.Start(new BrowserConfiguration());
         HomePage = App.Create<HomePage>();
         ProductPage = App.Create<ProductPage>();
         CartPage = App.Create<CartPage>();
         CheckoutPage = App.Create<CheckoutPage>();
-        App.Navigation.GoToUrl("https://ecommerce-playground.lambdatest.io/");
+
+        HomePage.Open();
+        //App.Navigation.GoToUrl("https://ecommerce-playground.lambdatest.io/");
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        DriverFactory.Dispose();
     }
 
     [Test]

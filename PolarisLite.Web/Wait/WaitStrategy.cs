@@ -1,7 +1,7 @@
 ﻿using PolarisLite.Core;
 using PolarisLite.Locators;
 using PolarisLite.Web;
-using PolarisLite.Web.Plugins.BrowserExecution;
+using PolarisLite.Web.Core;
 
 namespace PolarisLite;
 
@@ -20,26 +20,14 @@ public abstract class WaitStrategy
 
     protected IWebDriver WrappedDriver { get; }
 
-    public abstract void WaitUntil<TBy>(TBy by)
-     where TBy : FindStrategy;
+    public abstract void WaitUntil<TFindStrategy>(TFindStrategy findStrategy)
+     where TFindStrategy : FindStrategy;
 
     protected void WaitUntilInternal(Func<ISearchContext, bool> waitCondition)
     {
         var wait = new WebDriverWait(new SystemClock(), WrappedDriver, TimeoutInterval, SleepInterval);
         wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException), typeof(InvalidOperationException));
         wait.Until(waitCondition);
-    }
-
-    protected void WaitUntil(Func<ISearchContext, bool> waitCondition, IWebDriver driver)
-    {
-        var webDriverWait = new WebDriverWait(new SystemClock(), driver, TimeoutInterval, SleepInterval);
-        webDriverWait.Until(waitCondition);
-    }
-
-    protected void WaitUntil(Func<ISearchContext, IWebElement> waitCondition, IWebDriver driver)
-    {
-        var webDriverWait = new WebDriverWait(new SystemClock(), driver, TimeoutInterval, SleepInterval);
-        webDriverWait.Until(waitCondition);
     }
 
     protected IWebElement FindElement(ISearchContext searchContext, By by)
