@@ -1,8 +1,24 @@
 ﻿using PolarisLite.Web.Components;
 
 namespace PolarisLite.Web;
-public static class WebComponentExtensions
+public static class WebComponentWaitExtensions
 {
+    public static TComponent ToValueContains<TComponent>(this TComponent component, string value)
+       where TComponent : WebComponent
+    {
+        var waitStrategy = new ToValueContainingWaitStrategy(value);
+        component.EnsureState(waitStrategy);
+        return component;
+    }
+
+    public static TComponent ToValueContains<TComponent>(this TComponent component, string value, int timeoutInterval, int sleepInterval)
+       where TComponent : WebComponent
+    {
+        var waitStrategy = new ToValueContainingWaitStrategy(value, timeoutInterval, sleepInterval);
+        component.EnsureState(waitStrategy);
+        return component;
+    }
+
     public static TComponent ToExist<TComponent>(this TComponent component) 
         where TComponent : WebComponent
     {

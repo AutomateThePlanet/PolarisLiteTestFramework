@@ -134,31 +134,31 @@ public class WebComponent : IComponent, IComponentVisible
     public TComponent FindById<TComponent>(string id)
     where TComponent : WebComponent
     {
-        return FindComponent<TComponent>(new IdFindStrategy(id));
+        return Find<TComponent>(new IdFindStrategy(id));
     }
 
     public TComponent FindByIdContaining<TComponent>(string id)
        where TComponent : WebComponent
     {
-        return FindComponent<TComponent>(new IdContainingFindStrategy(id));
+        return Find<TComponent>(new IdContainingFindStrategy(id));
     }
 
     public TComponent FindByXPath<TComponent>(string xpath)
       where TComponent : WebComponent
     {
-        return FindComponent<TComponent>(new XPathFindStrategy(xpath));
+        return Find<TComponent>(new XPathFindStrategy(xpath));
     }
 
     public TComponent FindByCss<TComponent>(string css)
         where TComponent : WebComponent
     {
-        return FindComponent<TComponent>(new CssFindStrategy(css));
+        return Find<TComponent>(new CssFindStrategy(css));
     }
 
     public TComponent FindByClass<TComponent>(string value)
        where TComponent : WebComponent
     {
-        return FindComponent<TComponent>(new ClassFindStrategy(value));
+        return Find<TComponent>(new ClassFindStrategy(value));
     }
 
     public List<TComponent> FindComponentsById<TComponent>(string id)
@@ -190,7 +190,7 @@ public class WebComponent : IComponent, IComponentVisible
     public List<TComponent> FindAll<TComponent>(FindStrategy findStrategy) where TComponent : WebComponent => throw new NotImplementedException();
     public TComponent Create<TComponent>(FindStrategy findStrategy) where TComponent : WebComponent => throw new NotImplementedException();
 
-    public TComponent FindComponent<TComponent>(FindStrategy findStrategy)
+    public TComponent Find<TComponent>(FindStrategy findStrategy)
       where TComponent : WebComponent
     {
         var component = InstanceFactory.Create<TComponent>();
