@@ -7,7 +7,7 @@ using System.Drawing;
 using OpenQA.Selenium.Remote;
 
 namespace PolarisLite.Web.Plugins.BrowserExecution;
-public class DriverFactory : IDisposable
+public class DriverFactory
 {
     public static bool Disposed { get; set; } = true;
 
@@ -18,7 +18,7 @@ public class DriverFactory : IDisposable
     public static ExecutionType ExecutionType { get; set; }
     public static IWebDriver WrappedDriver { get; set; }
 
-    public void Start(BrowserConfiguration browserConfiguration)
+    public static void Start(BrowserConfiguration browserConfiguration)
     {
         var options = InitializeOptions(browserConfiguration.Browser, browserConfiguration.BrowserVersion);
         //AddOptionsConfig(options, gridSettings);
@@ -48,7 +48,7 @@ public class DriverFactory : IDisposable
         Disposed = false;
     }
 
-    public void StartGrid(BrowserConfiguration browserConfiguration, GridConfiguration gridSettings)
+    public static void StartGrid(BrowserConfiguration browserConfiguration, GridConfiguration gridSettings)
     {
         var options = InitializeOptions(browserConfiguration.Browser, browserConfiguration.BrowserVersion);
         AddGridOptions(options, gridSettings);
@@ -107,7 +107,7 @@ public class DriverFactory : IDisposable
         }
     }
 
-    public void Dispose()
+    public static void Dispose()
     {
         if (!Disposed)
         {
@@ -120,7 +120,6 @@ public class DriverFactory : IDisposable
             WrappedDriver.Quit();
             WrappedDriver.Dispose();
             WrappedDriver = null;
-            GC.SuppressFinalize(this);
             Disposed = true;
         }
     }
