@@ -5,7 +5,7 @@ using PolarisLite.Mobile.Plugins;
 
 namespace DemoSystemTests.Mobile.Framework;
 
-[ExecutionApp(AndroidVersion = "13.0",
+[LocalExecution(AndroidVersion = "13.0",
     DeviceName = "pixel5-test-device-13-new",
     AppPath = "ApiDemos-debug.apk",
     AppPackage = "com.example.android.apis",

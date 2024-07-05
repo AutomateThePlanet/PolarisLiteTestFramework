@@ -8,7 +8,6 @@ public partial class DriverAdapter : IWebService
     public IBrowserService Browser => _webDriverAdapter;
     public INavigationService Navigation => _webDriverAdapter;
     public ICookiesService Cookies => _webDriverAdapter;
-    public IDialogService Dialog => _webDriverAdapter;
-    public IInteractionsService InteractionsService => _webDriverAdapter;
-    public IJavaScriptService JavaScriptService => _webDriverAdapter;
+    public IInteractionsService Interactions => _webDriverAdapter;
+    public IJavaScriptService JavaScript => _webDriverAdapter;
 }

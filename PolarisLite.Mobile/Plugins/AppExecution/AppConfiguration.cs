@@ -3,7 +3,7 @@
 namespace PolarisLite.Mobile.Plugins;
 public class AppConfiguration
 {
-    public ExecutionType ExecutionType { get; private set; } = ExecutionType.Regular;
+    public ExecutionType ExecutionType { get; private set; } = ExecutionType.Local;
 
     // TODO: refactor and remove later
     public string Url { get; private set; } = "http://127.0.0.1:4722/wd/hub/";
@@ -36,7 +36,7 @@ public class AppConfiguration
         AppiumOptions = new Dictionary<string, string>();
     }
 
-    public static AppConfiguration FromAttribute(ExecutionAppAttribute attribute)
+    public static AppConfiguration FromAttribute(LocalExecutionAttribute attribute)
     {
         return new AppConfiguration(
             attribute.Lifecycle,
