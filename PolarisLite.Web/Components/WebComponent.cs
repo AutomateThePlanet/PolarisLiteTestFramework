@@ -1,4 +1,5 @@
-﻿using PolarisLite.Core.Infrastructure;
+﻿using PolarisLite.Core;
+using PolarisLite.Core.Infrastructure;
 using PolarisLite.Locators;
 using PolarisLite.Web.Contracts;
 using PolarisLite.Web.Services;
@@ -9,6 +10,7 @@ public class WebComponent : IComponent, IComponentVisible
 {
     private IWebElement _wrappedWebElement;
     private readonly List<WaitStrategy> waitStrategies;
+    private static readonly List<WebComponentPlugin> _plugins = new List<WebComponentPlugin>();
 
     public WebComponent()
     {
@@ -34,9 +36,16 @@ public class WebComponent : IComponent, IComponentVisible
                 _wrappedWebElement = FindElement(FindStrategy);
             }
 
+            _plugins.ToList().ForEach(plugin => plugin.OnComponentFound(this));
+
             return _wrappedWebElement;
         }
         set => _wrappedWebElement = value;
+    }
+
+    public static void AddPlugin(WebComponentPlugin plugin)
+    {
+        _plugins.Add(plugin);
     }
 
     private IWebElement FindElement(FindStrategy findStrategy)
