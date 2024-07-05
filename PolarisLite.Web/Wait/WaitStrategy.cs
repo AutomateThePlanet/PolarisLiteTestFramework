@@ -21,8 +21,8 @@ public abstract class WaitStrategy
 
     protected IWebDriver WrappedDriver { get; }
 
-    public abstract void WaitUntil<TBy>(TBy by)
-     where TBy : FindStrategy;
+    public abstract void WaitUntil<TFindStrategy>(TFindStrategy by)
+     where TFindStrategy : FindStrategy;
 
     protected void WaitUntilInternal(Func<ISearchContext, bool> waitCondition)
     {

@@ -1,5 +1,4 @@
-﻿using PolarisLite.Mobile.Components;
-using PolarisLite.Web;
+﻿using PolarisLite.Web;
 
 namespace PolarisLite.Mobile;
 
@@ -9,7 +8,6 @@ public interface IWebService
     IBrowserService Browser { get; }
     INavigationService Navigation { get; }
     ICookiesService Cookies { get; }
-    IDialogService Dialog { get; }
-    IInteractionsService InteractionsService { get; }
-    IJavaScriptService JavaScriptService { get; }
+    IInteractionsService Interactions { get; }
+    IJavaScriptService JavaScript { get; }
 }

@@ -58,25 +58,15 @@ public partial class DriverAdapter : IElementFindService
     public TComponent FindComponent<TComponent>(FindStrategy findStrategy)
         where TComponent : WebComponent
     {
-        foreach (var waitStrategy in _waitStrategies)
-        {
-            waitStrategy.WaitUntil(findStrategy);
-        }
         var component = InstanceFactory.Create<TComponent>();
         component.FindStrategy = findStrategy;
         component.WrappedDriver = _webDriver;
-        //component.WrappedElement = WrappedDriver;
         return component;
     }
 
     public List<TComponent> FindComponents<TComponent>(FindStrategy findStrategy)
         where TComponent : WebComponent
     {
-        foreach (var waitStrategy in _waitStrategies)
-        {
-            waitStrategy.WaitUntil(findStrategy);
-        }
-
         IEnumerable<IWebElement> nativeWebElements =
             WrappedDriver.FindElements(findStrategy.Convert());
         var components = new List<TComponent>();

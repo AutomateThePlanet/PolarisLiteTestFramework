@@ -34,14 +34,14 @@ public class Select : WebComponent, IComponentDisabled, IComponentClick
         return options;
     }
 
-    public virtual void SelectByText(string text)
+    public virtual void SelecTFindStrategyText(string text)
     {
         var nativeSelect = new SelectElement(WrappedElement);
         nativeSelect.SelectByText(text);
         WrappedElement = null;
     }
 
-    public virtual void SelectByIndex(int index)
+    public virtual void SelecTFindStrategyIndex(int index)
     {
         var nativeSelect = new SelectElement(WrappedElement);
         nativeSelect.SelectByIndex(index);

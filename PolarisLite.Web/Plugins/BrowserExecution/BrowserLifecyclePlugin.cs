@@ -31,15 +31,15 @@ public class BrowserLifecyclePlugin : Plugin
     {
         try
         {
-            _driverFactory.Dispose();
+            DriverFactory.Dispose();
 
-            if (_currentBrowserConfiguration.ExecutionType == ExecutionType.Regular)
+            if (_currentBrowserConfiguration.ExecutionType == ExecutionType.Local)
             {
-                _driverFactory.Start(_currentBrowserConfiguration.Browser);
+                DriverFactory.Start(_currentBrowserConfiguration.Browser);
             }
             else
             {
-                _driverFactory.StartGrid();
+                DriverFactory.StartGrid();
             }
         } catch (Exception ex)
         {
@@ -49,7 +49,7 @@ public class BrowserLifecyclePlugin : Plugin
 
     private void ShutdownBrowser()
     {
-        _driverFactory.Dispose();
+        DriverFactory.Dispose();
     }
 
     private bool ShouldRestartBrowser(BrowserConfiguration browserConfiguration)
@@ -95,13 +95,13 @@ public class BrowserLifecyclePlugin : Plugin
 
     private BrowserConfiguration GetExecutionBrowserMethodLevel(MemberInfo testMethod)
     {
-        var executionBrowserAttribute = testMethod.GetCustomAttribute<BrowserAttribute>(true);
+        var executionBrowserAttribute = testMethod.GetCustomAttribute<LocalExecutionAttribute>(true);
         return executionBrowserAttribute?.BrowserConfiguration;
     }
 
     private BrowserConfiguration GetExecutionBrowserClassLevel(Type testClass)
     {
-        var executionBrowserAttribute = testClass.GetCustomAttribute<BrowserAttribute>(true);
+        var executionBrowserAttribute = testClass.GetCustomAttribute<LocalExecutionAttribute>(true);
         return executionBrowserAttribute?.BrowserConfiguration;
     }
 }

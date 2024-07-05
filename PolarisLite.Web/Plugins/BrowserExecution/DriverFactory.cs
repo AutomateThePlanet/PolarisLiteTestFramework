@@ -16,7 +16,7 @@ using Newtonsoft.Json.Linq;
 using OpenQA.Selenium.DevTools;
 
 namespace PolarisLite.Web.Plugins.BrowserExecution;
-public class DriverFactory : IDisposable
+public class DriverFactory
 {
     private static readonly ThreadLocal<bool> _disposed = new ThreadLocal<bool>(() => true);
     private static readonly ThreadLocal<BrowserConfiguration> _browserConfiguration = new ThreadLocal<BrowserConfiguration>();
@@ -47,7 +47,7 @@ public class DriverFactory : IDisposable
         set { _wrappedDriver.Value = value; }
     }
 
-    public void Start(Browser browser)
+    public static void Start(Browser browser)
     {
         var webSettings = ConfigurationService.GetSection<WebSettings>();
         var options = InitializeOptionsFromConfig(webSettings);
@@ -83,7 +83,7 @@ public class DriverFactory : IDisposable
         Disposed = false;
     }
 
-    public void StartGrid()
+    public static void StartGrid()
     {
         var webSettings = ConfigurationService.GetSection<WebSettings>();
         //var options = new ChromeOptions();
@@ -250,7 +250,7 @@ public class DriverFactory : IDisposable
         return port;
     }
 
-    public void Dispose()
+    public static void Dispose()
     {
         if (!Disposed)
         {
@@ -263,7 +263,6 @@ public class DriverFactory : IDisposable
             WrappedDriver.Quit();
             WrappedDriver.Dispose();
             WrappedDriver = null;
-            GC.SuppressFinalize(this);
             Disposed = true;
         }
     }

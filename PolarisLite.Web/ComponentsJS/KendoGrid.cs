@@ -19,7 +19,7 @@ public class KendoGrid : WebComponent
     {
         var jsToBeExecuted = GetGridReference();
         jsToBeExecuted = string.Concat(jsToBeExecuted, "grid.dataSource.filter([]);");
-        JavaScriptExecutor.ExecuteScript(jsToBeExecuted);
+        JavaScriptService.Execute(jsToBeExecuted);
         WaitForAjax();
     }
 
@@ -28,7 +28,7 @@ public class KendoGrid : WebComponent
         WaitForAjax();
         var jsToBeExecuted = GetGridReference();
         jsToBeExecuted = string.Concat(jsToBeExecuted, "grid.dataSource.total();");
-        var jsResult = JavaScriptExecutor.ExecuteScript(jsToBeExecuted);
+        var jsResult = JavaScriptService.Execute(jsToBeExecuted);
         return int.Parse(jsResult.ToString());
     }
 
@@ -36,7 +36,7 @@ public class KendoGrid : WebComponent
     {
         var jsToBeExecuted = GetGridReference();
         jsToBeExecuted = string.Concat(jsToBeExecuted, "grid.dataSource.read();");
-        JavaScriptExecutor.ExecuteScript(jsToBeExecuted);
+        JavaScriptService.Execute(jsToBeExecuted);
         WaitForAjax();
     }
 
@@ -44,7 +44,7 @@ public class KendoGrid : WebComponent
     {
         var jsToBeExecuted = GetGridReference();
         jsToBeExecuted = string.Concat(jsToBeExecuted, "return grid.dataSource.pageSize();");
-        var currentResponse = JavaScriptExecutor.ExecuteScript(jsToBeExecuted);
+        var currentResponse = JavaScriptService.Execute(jsToBeExecuted);
         var pageSize = int.Parse(currentResponse.ToString());
         return pageSize;
     }
@@ -53,7 +53,7 @@ public class KendoGrid : WebComponent
     {
         var jsToBeExecuted = GetGridReference();
         jsToBeExecuted = string.Concat(jsToBeExecuted, "grid.dataSource.pageSize(", newSize, ");");
-        JavaScriptExecutor.ExecuteScript(jsToBeExecuted);
+        JavaScriptService.Execute(jsToBeExecuted);
         WaitForAjax();
     }
 
@@ -61,14 +61,14 @@ public class KendoGrid : WebComponent
     {
         var jsToBeExecuted = GetGridReference();
         jsToBeExecuted = string.Concat(jsToBeExecuted, "grid.dataSource.page(", pageNumber, ");");
-        JavaScriptExecutor.ExecuteScript(jsToBeExecuted);
+        JavaScriptService.Execute(jsToBeExecuted);
     }
 
     public void Sort(string columnName, SortType sortType)
     {
         var jsToBeExecuted = GetGridReference();
         jsToBeExecuted = string.Concat(jsToBeExecuted, "grid.dataSource.sort({field: '", columnName, "', dir: '", sortType.ToString().ToLower(), "'});");
-        JavaScriptExecutor.ExecuteScript(jsToBeExecuted);
+        JavaScriptService.Execute(jsToBeExecuted);
         WaitForAjax();
     }
 
@@ -77,7 +77,7 @@ public class KendoGrid : WebComponent
         WaitForAjax();
         var jsToBeExecuted = GetGridReference();
         jsToBeExecuted = string.Concat(jsToBeExecuted, "return JSON.stringify(grid.dataItems());");
-        var jsResults = JavaScriptExecutor.ExecuteScript(jsToBeExecuted);
+        var jsResults = JavaScriptService.Execute(jsToBeExecuted);
         var items = JsonConvert.DeserializeObject<List<T>>(jsResults.ToString());
         return items;
     }
@@ -105,7 +105,7 @@ public class KendoGrid : WebComponent
         }
         sb.Append("] });");
         jsToBeExecuted = sb.ToString().Replace(",]", "]");
-        JavaScriptExecutor.ExecuteScript(jsToBeExecuted);
+        JavaScriptService.Execute(jsToBeExecuted);
         WaitForAjax();
     }
 
@@ -113,7 +113,7 @@ public class KendoGrid : WebComponent
     {
         var jsToBeExecuted = GetGridReference();
         jsToBeExecuted = string.Concat(jsToBeExecuted, "return grid.dataSource.page();");
-        var result = JavaScriptExecutor.ExecuteScript(jsToBeExecuted);
+        var result = JavaScriptService.Execute(jsToBeExecuted);
         var pageNumber = int.Parse(result.ToString());
         return pageNumber;
     }

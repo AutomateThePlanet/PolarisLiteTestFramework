@@ -8,6 +8,6 @@ public class KendoColorPicker : WebComponent
     public void SetColor(string hexValue)
     {
         string scriptToBeExecuted = string.Format(_colorPickerSetColorExpression, FindStrategy.Value, hexValue);
-        JavaScriptExecutor.ExecuteScript(scriptToBeExecuted);
+        JavaScriptService.Execute(scriptToBeExecuted);
     }
 }

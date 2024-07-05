@@ -13,13 +13,13 @@ public class ToBeVisibleWaitStrategy : WaitStrategy
         TimeoutInterval = TimeSpan.FromSeconds(webSettings.TimeoutSettings.ElementToBeVisibleTimeout);
     }
 
-    public override void WaitUntil<TBy>(TBy by)
+    public override void WaitUntil<TFindStrategy>(TFindStrategy by)
     {
         WaitUntilInternal(d => ElementIsVisible(WrappedDriver, by));
     }
 
-    private bool ElementIsVisible<TBy>(ISearchContext searchContext, TBy by)
-         where TBy : FindStrategy
+    private bool ElementIsVisible<TFindStrategy>(ISearchContext searchContext, TFindStrategy by)
+         where TFindStrategy : FindStrategy
     {
         try
         {

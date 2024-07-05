@@ -13,13 +13,13 @@ public class ToExistWaitStrategy : WaitStrategy
         TimeoutInterval = TimeSpan.FromSeconds(webSettings.TimeoutSettings.ElementToExistTimeout);
     }
 
-    public override void WaitUntil<TBy>(TBy by)
+    public override void WaitUntil<TFindStrategy>(TFindStrategy by)
     {
         WaitUntilInternal(d => ElementExists(WrappedDriver, by));
     }
 
-    private bool ElementExists<TBy>(ISearchContext searchContext, TBy by)
-         where TBy : FindStrategy
+    private bool ElementExists<TFindStrategy>(ISearchContext searchContext, TFindStrategy by)
+         where TFindStrategy : FindStrategy
     {
         try
         {
