@@ -5,7 +5,7 @@ using PolarisLite.Web;
 
 namespace DemoSystemTests.Mobile.Framework;
 
-[ExecutionApp(AndroidVersion = "13.0",
+[LocalExecution(AndroidVersion = "13.0",
     DeviceName = "pixel5-test-device-13-new",
     IsMobileWebTest = true,
     BrowserName = "Chrome",

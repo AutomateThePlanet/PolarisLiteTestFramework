@@ -8,7 +8,7 @@ using PolarisLite.Secrets;
 using static Unity.Storage.RegistrationSet;
 
 namespace PolarisLite.Mobile.Plugins.AppExecution;
-public class DriverFactory : IDisposable
+public static class DriverFactory
 {
     private static readonly TimeSpan IMPLICIT_TIMEOUT = TimeSpan.FromSeconds(30);
     private static readonly ThreadLocal<bool> _disposed = new ThreadLocal<bool>(() => false);
@@ -40,7 +40,7 @@ public class DriverFactory : IDisposable
         set { _wrappedAndroidDriver.Value = value; }
     }
 
-    public AndroidDriver StartApp(AppConfiguration configuration)
+    public static AndroidDriver StartApp(AppConfiguration configuration)
     {
         AppConfiguration = configuration;
         Disposed = false;
@@ -64,7 +64,7 @@ public class DriverFactory : IDisposable
         return WrappedAndroidDriver;
     }
 
-    private AndroidDriver InitializeDriverGridMode(string testName)
+    private static AndroidDriver InitializeDriverGridMode(string testName)
     {
         var androidSettings = ConfigurationService.GetSection<AndroidSettings>();
         var gridSettings = androidSettings.GridSettings.First(x => x.ProviderName == androidSettings.ExecutionType);
@@ -110,7 +110,7 @@ public class DriverFactory : IDisposable
         return WrappedAndroidDriver;
     }
 
-    private AndroidDriver InitializeDriverRegularMode()
+    private static AndroidDriver InitializeDriverRegularMode()
     {
         var androidSettings = ConfigurationService.GetSection<AndroidSettings>();
         var gridSettings = androidSettings.GridSettings.First(x => x.ProviderName == "regular");
@@ -139,7 +139,7 @@ public class DriverFactory : IDisposable
         return driver;
     }
 
-    private void AddCustomDriverOptions(AppiumOptions caps)
+    private static void AddCustomDriverOptions(AppiumOptions caps)
     {
         foreach (var optionKey in _customDriverOptions.Value.Keys)
         {
@@ -200,7 +200,7 @@ public class DriverFactory : IDisposable
         return resolvedUrl;
     }
 
-    public void Dispose()
+    public static void Dispose()
     {
         if (_disposed.Value)
         {

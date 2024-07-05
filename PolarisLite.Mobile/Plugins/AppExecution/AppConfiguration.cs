@@ -3,7 +3,7 @@
 namespace PolarisLite.Mobile.Plugins;
 public class AppConfiguration
 {
-    public ExecutionType ExecutionType { get; private set; } = ExecutionType.Regular;
+    public ExecutionType ExecutionType { get; private set; } = ExecutionType.Local;
     public string AppPath { get; private set; }
     public Lifecycle Lifecycle { get; private set; }
     public string DeviceName { get; private set; }
@@ -46,7 +46,7 @@ public class AppConfiguration
         AppiumOptions = new Dictionary<string, string>();
     }
 
-    public static AppConfiguration FromAttribute(ExecutionAppAttribute attribute)
+    public static AppConfiguration FromAttribute(LocalExecutionAttribute attribute)
     {
         return new AppConfiguration(
             attribute.Lifecycle,

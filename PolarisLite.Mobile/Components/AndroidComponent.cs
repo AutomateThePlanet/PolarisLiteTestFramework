@@ -27,7 +27,6 @@ public class AndroidComponent : IComponent, IComponentVisible
         AppService = new DriverAdapter();
         ComponentCreateService = new DriverAdapter();
         WrappedDriver = DriverFactory.WrappedAndroidDriver;
-        ComponentWaitService = new DriverAdapter();
     }
 
     public AppiumElement WrappedElement
@@ -152,11 +151,10 @@ public class AndroidComponent : IComponent, IComponentVisible
 
         foreach (var waitStrategy in waitStrategies)
         {
-            ComponentWaitService.Wait(this, waitStrategy);
+            waitStrategy.WaitUntil(FindStrategy);
         }
 
         _wrappedElement = FindNativeElement(findStrategy);
-        //waitStrategies.Clear();
 
         return _wrappedElement;
     }

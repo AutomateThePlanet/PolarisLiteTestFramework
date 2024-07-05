@@ -7,14 +7,8 @@ using System.Reflection;
 namespace PolarisLite.Mobile.Plugins;
 public class AppLifecyclePlugin : Plugin
 {
-    private readonly DriverFactory _driverFactory;
     private AppConfiguration _currentAppConfiguration;
     private AppConfiguration _previousBrowserConfiguration;
-
-    public AppLifecyclePlugin()
-    {
-        _driverFactory = new DriverFactory();
-    }
 
     public override void OnBeforeTestInitialize(MethodInfo memberInfo)
     {
@@ -30,14 +24,14 @@ public class AppLifecyclePlugin : Plugin
 
     private void RestartApp()
     {
-        _driverFactory.Dispose();
-        
-        _driverFactory.StartApp(_currentAppConfiguration);
+        DriverFactory.Dispose();
+
+        DriverFactory.StartApp(_currentAppConfiguration);
     }
 
     private void ShutdownApp()
     {
-        _driverFactory.Dispose();
+        DriverFactory.Dispose();
     }
 
     private bool ShouldRestartBrowser(AppConfiguration browserConfiguration)
@@ -86,15 +80,15 @@ public class AppLifecyclePlugin : Plugin
         return appConfiguration;
     }
 
-    private ExecutionAppAttribute GetExecutionAppMethodLevel(MemberInfo testMethod)
+    private LocalExecutionAttribute GetExecutionAppMethodLevel(MemberInfo testMethod)
     {
-        var executionBrowserAttribute = testMethod.GetCustomAttribute<ExecutionAppAttribute>(true);
+        var executionBrowserAttribute = testMethod.GetCustomAttribute<LocalExecutionAttribute>(true);
         return executionBrowserAttribute;
     }
 
-    private ExecutionAppAttribute GetExecutionAppClassLevel(Type testClass)
+    private LocalExecutionAttribute GetExecutionAppClassLevel(Type testClass)
     {
-        var executionBrowserAttribute = testClass.GetCustomAttribute<ExecutionAppAttribute>(true);
+        var executionBrowserAttribute = testClass.GetCustomAttribute<LocalExecutionAttribute>(true);
         return executionBrowserAttribute;
     }
 }
