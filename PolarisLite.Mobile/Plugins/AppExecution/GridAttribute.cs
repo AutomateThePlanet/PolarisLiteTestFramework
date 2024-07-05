@@ -2,7 +2,7 @@
 namespace PolarisLite.Mobile.Plugins;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-public class GridAttribute : ExecutionAppAttribute
+public class GridAttribute : LocalExecutionAttribute
 {
     public GridAttribute()
     {

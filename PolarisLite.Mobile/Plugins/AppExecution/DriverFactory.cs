@@ -5,7 +5,7 @@ using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
 
 namespace PolarisLite.Mobile.Plugins.AppExecution;
-public class DriverFactory : IDisposable
+public class DriverFactory
 {
     public static bool Disposed { get; set; }
 
@@ -15,7 +15,7 @@ public class DriverFactory : IDisposable
 
     public static AndroidDriver WrappedAndroidDriver { get; set; }
 
-    public AndroidDriver StartApp(AppConfiguration configuration)
+    public static AndroidDriver StartApp(AppConfiguration configuration)
     {
         AppConfiguration = configuration;
         Disposed = false;
@@ -34,7 +34,7 @@ public class DriverFactory : IDisposable
         return WrappedAndroidDriver;
     }
 
-    private AndroidDriver InitializeDriverGridMode()
+    private static AndroidDriver InitializeDriverGridMode()
     {
         var gridUrl = AppConfiguration.GridSettings.Url;
 
@@ -77,7 +77,7 @@ public class DriverFactory : IDisposable
         return WrappedAndroidDriver;
     }
 
-    private AndroidDriver InitializeDriverRegularMode()
+    private static AndroidDriver InitializeDriverRegularMode()
     {
         var gridUrl = AppConfiguration.GridSettings.OptionsName;
         var caps = new AppiumOptions();
@@ -104,7 +104,7 @@ public class DriverFactory : IDisposable
         return driver;
     }
 
-    private void AddCustomDriverOptions(AppiumOptions caps)
+    private static void AddCustomDriverOptions(AppiumOptions caps)
     {
         foreach (var optionKey in CustomDriverOptions.Keys)
         {
@@ -120,7 +120,7 @@ public class DriverFactory : IDisposable
         }
     }
 
-    public void Dispose()
+    public static void Dispose()
     {
         if (Disposed)
         {

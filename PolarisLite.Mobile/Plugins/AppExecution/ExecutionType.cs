@@ -1,7 +1,7 @@
 ﻿namespace PolarisLite.Mobile.Plugins;
 public enum ExecutionType
 {
-    Regular,
+    Local,
     Grid,
     LambdaTest
 }

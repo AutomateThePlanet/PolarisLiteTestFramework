@@ -17,17 +17,13 @@ public class AndroidComponent : IComponent, IComponentVisible
     public FindStrategy FindStrategy { get; set; }
     public AndroidDriver WrappedDriver { get; set; }
     protected IAppService AppService { get; private set; }
-    protected IElementFindService ComponentCreateService { get; private set; }
-    protected IWaitService ComponentWaitService { get; private set; }
     private readonly List<WaitStrategy> waitStrategies;
 
     public AndroidComponent()
     {
         waitStrategies = new List<WaitStrategy>();
         AppService = new DriverAdapter();
-        ComponentCreateService = new DriverAdapter();
         WrappedDriver = DriverFactory.WrappedAndroidDriver;
-        ComponentWaitService = new DriverAdapter();
     }
 
     public AppiumElement WrappedElement
@@ -152,11 +148,10 @@ public class AndroidComponent : IComponent, IComponentVisible
 
         foreach (var waitStrategy in waitStrategies)
         {
-            ComponentWaitService.Wait(this, waitStrategy);
+            waitStrategy.WaitUntil(FindStrategy);
         }
 
         _wrappedElement = FindNativeElement(findStrategy);
-        //waitStrategies.Clear();
 
         return _wrappedElement;
     }

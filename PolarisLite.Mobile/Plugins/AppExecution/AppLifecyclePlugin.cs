@@ -8,14 +8,8 @@ using System.Reflection;
 namespace PolarisLite.Mobile.Plugins;
 public class AppLifecyclePlugin : Plugin
 {
-    private readonly DriverFactory _driverFactory;
     private AppConfiguration _currentAppConfiguration;
     private AppConfiguration _previousAppConfiguration;
-
-    public AppLifecyclePlugin()
-    {
-        _driverFactory = new DriverFactory();
-    }
 
     public override void OnBeforeTestInitialize(MethodInfo memberInfo)
     {
@@ -32,14 +26,14 @@ public class AppLifecyclePlugin : Plugin
 
     private void RestartApp()
     {
-        _driverFactory.Dispose();
-        
-        _driverFactory.StartApp(_currentAppConfiguration);
+        DriverFactory.Dispose();
+
+        DriverFactory.StartApp(_currentAppConfiguration);
     }
 
     private void ShutdownApp()
     {
-        _driverFactory.Dispose();
+        DriverFactory.Dispose();
     }
 
     private bool ShouldRestartApp(AppConfiguration AppConfiguration)
@@ -91,15 +85,15 @@ public class AppLifecyclePlugin : Plugin
         }
     }
 
-    private ExecutionAppAttribute GetExecutionAppMethodLevel(MemberInfo testMethod)
+    private LocalExecutionAttribute GetExecutionAppMethodLevel(MemberInfo testMethod)
     {
-        var executionAppAttribute = testMethod.GetCustomAttribute<ExecutionAppAttribute>(true);
+        var executionAppAttribute = testMethod.GetCustomAttribute<LocalExecutionAttribute>(true);
         return executionAppAttribute;
     }
 
-    private ExecutionAppAttribute GetExecutionAppClassLevel(Type testClass)
+    private LocalExecutionAttribute GetExecutionAppClassLevel(Type testClass)
     {
-        var executionAppAttribute = testClass.GetCustomAttribute<ExecutionAppAttribute>(true);
+        var executionAppAttribute = testClass.GetCustomAttribute<LocalExecutionAttribute>(true);
         return executionAppAttribute;
     }
 
