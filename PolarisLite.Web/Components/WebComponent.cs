@@ -17,7 +17,6 @@ public class WebComponent : IComponent, IComponentVisible
     }
 
     private Actions Actions => new Actions(WrappedDriver);
-    protected IWaitService ComponentWaitService { get; private set; }
     public FindStrategy FindStrategy { get; internal set; }
     public IWebDriver WrappedDriver { get; internal set; }
     public IJavaScriptService JavaScriptService { get; internal set; }
@@ -69,7 +68,7 @@ public class WebComponent : IComponent, IComponentVisible
 
         foreach (var waitStrategy in waitStrategies)
         {
-            ComponentWaitService.Wait(this, waitStrategy);
+            waitStrategy.WaitUntil(FindStrategy);
         }
 
         return FindNativeElements(findStrategy);
