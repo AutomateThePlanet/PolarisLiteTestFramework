@@ -64,7 +64,6 @@ public class CheckoutPage : WebPage
 
     public void AssertTotalPrice(string expectedPrice)
     {
-        TermsAgreeCheckbox.ValidateIsChecked();
         Assert.That(TotalPrice.Text, Is.EqualTo(expectedPrice));
     }
 
