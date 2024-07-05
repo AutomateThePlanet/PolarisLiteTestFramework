@@ -17,8 +17,8 @@ public class ToBeClickableWaitStrategy : WaitStrategy
         WaitUntilInternal(d => ElementIsClickable(WrappedDriver, by));
     }
 
-    private bool ElementIsClickable<TBy>(ISearchContext searchContext, TBy by)
-      where TBy : FindStrategy
+    private bool ElementIsClickable<TFindStrategy>(ISearchContext searchContext, TFindStrategy by)
+      where TFindStrategy : FindStrategy
     {
         var element = FindElement(searchContext, by.Convert());
         try

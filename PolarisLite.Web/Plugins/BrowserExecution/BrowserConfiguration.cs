@@ -13,7 +13,7 @@ public class BrowserConfiguration
     {
         Browser = browser;
         Lifecycle = lifecycle;
-        ExecutionType = ExecutionType.Regular;
+        ExecutionType = ExecutionType.Local;
     }
 
     public BrowserConfiguration(
