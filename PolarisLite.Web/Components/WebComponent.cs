@@ -2,6 +2,7 @@
 using PolarisLite.Core.Infrastructure;
 using PolarisLite.Locators;
 using PolarisLite.Web.Contracts;
+using PolarisLite.Web.Plugins;
 using PolarisLite.Web.Services;
 
 namespace PolarisLite.Web.Components;
@@ -34,6 +35,7 @@ public class WebComponent : IComponent, IComponentVisible
             if (_wrappedWebElement == null)
             {
                 _wrappedWebElement = FindElement(FindStrategy);
+                WebComponentPluginExecutionEngine.OnComponentFound(this);
             }
 
             _plugins.ToList().ForEach(plugin => plugin.OnComponentFound(this));

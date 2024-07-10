@@ -14,6 +14,8 @@ public class WebTest : BaseTest
         if (!_arePluginsAlreadyInitialized)
         {
             PluginExecutionEngine.AddPlugin(new BrowserLifecyclePlugin());
+            WebComponentPluginExecutionEngine.AddPlugin(new HighlightElementPlugin());
+            WebComponentPluginExecutionEngine.AddPlugin(new ScrollIntoViewPlugin());
             _arePluginsAlreadyInitialized = true;
         }
     }

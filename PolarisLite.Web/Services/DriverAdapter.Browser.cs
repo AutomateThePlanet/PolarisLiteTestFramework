@@ -1,6 +1,6 @@
 ﻿namespace PolarisLite.Web.Services;
 
-public partial class DriverAdapter : IBrowserService
+public partial class DriverAdapter : IDialogService
 {
     public void Back()
     {

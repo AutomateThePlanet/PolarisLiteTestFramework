@@ -1,7 +1,7 @@
 ﻿using PolarisLite.Web.Services;
 
 namespace PolarisLite.Web;
-public class App
+public partial class App
 {
     private readonly DriverAdapter _driver;
 
@@ -14,7 +14,7 @@ public class App
     }
 
     public IElementFindService Elements => _driver;
-    public IBrowserService Browser => _driver;
+    public IDialogService Browser => _driver;
     public INavigationService Navigation => _driver;
     public ICookiesService Cookies => _driver;
     public IInteractionsService Interactions => _driver;

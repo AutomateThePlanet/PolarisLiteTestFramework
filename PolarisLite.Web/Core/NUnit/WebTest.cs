@@ -11,10 +11,12 @@ public class WebTest : BaseTest
 
     protected override void Configure()
     {
-        //if (!_arePluginsAlreadyInitialized)
-        //{
-        //    PluginExecutionEngine.AddPlugin(new BrowserLifecyclePlugin());
-        //    _arePluginsAlreadyInitialized = true;
-        //}
+        if (!_arePluginsAlreadyInitialized)
+        {
+            PluginExecutionEngine.AddPlugin(new BrowserLifecyclePlugin());
+            WebComponentPluginExecutionEngine.AddPlugin(new HighlightElementPlugin());
+            WebComponentPluginExecutionEngine.AddPlugin(new ScrollIntoViewPlugin());
+            _arePluginsAlreadyInitialized = true;
+        }
     }
 }

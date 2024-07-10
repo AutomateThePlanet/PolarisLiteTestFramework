@@ -9,7 +9,7 @@ namespace DemoSystemTests.Framework.Web;
 
 [TestFixture]
 [LocalExecution(Browser.Chrome, Lifecycle.ReuseIfStarted)]
-public class ProductPurchaseTests
+public class ProductPurchaseTests : WebTest
 {
     public HomePage HomePage { get; private set; }
     public ProductPage ProductPage { get; private set; }

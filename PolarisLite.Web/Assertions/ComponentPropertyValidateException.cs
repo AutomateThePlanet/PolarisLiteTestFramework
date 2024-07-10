@@ -1,4 +1,5 @@
 ﻿namespace PolarisLite.Web.Assertions;
+
 public class ComponentPropertyValidateException : Exception
 {
     public ComponentPropertyValidateException()
