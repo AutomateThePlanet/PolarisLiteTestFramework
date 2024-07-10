@@ -1,22 +1,5 @@
-﻿using PolarisLite.Core;
-using PolarisLite.Core.Infrastructure.MSTest;
-using PolarisLite.Web.Plugins;
-
-namespace PolarisLite.Web.Core.MSTest;
-public class WebTest : BaseTest
+﻿namespace PolarisLite.Web.Core.MSTest;
+public class WebTest 
 {
-    private static bool _arePluginsAlreadyInitialized;
-
     public App App => new App();
-
-    protected override void Configure()
-    {
-        if (!_arePluginsAlreadyInitialized)
-        {
-            PluginExecutionEngine.AddPlugin(new BrowserLifecyclePlugin());
-            WebComponentPluginExecutionEngine.AddPlugin(new HighlightElementPlugin());
-            WebComponentPluginExecutionEngine.AddPlugin(new ScrollIntoViewPlugin());
-            _arePluginsAlreadyInitialized = true;
-        }
-    }
 }

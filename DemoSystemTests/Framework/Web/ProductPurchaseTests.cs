@@ -3,12 +3,11 @@ using DemoSystemTests.Framework.Web.Pages.Models;
 using PolarisLite.Web;
 using PolarisLite.Web.Core;
 using PolarisLite.Web.Core.NUnit;
-using PolarisLite.Web.Plugins;
 
 namespace DemoSystemTests.Framework.Web;
 
 [TestFixture]
-[LocalExecution(Browser.Chrome, Lifecycle.ReuseIfStarted)]
+//[LocalExecution(Browser.Chrome, Lifecycle.ReuseIfStarted)]
 public class ProductPurchaseTests : WebTest
 {
     public HomePage HomePage { get; private set; }
