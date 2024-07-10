@@ -11,11 +11,7 @@ public class WebComponent : IComponent, IComponentVisible
 {
     private IWebElement _wrappedWebElement;
     private readonly List<WaitStrategy> waitStrategies;
-<<<<<<< Updated upstream
     private static readonly List<WebComponentPlugin> _plugins = new List<WebComponentPlugin>();
-=======
-    private static readonly List<WebComponentPlugin> _plugins = new();
->>>>>>> Stashed changes
 
     public WebComponent()
     {

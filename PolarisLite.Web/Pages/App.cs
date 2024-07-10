@@ -13,8 +13,8 @@ public partial class App
         }
     }
 
+    public IBrowserService Browser => _driver;
     public IElementFindService Elements => _driver;
-    public IDialogService Browser => _driver;
     public INavigationService Navigation => _driver;
     public ICookiesService Cookies => _driver;
     public IInteractionsService Interactions => _driver;

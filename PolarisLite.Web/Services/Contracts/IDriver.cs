@@ -1,5 +1,7 @@
-﻿namespace PolarisLite.Web;
+﻿using PolarisLite.Web.Services;
 
-public interface IDriverAdapter : INavigationService, IDialogService, ICookiesService, IElementFindService, IJavaScriptService, IInteractionsService
+namespace PolarisLite.Web;
+
+public interface IDriverAdapter : INavigationService, ICookiesService, IElementFindService, IJavaScriptService, IInteractionsService
 {
 }
