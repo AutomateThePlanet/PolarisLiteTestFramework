@@ -64,7 +64,7 @@ public static partial class ValidateComponentExtensions
         Validate(() => component.Text.Contains(value), $"The component's inner text should contain '{value}' but was '{component.Text}'.", timeout, sleepInterval);
     }
 
-    private static void Validate(Func<bool> waitCondition, string exceptionMessage, int? timeoutInSeconds, int? sleepIntervalInSeconds)
+    public static void Validate(Func<bool> waitCondition, string exceptionMessage, int? timeoutInSeconds, int? sleepIntervalInSeconds)
     {
         var wrappedWebDriver = DriverFactory.WrappedDriver;
         var webDriverWait = new WebDriverWait(wrappedWebDriver, TimeSpan.FromSeconds(30));
