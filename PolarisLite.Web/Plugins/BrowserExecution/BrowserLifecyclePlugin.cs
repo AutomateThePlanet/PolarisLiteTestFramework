@@ -27,6 +27,19 @@ public class BrowserLifecyclePlugin : Plugin
         _previousBrowserConfiguration = _currentBrowserConfiguration;
     }
 
+    public override void OnAfterTestCleanup(TestOutcome testOutcome, MethodInfo memberInfo, Exception failedTestException)
+    {
+        if (_currentBrowserConfiguration.Lifecycle == Lifecycle.RestartOnFail && testOutcome == TestOutcome.Failed)
+        {
+            RestartBrowser();
+        }
+
+        if (_currentBrowserConfiguration.Lifecycle == Lifecycle.RestartEveryTime || (_currentBrowserConfiguration.Lifecycle == Lifecycle.RestartOnFail && !testOutcome.Equals(TestOutcome.Passed)))
+        {
+            ShutdownBrowser();
+        }
+    }
+
     private void RestartBrowser()
     {
         try
@@ -63,19 +76,6 @@ public class BrowserLifecyclePlugin : Plugin
             browserConfiguration.Lifecycle == Lifecycle.RestartEveryTime
             || browserConfiguration.Lifecycle == Lifecycle.NotSet;
         return shouldRestartBrowser;
-    }
-
-    public override void OnAfterTestCleanup(TestOutcome testOutcome, MethodInfo memberInfo, Exception failedTestException)
-    {
-        if (_currentBrowserConfiguration.Lifecycle == Lifecycle.RestartOnFail && testOutcome == TestOutcome.Failed)
-        {
-            RestartBrowser();
-        }
-
-        if (_currentBrowserConfiguration.Lifecycle == Lifecycle.RestartEveryTime || (_currentBrowserConfiguration.Lifecycle == Lifecycle.RestartOnFail && !testOutcome.Equals(TestOutcome.Passed)))
-        {
-            ShutdownBrowser();
-        }
     }
 
     private BrowserConfiguration GetBrowserConfiguration(MemberInfo testMethod)

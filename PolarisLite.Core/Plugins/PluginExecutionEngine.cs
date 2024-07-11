@@ -4,7 +4,7 @@ using System.Reflection;
 namespace PolarisLite.Core;
 public static class PluginExecutionEngine
 {
-    private static readonly HashSet<Plugin> Plugins = new HashSet<Plugin>();
+    private static readonly List<Plugin> Plugins = new List<Plugin>();
 
     public static void AddPlugin(Plugin plugin)
     {

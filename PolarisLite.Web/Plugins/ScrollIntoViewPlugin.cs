@@ -9,14 +9,6 @@ public class ScrollIntoViewPlugin : WebComponentPlugin
         ScrollIntoView(component);
     }
 
-    public override void OnComponentsFound(List<WebComponent> components)
-    {
-        if (components.Any())
-        {
-            ScrollIntoView(components.Last());
-        }
-    }
-
     private void ScrollIntoView(WebComponent element)
     {
         var driver = new DriverAdapter();

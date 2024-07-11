@@ -11,7 +11,6 @@ public class WebComponent : IComponent, IComponentVisible
 {
     private IWebElement _wrappedWebElement;
     private readonly List<WaitStrategy> waitStrategies;
-    private static readonly List<WebComponentPlugin> _plugins = new List<WebComponentPlugin>();
 
     public WebComponent()
     {
@@ -38,16 +37,9 @@ public class WebComponent : IComponent, IComponentVisible
                 WebComponentPluginExecutionEngine.OnComponentFound(this);
             }
 
-            _plugins.ToList().ForEach(plugin => plugin.OnComponentFound(this));
-
             return _wrappedWebElement;
         }
         set => _wrappedWebElement = value;
-    }
-
-    public static void AddPlugin(WebComponentPlugin plugin)
-    {
-        _plugins.Add(plugin);
     }
 
     private IWebElement FindElement(FindStrategy findStrategy)

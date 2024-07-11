@@ -8,7 +8,7 @@ using PolarisLite.Web.Plugins;
 namespace DemoSystemTests.Framework.Web;
 
 [TestFixture]
-[LocalExecution(Browser.Chrome, Lifecycle.ReuseIfStarted)]
+[LocalExecution(Browser.Chrome, Lifecycle.RestartEveryTime)]
 public class ProductPurchaseTests : WebTest
 {
     public HomePage HomePage { get; private set; }
@@ -30,11 +30,11 @@ public class ProductPurchaseTests : WebTest
         //App.Navigation.GoToUrl("https://ecommerce-playground.lambdatest.io/");
     }
 
-    [TearDown]
-    public void TearDown()
-    {
-        DriverFactory.Dispose();
-    }
+    //[TearDown]
+    //public void TearDown()
+    //{
+    //    DriverFactory.Dispose();
+    //}
 
     [Test]
     public void CorrectInformationDisplayedInCompareScreen_WhenOpenProductFromSearchResults_TwoProducts()
