@@ -13,6 +13,7 @@ public partial class App
         }
     }
 
+    public DriverAdapter Driver => _driver;
     public IBrowserService Browser => _driver;
     public IElementFindService Elements => _driver;
     public INavigationService Navigation => _driver;
