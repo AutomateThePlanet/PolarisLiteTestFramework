@@ -5,7 +5,7 @@ using PolarisLite.Web.Plugins;
 namespace PolarisLite.Web.Core.NUnit;
 public class WebTest : BaseTest
 {
-    private static bool _arePluginsAlreadyInitialized;
+    private static bool _arePluginsAlreadyInitialized = false;
 
     public App App => new App();
 

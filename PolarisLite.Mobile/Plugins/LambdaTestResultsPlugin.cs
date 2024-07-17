@@ -5,6 +5,7 @@ using PolarisLite.Mobile;
 using PolarisLite.Mobile.Plugins;
 using PolarisLite.Mobile.Plugins.AppExecution;
 using System.Reflection;
+
 namespace Bellatrix.Mobile.Plugins;
 
 public class LambdaTestResultsPlugin : Plugin

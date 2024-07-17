@@ -1,4 +1,5 @@
 ﻿using PolarisLite.Web.Plugins.BrowserExecution;
+using System.Drawing;
 
 namespace PolarisLite.Web.Plugins;
 public class BrowserConfiguration
@@ -44,4 +45,10 @@ public class BrowserConfiguration
     public string BrowserVersion { get; set; }
     public Lifecycle Lifecycle { get; set; }
     public ExecutionType ExecutionType { get; set; }
+
+    public Size Size { get; set; }
+    public double PixelRation { get; set; }
+    public string DeviceName { get; set; }
+    public string UserAgent { get; set; }
+    public bool MobileEmulation { get; set; }
 }

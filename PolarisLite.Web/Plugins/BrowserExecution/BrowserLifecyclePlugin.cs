@@ -31,21 +31,15 @@ public class BrowserLifecyclePlugin : Plugin
 
     private void RestartBrowser()
     {
-        try
-        {
-            DriverFactory.Dispose();
+        DriverFactory.Dispose();
 
-            if (_currentBrowserConfiguration.ExecutionType == ExecutionType.Local)
-            {
-                DriverFactory.Start(_currentBrowserConfiguration);
-            }
-            else
-            {
-                DriverFactory.StartGrid(_currentBrowserConfiguration, _currentGridConfiguration);
-            }
-        } catch (Exception ex)
+        if (_currentBrowserConfiguration.ExecutionType == ExecutionType.Local)
         {
-            Console.WriteLine(ex);
+            DriverFactory.Start(_currentBrowserConfiguration);
+        }
+        else
+        {
+            DriverFactory.StartGrid(_currentBrowserConfiguration, _currentGridConfiguration);
         }
     }
 

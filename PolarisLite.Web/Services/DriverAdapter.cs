@@ -6,7 +6,6 @@ public partial class DriverAdapter
 {
     private IWebDriver _webDriver;
     private WebDriverWait _webDriverWait;
-    private List<WaitStrategy> _waitStrategies;
 
     public DriverAdapter()
     {

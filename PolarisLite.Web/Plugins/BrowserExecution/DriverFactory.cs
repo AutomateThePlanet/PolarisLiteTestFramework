@@ -5,6 +5,7 @@ using OpenQA.Selenium.Safari;
 using WebDriverManager.DriverConfigs.Impl;
 using System.Drawing;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Chromium;
 
 namespace PolarisLite.Web.Plugins.BrowserExecution;
 public class DriverFactory
@@ -21,21 +22,38 @@ public class DriverFactory
     public static void Start(BrowserConfiguration browserConfiguration)
     {
         var options = InitializeOptions(browserConfiguration.Browser, browserConfiguration.BrowserVersion);
-        //AddOptionsConfig(options, gridSettings);
+        var mobileEmulationOptions = InitializeMobileEmulationOptions(browserConfiguration);
+
         ExecutionType = browserConfiguration.ExecutionType;
         switch (browserConfiguration.Browser)
         {
             case Browser.Chrome:
                 new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig());
-                WrappedDriver = new ChromeDriver(options as ChromeOptions);
+                ChromeOptions chromeOptions = options as ChromeOptions;
+
+                if (browserConfiguration.MobileEmulation)
+                {
+                    chromeOptions.EnableMobileEmulation(mobileEmulationOptions);
+                    chromeOptions.EnableMobileEmulation(browserConfiguration.DeviceName);
+                }
+
+                WrappedDriver = new ChromeDriver(chromeOptions);
+                break;
+            case Browser.Edge:
+                new WebDriverManager.DriverManager().SetUpDriver(new EdgeConfig());
+                EdgeOptions edgeOptions = options as EdgeOptions;
+
+                if (browserConfiguration.MobileEmulation)
+                {
+                    edgeOptions.EnableMobileEmulation(mobileEmulationOptions);
+                    edgeOptions.EnableMobileEmulation(browserConfiguration.DeviceName);
+                }
+
+                WrappedDriver = new EdgeDriver(edgeOptions);
                 break;
             case Browser.Firefox:
                 new WebDriverManager.DriverManager().SetUpDriver(new FirefoxConfig());
                 WrappedDriver = new FirefoxDriver(options as FirefoxOptions);
-                break;
-            case Browser.Edge:
-                new WebDriverManager.DriverManager().SetUpDriver(new EdgeConfig());
-                WrappedDriver = new EdgeDriver(options as EdgeOptions);
                 break;
             case Browser.Safari:
                 WrappedDriver = new SafariDriver(options as SafariOptions);
@@ -44,8 +62,36 @@ public class DriverFactory
                 throw new ArgumentOutOfRangeException(nameof(browserConfiguration.Browser), browserConfiguration.Browser, null);
         }
 
+        // change window size
+        //if (browserConfiguration.Size != default)
+        //{
+        //    WrappedDriver.Manage().Window.Size = browserConfiguration.Size;
+        //}
+        //else
+        //{
+        //    WrappedDriver.Manage().Window.Maximize();
+        //}
+
         WrappedDriver.Manage().Window.Maximize();
+
+
         Disposed = false;
+    }
+
+    private static ChromiumMobileEmulationDeviceSettings InitializeMobileEmulationOptions(BrowserConfiguration browserConfiguration)
+    {
+        ChromiumMobileEmulationDeviceSettings deviceOptions = default;
+        if (browserConfiguration.MobileEmulation)
+        {
+            deviceOptions = new ChromiumMobileEmulationDeviceSettings();
+            deviceOptions.UserAgent = "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19";
+            deviceOptions.Width = browserConfiguration.Size.Width;
+            deviceOptions.Height = browserConfiguration.Size.Height;
+            deviceOptions.EnableTouchEvents = true;
+            deviceOptions.PixelRatio = browserConfiguration.PixelRation;
+        }
+
+        return deviceOptions;
     }
 
     public static void StartGrid(BrowserConfiguration browserConfiguration, GridConfiguration gridSettings)
