@@ -103,7 +103,7 @@ public class ReportPortalTestLogExtension : ITestEventListener
                     var sessionId = ((RemoteWebDriver)DriverFactory.WrappedDriver).SessionId.ToString(); // FETCHING SESSION ID
 
                     var gridSettings = webSettings.GridSettings;
-                    var x = gridSettings[0].Arguments[0];
+                    var x = gridSettings[0].Arguments;
                     var accessKey = SecretsResolver.GetSecret(x["accessKey"].ToString());
                     var username = SecretsResolver.GetSecret(x["username"].ToString());
 

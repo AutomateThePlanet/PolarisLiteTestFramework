@@ -2,7 +2,7 @@
 
 public sealed class WebSettings
 {
-    public List<GridSettings> GridSettings { get; set; }
+    public List<GridConfiguration> GridSettings { get; set; }
     public TimeoutSettings TimeoutSettings { get; set; }
 
     public string ExecutionType { get; set; }

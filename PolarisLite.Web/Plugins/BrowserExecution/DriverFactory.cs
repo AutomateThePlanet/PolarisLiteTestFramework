@@ -14,6 +14,7 @@ using OpenQA.Selenium.IE;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using OpenQA.Selenium.DevTools;
+using OpenQA.Selenium.Chromium;
 
 namespace PolarisLite.Web.Plugins.BrowserExecution;
 public class DriverFactory
@@ -22,6 +23,7 @@ public class DriverFactory
     private static readonly ThreadLocal<BrowserConfiguration> _browserConfiguration = new ThreadLocal<BrowserConfiguration>();
     private static readonly ThreadLocal<Dictionary<string, string>> _customDriverOptions = new ThreadLocal<Dictionary<string, string>>();
     private static readonly ThreadLocal<IWebDriver> _wrappedDriver = new ThreadLocal<IWebDriver>();
+    private static readonly ThreadLocal<ExecutionType> _executionType = new ThreadLocal<ExecutionType>();
 
     public static bool Disposed
     {
@@ -47,11 +49,66 @@ public class DriverFactory
         set { _wrappedDriver.Value = value; }
     }
 
+    public static ExecutionType ExecutionType
+    {
+        get { return _executionType.Value; }
+        set { _executionType.Value = value; }
+    }
+
+    public static void Start(BrowserConfiguration browserConfiguration)
+    {
+        var options = InitializeOptions(browserConfiguration.Browser, browserConfiguration.BrowserVersion);
+        var mobileEmulationOptions = InitializeMobileEmulationOptions(browserConfiguration);
+        ExecutionType = browserConfiguration.ExecutionType;
+        switch (browserConfiguration.Browser)
+        {
+            case Browser.Chrome:
+                new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig());
+                ChromeOptions chromeOptions = options as ChromeOptions;
+
+                if (browserConfiguration.MobileEmulation)
+                {
+                    chromeOptions.EnableMobileEmulation(mobileEmulationOptions);
+                    chromeOptions.EnableMobileEmulation(browserConfiguration.DeviceName);
+                }
+
+                WrappedDriver = new ChromeDriver(chromeOptions);
+                break;
+            case Browser.Edge:
+                new WebDriverManager.DriverManager().SetUpDriver(new EdgeConfig());
+                EdgeOptions edgeOptions = options as EdgeOptions;
+
+                if (browserConfiguration.MobileEmulation)
+                {
+                    edgeOptions.EnableMobileEmulation(mobileEmulationOptions);
+                    edgeOptions.EnableMobileEmulation(browserConfiguration.DeviceName);
+                }
+
+                WrappedDriver = new EdgeDriver(edgeOptions);
+                break;
+            case Browser.Firefox:
+                new WebDriverManager.DriverManager().SetUpDriver(new FirefoxConfig());
+                WrappedDriver = new FirefoxDriver(options as FirefoxOptions);
+                break;
+            case Browser.Safari:
+                WrappedDriver = new SafariDriver(options as SafariOptions);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(browserConfiguration.Browser), browserConfiguration.Browser, null);
+        }
+
+        WrappedDriver.Manage().Window.Maximize();
+
+
+        Disposed = false;
+    }
+
     public static void Start(Browser browser)
     {
         var webSettings = ConfigurationService.GetSection<WebSettings>();
         var options = InitializeOptionsFromConfig(webSettings);
         var gridSettings = webSettings.GridSettings.FirstOrDefault(x => x.ProviderName.ToLower() == webSettings.ExecutionType);
+
         AddOptionsConfig(options, gridSettings);
         if (browser == Browser.NotSet)
         {
@@ -83,6 +140,16 @@ public class DriverFactory
         Disposed = false;
     }
 
+    public static void StartGrid(BrowserConfiguration browserConfiguration, GridConfiguration gridSettings)
+    {
+        var options = InitializeOptions(browserConfiguration.Browser, browserConfiguration.BrowserVersion);
+        AddGridOptions(options, gridSettings);
+
+        WrappedDriver = new RemoteWebDriver(new Uri(gridSettings.Url), options);
+        WrappedDriver.Manage().Window.Maximize();
+        Disposed = false;
+    }
+
     public static void StartGrid()
     {
         var webSettings = ConfigurationService.GetSection<WebSettings>();
@@ -96,6 +163,22 @@ public class DriverFactory
         WrappedDriver = new RemoteWebDriver(new Uri(gridUrl), options);
         WrappedDriver.Manage().Window.Maximize();
         Disposed = false;
+    }
+
+    private static ChromiumMobileEmulationDeviceSettings InitializeMobileEmulationOptions(BrowserConfiguration browserConfiguration)
+    {
+        ChromiumMobileEmulationDeviceSettings deviceOptions = default;
+        if (browserConfiguration.MobileEmulation)
+        {
+            deviceOptions = new ChromiumMobileEmulationDeviceSettings();
+            deviceOptions.UserAgent = "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19";
+            deviceOptions.Width = browserConfiguration.Size.Width;
+            deviceOptions.Height = browserConfiguration.Size.Height;
+            deviceOptions.EnableTouchEvents = true;
+            deviceOptions.PixelRatio = browserConfiguration.PixelRation;
+        }
+
+        return deviceOptions;
     }
 
     private static DriverOptions InitializeOptionsFromConfig(WebSettings webSettings)
@@ -124,7 +207,19 @@ public class DriverFactory
         return options;
     }
 
-    private static void AddGridOptionsConfig<TOptions>(TOptions options, GridSettings gridSettings) 
+    private static void AddGridOptions<TOptions>(TOptions options, GridConfiguration gridSettings)
+      where TOptions : DriverOptions
+    {
+        Dictionary<string, object> args = new();
+        foreach (var entry in gridSettings?.Arguments)
+        {
+            args.Add(entry.Key, entry.Value);
+        }
+
+        options.AddAdditionalOption(gridSettings.OptionsName, args);
+    }
+
+    private static void AddGridOptionsConfig<TOptions>(TOptions options, GridConfiguration gridSettings) 
         where TOptions : DriverOptions
     {
         if(gridSettings == null)
@@ -150,33 +245,55 @@ public class DriverFactory
         Dictionary<string, object> args = new();
         foreach (var entry in gridSettings?.Arguments)
         {
-            foreach (var c in entry)
+            // handle mask command for LambdaTest
+            if (entry.Key.Equals("maskCommands", StringComparison.OrdinalIgnoreCase))
             {
-                // handle mask command for LambdaTest
-                if (c.Key.Equals("maskCommands", StringComparison.OrdinalIgnoreCase))
+                if (entry.Value is JArray maskCommandsArray)
                 {
-                    if (c.Value is JArray maskCommandsArray)
-                    {
-                        var maskCommands = maskCommandsArray.ToObject<string[]>();
-                        args.Add(c.Key, maskCommands);
-                    }
+                    var maskCommands = maskCommandsArray.ToObject<string[]>();
+                    args.Add(entry.Key, maskCommands);
                 }
-                else if (c.Value is string value && value.StartsWith("{env_"))
-                {
-                    var envValue = SecretsResolver.GetSecret(value);
-                    args.Add(c.Key, envValue);
-                }
-                else
-                {
-                    args.Add(c.Key, c.Value);
-                }
+            }
+            else if (entry.Value is string value && value.StartsWith("{env_"))
+            {
+                var envValue = SecretsResolver.GetSecret(value);
+                args.Add(entry.Key, envValue);
+            }
+            else
+            {
+                args.Add(entry.Key, entry.Value);
             }
         }
 
         options.AddAdditionalOption(gridSettings.OptionsName, args);
     }
 
-    private static void AddOptionsConfig<TOptions>(TOptions options, GridSettings gridSettings)
+    private static DriverOptions InitializeOptions(Browser browserType, string browserVersion)
+    {
+        DriverOptions options = default;
+        switch (browserType)
+        {
+            case Browser.Chrome:
+                options = new ChromeOptions();
+                break;
+            case Browser.Firefox:
+                options = new FirefoxOptions();
+                break;
+
+            case Browser.Edge:
+                options = new EdgeOptions();
+                break;
+
+            case Browser.Safari:
+                options = new SafariOptions();
+                break;
+        }
+
+        options.BrowserVersion = browserVersion;
+        return options;
+    }
+
+    private static void AddOptionsConfig<TOptions>(TOptions options, GridConfiguration gridSettings)
         where TOptions : DriverOptions
     {
         if (gridSettings == null)
@@ -186,17 +303,14 @@ public class DriverFactory
 
         foreach (var entry in gridSettings?.Arguments)
         {
-            foreach (var c in entry)
+            if (entry.Value is string value && value.StartsWith("{env_"))
             {
-                if (c.Value is string value && value.StartsWith("{env_"))
-                {
-                    var envValue = SecretsResolver.GetSecret(value);
-                    options.AddAdditionalOption(c.Key, envValue);
-                }
-                else
-                {
-                    options.AddAdditionalOption(c.Key, c.Value);
-                }
+                var envValue = SecretsResolver.GetSecret(value);
+                options.AddAdditionalOption(entry.Key, envValue);
+            }
+            else
+            {
+                options.AddAdditionalOption(entry.Key, entry.Value);
             }
         }
     }
