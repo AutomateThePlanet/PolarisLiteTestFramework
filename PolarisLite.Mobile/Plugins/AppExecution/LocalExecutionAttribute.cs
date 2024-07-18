@@ -1,6 +1,6 @@
 ﻿namespace PolarisLite.Mobile.Plugins;
 
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
 public class LocalExecutionAttribute : Attribute
 {
     public Lifecycle Lifecycle { get; set; } = Lifecycle.RestartEveryTime;

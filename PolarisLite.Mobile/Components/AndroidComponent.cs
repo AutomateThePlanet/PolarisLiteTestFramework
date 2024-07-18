@@ -17,18 +17,21 @@ public class AndroidComponent : IComponent, IComponentVisible
     public FindStrategy FindStrategy { get; set; }
     public AndroidDriver WrappedDriver { get; set; }
     protected IAppService AppService { get; private set; }
+    protected IElementFindService ComponentCreateService { get; private set; }
+    //protected IWaitService ComponentWaitService { get; private set; }
     private readonly List<WaitStrategy> waitStrategies;
 
     public AndroidComponent()
     {
         waitStrategies = new List<WaitStrategy>();
         AppService = new DriverAdapter();
+        ComponentCreateService = new DriverAdapter();
         WrappedDriver = DriverFactory.WrappedAndroidDriver;
     }
 
     public AppiumElement WrappedElement
     {
-        get 
+        get
         {
             if (_wrappedElement == null)
             {
@@ -41,6 +44,10 @@ public class AndroidComponent : IComponent, IComponentVisible
         }
         set => _wrappedElement = value;
     }
+
+    public Point Location => WrappedElement.Location;
+
+    public Size Size => WrappedElement.Size;
 
     public bool IsVisible => WrappedElement.Displayed;
 

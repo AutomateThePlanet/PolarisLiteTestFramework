@@ -1,4 +1,6 @@
+using PolarisLite.Core.Layout;
 using PolarisLite.Mobile;
+using PolarisLite.Mobile.Components;
 using PolarisLite.Mobile.Core.NUnit;
 using PolarisLite.Mobile.Plugins;
 
@@ -32,5 +34,45 @@ public class AppiumTests : AndroidTest
         var saveButton = App.Elements.FindByXPath<Button>("//*[@text=\"Save\"]");
 
         //saveButton.ValidateIsNotDisabled();
+    }
+
+    [Test]
+    public void TestPageLayout()
+    {
+        App.AppService.StartActivity("com.example.android.apis", ".view.Controls1");
+
+        var button = App.Elements.FindByIdContaining<Button>("button");
+        var secondButton = App.Elements.FindByIdContaining<Button>("button_disabled");
+        var checkBox = App.Elements.FindByIdContaining<CheckBox>("check1");
+        var secondCheckBox = App.Elements.FindByIdContaining<CheckBox>("check2");
+        var mainElement = App.Elements.FindById<AndroidComponent>("android:id/content");
+
+        button.AssertAboveOf(checkBox);
+
+        button.AssertAboveOf(checkBox, 105);
+
+        button.AssertAboveOfGreaterThan(checkBox, 100);
+        button.AssertAboveOfGreaterThanOrEqual(checkBox, 105);
+        button.AssertAboveOfLessThan(checkBox, 110);
+        button.AssertAboveOfLessThanOrEqual(checkBox, 105);
+
+        button.AssertAboveOfApproximate(checkBox, 104, percent: 10);
+
+        button.AssertAboveOfBetween(checkBox, 100, 120);
+
+        LayoutAssert.AssertAlignedHorizontallyAll(button, secondButton);
+
+        LayoutAssert.AssertAlignedHorizontallyTop(button, secondButton);
+        LayoutAssert.AssertAlignedHorizontallyCentered(button, secondButton, secondButton);
+        LayoutAssert.AssertAlignedHorizontallyBottom(button, secondButton, secondButton);
+
+        LayoutAssert.AssertAlignedVerticallyAll(secondCheckBox, checkBox);
+
+        LayoutAssert.AssertAlignedVerticallyLeft(secondCheckBox, checkBox);
+        LayoutAssert.AssertAlignedVerticallyCentered(secondCheckBox, checkBox);
+        LayoutAssert.AssertAlignedVerticallyRight(secondCheckBox, checkBox);
+
+        button.AssertHeightLessThan(100);
+        button.AssertWidthBetween(50, 80);
     }
 }

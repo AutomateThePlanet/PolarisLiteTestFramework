@@ -17,6 +17,7 @@ public partial class DriverAdapter
     {
         _androidDriver = DriverFactory.WrappedAndroidDriver;
         _webDriverAdapter = new WEB.DriverAdapter(_androidDriver);
+        Web.Plugins.BrowserExecution.DriverFactory.WrappedDriver = _androidDriver;
         _actions = new Actions(_androidDriver);
     }
 }

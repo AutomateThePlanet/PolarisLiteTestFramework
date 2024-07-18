@@ -2,6 +2,7 @@
 using PolarisLite.Locators;
 using PolarisLite.Web.Contracts;
 using PolarisLite.Web.Services;
+using System.Drawing;
 
 namespace PolarisLite.Web.Components;
 
@@ -13,12 +14,13 @@ public class WebComponent : IComponent, IComponentVisible
     public WebComponent()
     {
         waitStrategies = new List<WaitStrategy>();
+        JavaScriptService = new DriverAdapter();
     }
 
     private Actions Actions => new Actions(WrappedDriver);
     public FindStrategy FindStrategy { get; internal set; }
     public IWebDriver WrappedDriver { get; internal set; }
-    public IJavaScriptExecutor JavaScriptExecutor => (IJavaScriptExecutor)WrappedDriver;
+    public IJavaScriptService JavaScriptService { get; internal set; }
 
     public bool? Enabled => _wrappedWebElement?.Enabled;
 
@@ -39,6 +41,52 @@ public class WebComponent : IComponent, IComponentVisible
             }
         }
         set => _wrappedWebElement = value;
+    }
+
+    private IWebElement FindElement(FindStrategy findStrategy)
+    {
+        if (!waitStrategies.Any())
+        {
+            waitStrategies.Add(new ToExistWaitStrategy());
+        }
+
+        foreach (var waitStrategy in waitStrategies)
+        {
+            waitStrategy.WaitUntil(FindStrategy);
+        }
+
+        _wrappedWebElement = FindNativeElements(findStrategy).FirstOrDefault();
+
+        return _wrappedWebElement;
+    }
+
+    private List<IWebElement> FindElements(FindStrategy findStrategy)
+    {
+        if (!waitStrategies.Any())
+        {
+            waitStrategies.Add(new ToExistWaitStrategy());
+        }
+
+        foreach (var waitStrategy in waitStrategies)
+        {
+            waitStrategy.WaitUntil(FindStrategy);
+        }
+
+        return FindNativeElements(findStrategy);
+    }
+
+    private List<IWebElement> FindNativeElements(FindStrategy findStrategy)
+    {
+        if (ParentWrappedElement != null)
+        {
+            var elements = ParentWrappedElement.FindElements(findStrategy.Convert()).ToList();
+            return elements;
+        }
+        else
+        {
+            var elements = WrappedDriver.FindElements(findStrategy.Convert()).ToList();
+            return elements;
+        }
     }
 
     public void EnsureState(WaitStrategy waitStrategy)
@@ -165,49 +213,7 @@ public class WebComponent : IComponent, IComponentVisible
     protected string Text => WrappedElement?.Text;
     protected string Value => GetAttribute("value");
 
-    private IWebElement FindElement(FindStrategy findStrategy)
-    {
-        if (!waitStrategies.Any())
-        {
-            waitStrategies.Add(new ToExistWaitStrategy());
-        }
+    public Point Location => WrappedElement.Location;
 
-        foreach (var waitStrategy in waitStrategies)
-        {
-            waitStrategy.WaitUntil(FindStrategy);
-        }
-
-        _wrappedWebElement = FindNativeElements(findStrategy).FirstOrDefault();
-
-        return _wrappedWebElement;
-    }
-
-    private List<IWebElement> FindElements(FindStrategy findStrategy)
-    {
-        if (!waitStrategies.Any())
-        {
-            waitStrategies.Add(new ToExistWaitStrategy());
-        }
-
-        foreach (var waitStrategy in waitStrategies)
-        {
-            waitStrategy.WaitUntil(FindStrategy);
-        }
-
-        return FindNativeElements(findStrategy);
-    }
-
-    private List<IWebElement> FindNativeElements(FindStrategy findStrategy)
-    {
-        if (ParentWrappedElement != null)
-        {
-            var elements = ParentWrappedElement.FindElements(findStrategy.Convert()).ToList();
-            return elements;
-        }
-        else
-        {
-            var elements = WrappedDriver.FindElements(findStrategy.Convert()).ToList();
-            return elements;
-        }
-    }
+    public Size Size => WrappedElement.Size;
 }

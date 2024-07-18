@@ -15,11 +15,15 @@ public class LambdaTestAttribute : GridAttribute
         GridSettings.Arguments = new Dictionary<string, object>
         {
             { "isRealMobile", "true" },
-            { "build", "1.2" },
+            { "build", "1.3" },
             { "video", "true" },
             { "visual", "true" },
+            { "w3c", "true" },
+            { "autoGrantPermissions", "true" },
             { "project", "POLARIS_ANDROID_RUN" },
             { "appiumVersion", "1.22.0" }
         };
     }
+
+    public bool IsRealDevice { get; set; } = true;
 }

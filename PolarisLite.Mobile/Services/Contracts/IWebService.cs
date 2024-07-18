@@ -1,5 +1,4 @@
-﻿using PolarisLite.Mobile.Components;
-using PolarisLite.Web;
+﻿using PolarisLite.Web;
 
 namespace PolarisLite.Mobile;
 
@@ -11,4 +10,10 @@ public interface IWebService
     ICookiesService Cookies { get; }
     IInteractionsService Interactions { get; }
     IJavaScriptService JavaScript { get; }
+
+    public TPage Create<TPage>()
+       where TPage : WebPage, new();
+
+    public TPage GoTo<TPage>()
+       where TPage : NavigatablePage, new();
 }

@@ -10,7 +10,7 @@ public class LocalExecutionAttribute : Attribute
         BrowserConfiguration = new BrowserConfiguration(browser, lifecycle);
     }
 
-    public LocalExecutionAttribute(Browser browser, Lifecycle lifecycle, string browserVersion, DesktopWindowSize size)
+    public LocalExecutionAttribute(Browser browser, Lifecycle lifecycle, string browserVersion = "latest", DesktopWindowSize size = DesktopWindowSize._1920_1080)
     {
         BrowserConfiguration = new BrowserConfiguration(browser, lifecycle);
         BrowserConfiguration.BrowserVersion = browserVersion;
