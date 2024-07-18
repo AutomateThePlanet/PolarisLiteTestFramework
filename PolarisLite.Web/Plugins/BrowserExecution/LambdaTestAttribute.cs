@@ -20,7 +20,7 @@ public class LambdaTestAttribute : GridAttribute
         string resolution = WindowsSizeResolver.GetWindowSize(desktopWindowSize).ConvertToString();
         GridSettings.Arguments = new Dictionary<string, object>
         {
-            { "resolution", "1920x1080" },
+            { "resolution", resolution },
             { "platform", "Windows 10" },
             { "visual", "true" },
             { "video", "true" },

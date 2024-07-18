@@ -7,10 +7,10 @@ public class GridAttribute : LocalExecutionAttribute
     public GridAttribute()
     {
         Lifecycle = Lifecycle.RestartEveryTime;
-        GridSettings = new GridSettings();
+        GridSettings = new GridConfiguration();
         GridSettings.OptionsName = "";
         ExecutionType = ExecutionType.Grid;
     }
 
-    public GridSettings GridSettings { get; set; }
+    public GridConfiguration GridSettings { get; set; }
 }

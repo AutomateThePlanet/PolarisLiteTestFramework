@@ -6,7 +6,7 @@ public class LambdaTestAttribute : GridAttribute
     public LambdaTestAttribute()
     {
         Lifecycle = Lifecycle.RestartEveryTime;
-        GridSettings = new GridSettings();
+        GridSettings = new GridConfiguration();
         GridSettings.OptionsName = "LT:Options";
         ExecutionType = ExecutionType.LambdaTest;
         var userName = Environment.GetEnvironmentVariable("LT_USERNAME", EnvironmentVariableTarget.Machine);
@@ -24,6 +24,4 @@ public class LambdaTestAttribute : GridAttribute
             { "appiumVersion", "1.22.0" }
         };
     }
-
-    public bool IsRealDevice { get; set; } = true;
 }

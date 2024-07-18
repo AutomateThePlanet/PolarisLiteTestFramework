@@ -63,14 +63,14 @@ public class DriverFactory
         }
 
         // change window size
-        //if (browserConfiguration.Size != default)
-        //{
-        //    WrappedDriver.Manage().Window.Size = browserConfiguration.Size;
-        //}
-        //else
-        //{
-        //    WrappedDriver.Manage().Window.Maximize();
-        //}
+        if (browserConfiguration.Size != default)
+        {
+            WrappedDriver.Manage().Window.Size = browserConfiguration.Size;
+        }
+        else
+        {
+            WrappedDriver.Manage().Window.Maximize();
+        }
 
         WrappedDriver.Manage().Window.Maximize();
 

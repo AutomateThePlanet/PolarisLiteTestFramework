@@ -219,8 +219,8 @@ public class ProductPurchaseTests : WebTest
     }
 
     [Test]
-    //[LambdaTest(Browser.Chrome, 120, DesktopWindowSize._1366_768)]
-    [LocalExecution(Browser.Chrome, Lifecycle.RestartEveryTime, size: DesktopWindowSize._1366_768)]
+    [LambdaTest(Browser.Chrome, 120, DesktopWindowSize._1366_768)]
+    //[LocalExecution(Browser.Chrome, Lifecycle.RestartEveryTime, size: DesktopWindowSize._1366_768)]
 
     public void SearchProducts_TestResponsiveDesign_WhenResolutionIsSetTo_1366_768()
     {
