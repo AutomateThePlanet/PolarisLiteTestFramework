@@ -10,4 +10,19 @@ public partial class DriverAdapter : IWebService
     public ICookiesService Cookies => _webDriverAdapter;
     public IInteractionsService Interactions => _webDriverAdapter;
     public IJavaScriptService JavaScript => _webDriverAdapter;
+
+    public TPage Create<TPage>()
+       where TPage : WebPage, new()
+    {
+        TPage pageInstance = new TPage();
+        return pageInstance;
+    }
+
+    public TPage GoTo<TPage>()
+       where TPage : NavigatablePage, new()
+    {
+        TPage pageInstance = new TPage();
+        pageInstance.Open();
+        return pageInstance;
+    }
 }

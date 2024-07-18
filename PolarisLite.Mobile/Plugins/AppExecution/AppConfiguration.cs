@@ -13,6 +13,7 @@ public class AppConfiguration
     public string TestName { get; set; }
     public bool IsMobileWebExecution { get; private set; }
     public string DefaultBrowser { get; private set; }
+    public GridSettings GridSettings { get; private set; }
     public Dictionary<string, string> AppiumOptions { get; private set; }
 
     public AppConfiguration(bool isMobileWebExecution)
@@ -59,6 +60,27 @@ public class AppConfiguration
         {
             IsMobileWebExecution = attribute.IsMobileWebTest
         };
+    }
+
+    public static AppConfiguration FromAttribute(LambdaTestAttribute attribute)
+    {
+        if (attribute == null)
+        {
+            return null;
+        }
+
+        var appConfig = new AppConfiguration(
+            attribute.Lifecycle,
+            attribute.ExecutionType,
+            attribute.AndroidVersion,
+            attribute.DeviceName,
+            attribute.AppPath,
+            attribute.AppPackage,
+            attribute.AppActivity);
+
+        appConfig.IsMobileWebExecution = attribute.IsMobileWebTest;
+        appConfig.GridSettings = attribute.GridSettings;
+        return appConfig;
     }
 
     public override bool Equals(object obj)

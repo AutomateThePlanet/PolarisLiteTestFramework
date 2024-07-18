@@ -16,7 +16,7 @@ public class WebTest : BaseTest
         if (!_arePluginsAlreadyInitialized)
         {
             PluginExecutionEngine.AddPlugin(new LambdaTestResultsPluginConfigurationFile());
-            PluginExecutionEngine.AddPlugin(new BrowserLifecyclePlugin());
+            PluginExecutionEngine.AddPlugin(new BrowserLifecyclePluginNoConfigurationFile());
             _arePluginsAlreadyInitialized = true;
         }
     }

@@ -2,6 +2,7 @@
 using PolarisLite.Locators;
 using PolarisLite.Web.Contracts;
 using PolarisLite.Web.Services;
+using System.Drawing;
 
 namespace PolarisLite.Web.Components;
 
@@ -211,4 +212,8 @@ public class WebComponent : IComponent, IComponentVisible
     protected string InnerHtml => GetAttribute("innerHTML");
     protected string Text => WrappedElement?.Text;
     protected string Value => GetAttribute("value");
+
+    public Point Location => WrappedElement.Location;
+
+    public Size Size => WrappedElement.Size;
 }

@@ -5,9 +5,8 @@ using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
 using PolarisLite.Core;
 using PolarisLite.Secrets;
-using static Unity.Storage.RegistrationSet;
 
-namespace PolarisLite.Mobile.Plugins.AppExecution;
+namespace PolarisLite.Mobile.Plugins.AppExecution.Factory;
 public static class DriverFactory
 {
     private static readonly TimeSpan IMPLICIT_TIMEOUT = TimeSpan.FromSeconds(30);
@@ -55,12 +54,9 @@ public static class DriverFactory
         else
         {
             var testName = AppConfiguration.TestName;
-            //var gridSettings = androidSettings.GridSettings.FirstOrDefault(g => g.ProviderName.Equals(executionType, StringComparison.OrdinalIgnoreCase));
-
             WrappedAndroidDriver = InitializeDriverGridMode(testName);
         }
 
-        //WrappedAndroidDriver.Manage().Timeouts().ImplicitWait = IMPLICIT_TIMEOUT;
         return WrappedAndroidDriver;
     }
 
@@ -105,9 +101,9 @@ public static class DriverFactory
         AddGridOptionsConfig(options, gridSettings);
         appiumOptions.AddAdditionalAppiumOption(gridSettings.OptionsName, options);
 
-        WrappedAndroidDriver = new AndroidDriver(new Uri(gridUrl), appiumOptions);
+        var driver = new AndroidDriver(new Uri(gridUrl), appiumOptions);
 
-        return WrappedAndroidDriver;
+        return driver;
     }
 
     private static AndroidDriver InitializeDriverRegularMode()
@@ -149,7 +145,7 @@ public static class DriverFactory
 
     private static void AddGridOptionsConfig(Dictionary<string, object> options, GridSettings gridSettings)
     {
-        var arguments = gridSettings?.Arguments.First();
+        var arguments = gridSettings?.Arguments;
         foreach (var entry in arguments)
         {
             // handle mask command for LambdaTest

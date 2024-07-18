@@ -45,6 +45,10 @@ public class AndroidComponent : IComponent, IComponentVisible
         set => _wrappedElement = value;
     }
 
+    public Point Location => WrappedElement.Location;
+
+    public Size Size => WrappedElement.Size;
+
     public bool IsVisible => WrappedElement.Displayed;
 
     internal void Click()
