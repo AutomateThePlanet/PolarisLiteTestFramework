@@ -3,6 +3,7 @@ using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
 using PolarisLite.Web.Plugins;
 using PolarisLite.Web.Plugins.BrowserExecution;
+using PolarisLite.Web.Settings.FilesImplementation;
 using System.Reflection;
 namespace Bellatrix.Web.Plugins.Browser;
 
@@ -11,7 +12,8 @@ public class LambdaTestResultsPlugin : Plugin
     public override void OnAfterTestCleanup(TestOutcome testResult, MethodInfo memberInfo, Exception failedTestException)
     {
         var driver = DriverFactory.WrappedDriver;
-        bool isLambdaTestRun = DriverFactory.ExecutionType.Equals(ExecutionType.LambdaTest);
+        var executionType = ConfigurationService.GetSection<WebSettings>().ExecutionType;
+        bool isLambdaTestRun = executionType.Equals("lambda test", StringComparison.OrdinalIgnoreCase);
 
         if (isLambdaTestRun && testResult == TestOutcome.Passed)
         {

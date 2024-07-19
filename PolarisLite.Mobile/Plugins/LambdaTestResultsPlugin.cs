@@ -4,6 +4,7 @@ using PolarisLite.Core.Plugins;
 using PolarisLite.Mobile;
 using PolarisLite.Mobile.Plugins;
 using PolarisLite.Mobile.Plugins.AppExecution;
+using PolarisLite.Mobile.Settings.FilesImplementation;
 using System.Reflection;
 
 namespace Bellatrix.Mobile.Plugins;
@@ -14,7 +15,8 @@ public class LambdaTestResultsPlugin : Plugin
     {
         var driver = DriverFactory.WrappedAndroidDriver;
 
-        bool isLambdaTestRun = DriverFactory.AppConfiguration.ExecutionType.Equals(ExecutionType.LambdaTest);
+        var executionType = ConfigurationService.GetSection<AndroidSettings>().ExecutionType;
+        bool isLambdaTestRun = executionType.Equals("lambda test", StringComparison.OrdinalIgnoreCase);
 
         try
         {

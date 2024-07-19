@@ -1,5 +1,6 @@
 ﻿using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
+using PolarisLite.Web.Settings.FilesImplementation;
 using PolarisLite.Web.Plugins.BrowserExecution;
 using System.Reflection;
 
@@ -80,6 +81,25 @@ public class BrowserLifecyclePlugin : Plugin
         var methodBrowser = GetExecutionBrowserMethodLevel(testMethod);
         BrowserConfiguration browserConfiguration = methodBrowser != null ? methodBrowser : classBrowser;
         
+        //if (browserConfiguration == null)
+        //{
+        //    browserConfiguration = new BrowserConfiguration();
+        //    browserConfiguration.Browser = WebSettings.DefaultBrowser;
+        //    browserConfiguration.Lifecycle = WebSettings.DefaultLifeCycle;
+        //    browserConfiguration.BrowserVersion = WebSettings.BrowserVersion;
+        //    browserConfiguration.MobileEmulation = WebSettings.MobileEmulation;
+        //    browserConfiguration.UserAgent = WebSettings.UserAgent;
+        //    browserConfiguration.PixelRation = WebSettings.PixelRation;
+        //    browserConfiguration.DeviceName = WebSettings.DeviceName;
+        //    browserConfiguration.Size = WebSettings.Size;
+        //}
+
+        var webSettings = ConfigurationService.GetSection<WebSettings>();
+        if (browserConfiguration == null)
+        {
+            browserConfiguration = new BrowserConfiguration(webSettings.DefaultBrowser, webSettings.DefaultLifeCycle, webSettings.ExecutionType);
+        }
+
         return browserConfiguration;
     }
 
@@ -88,7 +108,23 @@ public class BrowserLifecyclePlugin : Plugin
         var classGridSettings = GetLambdaTestClassLevel(testMethod.DeclaringType);
         var methodGridSettings = GetLambdaTestMethodLevel(testMethod);
         GridConfiguration gridSettings = methodGridSettings != null ? methodGridSettings : classGridSettings;
-
+        //if (gridSettings == null)
+        //{
+        //    gridSettings = new GridConfiguration();
+        //    gridSettings.ProviderName = GridSettings.ProviderName;
+        //    gridSettings.Url = GridSettings.Url;
+        //    gridSettings.OptionsName = GridSettings.Url;
+        //    gridSettings.Arguments = GridSettings.Arguments;
+        //}
+        var webSettings = ConfigurationService.GetSection<WebSettings>();
+        if (gridSettings == null)
+        {
+            gridSettings = new GridConfiguration();
+            gridSettings.ProviderName = webSettings.GridSettings.ProviderName;
+            gridSettings.Url = webSettings.GridSettings.Url;
+            gridSettings.OptionsName = webSettings.GridSettings.OptionsName;
+            gridSettings.Arguments = webSettings.GridSettings.Arguments;
+        }
         return gridSettings;
     }
 

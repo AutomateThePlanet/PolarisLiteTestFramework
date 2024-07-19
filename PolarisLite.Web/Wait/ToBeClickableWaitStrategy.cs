@@ -1,6 +1,7 @@
 ﻿using PolarisLite.Core;
 using PolarisLite.Locators;
 using PolarisLite.Web;
+using PolarisLite.Web.Configuration.StaticImplementation;
 
 namespace PolarisLite;
 
@@ -9,7 +10,7 @@ public class ToBeClickableWaitStrategy : WaitStrategy
     public ToBeClickableWaitStrategy(int? timeoutIntervalInSeconds = null, int? sleepIntervalInSeconds = null)
         : base(timeoutIntervalInSeconds, sleepIntervalInSeconds)
     {
-        TimeoutInterval = TimeSpan.FromSeconds(60);
+        TimeoutInterval = TimeSpan.FromSeconds(WebSettings.TimeoutSettings.ElementToBeClickableTimeout);
     }
 
     public override void WaitUntil<TBy>(TBy by)

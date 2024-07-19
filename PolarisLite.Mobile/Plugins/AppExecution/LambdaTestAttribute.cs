@@ -1,4 +1,6 @@
-﻿namespace PolarisLite.Mobile.Plugins;
+﻿using PolarisLite.Mobile.Plugins.AppExecution;
+
+namespace PolarisLite.Mobile.Plugins;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
 public class LambdaTestAttribute : GridAttribute

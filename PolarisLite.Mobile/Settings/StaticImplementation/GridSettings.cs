@@ -1,8 +1,6 @@
-﻿using PolarisLite.Web.Plugins.BrowserExecution;
+﻿namespace PolarisLite.Mobile.Settings.StaticImplementation;
 
-namespace PolarisLite.Web;
-
-public class GridConfiguration
+public class GridSettings
 {
     public string ProviderName { get; set; }
     public string OptionsName { get; set; }

@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using PolarisLite.Mobile.Plugins.AppExecution;
 namespace PolarisLite.Mobile.Plugins;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]

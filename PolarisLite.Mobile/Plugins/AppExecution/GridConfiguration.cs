@@ -1,4 +1,4 @@
-﻿namespace PolarisLite.Mobile;
+﻿namespace PolarisLite.Mobile.Plugins.AppExecution;
 
 public class GridConfiguration
 {
