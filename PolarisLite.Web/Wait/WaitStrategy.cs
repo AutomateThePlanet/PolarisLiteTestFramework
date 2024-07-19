@@ -2,6 +2,7 @@
 using PolarisLite.Locators;
 using PolarisLite.Web;
 using PolarisLite.Web.Plugins.BrowserExecution;
+using PolarisLite.Web.Settings.FilesImplementation;
 
 namespace PolarisLite;
 

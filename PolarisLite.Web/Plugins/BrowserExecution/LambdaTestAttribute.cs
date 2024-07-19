@@ -1,4 +1,5 @@
 ﻿using PolarisLite.Web.Plugins.BrowserExecution;
+using PolarisLite.Web.Settings.FilesImplementation;
 using System.Runtime.InteropServices;
 
 namespace PolarisLite.Web.Plugins;
@@ -11,7 +12,7 @@ public class LambdaTestAttribute : GridAttribute
     {
         string browserVersionString = browserVersion <= 0 ? "latest" : browserVersion.ToString();
         BrowserConfiguration = new BrowserConfiguration(browser, Lifecycle.RestartEveryTime, ExecutionType.Grid, browserVersionString);
-        GridSettings = new GridConfiguration();
+        GridSettings = new GridSettings();
         GridSettings.OptionsName = "LT:Options";
         string userName = Environment.GetEnvironmentVariable("LT_USERNAME", EnvironmentVariableTarget.Machine);
         string accessKey = Environment.GetEnvironmentVariable("LT_ACCESSKEY", EnvironmentVariableTarget.Machine);

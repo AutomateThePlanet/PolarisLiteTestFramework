@@ -4,6 +4,7 @@ using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
 using PolarisLite.Core;
+using PolarisLite.Mobile.Settings.FilesImplementation;
 using PolarisLite.Secrets;
 
 namespace PolarisLite.Mobile.Plugins.AppExecution.Factory;

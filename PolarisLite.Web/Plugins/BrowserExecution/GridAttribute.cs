@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using PolarisLite.Web.Plugins.BrowserExecution;
+using PolarisLite.Web.Settings.FilesImplementation;
 
 namespace PolarisLite.Web.Plugins;
 
@@ -10,11 +11,11 @@ public class GridAttribute : LocalExecutionAttribute
         : base(browser, Lifecycle.RestartEveryTime)
     {
         BrowserConfiguration = new BrowserConfiguration(browser, Lifecycle.RestartEveryTime);
-        GridSettings = new GridConfiguration();
+        GridSettings = new GridSettings();
         GridSettings.OptionsName = "";
 
         BrowserConfiguration = new BrowserConfiguration(browser, Lifecycle.RestartEveryTime, ExecutionType.Grid, browserVersion);
     }
 
-    public GridConfiguration GridSettings { get; set; }
+    public GridSettings GridSettings { get; set; }
 }

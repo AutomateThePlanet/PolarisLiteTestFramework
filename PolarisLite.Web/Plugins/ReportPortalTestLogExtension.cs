@@ -5,6 +5,7 @@ using OpenQA.Selenium.Remote;
 using PolarisLite.Core;
 using PolarisLite.Secrets;
 using PolarisLite.Web.Plugins.BrowserExecution;
+using PolarisLite.Web.Settings.FilesImplementation;
 using ReportPortal.Client.Abstractions.Models;
 using ReportPortal.Client.Abstractions.Requests;
 using ReportPortal.Client.Abstractions.Responses;
@@ -23,7 +24,8 @@ public class ReportPortalTestLogExtension : ITestEventListener
     public ReportPortalTestLogExtension()
     {
         var webSettings = ConfigurationService.GetSection<WebSettings>();
-        _reportPortalEnabled = webSettings.ReportPortalEnabled;
+        //_reportPortalEnabled = webSettings.ReportPortalEnabled;
+        _reportPortalEnabled = false;
 
         if (_reportPortalEnabled)
         {
@@ -103,7 +105,7 @@ public class ReportPortalTestLogExtension : ITestEventListener
                     var sessionId = ((RemoteWebDriver)DriverFactory.WrappedDriver).SessionId.ToString(); // FETCHING SESSION ID
 
                     var gridSettings = webSettings.GridSettings;
-                    var x = gridSettings[0].Arguments;
+                    var x = gridSettings.Arguments;
                     var accessKey = SecretsResolver.GetSecret(x["accessKey"].ToString());
                     var username = SecretsResolver.GetSecret(x["username"].ToString());
 

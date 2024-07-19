@@ -15,6 +15,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using OpenQA.Selenium.DevTools;
 using OpenQA.Selenium.Chromium;
+using PolarisLite.Web.Settings.FilesImplementation;
 
 namespace PolarisLite.Web.Plugins.BrowserExecution;
 public class DriverFactory
@@ -107,7 +108,7 @@ public class DriverFactory
     {
         var webSettings = ConfigurationService.GetSection<WebSettings>();
         var options = InitializeOptionsFromConfig(webSettings);
-        var gridSettings = webSettings.GridSettings.FirstOrDefault(x => x.ProviderName.ToLower() == webSettings.ExecutionType);
+        var gridSettings = webSettings.GridSettings;
 
         AddOptionsConfig(options, gridSettings);
         if (browser == Browser.NotSet)
@@ -140,7 +141,7 @@ public class DriverFactory
         Disposed = false;
     }
 
-    public static void StartGrid(BrowserConfiguration browserConfiguration, GridConfiguration gridSettings)
+    public static void StartGrid(BrowserConfiguration browserConfiguration, GridSettings gridSettings)
     {
         var options = InitializeOptions(browserConfiguration.Browser, browserConfiguration.BrowserVersion);
         AddGridOptions(options, gridSettings);
@@ -155,7 +156,7 @@ public class DriverFactory
         var webSettings = ConfigurationService.GetSection<WebSettings>();
         //var options = new ChromeOptions();
         var options = InitializeOptionsFromConfig(webSettings);
-        var gridSettings = webSettings.GridSettings.First(x => x.ProviderName == webSettings.ExecutionType);
+        var gridSettings = webSettings.GridSettings;
         AddGridOptionsConfig(options, gridSettings);
         //options.AddAdditionalOption(gridSettings.OptionsName, args);
         var gridUrl = ConstructGridUrl(gridSettings.Url);
@@ -207,7 +208,7 @@ public class DriverFactory
         return options;
     }
 
-    private static void AddGridOptions<TOptions>(TOptions options, GridConfiguration gridSettings)
+    private static void AddGridOptions<TOptions>(TOptions options, GridSettings gridSettings)
       where TOptions : DriverOptions
     {
         Dictionary<string, object> args = new();
@@ -219,7 +220,7 @@ public class DriverFactory
         options.AddAdditionalOption(gridSettings.OptionsName, args);
     }
 
-    private static void AddGridOptionsConfig<TOptions>(TOptions options, GridConfiguration gridSettings) 
+    private static void AddGridOptionsConfig<TOptions>(TOptions options, GridSettings gridSettings) 
         where TOptions : DriverOptions
     {
         if(gridSettings == null)
@@ -293,7 +294,7 @@ public class DriverFactory
         return options;
     }
 
-    private static void AddOptionsConfig<TOptions>(TOptions options, GridConfiguration gridSettings)
+    private static void AddOptionsConfig<TOptions>(TOptions options, GridSettings gridSettings)
         where TOptions : DriverOptions
     {
         if (gridSettings == null)

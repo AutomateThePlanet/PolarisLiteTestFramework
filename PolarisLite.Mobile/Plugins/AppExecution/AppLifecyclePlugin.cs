@@ -1,6 +1,7 @@
 ﻿using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
 using PolarisLite.Mobile.Plugins.AppExecution;
+using PolarisLite.Mobile.Settings.FilesImplementation;
 using System;
 using System.Reflection;
 

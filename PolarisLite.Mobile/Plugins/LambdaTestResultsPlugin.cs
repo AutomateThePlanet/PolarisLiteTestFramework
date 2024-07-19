@@ -3,6 +3,7 @@ using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
 using PolarisLite.Mobile;
 using PolarisLite.Mobile.Plugins.AppExecution;
+using PolarisLite.Mobile.Settings.FilesImplementation;
 using System.Reflection;
 namespace Bellatrix.Mobile.Plugins;
 

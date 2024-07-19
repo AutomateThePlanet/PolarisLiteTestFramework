@@ -1,4 +1,5 @@
 ﻿using PolarisLite.Core;
+using PolarisLite.Mobile.Settings.FilesImplementation;
 
 namespace PolarisLite.Mobile.Plugins;
 public class AppConfiguration

@@ -1,6 +1,7 @@
 ﻿using PolarisLite.Core;
 using PolarisLite.Locators;
 using PolarisLite.Web;
+using PolarisLite.Web.Settings.FilesImplementation;
 
 namespace PolarisLite;
 

@@ -3,6 +3,7 @@ using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
 using PolarisLite.Web;
 using PolarisLite.Web.Plugins.BrowserExecution;
+using PolarisLite.Web.Settings.FilesImplementation;
 using System.Reflection;
 namespace Bellatrix.Web.Plugins.Browser;
 

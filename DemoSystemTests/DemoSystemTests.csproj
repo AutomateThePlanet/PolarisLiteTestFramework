@@ -68,4 +68,10 @@
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <CallTarget Targets="CopyCategoriesToAllureFolder" />
   </Target>
+
+  <ItemGroup>
+    <None Update="testFrameworkSettings.$(Configuration).json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
