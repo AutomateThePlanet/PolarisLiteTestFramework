@@ -8,7 +8,7 @@ public sealed class ConfigurationService
     private static readonly IConfigurationRoot Root = InitializeConfiguration();
 
     public static TSection GetSection<TSection>()
-          where TSection : class, new()
+        where TSection : class, new()
     {
         string sectionName = typeof(TSection).Name.MakeFirstLetterToLower();
         return Root.GetSection(sectionName).Get<TSection>();
@@ -16,12 +16,20 @@ public sealed class ConfigurationService
 
     private static IConfigurationRoot InitializeConfiguration()
     {
-        var filesInExecutionDir = Directory.GetFiles(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
-        var settingsFile = filesInExecutionDir.FirstOrDefault(x => x.Contains("testFrameworkSettings") && x.EndsWith(".json"));
+        string environment = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? "Development";
+        string settingsFileName = $"testFrameworkSettings.{environment}.json";
+
         var builder = new ConfigurationBuilder();
-        if (settingsFile != null)
+        var executionDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        var settingsFilePath = Path.Combine(executionDir, settingsFileName);
+
+        if (File.Exists(settingsFilePath))
         {
-            builder.AddJsonFile(settingsFile, optional: true, reloadOnChange: true);
+            builder.AddJsonFile(settingsFilePath, optional: true, reloadOnChange: true);
+        }
+        else
+        {
+            throw new FileNotFoundException($"Configuration file '{settingsFileName}' not found in '{executionDir}'.");
         }
 
         return builder.Build();
