@@ -84,7 +84,7 @@ public class DriverFactory
         if (browserConfiguration.MobileEmulation)
         {
             deviceOptions = new ChromiumMobileEmulationDeviceSettings();
-            deviceOptions.UserAgent = "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19";
+            deviceOptions.UserAgent = browserConfiguration.UserAgent;
             deviceOptions.Width = browserConfiguration.Size.Width;
             deviceOptions.Height = browserConfiguration.Size.Height;
             deviceOptions.EnableTouchEvents = true;

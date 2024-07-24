@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PolarisLite.Web.Plugins.BrowserExecution;
+﻿namespace PolarisLite.Web.Plugins.BrowserExecution;
 public class MobileUserAgents
 {
     public const string IPhoneX = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0 Mobile/15E148 Safari/604.1";
