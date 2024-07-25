@@ -1,18 +1,19 @@
-﻿using Newtonsoft.Json;
+﻿using AngleSharp.Html;
+using Newtonsoft.Json;
 using PolarisLite.Web.Components;
+using PolarisLite.Web.Services;
 using System.Text;
 
 namespace PolarisLite.Web;
 
 public class KendoGrid : WebComponent
 {
-    private readonly string _gridId;
-    private readonly WebDriverWait _wait;
+    private WebDriverWait _wait;
 
-    public KendoGrid(IWebDriver driver, IWebElement gridDiv)
+    public KendoGrid()
     {
-        _gridId = gridDiv.GetAttribute("id");
-        _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+        _wait = new WebDriverWait(WrappedDriver, TimeSpan.FromSeconds(30));
+        _wait.IgnoreExceptionTypes(typeof(JavaScriptException));
     }
 
     public void RemoveFilters()
@@ -44,7 +45,7 @@ public class KendoGrid : WebComponent
     {
         var jsToBeExecuted = GetGridReference();
         jsToBeExecuted = string.Concat(jsToBeExecuted, "return grid.dataSource.pageSize();");
-        var currentResponse = JavaScriptService.Execute(jsToBeExecuted);
+        var currentResponse = JavaScriptService.Execute(jsToBeExecuted, WrappedElement);
         var pageSize = int.Parse(currentResponse.ToString());
         return pageSize;
     }
@@ -67,14 +68,16 @@ public class KendoGrid : WebComponent
     public void Sort(string columnName, SortType sortType)
     {
         var jsToBeExecuted = GetGridReference();
+        WaitForDataSourceToBeInitialized();
         jsToBeExecuted = string.Concat(jsToBeExecuted, "grid.dataSource.sort({field: '", columnName, "', dir: '", sortType.ToString().ToLower(), "'});");
         JavaScriptService.Execute(jsToBeExecuted);
         WaitForAjax();
     }
 
+
     public List<T> GetItems<T>() where T : class
     {
-        WaitForAjax();
+        WaitForDataItemsToBeInitialized();
         var jsToBeExecuted = GetGridReference();
         jsToBeExecuted = string.Concat(jsToBeExecuted, "return JSON.stringify(grid.dataItems());");
         var jsResults = JavaScriptService.Execute(jsToBeExecuted);
@@ -90,6 +93,8 @@ public class KendoGrid : WebComponent
     public void Filter(params GridFilter[] gridFilters)
     {
         var jsToBeExecuted = GetGridReference();
+        WaitForDataSourceToBeInitialized();
+
         var sb = new StringBuilder();
         sb.Append(jsToBeExecuted);
         sb.Append("grid.dataSource.filter({ logic: \"and\", filters: [");
@@ -97,11 +102,10 @@ public class KendoGrid : WebComponent
         {
             DateTime filterDateTime;
             var isFilterDateTime = DateTime.TryParse(currentFilter.FilterValue, out filterDateTime);
-            var filterValueToBeApplied =
-                                           isFilterDateTime ? string.Format("new Date({0}, {1}, {2})", filterDateTime.Year, filterDateTime.Month - 1, filterDateTime.Day) :
-                                            string.Format("\"{0}\"", currentFilter.FilterValue);
+            var filterValueToBeApplied = isFilterDateTime ? $"new Date({filterDateTime.Year}, {filterDateTime.Month - 1}, {filterDateTime.Day})" :
+                                            $"""{currentFilter.FilterValue}""";
             var kendoFilterOperator = ConvertFilterOperatorToKendoOperator(currentFilter.FilterOperator);
-            sb.Append(string.Concat("{ field: \"", currentFilter.ColumnName, "\", operator: \"", kendoFilterOperator, "\", value: ", filterValueToBeApplied, " },"));
+            sb.Append(string.Concat("{ field: \"", currentFilter.ColumnName, "\", operator: \"", kendoFilterOperator, "\", value: \"", filterValueToBeApplied, "\" },"));
         }
         sb.Append("] });");
         jsToBeExecuted = sb.ToString().Replace(",]", "]");
@@ -111,6 +115,7 @@ public class KendoGrid : WebComponent
 
     public int GetCurrentPageNumber()
     {
+        WaitForDataSourceToBeInitialized();
         var jsToBeExecuted = GetGridReference();
         jsToBeExecuted = string.Concat(jsToBeExecuted, "return grid.dataSource.page();");
         var result = JavaScriptService.Execute(jsToBeExecuted);
@@ -120,7 +125,7 @@ public class KendoGrid : WebComponent
 
     private string GetGridReference()
     {
-        var initializeKendoGrid = string.Format("var grid = $('#{0}').data('kendoGrid');", _gridId);
+        var initializeKendoGrid = string.Format("var grid = $('#{0}').data('kendoGrid');", FindStrategy.Value);
 
         return initializeKendoGrid;
     }
@@ -181,6 +186,25 @@ public class KendoGrid : WebComponent
 
     private void WaitForAjax()
     {
-        _wait.Until(d => (bool)(d as IJavaScriptExecutor).ExecuteScript("return jQuery.active == 0"));
+        IBrowserService browserService = new DriverAdapter();
+        browserService.WaitForAjax();
+    }
+
+    private void WaitForDataSourceToBeInitialized()
+    {
+        _wait.Until(driver =>
+        {
+            var jsToBeExecuted = GetGridReference() + "return grid.dataSource !== null;";
+            return (bool)(driver as IJavaScriptExecutor).ExecuteScript(jsToBeExecuted);
+        });
+    }
+
+    private void WaitForDataItemsToBeInitialized()
+    {
+        _wait.Until(driver =>
+        {
+            var jsToBeExecuted = GetGridReference() + "return grid.dataItems() !== null && grid.dataItems().length > 0;";
+            return (bool)(driver as IJavaScriptExecutor).ExecuteScript(jsToBeExecuted);
+        });
     }
 }
