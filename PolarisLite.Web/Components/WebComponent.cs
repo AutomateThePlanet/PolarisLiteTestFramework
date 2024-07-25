@@ -1,6 +1,7 @@
 ﻿using PolarisLite.Core.Infrastructure;
 using PolarisLite.Locators;
 using PolarisLite.Web.Contracts;
+using PolarisLite.Web.Plugins.BrowserExecution;
 using PolarisLite.Web.Services;
 using System.Drawing;
 
@@ -15,6 +16,7 @@ public class WebComponent : IComponent, IComponentVisible
     {
         waitStrategies = new List<WaitStrategy>();
         JavaScriptService = new DriverAdapter();
+        WrappedDriver = DriverFactory.WrappedDriver;
     }
 
     private Actions Actions => new Actions(WrappedDriver);
