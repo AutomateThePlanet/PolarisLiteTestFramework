@@ -1,4 +1,5 @@
-﻿using PolarisLite.Core.Infrastructure;
+﻿using PolarisLite.Core;
+using PolarisLite.Core.Infrastructure;
 using PolarisLite.Locators;
 using PolarisLite.Web.Contracts;
 using PolarisLite.Web.Services;
@@ -33,10 +34,12 @@ public class WebComponent : IComponent, IComponentVisible
         {
             if (_wrappedWebElement == null)
             {
+                WebComponentPluginExecutionEngine.OnComponentFound(this);
                 return FindElement(FindStrategy);
             }
             else
             {
+                WebComponentPluginExecutionEngine.OnComponentFound(this);
                 return _wrappedWebElement;
             }
         }
