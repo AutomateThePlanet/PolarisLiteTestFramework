@@ -194,7 +194,7 @@ public class KendoGrid : WebComponent
     {
         _wait.Until(driver =>
         {
-            var jsToBeExecuted = GetGridReference() + "return grid.dataItems() !== null && grid.dataItems().length > 0;";
+            var jsToBeExecuted = GetGridReference() + "return grid.dataSource !== null;";
             return (bool)(driver as IJavaScriptExecutor).ExecuteScript(jsToBeExecuted);
         });
     }

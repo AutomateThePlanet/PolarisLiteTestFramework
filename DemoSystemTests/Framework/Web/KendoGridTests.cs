@@ -14,7 +14,7 @@ public class KendoGridTests : WebTest
 
     protected override void TestInitialize()
     {
-
+        App.Navigation.GoToUrl("https://demos.telerik.com/kendo-ui/grid/basic-usage");
         var consentButton = App.Elements.FindById<Button>("onetrust-accept-btn-handler");
         consentButton.Click();
 
