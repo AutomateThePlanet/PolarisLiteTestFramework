@@ -1,9 +1,6 @@
-﻿using Newtonsoft.Json;
-using PolarisLite.API;
+﻿using PolarisLite.API;
 using RestSharp;
-using RestSharp.Authenticators;
 using RestSharp.Authenticators.OAuth2;
-using RestSharp.Serializers.NewtonsoftJson;
 namespace DemoSystemTests;
 
 [TestFixture]

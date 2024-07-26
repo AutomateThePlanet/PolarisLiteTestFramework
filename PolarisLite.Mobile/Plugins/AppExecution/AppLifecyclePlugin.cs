@@ -1,11 +1,9 @@
 ﻿using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
 using PolarisLite.Mobile.Plugins.AppExecution;
-using PolarisLite.Mobile.Settings.FilesImplementation;
-using System;
 using System.Reflection;
 
-namespace PolarisLite.Mobile.Plugins.App;
+namespace PolarisLite.Mobile.Plugins;
 public class AppLifecyclePlugin : Plugin
 {
     private AppConfiguration _currentAppConfiguration;
@@ -14,6 +12,7 @@ public class AppLifecyclePlugin : Plugin
     public override void OnBeforeTestInitialize(MethodInfo memberInfo)
     {
         _currentAppConfiguration = GetAppConfiguration(memberInfo);
+        
         bool shouldRestartApp = ShouldRestartApp(_currentAppConfiguration);
         if (shouldRestartApp)
         {
@@ -63,22 +62,25 @@ public class AppLifecyclePlugin : Plugin
 
     private AppConfiguration GetAppConfiguration(MemberInfo testMethod)
     {
-        var classApp = GetExecutionAppClassLevel(testMethod.DeclaringType);
-        var methodApp = GetExecutionAppMethodLevel(testMethod);
-        var appAttribute = methodApp != null ? methodApp : classApp;
+        var lambdaClassAttribute = GetLambdaTestClassLevel(testMethod.DeclaringType);
+        var lambdaMethodAttribute = GetLambdaTestMethodLevel(testMethod);
+        var lambdaAppAttribute = lambdaMethodAttribute != null ? lambdaMethodAttribute : lambdaClassAttribute;
 
         AppConfiguration appConfiguration = default;
-        if (appAttribute == null)
+        if (lambdaAppAttribute != null)
         {
-            var androidSettings = ConfigurationService.GetSection<AndroidSettings>();
-            appConfiguration = new AppConfiguration(androidSettings);
+            appConfiguration = AppConfiguration.FromAttribute(lambdaAppAttribute);
+            return appConfiguration;
         }
         else
         {
-            appConfiguration = AppConfiguration.FromAttribute(appAttribute);
-        }
+            var classApp = GetExecutionAppClassLevel(testMethod.DeclaringType);
+            var methodApp = GetExecutionAppMethodLevel(testMethod);
+            var appAttribute = methodApp != null ? methodApp : classApp;
 
-        return appConfiguration;
+            appConfiguration = AppConfiguration.FromAttribute(appAttribute);
+            return appConfiguration;
+        }
     }
 
     private LocalExecutionAttribute GetExecutionAppMethodLevel(MemberInfo testMethod)
@@ -91,5 +93,17 @@ public class AppLifecyclePlugin : Plugin
     {
         var executionAppAttribute = testClass.GetCustomAttribute<LocalExecutionAttribute>(true);
         return executionAppAttribute;
+    }
+
+    private LambdaTestAttribute GetLambdaTestMethodLevel(MemberInfo testMethod)
+    {
+        var gridAttribute = testMethod.GetCustomAttribute<LambdaTestAttribute>(true);
+        return gridAttribute;
+    }
+
+    private LambdaTestAttribute GetLambdaTestClassLevel(Type testClass)
+    {
+        var gridAttribute = testClass.GetCustomAttribute<LambdaTestAttribute>(true);
+        return gridAttribute;
     }
 }

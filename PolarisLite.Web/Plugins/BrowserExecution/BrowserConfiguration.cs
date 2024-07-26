@@ -1,5 +1,4 @@
-﻿using PolarisLite.Web.Plugins.BrowserExecution;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace PolarisLite.Web.Plugins;
 public class BrowserConfiguration
@@ -9,7 +8,7 @@ public class BrowserConfiguration
     }
 
     public BrowserConfiguration(
-        Browser browser,
+        BrowserType browser,
         Lifecycle lifecycle)
     {
         Browser = browser;
@@ -18,7 +17,7 @@ public class BrowserConfiguration
     }
 
     public BrowserConfiguration(
-    Browser browser,
+    BrowserType browser,
     Lifecycle lifecycle,
     ExecutionType executionType,
     string browserVersion = "latest")
@@ -35,13 +34,13 @@ public class BrowserConfiguration
         string executionType,
         string browserVersion = "latest")
     {
-        Browser = (Browser)Enum.Parse(typeof(Browser), browser);
+        Browser = (BrowserType)Enum.Parse(typeof(BrowserType), browser);
         Lifecycle = (Lifecycle)Enum.Parse(typeof(Lifecycle), lifecycle);
         ExecutionType = (ExecutionType)Enum.Parse(typeof(ExecutionType), executionType);
         BrowserVersion = browserVersion;
     }
 
-    public Browser Browser { get; set; }
+    public BrowserType Browser { get; set; }
     public string BrowserVersion { get; set; }
     public Lifecycle Lifecycle { get; set; }
     public ExecutionType ExecutionType { get; set; }

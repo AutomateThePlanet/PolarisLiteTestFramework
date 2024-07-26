@@ -1,7 +1,4 @@
-﻿using OpenQA.Selenium.Appium;
-using OpenQA.Selenium.Appium.Android;
-
-namespace PolarisLite.Mobile;
+﻿namespace PolarisLite.Mobile;
 
 public class IdFindStrategy : FindStrategy
 {

@@ -1,10 +1,5 @@
-﻿using PolarisLite.Core.Plugins;
-using PolarisLite.Web.Components;
-using System.Reflection;
-
-namespace PolarisLite.Web;
+﻿namespace PolarisLite.Web.Plugins;
 public class WebComponentPlugin
 {
-    public virtual void OnComponentFound(WebComponent component) { }
-    public virtual void OnComponentsFound(List<WebComponent> components) { }
+    public virtual void OnComponentFound(IWebElement component) { }
 }

@@ -1,10 +1,10 @@
 ﻿using OpenQA.Selenium.Support.Extensions;
 using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
-using PolarisLite.Mobile;
+using PolarisLite.Mobile.Plugins;
 using PolarisLite.Mobile.Plugins.AppExecution;
-using PolarisLite.Mobile.Settings.FilesImplementation;
 using System.Reflection;
+
 namespace Bellatrix.Mobile.Plugins;
 
 public class LambdaTestResultsPlugin : Plugin
@@ -13,8 +13,7 @@ public class LambdaTestResultsPlugin : Plugin
     {
         var driver = DriverFactory.WrappedAndroidDriver;
 
-        var executionType = ConfigurationService.GetSection<AndroidSettings>().ExecutionType;
-        bool isLambdaTestRun = executionType.Equals("lambda test", StringComparison.OrdinalIgnoreCase);
+        bool isLambdaTestRun = DriverFactory.AppConfiguration.ExecutionType.Equals(ExecutionType.LambdaTest);
 
         try
         {

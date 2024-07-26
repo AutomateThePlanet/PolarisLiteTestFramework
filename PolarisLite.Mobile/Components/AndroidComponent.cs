@@ -1,6 +1,4 @@
-﻿using OpenQA.Selenium.Appium;
-using OpenQA.Selenium.Appium.Android;
-using PolarisLite.Core.Infrastructure;
+﻿using PolarisLite.Core.Infrastructure;
 using PolarisLite.Mobile.Contracts;
 using PolarisLite.Mobile.Plugins.AppExecution;
 using PolarisLite.Mobile.Services;
@@ -18,7 +16,7 @@ public class AndroidComponent : IComponent, IComponentVisible
     public AndroidDriver WrappedDriver { get; set; }
     protected IAppService AppService { get; private set; }
     protected IElementFindService ComponentCreateService { get; private set; }
-    protected IWaitService ComponentWaitService { get; private set; }
+    //protected IWaitService ComponentWaitService { get; private set; }
     private readonly List<WaitStrategy> waitStrategies;
 
     public AndroidComponent()
@@ -31,7 +29,7 @@ public class AndroidComponent : IComponent, IComponentVisible
 
     public AppiumElement WrappedElement
     {
-        get 
+        get
         {
             if (_wrappedElement == null)
             {

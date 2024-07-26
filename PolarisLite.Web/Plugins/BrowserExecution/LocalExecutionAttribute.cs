@@ -1,16 +1,14 @@
-﻿using PolarisLite.Web.Plugins.BrowserExecution;
-
-namespace PolarisLite.Web.Plugins;
+﻿namespace PolarisLite.Web.Plugins;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
 public class LocalExecutionAttribute : Attribute
 {
-    public LocalExecutionAttribute(Browser browser, Lifecycle lifecycle)
+    public LocalExecutionAttribute(BrowserType browser, Lifecycle lifecycle)
     {
         BrowserConfiguration = new BrowserConfiguration(browser, lifecycle);
     }
 
-    public LocalExecutionAttribute(Browser browser, Lifecycle lifecycle, string browserVersion = "latest", DesktopWindowSize size = DesktopWindowSize._1920_1080)
+    public LocalExecutionAttribute(BrowserType browser, Lifecycle lifecycle, string browserVersion = "latest", DesktopWindowSize size = DesktopWindowSize._1920_1080)
     {
         BrowserConfiguration = new BrowserConfiguration(browser, lifecycle);
         BrowserConfiguration.BrowserVersion = browserVersion;
@@ -18,7 +16,7 @@ public class LocalExecutionAttribute : Attribute
     }
 
     // Supported only for Chromium
-    public LocalExecutionAttribute(Browser browser, Lifecycle lifecycle, bool mobileEmulation, string deviceName, MobileWindowSize size, double pixelRation, string userAgent)
+    public LocalExecutionAttribute(BrowserType browser, Lifecycle lifecycle, bool mobileEmulation, string deviceName, MobileWindowSize size, double pixelRation, string userAgent)
     {
         BrowserConfiguration = new BrowserConfiguration(browser, lifecycle);
         BrowserConfiguration.MobileEmulation = mobileEmulation;
@@ -28,7 +26,7 @@ public class LocalExecutionAttribute : Attribute
         BrowserConfiguration.UserAgent = userAgent;
     }
 
-    public LocalExecutionAttribute(Browser browser, Lifecycle lifecycle, bool mobileEmulation, string deviceName, TabletWindowSize size, double pixelRation, string userAgent)
+    public LocalExecutionAttribute(BrowserType browser, Lifecycle lifecycle, bool mobileEmulation, string deviceName, TabletWindowSize size, double pixelRation, string userAgent)
     {
         BrowserConfiguration = new BrowserConfiguration(browser, lifecycle);
         BrowserConfiguration.MobileEmulation = mobileEmulation;
@@ -38,7 +36,7 @@ public class LocalExecutionAttribute : Attribute
         BrowserConfiguration.UserAgent = userAgent;
     }
 
-    public LocalExecutionAttribute(Browser browser, Lifecycle lifecycle, bool mobileEmulation, string deviceName, DesktopWindowSize size, double pixelRation, string userAgent)
+    public LocalExecutionAttribute(BrowserType browser, Lifecycle lifecycle, bool mobileEmulation, string deviceName, DesktopWindowSize size, double pixelRation, string userAgent)
     {
         BrowserConfiguration = new BrowserConfiguration(browser, lifecycle);
         BrowserConfiguration.MobileEmulation = mobileEmulation;

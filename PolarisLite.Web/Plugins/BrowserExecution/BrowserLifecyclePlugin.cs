@@ -1,8 +1,6 @@
 ﻿using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
-using PolarisLite.Web.Plugins.BrowserExecution;
 using System.Reflection;
-using PolarisLite.Web.Settings.FilesImplementation;
 
 namespace PolarisLite.Web.Plugins;
 public class BrowserLifecyclePlugin : Plugin
@@ -10,6 +8,7 @@ public class BrowserLifecyclePlugin : Plugin
     private readonly DriverFactory _driverFactory;
     private BrowserConfiguration _currentBrowserConfiguration;
     private BrowserConfiguration _previousBrowserConfiguration;
+    private GridSettings _currentGridConfiguration;
 
     public BrowserLifecyclePlugin()
     {
@@ -19,6 +18,7 @@ public class BrowserLifecyclePlugin : Plugin
     public override void OnBeforeTestInitialize(MethodInfo memberInfo)
     {
         _currentBrowserConfiguration = GetBrowserConfiguration(memberInfo);
+        _currentGridConfiguration = GetGridSettingsConfiguration(memberInfo);
         bool shouldRestartBrowser = ShouldRestartBrowser(_currentBrowserConfiguration);
         if (shouldRestartBrowser)
         {
@@ -34,11 +34,11 @@ public class BrowserLifecyclePlugin : Plugin
 
         if (_currentBrowserConfiguration.ExecutionType == ExecutionType.Local)
         {
-            DriverFactory.Start(_currentBrowserConfiguration.Browser);
+            DriverFactory.Start(_currentBrowserConfiguration);
         }
         else
         {
-            DriverFactory.StartGrid();
+            DriverFactory.StartGrid(_currentBrowserConfiguration, _currentGridConfiguration);
         }
     }
 
@@ -54,7 +54,7 @@ public class BrowserLifecyclePlugin : Plugin
             return true;
         }
 
-        bool shouldRestartBrowser =
+        bool shouldRestartBrowser = 
             browserConfiguration.Lifecycle == Lifecycle.RestartEveryTime
             || browserConfiguration.Lifecycle == Lifecycle.NotSet;
         return shouldRestartBrowser;
@@ -78,26 +78,7 @@ public class BrowserLifecyclePlugin : Plugin
         var classBrowser = GetExecutionBrowserClassLevel(testMethod.DeclaringType);
         var methodBrowser = GetExecutionBrowserMethodLevel(testMethod);
         BrowserConfiguration browserConfiguration = methodBrowser != null ? methodBrowser : classBrowser;
-
-        //if (browserConfiguration == null)
-        //{
-        //    browserConfiguration = new BrowserConfiguration();
-        //    browserConfiguration.Browser = WebSettings.DefaultBrowser;
-        //    browserConfiguration.Lifecycle = WebSettings.DefaultLifeCycle;
-        //    browserConfiguration.BrowserVersion = WebSettings.BrowserVersion;
-        //    browserConfiguration.MobileEmulation = WebSettings.MobileEmulation;
-        //    browserConfiguration.UserAgent = WebSettings.UserAgent;
-        //    browserConfiguration.PixelRation = WebSettings.PixelRation;
-        //    browserConfiguration.DeviceName = WebSettings.DeviceName;
-        //    browserConfiguration.Size = WebSettings.Size;
-        //}
-
-        var webSettings = ConfigurationService.GetSection<WebSettings>();
-        if (browserConfiguration == null)
-        {
-            browserConfiguration = new BrowserConfiguration(webSettings.DefaultBrowser, webSettings.DefaultLifeCycle, webSettings.ExecutionType);
-        }
-
+        
         return browserConfiguration;
     }
 
@@ -106,23 +87,7 @@ public class BrowserLifecyclePlugin : Plugin
         var classGridSettings = GetLambdaTestClassLevel(testMethod.DeclaringType);
         var methodGridSettings = GetLambdaTestMethodLevel(testMethod);
         GridSettings gridSettings = methodGridSettings != null ? methodGridSettings : classGridSettings;
-        //if (gridSettings == null)
-        //{
-        //    gridSettings = new GridConfiguration();
-        //    gridSettings.ProviderName = GridSettings.ProviderName;
-        //    gridSettings.Url = GridSettings.Url;
-        //    gridSettings.OptionsName = GridSettings.Url;
-        //    gridSettings.Arguments = GridSettings.Arguments;
-        //}
-        var webSettings = ConfigurationService.GetSection<WebSettings>();
-        if (gridSettings == null)
-        {
-            gridSettings = new GridSettings();
-            gridSettings.ProviderName = webSettings.GridSettings.ProviderName;
-            gridSettings.Url = webSettings.GridSettings.Url;
-            gridSettings.OptionsName = webSettings.GridSettings.OptionsName;
-            gridSettings.Arguments = webSettings.GridSettings.Arguments;
-        }
+
         return gridSettings;
     }
 

@@ -1,13 +1,8 @@
 ﻿using AutoFixture;
-using Dasync.Collections;
-using Newtonsoft.Json;
 using PolarisLite.API;
 using RestSharp;
 using RestSharp.Authenticators.OAuth2;
-using RestSharp.Serializers;
-using RestSharp.Serializers.NewtonsoftJson;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace DemoSystemTests;
 

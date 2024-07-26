@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace DemoSystemTests;
+﻿namespace DemoSystemTests;
 public class MediaTypes
 {
     public MediaTypes() => Tracks = new HashSet<Tracks>();

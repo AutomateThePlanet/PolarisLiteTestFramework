@@ -5,6 +5,7 @@ public class FullCalendar : WebComponent
 {
     private readonly string _fullCalendarMethodJqueryExpression = "$('#{0}').fullCalendar('{1}')";
 
+    // $('#calendar').fullCalendar('next');
     public void ClickNextButton()
     {
         string scriptToBeExecuted = string.Format(_fullCalendarMethodJqueryExpression, FindStrategy.Value, "next");

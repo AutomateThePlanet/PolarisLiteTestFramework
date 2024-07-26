@@ -1,10 +1,11 @@
 ﻿using PolarisLite.Mobile.Plugins;
+using PolarisLite.Web.Plugins;
 
 namespace PolarisLite.Mobile.Settings.StaticImplementation;
 
 public class AndroidSettings
 {
-    public static ExecutionType ExecutionType { get; set; } = ExecutionType.LambdaTest;
+    public static Mobile.Plugins.ExecutionType ExecutionType { get; set; } = Mobile.Plugins.ExecutionType.LambdaTest;
     public static Lifecycle DefaultLifeCycle { get; set; } = Lifecycle.RestartEveryTime;
     public static BrowserType DefaultBrowser { get; set; } = BrowserType.Chrome;
 

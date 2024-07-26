@@ -100,7 +100,8 @@ public static class WindowsSizeResolver
         return result;
     }
 
-    public static string ConvertToString(this Size size) => $"{size.Width}x{size.Height}";
-
-    public static string ConvertToStringWithColorDepth(this Size size, int colorDepth = 24) => $"{size.Width}x{size.Height}x{colorDepth}";
+    public static string ConvertToString(this Size size)
+    {
+        return $"{size.Width}x{size.Height}";
+    }
 }

@@ -32,4 +32,6 @@ public interface IElementFindService
 
     List<TComponent> FindAll<TComponent>(FindStrategy findStrategy)
         where TComponent : WebComponent, new();
+    TComponent Create<TComponent>(FindStrategy findStrategy)
+        where TComponent : WebComponent, new();
 }

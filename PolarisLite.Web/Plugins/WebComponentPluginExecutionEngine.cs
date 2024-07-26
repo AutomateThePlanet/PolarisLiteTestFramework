@@ -1,9 +1,4 @@
-﻿using PolarisLite.Core.Plugins;
-using PolarisLite.Web;
-using PolarisLite.Web.Components;
-using System.Reflection;
-
-namespace PolarisLite.Core;
+﻿namespace PolarisLite.Web.Plugins;
 public static class WebComponentPluginExecutionEngine
 {
     private static readonly HashSet<WebComponentPlugin> Plugins = new();
@@ -18,16 +13,11 @@ public static class WebComponentPluginExecutionEngine
         Plugins.Remove(plugin);
     }
 
-    public static void OnComponentFound(WebComponent component)
+    public static void OnComponentFound(IWebElement webElement)
     {
         foreach (var plugin in Plugins)
         {
-            plugin?.OnComponentFound(component);
+            plugin?.OnComponentFound(webElement);
         }
-    }
-
-    public static void OnComponentsFound(List<WebComponent> components)
-    {
-        Plugins.ToList().ForEach(plugin => plugin?.OnComponentsFound(components));
     }
 }

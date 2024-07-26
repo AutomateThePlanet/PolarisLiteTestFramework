@@ -1,6 +1,4 @@
-﻿using OpenQA.Selenium.Appium;
-using PolarisLite.Core.Infrastructure;
-using PolarisLite.Mobile.Components;
+﻿using PolarisLite.Mobile.Components;
 
 namespace PolarisLite.Mobile.Services;
 
@@ -16,8 +14,7 @@ public partial class DriverAdapter : IElementFindService
         return FindComponent<TComponent>(new IdContainingFindStrategy(id));
     }
 
-    public TComponent FindByXPath<TComponent>(string xpath)
-        where TComponent : AndroidComponent, new()
+    public TComponent FindByXPath<TComponent>(string xpath) where TComponent : AndroidComponent, new()
     {
         return FindComponent<TComponent>(new XPathFindStrategy(xpath));
     }

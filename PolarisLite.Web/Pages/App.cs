@@ -1,4 +1,4 @@
-﻿using PolarisLite.Web.Plugins.BrowserExecution;
+﻿using PolarisLite.Web.Plugins;
 using PolarisLite.Web.Services;
 
 namespace PolarisLite.Web;

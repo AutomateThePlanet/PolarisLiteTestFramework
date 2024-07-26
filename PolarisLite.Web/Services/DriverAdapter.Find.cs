@@ -1,7 +1,5 @@
-﻿using PolarisLite.Core.Infrastructure;
-using PolarisLite.Locators;
+﻿using PolarisLite.Locators;
 using PolarisLite.Web.Components;
-using PolarisLite.Web.Plugins.BrowserExecution;
 
 namespace PolarisLite.Web.Services;
 
@@ -99,4 +97,5 @@ public partial class DriverAdapter : IElementFindService
     public List<TComponent> FindAllByCss<TComponent>(string css) where TComponent : WebComponent, new() => throw new NotImplementedException();
     public List<TComponent> FindAllByLinkText<TComponent>(string linkText) where TComponent : WebComponent, new() => throw new NotImplementedException();
     public List<TComponent> FindAll<TComponent>(FindStrategy findStrategy) where TComponent : WebComponent, new() => throw new NotImplementedException();
+    public TComponent Create<TComponent>(FindStrategy findStrategy) where TComponent : WebComponent, new() => throw new NotImplementedException();
 }

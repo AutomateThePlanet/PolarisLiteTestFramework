@@ -6,6 +6,14 @@
     <!--<Nullable>enable</Nullable>-->
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;CA1416</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;CA1416</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\PolarisLite.Core\PolarisLite.Core.csproj" />
   </ItemGroup>
@@ -13,9 +21,6 @@
   <ItemGroup>
     <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
     <PackageReference Include="NUnit.Engine" Version="3.17.0" />
-    <PackageReference Include="ReportPortal.Client" Version="3.4.1" />
-    <PackageReference Include="ReportPortal.NUnit" Version="4.6.0" />
-    <PackageReference Include="RestSharp" Version="111.3.0" />
     <PackageReference Include="Selenium.Support" Version="4.21.0" />
     <PackageReference Include="Selenium.WebDriver" Version="4.21.0" />
     <PackageReference Include="WebDriverManager" Version="2.17.4" />

@@ -1,7 +1,8 @@
-﻿using PolarisLite.Core;
-using PolarisLite.Core.Infrastructure;
+﻿using PolarisLite.Core.Infrastructure;
 using PolarisLite.Locators;
 using PolarisLite.Web.Contracts;
+using PolarisLite.Web.Events;
+using PolarisLite.Web.Plugins;
 using PolarisLite.Web.Services;
 using System.Drawing;
 
@@ -16,10 +17,11 @@ public class WebComponent : IComponent, IComponentVisible
     {
         waitStrategies = new List<WaitStrategy>();
         JavaScriptService = new DriverAdapter();
+        WrappedDriver = DriverFactory.WrappedDriver;
     }
 
     private Actions Actions => new Actions(WrappedDriver);
-    public FindStrategy FindStrategy { get; internal set; }
+    public FindStrategy FindStrategy { get; set; }
     public IWebDriver WrappedDriver { get; internal set; }
     public IJavaScriptService JavaScriptService { get; internal set; }
 
@@ -34,14 +36,11 @@ public class WebComponent : IComponent, IComponentVisible
         {
             if (_wrappedWebElement == null)
             {
-                WebComponentPluginExecutionEngine.OnComponentFound(this);
-                return FindElement(FindStrategy);
+                FindElement(FindStrategy);
             }
-            else
-            {
-                WebComponentPluginExecutionEngine.OnComponentFound(this);
-                return _wrappedWebElement;
-            }
+
+            WebComponentPluginExecutionEngine.OnComponentFound(_wrappedWebElement);
+            return _wrappedWebElement;
         }
         set => _wrappedWebElement = value;
     }
@@ -198,15 +197,19 @@ public class WebComponent : IComponent, IComponentVisible
         return components;
     }
 
-    protected void Click()
+    protected void Click(EventHandler<ComponentActionEventArgs> clicked = null)
     {
         WrappedElement?.Click();
+
+        clicked?.Invoke(this, new ComponentActionEventArgs(this));
     }
 
-    protected void TypeText(string text)
+    protected void TypeText(string text, EventHandler<ComponentActionEventArgs> textSet = null)
     {
         WrappedElement?.Clear();
         WrappedElement?.SendKeys(text);
+
+        textSet?.Invoke(this, new ComponentActionEventArgs(this));
     }
 
     public bool IsVisible => WrappedElement.Displayed;

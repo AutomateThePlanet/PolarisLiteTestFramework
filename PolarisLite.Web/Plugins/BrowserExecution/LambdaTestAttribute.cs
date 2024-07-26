@@ -1,17 +1,12 @@
-﻿using PolarisLite.Web.Plugins.BrowserExecution;
-using PolarisLite.Web.Settings.FilesImplementation;
-using System.Runtime.InteropServices;
-
-namespace PolarisLite.Web.Plugins;
-
+﻿namespace PolarisLite.Web.Plugins;
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
 public class LambdaTestAttribute : GridAttribute
 {
-    public LambdaTestAttribute(Browser browser = Browser.Chrome, int browserVersion = 0, DesktopWindowSize desktopWindowSize = DesktopWindowSize._1920_1080)
+    public LambdaTestAttribute(BrowserType browser = BrowserType.Chrome, int browserVersion = 0, DesktopWindowSize desktopWindowSize = DesktopWindowSize._1920_1080)
         : base(browser)
     {
         string browserVersionString = browserVersion <= 0 ? "latest" : browserVersion.ToString();
-        BrowserConfiguration = new BrowserConfiguration(browser, Lifecycle.RestartEveryTime, ExecutionType.Grid, browserVersionString);
+        BrowserConfiguration = new BrowserConfiguration(browser, Lifecycle.RestartEveryTime, ExecutionType.LambdaTest, browserVersionString);
         GridSettings = new GridSettings();
         GridSettings.OptionsName = "LT:Options";
         string userName = Environment.GetEnvironmentVariable("LT_USERNAME", EnvironmentVariableTarget.Machine);
@@ -21,7 +16,7 @@ public class LambdaTestAttribute : GridAttribute
         string resolution = WindowsSizeResolver.GetWindowSize(desktopWindowSize).ConvertToString();
         GridSettings.Arguments = new Dictionary<string, object>
         {
-            { "resolution", "1920x1080" },
+            { "resolution", resolution },
             { "platform", "Windows 10" },
             { "visual", "true" },
             { "video", "true" },

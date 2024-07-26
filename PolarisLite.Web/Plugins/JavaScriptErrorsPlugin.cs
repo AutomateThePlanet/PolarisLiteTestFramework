@@ -1,10 +1,9 @@
 ﻿using NUnit.Framework;
 using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
-using PolarisLite.Web.Plugins.BrowserExecution;
 using System.Collections.ObjectModel;
 using System.Reflection;
-namespace Bellatrix.Web.Plugins.Browser;
+namespace PolarisLite.Web.Plugins.Browser;
 
 public class JavaScriptErrorsPlugin : Plugin
 {

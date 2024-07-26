@@ -1,5 +1,4 @@
-﻿using AngleSharp.Html;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using PolarisLite.Web.Components;
 using PolarisLite.Web.Services;
 using System.Text;
@@ -47,7 +46,7 @@ public class KendoGrid : WebComponent
         jsToBeExecuted = string.Concat(jsToBeExecuted, "return grid.dataSource.pageSize();");
         var currentResponse = JavaScriptService.Execute(jsToBeExecuted, WrappedElement);
         var pageSize = int.Parse(currentResponse.ToString());
-        return pageSize;
+        return pageSize; 
     }
 
     public void ChangePageSize(int newSize)

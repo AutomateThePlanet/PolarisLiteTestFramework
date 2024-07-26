@@ -1,8 +1,7 @@
 ﻿using OpenQA.Selenium.Support.Extensions;
 using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
-using PolarisLite.Web;
-using PolarisLite.Web.Plugins.BrowserExecution;
+using PolarisLite.Web.Plugins;
 using PolarisLite.Web.Settings.FilesImplementation;
 using System.Reflection;
 namespace Bellatrix.Web.Plugins.Browser;

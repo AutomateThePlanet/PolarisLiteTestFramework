@@ -1,10 +1,12 @@
 ﻿using PolarisLite.Web.Components;
 using PolarisLite.Web.Contracts;
+using PolarisLite.Web.Events;
 
 namespace PolarisLite.Web;
 
 public class Date : WebComponent, IComponentDisabled, IComponentValue
 {
+    public static event EventHandler<ComponentActionEventArgs> DateSet;
     public virtual string GetDate()
     {
         return GetAttribute("value");
@@ -30,6 +32,8 @@ public class Date : WebComponent, IComponentDisabled, IComponentValue
         string valueToBeSet = month < 10 ? $"{year}-0{month}" : $"{year}-{month}";
         valueToBeSet = day < 10 ? $"{valueToBeSet}-0{day}" : $"{valueToBeSet}-{day}";
         SetAttribute("value", valueToBeSet);
+
+        DateSet?.Invoke(this, new ComponentActionEventArgs(this));
     }
 
     // TODO: add properties for step, min, max

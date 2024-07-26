@@ -1,28 +1,17 @@
 ﻿using OpenQA.Selenium.Support.Extensions;
-using PolarisLite.Web.Components;
-using PolarisLite.Web.Plugins.BrowserExecution;
 
 namespace PolarisLite.Web.Plugins;
-public class ScrollIntoViewPlugin
-    //: DriverAdapterPlugin
+public class ScrollIntoViewPlugin : WebComponentPlugin
 {
-    public void OnComponentFound(WebComponent component)
+    public override void OnComponentFound(IWebElement webElement)
     {
-        ScrollIntoView(component);
+        ScrollIntoView(webElement);
     }
 
-    public void OnComponentsFound(List<WebComponent> components)
-    {
-        if (components.Any())
-        {
-            ScrollIntoView(components.Last());
-        }
-    }
-
-    private void ScrollIntoView(WebComponent element)
+    private void ScrollIntoView(IWebElement webElement)
     {
         var driver = DriverFactory.WrappedDriver;
         var script = "arguments[0].scrollIntoView(true);";
-        driver.ExecuteJavaScript(script, element.WrappedElement);
+        driver.ExecuteJavaScript(script, webElement);
     }
 }

@@ -1,7 +1,4 @@
-﻿using PolarisLite.Web.Plugins.BrowserExecution;
-using static System.Net.WebRequestMethods;
-
-namespace PolarisLite.Web.Settings.StaticImplementation;
+﻿namespace PolarisLite.Web;
 
 public class GridSettings
 {

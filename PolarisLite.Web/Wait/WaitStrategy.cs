@@ -1,8 +1,5 @@
-﻿using PolarisLite.Core;
-using PolarisLite.Locators;
-using PolarisLite.Web;
-using PolarisLite.Web.Plugins.BrowserExecution;
-using PolarisLite.Web.Settings.FilesImplementation;
+﻿using PolarisLite.Locators;
+using PolarisLite.Web.Plugins;
 
 namespace PolarisLite;
 
@@ -10,9 +7,8 @@ public abstract class WaitStrategy
 {
     protected WaitStrategy(int? timeoutIntervalInSeconds = null, int? sleepIntervalInSeconds = null)
     {
-        var webSettings = ConfigurationService.GetSection<WebSettings>();
-        TimeoutInterval = TimeSpan.FromSeconds(timeoutIntervalInSeconds ?? webSettings.TimeoutSettings.ElementToExistTimeout);
-        SleepInterval = TimeSpan.FromSeconds(sleepIntervalInSeconds ?? webSettings.TimeoutSettings.SleepInterval);
+        TimeoutInterval = TimeSpan.FromSeconds(timeoutIntervalInSeconds ?? 60);
+        SleepInterval = TimeSpan.FromSeconds(sleepIntervalInSeconds ?? 2);
         WrappedDriver = DriverFactory.WrappedDriver;
     }
 

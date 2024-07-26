@@ -1,6 +1,7 @@
 ﻿using Bellatrix.Mobile.Plugins;
 using PolarisLite.Core;
 using PolarisLite.Core.Infrastructure.NUnit;
+using PolarisLite.Mobile.Plugins;
 
 namespace PolarisLite.Mobile.Core.NUnit;
 public class AndroidTest : BaseTest

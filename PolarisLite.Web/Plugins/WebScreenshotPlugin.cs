@@ -1,45 +1,38 @@
-﻿//using Bellatrix.Core.Plugins;
-//using PolarisLite.Core;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Runtime.InteropServices.JavaScript;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using Bellatrix.Core.Plugins;
+using OpenQA.Selenium.Support.Extensions;
+using PolarisLite.Web.Configuration.StaticImplementation;
 
-//namespace PolarisLite.Web.Plugins;
-//public class WebScreenshotPlugin : ScreenshotPlugin
-//{
-//    public WebScreenshotPlugin()
-//        : base(ConfigurationService.GetSection<WebSettings>().ScreenshotsOnFailEnabled)
-//    {
-//    }
+namespace PolarisLite.Web.Plugins;
+public class WebScreenshotPlugin : ScreenshotPlugin
+{
+    public WebScreenshotPlugin()
+        : base(WebSettings.ScreenshotsOnFailure)
+    {
+    }
 
-//    protected override void TakeScreenshot(string screenshotSaveDir, string filename)
-//    {
-//        var screenshot = new AShot()
-//            .ShootingStrategy(ShootingStrategies.ViewportPasting(100))
-//            .TakeScreenshot(DriverService.GetWrappedDriver());
-//        var destFile = new FileInfo(Path.Combine(screenshotSaveDir, filename));
-//        screenshot.Image.Save(destFile.FullName, ImageFormat.Png);
-//    }
+    protected override void TakeScreenshot(string screenshotSaveDir, string filename)
+    {
+        IWebDriver driver = DriverFactory.WrappedDriver;
+        var screenshot = driver.TakeScreenshot();
+        var destFile = new FileInfo(Path.Combine(screenshotSaveDir, filename));
+        File.WriteAllBytes(destFile.FullName, screenshot.AsByteArray);
+    }
 
-//    protected override string GetOutputFolder()
-//    {
-//        var saveLocation = ConfigurationService.Get<WebSettings>().ScreenshotsSaveLocation;
-//        saveLocation = PathNormalizer.NormalizePath(saveLocation);
+    protected override string GetOutputFolder()
+    {
+        var saveLocation = WebSettings.ScreenshotsSaveLocation;
 
-//        var directory = new DirectoryInfo(saveLocation);
-//        if (!directory.Exists)
-//        {
-//            directory.Create();
-//        }
+        var directory = new DirectoryInfo(saveLocation);
+        if (!directory.Exists)
+        {
+            directory.Create();
+        }
 
-//        return saveLocation;
-//    }
+        return saveLocation;
+    }
 
-//    protected override string GetUniqueFileName(string testName)
-//    {
-//        return $"{testName}_{Guid.NewGuid()}.png";
-//    }
-//}
+    protected override string GetUniqueFileName(string testName)
+    {
+        return $"{testName}_{Guid.NewGuid()}.png";
+    }
+}

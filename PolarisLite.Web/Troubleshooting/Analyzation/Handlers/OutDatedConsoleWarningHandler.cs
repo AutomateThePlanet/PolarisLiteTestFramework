@@ -1,6 +1,10 @@
 ﻿namespace PolarisLite.Web.Troubshoting;
 public class OutDatedConsoleWarningHandler : JavaScriptConsoleWarningsHandler
 {
+    public OutDatedConsoleWarningHandler()
+    {
+    }
+
     public override string DetailedIssueExplanation
     {
         get

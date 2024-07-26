@@ -1,7 +1,4 @@
-﻿using PolarisLite.Core;
-using PolarisLite.Locators;
-using PolarisLite.Web;
-using PolarisLite.Web.Settings.FilesImplementation;
+﻿using PolarisLite.Locators;
 
 namespace PolarisLite;
 
@@ -10,17 +7,16 @@ public class ToExistWaitStrategy : WaitStrategy
     public ToExistWaitStrategy(int? timeoutIntervalInSeconds = null, int? sleepIntervalInSeconds = null)
         : base(timeoutIntervalInSeconds, sleepIntervalInSeconds)
     {
-        var webSettings = ConfigurationService.GetSection<WebSettings>();
-        TimeoutInterval = TimeSpan.FromSeconds(webSettings.TimeoutSettings.ElementToExistTimeout);
+        TimeoutInterval = TimeSpan.FromSeconds(60);
     }
 
-    public override void WaitUntil<TFindStrategy>(TFindStrategy by)
+    public override void WaitUntil<TBy>(TBy by)
     {
         WaitUntilInternal(d => ElementExists(WrappedDriver, by));
     }
 
-    private bool ElementExists<TFindStrategy>(ISearchContext searchContext, TFindStrategy by)
-         where TFindStrategy : FindStrategy
+    private bool ElementExists<TBy>(ISearchContext searchContext, TBy by)
+         where TBy : FindStrategy
     {
         try
         {

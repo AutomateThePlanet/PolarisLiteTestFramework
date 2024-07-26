@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace DemoSystemTests;
+﻿namespace DemoSystemTests;
 public class Invoices
 {
     public Invoices() => InvoiceItems = new HashSet<InvoiceItems>();

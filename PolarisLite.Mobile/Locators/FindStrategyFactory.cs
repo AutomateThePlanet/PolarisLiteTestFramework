@@ -1,6 +1,4 @@
-﻿using PolarisLite.Mobile;
-
-namespace PolarisLite.Mobile.Components;
+﻿namespace PolarisLite.Mobile.Components;
 
 public class FindStrategyFactory
 {

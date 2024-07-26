@@ -1,6 +1,4 @@
-﻿using OpenQA.Selenium.Appium.Android;
-
-namespace PolarisLite.Mobile;
+﻿namespace PolarisLite.Mobile;
 
 public class ToExistWaitStrategy : WaitStrategy
 {

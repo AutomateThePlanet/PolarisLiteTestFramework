@@ -1,5 +1,4 @@
-﻿using PolarisLite.Core;
-using PolarisLite.Mobile.Settings.FilesImplementation;
+﻿using PolarisLite.Mobile.Settings.StaticImplementation;
 
 namespace PolarisLite.Mobile.Plugins;
 public class AppConfiguration
@@ -35,21 +34,13 @@ public class AppConfiguration
         AppiumOptions = new Dictionary<string, string>();
     }
 
-    public AppConfiguration(AndroidSettings androidSettings)
-    {
-        ExecutionType = (ExecutionType)Enum.Parse(typeof(ExecutionType), androidSettings.ExecutionType.RemoveSpacesAndCapitalize());
-        AndroidVersion = androidSettings.DefaultAndroidVersion;
-        DeviceName = androidSettings.DefaultDeviceName;
-        AppPath = androidSettings.DefaultAppPath;
-        Lifecycle = (Lifecycle)Enum.Parse(typeof(Lifecycle), androidSettings.DefaultLifeCycle.RemoveSpacesAndCapitalize()); ;
-        AppPackage = androidSettings.DefaultAppPackage;
-        AppActivity = androidSettings.DefaultAppActivity;
-        IsMobileWebExecution = false;
-        AppiumOptions = new Dictionary<string, string>();
-    }
-
     public static AppConfiguration FromAttribute(LocalExecutionAttribute attribute)
     {
+        if (attribute == null)
+        {
+            return null;
+        }
+
         return new AppConfiguration(
             attribute.Lifecycle,
             attribute.ExecutionType,

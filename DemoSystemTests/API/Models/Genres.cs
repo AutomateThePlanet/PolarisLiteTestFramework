@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace DemoSystemTests;
+﻿namespace DemoSystemTests;
 public class Genres
 {
     public Genres() => Tracks = new HashSet<Tracks>();

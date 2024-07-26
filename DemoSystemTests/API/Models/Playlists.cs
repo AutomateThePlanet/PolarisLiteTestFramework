@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace DemoSystemTests;
+﻿namespace DemoSystemTests;
 public class Playlists
 {
     public Playlists() => PlaylistTrack = new HashSet<PlaylistTrack>();
