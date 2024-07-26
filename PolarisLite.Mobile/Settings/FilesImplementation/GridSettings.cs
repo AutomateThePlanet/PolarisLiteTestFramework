@@ -1,6 +1,6 @@
 ﻿namespace PolarisLite.Mobile;
 
-public class GridConfiguration
+public class GridSettings
 {
     public string ProviderName { get; set; }
     public string OptionsName { get; set; }

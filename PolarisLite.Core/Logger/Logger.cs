@@ -1,4 +1,4 @@
-﻿using PolarisLite.Logging.StaticSettings;
+﻿using PolarisLite.Core.Settings.StaticSettings;
 using Serilog;
 
 namespace PolarisLite.Logging;
@@ -10,21 +10,21 @@ public static class Logger
     static Logger()
     {
         var loggerConfiguration = new LoggerConfiguration();
-        if (LoggingSettings.IsEnabled)
+        if (GlobalSettings.LoggingSettings.IsEnabled)
         {
-            if (LoggingSettings.IsConsoleLoggingEnabled)
+            if (GlobalSettings.LoggingSettings.IsConsoleLoggingEnabled)
             {
-                loggerConfiguration.WriteTo.Console(outputTemplate: LoggingSettings.OutputTemplate);
+                loggerConfiguration.WriteTo.Console(outputTemplate: GlobalSettings.LoggingSettings.OutputTemplate);
             }
 
-            if (LoggingSettings.IsDebugLoggingEnabled)
+            if (GlobalSettings.LoggingSettings.IsDebugLoggingEnabled)
             {
-                loggerConfiguration.WriteTo.Debug(outputTemplate: LoggingSettings.OutputTemplate);
+                loggerConfiguration.WriteTo.Debug(outputTemplate: GlobalSettings.LoggingSettings.OutputTemplate);
             }
 
-            if (LoggingSettings.IsFileLoggingEnabled)
+            if (GlobalSettings.LoggingSettings.IsFileLoggingEnabled)
             {
-                loggerConfiguration.WriteTo.File("unicorn-log.txt", rollingInterval: RollingInterval.Day, outputTemplate: LoggingSettings.OutputTemplate);
+                loggerConfiguration.WriteTo.File("unicorn-log.txt", rollingInterval: RollingInterval.Day, outputTemplate: GlobalSettings.LoggingSettings.OutputTemplate);
             }
         }
 
