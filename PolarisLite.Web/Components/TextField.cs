@@ -1,10 +1,12 @@
 ﻿using PolarisLite.Web.Components;
 using PolarisLite.Web.Contracts;
+using PolarisLite.Web.Events;
 
 namespace PolarisLite.Web;
 
 public class TextField : WebComponent, IComponentText, IComponentDisabled, IComponentInnerText, IComponentInnerHtml, IComponentValue
 {
+    public static event EventHandler<ComponentActionEventArgs> TextSet;
     public virtual bool? IsAutoComplete => GetAttribute("autocomplete") == "on";
 
     public virtual bool IsReadonly => !string.IsNullOrEmpty(GetAttribute("readonly"));
@@ -21,5 +23,5 @@ public class TextField : WebComponent, IComponentText, IComponentDisabled, IComp
 
     public new string Value => base.Value;
 
-    public new void TypeText(string text) => base.TypeText(text);
+    public void TypeText(string text) => base.TypeText(text, TextSet);
 }

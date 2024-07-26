@@ -1,67 +1,89 @@
 ﻿using PolarisLite.Web.Contracts;
-using PolarisLite.Web.Plugins.BrowserExecution;
+using PolarisLite.Web.Events;
+using PolarisLite.Web.Plugins;
 
 namespace PolarisLite.Web.Assertions;
 public static class ValidateComponentExtensions
 {
-    public static void ValidateIsVisible<T>(this T control, int? timeout = null, int? sleepInterval = null)
+    public static event EventHandler<ComponentActionEventArgs> ValidatedIsVisibleEvent;
+    public static event EventHandler<ComponentActionEventArgs> ValidatedIsNotVisibleEvent;
+    public static event EventHandler<ComponentActionEventArgs> ValidatedValueIsNullEvent;
+    public static event EventHandler<ComponentActionEventArgs> ValidatedValueIsEvent;
+    public static event EventHandler<ComponentActionEventArgs> ValidatedValueContainsEvent;
+    public static event EventHandler<ComponentActionEventArgs> ValidatedIsCheckedEvent;
+    public static event EventHandler<ComponentActionEventArgs> ValidatedIsNotCheckedEvent;
+    public static event EventHandler<ComponentActionEventArgs> ValidatedInnerTextIsEvent;
+    public static event EventHandler<ComponentActionEventArgs> ValidatedInnerTextIsNotEvent;
+    public static event EventHandler<ComponentActionEventArgs> ValidatedInnerTextContainsEvent;
+
+    public static void ValidateIsVisible<T>(this T component, int? timeout = null, int? sleepInterval = null)
        where T : IComponentVisible
     {
-        WaitUntil(() => control.IsVisible.Equals(true), $"The control should be visible but was NOT.", timeout, sleepInterval);
+        WaitUntil(() => component.IsVisible.Equals(true), $"The component should be visible but was NOT.", timeout, sleepInterval);
+        ValidatedIsVisibleEvent?.Invoke(component, new ComponentActionEventArgs(component));
     }
 
-    public static void ValidateIsNotVisible<T>(this T control, int? timeout = null, int? sleepInterval = null)
+    public static void ValidateIsNotVisible<T>(this T component, int? timeout = null, int? sleepInterval = null)
         where T : IComponentVisible, IComponent
     {
-        WaitUntil(() => !control.IsVisible.Equals(true), $"The control should be NOT visible but it was.", timeout, sleepInterval);
+        WaitUntil(() => !component.IsVisible.Equals(true), $"The component should be NOT visible but it was.", timeout, sleepInterval);
+        ValidatedIsNotVisibleEvent?.Invoke(component, new ComponentActionEventArgs(component));
     }
 
-    public static void ValidateValueIsNull<T>(this T control, int? timeout = null, int? sleepInterval = null)
+    public static void ValidateValueIsNull<T>(this T component, int? timeout = null, int? sleepInterval = null)
        where T : IComponentValue, IComponent
     {
-        WaitUntil(() => control.Value == null, $"The control's value should be null but was '{control.Value}'.", timeout, sleepInterval);
+        WaitUntil(() => component.Value == null, $"The component's value should be null but was '{component.Value}'.", timeout, sleepInterval);
+        ValidatedValueIsNullEvent?.Invoke(component, new ComponentActionEventArgs(component));
     }
 
-    public static void ValidateValueIs<T>(this T control, string value, int? timeout = null, int? sleepInterval = null)
+    public static void ValidateValueIs<T>(this T component, string value, int? timeout = null, int? sleepInterval = null)
         where T : IComponentValue, IComponent
     {
-        WaitUntil(() => control.Value.Equals(value), $"The control's value should be '{value}' but was '{control.Value}'.", timeout, sleepInterval);
+        WaitUntil(() => component.Value.Equals(value), $"The component's value should be '{value}' but was '{component.Value}'.", timeout, sleepInterval);
+        ValidatedValueIsEvent?.Invoke(component, new ComponentActionEventArgs(component, value));
     }
 
-    public static void ValidateValueContains<T>(this T control, string value, int? timeout = null, int? sleepInterval = null)
+    public static void ValidateValueContains<T>(this T component, string value, int? timeout = null, int? sleepInterval = null)
      where T : IComponentValue, IComponent
     {
-        WaitUntil(() => control.Value.Contains(value), $"The control's value should contain '{value}' but was '{control.Value}'.", timeout, sleepInterval);
+        WaitUntil(() => component.Value.Contains(value), $"The component's value should contain '{value}' but was '{component.Value}'.", timeout, sleepInterval);
+        ValidatedValueContainsEvent?.Invoke(component, new ComponentActionEventArgs(component, value));
     }
 
-    public static void ValidateIsChecked<T>(this T control, int? timeout = null, int? sleepInterval = null)
+    public static void ValidateIsChecked<T>(this T component, int? timeout = null, int? sleepInterval = null)
        where T : IComponentChecked, IComponent
     {
-        WaitUntil(() => control.IsChecked.Equals(true), "The control should be checked but was NOT.", timeout, sleepInterval);
+        WaitUntil(() => component.IsChecked.Equals(true), "The component should be checked but was NOT.", timeout, sleepInterval);
+        ValidatedIsCheckedEvent?.Invoke(component, new ComponentActionEventArgs(component));
     }
 
-    public static void ValidateIsNotChecked<T>(this T control, int? timeout = null, int? sleepInterval = null)
+    public static void ValidateIsNotChecked<T>(this T component, int? timeout = null, int? sleepInterval = null)
         where T : IComponentChecked, IComponent
     {
-        WaitUntil(() => control.IsChecked.Equals(false), "The control should be not checked but it WAS.", timeout, sleepInterval);
+        WaitUntil(() => component.IsChecked.Equals(false), "The component should be not checked but it WAS.", timeout, sleepInterval);
+        ValidatedIsNotCheckedEvent?.Invoke(component, new ComponentActionEventArgs(component));
     }
 
-    public static void ValidateInnerTextIs<T>(this T control, string value, int? timeout = null, int? sleepInterval = null)
+    public static void ValidateInnerTextIs<T>(this T component, string value, int? timeout = null, int? sleepInterval = null)
         where T : IComponentInnerText, IComponent
     {
-        WaitUntil(() => control.Text.Equals(value), $"The control's inner text should be '{value}' but was '{control.Text}'.", timeout, sleepInterval);
+        WaitUntil(() => component.Text.Equals(value), $"The component's inner text should be '{value}' but was '{component.Text}'.", timeout, sleepInterval);
+        ValidatedInnerTextIsEvent?.Invoke(component, new ComponentActionEventArgs(component, value));
     }
 
-    public static void ValidateInnerTextIsNot<T>(this T control, string value, int? timeout = null, int? sleepInterval = null)
+    public static void ValidateInnerTextIsNot<T>(this T component, string value, int? timeout = null, int? sleepInterval = null)
     where T : IComponentInnerText, IComponent
     {
-        WaitUntil(() => !control.Text.Equals(value), $"The control's inner text should not be '{value}' but was '{control.Text}'.", timeout, sleepInterval);
+        WaitUntil(() => !component.Text.Equals(value), $"The component's inner text should not be '{value}' but was '{component.Text}'.", timeout, sleepInterval);
+        ValidatedInnerTextIsNotEvent?.Invoke(component, new ComponentActionEventArgs(component, value));
     }
 
-    public static void ValidateInnerTextContains<T>(this T control, string value, int? timeout = null, int? sleepInterval = null)
+    public static void ValidateInnerTextContains<T>(this T component, string value, int? timeout = null, int? sleepInterval = null)
         where T : IComponentInnerText, IComponent
     {
-        WaitUntil(() => control.Text.Contains(value), $"The control's inner text should contain '{value}' but was '{control.Text}'.", timeout, sleepInterval);
+        WaitUntil(() => component.Text.Contains(value), $"The component's inner text should contain '{value}' but was '{component.Text}'.", timeout, sleepInterval);
+        ValidatedInnerTextContainsEvent?.Invoke(component, new ComponentActionEventArgs(component, value));
     }
 
     private static void WaitUntil(Func<bool> waitCondition, string exceptionMessage, int? timeoutInSeconds, int? sleepIntervalInSeconds)

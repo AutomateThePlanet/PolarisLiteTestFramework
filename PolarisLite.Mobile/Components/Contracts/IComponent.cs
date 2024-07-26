@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium.Appium;
-using PolarisLite.Core.Layout;
+﻿using PolarisLite.Core.Layout;
 
 namespace PolarisLite.Mobile.Contracts;
 public interface IComponent : ILayoutComponent

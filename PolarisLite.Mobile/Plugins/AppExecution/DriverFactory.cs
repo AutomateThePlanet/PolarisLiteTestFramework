@@ -1,8 +1,4 @@
-﻿using AngleSharp.Html.Parser;
-using Newtonsoft.Json.Linq;
-using OpenQA.Selenium.Appium;
-using OpenQA.Selenium.Appium.Android;
-using OpenQA.Selenium.Appium.Enums;
+﻿using OpenQA.Selenium.Appium.Enums;
 
 namespace PolarisLite.Mobile.Plugins.AppExecution;
 public class DriverFactory

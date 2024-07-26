@@ -1,6 +1,4 @@
-﻿using OpenQA.Selenium.Appium;
-using OpenQA.Selenium.Appium.Android;
-using PolarisLite.Core.Infrastructure;
+﻿using PolarisLite.Core.Infrastructure;
 using PolarisLite.Mobile.Contracts;
 using PolarisLite.Mobile.Plugins.AppExecution;
 using PolarisLite.Mobile.Services;

@@ -4,7 +4,6 @@ using PolarisLite.Mobile;
 using PolarisLite.Mobile.Core.NUnit;
 using PolarisLite.Mobile.Plugins;
 using PolarisLite.Web;
-using PolarisLite.Core.Layout;
 using PolarisLite.Core.Layout.Second;
 using DemoSystemTests.Framework.Web.Pages.Models;
 

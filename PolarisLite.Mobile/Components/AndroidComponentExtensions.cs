@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PolarisLite.Mobile.Components;
+﻿namespace PolarisLite.Mobile.Components;
 public static class AndroidComponentExtensions
 {
     public static TComponent ToExist<TComponent>(this TComponent component) where TComponent : AndroidComponent

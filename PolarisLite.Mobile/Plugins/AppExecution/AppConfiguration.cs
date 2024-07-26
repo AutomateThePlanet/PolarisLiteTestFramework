@@ -1,7 +1,4 @@
-﻿using PolarisLite.Core;
-using System.Runtime.InteropServices;
-
-namespace PolarisLite.Mobile.Plugins;
+﻿namespace PolarisLite.Mobile.Plugins;
 public class AppConfiguration
 {
     public ExecutionType ExecutionType { get; private set; } = ExecutionType.Local;

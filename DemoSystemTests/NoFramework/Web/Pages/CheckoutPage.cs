@@ -1,6 +1,4 @@
-﻿using DemoSystemTests.Framework.Web.Pages.Models;
-
-namespace DemoSystemTests.NoFramework;
+﻿namespace DemoSystemTests.NoFramework;
 public class CheckoutPage : WebPage
 {
     public CheckoutPage(IWebDriver driver, WebDriverWait wait, Actions actions) 

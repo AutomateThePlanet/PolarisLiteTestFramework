@@ -1,6 +1,4 @@
-﻿using OpenQA.Selenium.Appium;
-using PolarisLite.Core.Infrastructure;
-using PolarisLite.Mobile.Components;
+﻿using PolarisLite.Mobile.Components;
 
 namespace PolarisLite.Mobile.Services;
 

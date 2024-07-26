@@ -7,7 +7,7 @@ using System.Drawing;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Chromium;
 
-namespace PolarisLite.Web.Plugins.BrowserExecution;
+namespace PolarisLite.Web.Plugins;
 public class DriverFactory
 {
     public static bool Disposed { get; set; } = true;
@@ -27,7 +27,7 @@ public class DriverFactory
         ExecutionType = browserConfiguration.ExecutionType;
         switch (browserConfiguration.Browser)
         {
-            case Browser.Chrome:
+            case BrowserType.Chrome:
                 new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig());
                 ChromeOptions chromeOptions = options as ChromeOptions;
 
@@ -39,7 +39,7 @@ public class DriverFactory
 
                 WrappedDriver = new ChromeDriver(chromeOptions);
                 break;
-            case Browser.Edge:
+            case BrowserType.Edge:
                 new WebDriverManager.DriverManager().SetUpDriver(new EdgeConfig());
                 EdgeOptions edgeOptions = options as EdgeOptions;
 
@@ -51,11 +51,11 @@ public class DriverFactory
 
                 WrappedDriver = new EdgeDriver(edgeOptions);
                 break;
-            case Browser.Firefox:
+            case BrowserType.Firefox:
                 new WebDriverManager.DriverManager().SetUpDriver(new FirefoxConfig());
                 WrappedDriver = new FirefoxDriver(options as FirefoxOptions);
                 break;
-            case Browser.Safari:
+            case BrowserType.Safari:
                 WrappedDriver = new SafariDriver(options as SafariOptions);
                 break;
             default:
@@ -104,23 +104,23 @@ public class DriverFactory
         Disposed = false;
     }
 
-    private static DriverOptions InitializeOptions(Browser browserType, string browserVersion)
+    private static DriverOptions InitializeOptions(BrowserType browserType, string browserVersion)
     {
         DriverOptions options = default;
         switch (browserType)
         {
-            case Browser.Chrome:
+            case BrowserType.Chrome:
                 options = new ChromeOptions();
                 break;
-            case Browser.Firefox:
+            case BrowserType.Firefox:
                 options = new FirefoxOptions();
                 break;
 
-            case Browser.Edge:
+            case BrowserType.Edge:
                 options = new EdgeOptions();
                 break;
 
-            case Browser.Safari:
+            case BrowserType.Safari:
                 options = new SafariOptions();
                 break;
         }

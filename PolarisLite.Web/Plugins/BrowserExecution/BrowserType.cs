@@ -1,6 +1,6 @@
-﻿namespace PolarisLite.Web.Plugins.BrowserExecution;
+﻿namespace PolarisLite.Web.Plugins;
 
-public enum Browser
+public enum BrowserType
 {
     NotSet,
     Chrome,

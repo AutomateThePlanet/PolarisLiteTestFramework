@@ -1,12 +1,8 @@
-﻿using PolarisLite.Web.Plugins.BrowserExecution;
-using System.Runtime.InteropServices;
-
-namespace PolarisLite.Web.Plugins;
-
+﻿namespace PolarisLite.Web.Plugins;
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
 public class LambdaTestAttribute : GridAttribute
 {
-    public LambdaTestAttribute(Browser browser = Browser.Chrome, int browserVersion = 0, DesktopWindowSize desktopWindowSize = DesktopWindowSize._1920_1080)
+    public LambdaTestAttribute(BrowserType browser = BrowserType.Chrome, int browserVersion = 0, DesktopWindowSize desktopWindowSize = DesktopWindowSize._1920_1080)
         : base(browser)
     {
         string browserVersionString = browserVersion <= 0 ? "latest" : browserVersion.ToString();

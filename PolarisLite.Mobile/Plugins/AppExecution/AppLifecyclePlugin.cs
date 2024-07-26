@@ -1,8 +1,6 @@
 ﻿using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
 using PolarisLite.Mobile.Plugins.AppExecution;
-using PolarisLite.Web;
-using System;
 using System.Reflection;
 
 namespace PolarisLite.Mobile.Plugins;

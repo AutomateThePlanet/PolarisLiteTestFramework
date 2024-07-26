@@ -1,5 +1,4 @@
 ﻿using PolarisLite.Mobile.Contracts;
-using System.Diagnostics;
 
 namespace PolarisLite.Mobile.Components;
 

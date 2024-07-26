@@ -1,10 +1,8 @@
 ﻿using OpenQA.Selenium.Support.Extensions;
 using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
-using PolarisLite.Web.Plugins;
-using PolarisLite.Web.Plugins.BrowserExecution;
 using System.Reflection;
-namespace Bellatrix.Web.Plugins.Browser;
+namespace PolarisLite.Web.Plugins.Browser;
 
 public class LambdaTestResultsPlugin : Plugin
 {

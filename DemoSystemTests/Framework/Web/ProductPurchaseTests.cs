@@ -1,17 +1,15 @@
 ﻿using DemoSystemTests.Framework.Web.Pages;
 using DemoSystemTests.Framework.Web.Pages.Models;
 using DemoSystemTests.Web;
-using PolarisLite.Core.Layout;
 using PolarisLite.Core.Layout.Second;
 using PolarisLite.Web;
 using PolarisLite.Web.Core.NUnit;
 using PolarisLite.Web.Plugins;
-using PolarisLite.Web.Plugins.BrowserExecution;
 
 namespace DemoSystemTests.Framework.Web;
 
 [TestFixture]
-[LocalExecution(Browser.Chrome, Lifecycle.RestartEveryTime, mobileEmulation: true, deviceName: MobileDevices.GalaxyS20Ultra, MobileWindowSize._412_915, 1.0, userAgent: MobileUserAgents.GalaxyS20Ultra)]
+[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
 public class ProductPurchaseTests : WebTest
 {
     public HomePage HomePage { get; private set; }
@@ -65,7 +63,7 @@ public class ProductPurchaseTests : WebTest
 
         ProductPage.GoToComparePage();
 
-        ProductPage.AssertCompareProductDetails(expectedProduct1, 1);
+        ProductPage.AssertCompareProductDetails(expectedProduct1, 5);
         ProductPage.AssertCompareProductDetails(expectedProduct2, 2);
     }
 
@@ -123,7 +121,7 @@ public class ProductPurchaseTests : WebTest
     }
 
     [Test]
-    [LocalExecution(Browser.Chrome, Lifecycle.RestartEveryTime, mobileEmulation: true, deviceName: MobileDevices.GalaxyS20Ultra, MobileWindowSize._412_915, 1.0, userAgent: MobileUserAgents.GalaxyS20Ultra)]
+    [LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime, mobileEmulation: true, deviceName: MobileDevices.GalaxyS20Ultra, MobileWindowSize._412_915, 1.0, userAgent: MobileUserAgents.GalaxyS20Ultra)]
     public void PurchaseTwoSameProduct_WhenSearchingWithoutAutocomplete_And_MobileEmulation()
     {
         var expectedProduct1 = new ProductDetails
@@ -179,7 +177,7 @@ public class ProductPurchaseTests : WebTest
     }
 
     [Test]
-    [LocalExecution(Browser.Chrome, Lifecycle.RestartEveryTime, mobileEmulation: true, deviceName: MobileDevices.GalaxyS20Ultra, MobileWindowSize._412_915, 1.0, userAgent: MobileUserAgents.GalaxyS20Ultra)]
+    [LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime, mobileEmulation: true, deviceName: MobileDevices.GalaxyS20Ultra, MobileWindowSize._412_915, 1.0, userAgent: MobileUserAgents.GalaxyS20Ultra)]
     public void SearchProducts_TestResponsiveDesign_And_MobileEmulation()
     {
         var expectedProduct1 = new ProductDetails
@@ -219,7 +217,7 @@ public class ProductPurchaseTests : WebTest
     }
 
     [Test]
-    [LambdaTest(Browser.Chrome, 120, DesktopWindowSize._1366_768)]
+    [LambdaTest(BrowserType.Chrome, 120, DesktopWindowSize._1366_768)]
     //[LocalExecution(Browser.Chrome, Lifecycle.RestartEveryTime, size: DesktopWindowSize._1366_768)]
 
     public void SearchProducts_TestResponsiveDesign_WhenResolutionIsSetTo_1366_768()

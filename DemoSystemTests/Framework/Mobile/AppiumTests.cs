@@ -1,4 +1,3 @@
-using PolarisLite.Core.Layout;
 using PolarisLite.Mobile;
 using PolarisLite.Mobile.Components;
 using PolarisLite.Mobile.Core.NUnit;

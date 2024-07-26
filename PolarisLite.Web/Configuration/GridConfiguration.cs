@@ -1,6 +1,4 @@
-﻿using PolarisLite.Web.Plugins.BrowserExecution;
-
-namespace PolarisLite.Web;
+﻿namespace PolarisLite.Web;
 
 public class GridConfiguration
 {

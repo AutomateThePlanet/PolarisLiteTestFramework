@@ -1,6 +1,4 @@
-﻿using PolarisLite.Web.Components;
-
-namespace PolarisLite.Web.Services;
+﻿namespace PolarisLite.Web.Services;
 
 public partial class DriverAdapter : ICookiesService
 {

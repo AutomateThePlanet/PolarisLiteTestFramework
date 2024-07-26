@@ -1,6 +1,4 @@
-﻿using PolarisLite.Web.Services;
-
-namespace PolarisLite.Web;
+﻿namespace PolarisLite.Web;
 public abstract class NavigatablePage : WebPage
 {
     public abstract string Url { get; }

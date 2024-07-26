@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium.Appium.Android;
-using PolarisLite.Mobile.Plugins.AppExecution;
+﻿using PolarisLite.Mobile.Plugins.AppExecution;
 
 namespace PolarisLite.Mobile;
 

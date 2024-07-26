@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium.Support.Extensions;
 using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
-using PolarisLite.Mobile;
 using PolarisLite.Mobile.Plugins;
 using PolarisLite.Mobile.Plugins.AppExecution;
 using System.Reflection;

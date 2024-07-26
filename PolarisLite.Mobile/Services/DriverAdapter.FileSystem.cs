@@ -1,6 +1,4 @@
-﻿using PolarisLite.Mobile.Components;
-
-namespace PolarisLite.Mobile.Services;
+﻿namespace PolarisLite.Mobile.Services;
 
 public partial class DriverAdapter : IFileSystemService
 {

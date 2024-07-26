@@ -1,7 +1,5 @@
-﻿using PolarisLite.Core.Infrastructure;
-using PolarisLite.Locators;
+﻿using PolarisLite.Locators;
 using PolarisLite.Web.Components;
-using PolarisLite.Web.Plugins.BrowserExecution;
 
 namespace PolarisLite.Web.Services;
 

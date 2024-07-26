@@ -1,12 +1,11 @@
 using PolarisLite.Web;
 using PolarisLite.Web.Core.NUnit;
 using PolarisLite.Web.Plugins;
-using PolarisLite.Web.Plugins.BrowserExecution;
 
 namespace DemoSystemTests.Web;
 
 [TestFixture]
-[LocalExecution(Browser.Chrome, Lifecycle.RestartEveryTime)]
+[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
 public class CustomControlsTests : WebTest
 {
     [Test]

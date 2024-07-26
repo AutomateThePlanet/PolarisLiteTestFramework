@@ -2,12 +2,11 @@ using DemoSystemTests.Framework.Web.Pages.Models;
 using PolarisLite.Web;
 using PolarisLite.Web.Core.NUnit;
 using PolarisLite.Web.Plugins;
-using PolarisLite.Web.Plugins.BrowserExecution;
 
 namespace DemoSystemTests.Web;
 
 [TestFixture]
-[LocalExecution(Browser.Chrome, Lifecycle.RestartEveryTime)]
+[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
 public class KendoGridTests : WebTest
 {
     private KendoGrid _kendoGrid;

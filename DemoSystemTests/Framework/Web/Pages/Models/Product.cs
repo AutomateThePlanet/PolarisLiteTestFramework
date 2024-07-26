@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DemoSystemTests.Framework.Web.Pages.Models;
+﻿namespace DemoSystemTests.Framework.Web.Pages.Models;
 public class Product
 {
     public int ProductID { get; set; }

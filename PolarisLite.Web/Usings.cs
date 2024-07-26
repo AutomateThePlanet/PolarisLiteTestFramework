@@ -15,3 +15,5 @@ global using OpenQA.Selenium.DevTools.V125.Security;
 global using DevToolsSessionDomains = OpenQA.Selenium.DevTools.V125.DevToolsSessionDomains;
 global using EnableCommandSettings = OpenQA.Selenium.DevTools.V125.Network.EnableCommandSettings;
 global using SetUserAgentOverrideCommandSettings = OpenQA.Selenium.DevTools.V125.Network.SetUserAgentOverrideCommandSettings;
+global using PAGE = OpenQA.Selenium.DevTools.V125.Page;
+global using PolarisLite.Logging;

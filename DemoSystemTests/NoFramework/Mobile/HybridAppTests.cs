@@ -1,7 +1,3 @@
-using OpenQA.Selenium.Appium.Interfaces;
-using OpenQA.Selenium.Support.UI;
-using System.Linq;
-
 namespace DemoSystemTests.Mobile.NoFramework;
 
 [TestFixture]

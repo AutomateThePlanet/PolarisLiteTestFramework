@@ -1,6 +1,5 @@
 ﻿using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
-using PolarisLite.Web.Plugins.BrowserExecution;
 using System.Reflection;
 
 namespace PolarisLite.Web.Plugins;
