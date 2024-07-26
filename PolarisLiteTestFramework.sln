@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolarisLite.Web", "PolarisL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolarisLite.Mobile", "PolarisLite.Mobile\PolarisLite.Mobile.csproj", "{FE375A64-841E-4A71-9100-339C28308289}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolarisLite.API", "PolarisLite.API\PolarisLite.API.csproj", "{56DF649F-32A3-41BF-9906-5F8D6460E500}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{FE375A64-841E-4A71-9100-339C28308289}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE375A64-841E-4A71-9100-339C28308289}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE375A64-841E-4A71-9100-339C28308289}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56DF649F-32A3-41BF-9906-5F8D6460E500}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56DF649F-32A3-41BF-9906-5F8D6460E500}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56DF649F-32A3-41BF-9906-5F8D6460E500}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56DF649F-32A3-41BF-9906-5F8D6460E500}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

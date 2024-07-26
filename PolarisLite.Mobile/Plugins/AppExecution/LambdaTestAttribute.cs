@@ -6,7 +6,7 @@ public class LambdaTestAttribute : GridAttribute
     public LambdaTestAttribute()
     {
         Lifecycle = Lifecycle.RestartEveryTime;
-        GridSettings = new Settings.StaticImplementation.GridSettings();
+        GridSettings = new GridSettings();
         GridSettings.OptionsName = "LT:Options";
         ExecutionType = ExecutionType.LambdaTest;
         var userName = Environment.GetEnvironmentVariable("LT_USERNAME", EnvironmentVariableTarget.Machine);
