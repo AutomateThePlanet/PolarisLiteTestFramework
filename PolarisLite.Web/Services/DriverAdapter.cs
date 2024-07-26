@@ -5,7 +5,7 @@ namespace PolarisLite.Web.Services;
 public partial class DriverAdapter
 {
     private IWebDriver _webDriver;
-    private WebDriverWait _webDriverWait;
+    //private WebDriverWait _webDriverWait;
 
     public DriverAdapter()
     {
