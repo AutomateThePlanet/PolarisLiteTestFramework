@@ -7,7 +7,7 @@ public class LambdaTestAttribute : GridAttribute
     {
         string browserVersionString = browserVersion <= 0 ? "latest" : browserVersion.ToString();
         BrowserConfiguration = new BrowserConfiguration(browser, Lifecycle.RestartEveryTime, ExecutionType.LambdaTest, browserVersionString);
-        GridSettings = new GridConfiguration();
+        GridSettings = new GridSettings();
         GridSettings.OptionsName = "LT:Options";
         string userName = Environment.GetEnvironmentVariable("LT_USERNAME", EnvironmentVariableTarget.Machine);
         string accessKey = Environment.GetEnvironmentVariable("LT_ACCESSKEY", EnvironmentVariableTarget.Machine);

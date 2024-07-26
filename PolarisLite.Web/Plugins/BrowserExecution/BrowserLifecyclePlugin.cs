@@ -8,7 +8,7 @@ public class BrowserLifecyclePlugin : Plugin
     private readonly DriverFactory _driverFactory;
     private BrowserConfiguration _currentBrowserConfiguration;
     private BrowserConfiguration _previousBrowserConfiguration;
-    private GridConfiguration _currentGridConfiguration;
+    private GridSettings _currentGridSettings;
 
     public BrowserLifecyclePlugin()
     {
@@ -18,7 +18,7 @@ public class BrowserLifecyclePlugin : Plugin
     public override void OnBeforeTestInitialize(MethodInfo memberInfo)
     {
         _currentBrowserConfiguration = GetBrowserConfiguration(memberInfo);
-        _currentGridConfiguration = GetGridSettingsConfiguration(memberInfo);
+        _currentGridSettings = GetGridSettingsConfiguration(memberInfo);
         bool shouldRestartBrowser = ShouldRestartBrowser(_currentBrowserConfiguration);
         if (shouldRestartBrowser)
         {
@@ -38,7 +38,7 @@ public class BrowserLifecyclePlugin : Plugin
         }
         else
         {
-            DriverFactory.StartGrid(_currentBrowserConfiguration, _currentGridConfiguration);
+            DriverFactory.StartGrid(_currentBrowserConfiguration, _currentGridSettings);
         }
     }
 
@@ -82,11 +82,11 @@ public class BrowserLifecyclePlugin : Plugin
         return browserConfiguration;
     }
 
-    private GridConfiguration GetGridSettingsConfiguration(MemberInfo testMethod)
+    private GridSettings GetGridSettingsConfiguration(MemberInfo testMethod)
     {
         var classGridSettings = GetLambdaTestClassLevel(testMethod.DeclaringType);
         var methodGridSettings = GetLambdaTestMethodLevel(testMethod);
-        GridConfiguration gridSettings = methodGridSettings != null ? methodGridSettings : classGridSettings;
+        GridSettings gridSettings = methodGridSettings != null ? methodGridSettings : classGridSettings;
 
         return gridSettings;
     }
@@ -103,13 +103,13 @@ public class BrowserLifecyclePlugin : Plugin
         return executionBrowserAttribute?.BrowserConfiguration;
     }
 
-    private GridConfiguration GetLambdaTestMethodLevel(MemberInfo testMethod)
+    private GridSettings GetLambdaTestMethodLevel(MemberInfo testMethod)
     {
         var gridAttribute = testMethod.GetCustomAttribute<LambdaTestAttribute>(true);
         return gridAttribute?.GridSettings;
     }
 
-    private GridConfiguration GetLambdaTestClassLevel(Type testClass)
+    private GridSettings GetLambdaTestClassLevel(Type testClass)
     {
         var gridAttribute = testClass.GetCustomAttribute<LambdaTestAttribute>(true);
         return gridAttribute?.GridSettings;

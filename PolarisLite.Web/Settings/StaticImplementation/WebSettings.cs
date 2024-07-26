@@ -16,7 +16,7 @@ public class WebSettings
     public static bool MobileEmulation { get; set; } = false;
     public static TimeoutSettings TimeoutSettings { get; set; } = new TimeoutSettings();
     public static GridSettings GridSettings { get; set; } = new GridSettings();
-    //public List<GridConfiguration> GridSettings { get; set; }
+    //public List<GridSettings> GridSettings { get; set; }
 
     public static bool EnableBDDLogging { get; set; } = true;
     public static bool EnableHighlight { get; set; } = true;

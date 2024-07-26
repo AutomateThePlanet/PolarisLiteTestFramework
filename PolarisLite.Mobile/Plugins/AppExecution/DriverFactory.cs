@@ -108,7 +108,7 @@ public class DriverFactory
         }
     }
 
-    private static void AddGridOptionsConfig(Dictionary<string, object> options, GridConfiguration gridSettings)
+    private static void AddGridOptionsConfig(Dictionary<string, object> options, GridSettings gridSettings)
     {
         foreach (var entry in gridSettings?.Arguments)
         {

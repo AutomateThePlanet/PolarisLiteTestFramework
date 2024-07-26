@@ -94,7 +94,7 @@ public class DriverFactory
         return deviceOptions;
     }
 
-    public static void StartGrid(BrowserConfiguration browserConfiguration, GridConfiguration gridSettings)
+    public static void StartGrid(BrowserConfiguration browserConfiguration, GridSettings gridSettings)
     {
         var options = InitializeOptions(browserConfiguration.Browser, browserConfiguration.BrowserVersion);
         AddGridOptions(options, gridSettings);
@@ -129,7 +129,7 @@ public class DriverFactory
         return options;
     }
 
-    private static void AddGridOptions<TOptions>(TOptions options, GridConfiguration gridSettings) 
+    private static void AddGridOptions<TOptions>(TOptions options, GridSettings gridSettings) 
         where TOptions : DriverOptions
     {
         Dictionary<string, object> args = new();

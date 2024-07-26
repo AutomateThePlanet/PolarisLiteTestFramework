@@ -1,7 +1,8 @@
-﻿using PolarisLite.Web.Plugins;
+﻿using PolarisLite.Core.Settings.StaticSettings;
+using PolarisLite.Web.Plugins;
 
 namespace PolarisLite.Web.Configuration.StaticImplementation;
-public class ConfigurationLoader
+public class WebConfigurationLoader
 {
     public static void LoadConfiguration()
     {
@@ -59,6 +60,11 @@ public class ConfigurationLoader
         WebSettings.ScreenshotsSaveLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Polaris", "ScreenshotsOnFailure");
 
         WebSettings.GridSettings = null;
+
+        GlobalSettings.LoggingSettings.IsEnabled = true;
+        GlobalSettings.LoggingSettings.IsConsoleLoggingEnabled = true;
+        GlobalSettings.LoggingSettings.IsFileLoggingEnabled = false;
+        GlobalSettings.LoggingSettings.IsDebugLoggingEnabled = false;
     }
 
     private static void LoadStagingConfiguration()
@@ -107,6 +113,11 @@ public class ConfigurationLoader
         WebSettings.EnableExceptionAnalysis = true;
 
         WebSettings.ScreenshotsSaveLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Polaris", "ScreenshotsOnFailure");
+
+        GlobalSettings.LoggingSettings.IsEnabled = true;
+        GlobalSettings.LoggingSettings.IsConsoleLoggingEnabled = true;
+        GlobalSettings.LoggingSettings.IsFileLoggingEnabled = false;
+        GlobalSettings.LoggingSettings.IsDebugLoggingEnabled = false;
     }
 
     private static void LoadDevelopmentConfiguration()
@@ -155,5 +166,10 @@ public class ConfigurationLoader
         WebSettings.EnableExceptionAnalysis = false;
 
         WebSettings.ScreenshotsSaveLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Polaris", "ScreenshotsOnFailure");
+
+        GlobalSettings.LoggingSettings.IsEnabled = true;
+        GlobalSettings.LoggingSettings.IsConsoleLoggingEnabled = true;
+        GlobalSettings.LoggingSettings.IsFileLoggingEnabled = false;
+        GlobalSettings.LoggingSettings.IsDebugLoggingEnabled = false;
     }
 }
