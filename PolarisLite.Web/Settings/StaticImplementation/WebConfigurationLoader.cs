@@ -158,10 +158,10 @@ public class WebConfigurationLoader
             { "selenium_version", "4.21.0" }
         };
 
-        WebSettings.EnableBDDLogging = false;
-        WebSettings.EnableHighlight = false;
-        WebSettings.EnableScrollIntoView = false;
-        WebSettings.EnableToastMessages = false;
+        WebSettings.EnableBDDLogging = true;
+        WebSettings.EnableHighlight = true;
+        WebSettings.EnableScrollIntoView = true;
+        WebSettings.EnableToastMessages = true;
         WebSettings.ScreenshotsOnFailure = false;
         WebSettings.EnableExceptionAnalysis = false;
 

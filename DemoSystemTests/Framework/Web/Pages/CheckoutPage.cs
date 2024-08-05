@@ -1,5 +1,6 @@
 ﻿using DemoSystemTests.Framework.Web.Pages.Models;
 using PolarisLite.Web;
+using PolarisLite.Web.Assertions;
 
 namespace DemoSystemTests.Framework.Web.Pages;
 public class CheckoutPage : WebPage
@@ -64,7 +65,7 @@ public class CheckoutPage : WebPage
 
     public void AssertTotalPrice(string expectedPrice)
     {
-        Assert.That(TotalPrice.Text, Is.EqualTo(expectedPrice));
+        TotalPrice.ValidateInnerTextIs(expectedPrice);
     }
 
     public void CompleteCheckout()

@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium.Support.Extensions;
 using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
+using PolarisLite.Web.Services;
 using System.Reflection;
 namespace PolarisLite.Web.Plugins.Browser;
 
@@ -8,12 +9,12 @@ public class LambdaTestResultsPlugin : Plugin
 {
     public override void OnAfterTestCleanup(TestOutcome testResult, MethodInfo memberInfo, Exception failedTestException)
     {
-        var driver = DriverFactory.WrappedDriver;
+        var driver = new DriverAdapter();
         bool isLambdaTestRun = DriverFactory.ExecutionType.Equals(ExecutionType.LambdaTest);
 
         if (isLambdaTestRun && testResult == TestOutcome.Passed)
         {
-            driver.ExecuteJavaScript("lambda-status=passed");
+            driver.Execute("lambda-status=passed");
         }
         else if (isLambdaTestRun)
         {
@@ -22,8 +23,8 @@ public class LambdaTestResultsPlugin : Plugin
                 {
                     failedTestException.ToString()
                 };
-            driver.ExecuteJavaScript("lambda-exceptions", exceptionCapture);
-            driver.ExecuteJavaScript("lambda-status=failed");
+            driver.Execute("lambda-exceptions", exceptionCapture);
+            driver.Execute("lambda-status=failed");
         }
     }
 }

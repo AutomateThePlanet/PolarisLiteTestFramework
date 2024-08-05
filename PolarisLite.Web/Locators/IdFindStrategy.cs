@@ -11,4 +11,6 @@ public class IdFindStrategy : FindStrategy
     {
         return By.Id(Value);
     }
+
+    public override string ToString() => $"Id = {Value}";
 }

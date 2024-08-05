@@ -1,7 +1,7 @@
 using PolarisLite.Web.Controls.EventHandlers;
 using PolarisLite.Web.Events;
 
-namespace Bellatrix.Web.Extensions.Controls.Controls.EventHandlers;
+namespace PolarisLite.Web.Extensions.Controls.Controls.EventHandlers;
 
 public class BDDLoggingInputFileEventHandlers : InputFileEventHandlers
 {

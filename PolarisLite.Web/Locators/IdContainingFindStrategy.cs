@@ -11,4 +11,6 @@ public class IdContainingFindStrategy : FindStrategy
     {
         return By.CssSelector($"[id*='{Value}']");
     }
+
+    public override string ToString() => $"Id Containing {Value}";
 }

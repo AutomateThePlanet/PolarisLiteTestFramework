@@ -11,8 +11,15 @@ public class ScrollIntoViewPlugin : WebComponentPlugin
 
     private void ScrollIntoView(IWebElement webElement)
     {
-        var driver = DriverFactory.WrappedDriver;
-        var script = "arguments[0].scrollIntoView(true);";
-        driver.ExecuteJavaScript(script, webElement);
+        try
+        {
+            var driver = DriverFactory.WrappedDriver;
+            var script = "arguments[0].scrollIntoView(true);";
+            driver.ExecuteJavaScript(script, webElement);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
     }
 }
