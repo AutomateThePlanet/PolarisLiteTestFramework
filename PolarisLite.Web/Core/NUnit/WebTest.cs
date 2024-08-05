@@ -26,7 +26,6 @@ public class WebTest : BaseTest
             PluginExecutionEngine.AddPlugin(new LambdaTestResultsPlugin());
             PluginExecutionEngine.AddPlugin(new ExceptionAnalysationPlugin());
             PluginExecutionEngine.AddPlugin(new WebScreenshotPlugin());
-            //PluginExecutionEngine.AddPlugin(new WebScreenshotPlugin());
             WebComponentPluginExecutionEngine.AddPlugin(new HighlightElementPlugin());
             WebComponentPluginExecutionEngine.AddPlugin(new ScrollIntoViewPlugin());
 
