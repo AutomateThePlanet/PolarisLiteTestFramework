@@ -209,7 +209,7 @@ public class WebComponent : IComponent, IComponentVisible
         WrappedElement?.Clear();
         WrappedElement?.SendKeys(text);
 
-        textSet?.Invoke(this, new ComponentActionEventArgs(this));
+        textSet?.Invoke(this, new ComponentActionEventArgs(this, text));
     }
 
     public bool IsVisible => WrappedElement.Displayed;

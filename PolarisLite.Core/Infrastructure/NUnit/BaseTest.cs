@@ -22,7 +22,7 @@ public abstract class BaseTest
     }
 
     [SetUp]
-    public void CoreTestInitialize()
+    public async Task CoreTestInitialize()
     {
         AppDomain.CurrentDomain.FirstChanceException += (sender, eventArgs) =>
         {
@@ -31,6 +31,7 @@ public abstract class BaseTest
 
         var testMethod = GetCurrentTestMethod();
         PluginExecutionEngine.OnBeforeTestInitialize(testMethod);
+        await PluginExecutionEngine.OnBeforeTestInitializeAsync(testMethod);
         TestInitialize();
         PluginExecutionEngine.OnAfterTestInitialize(testMethod);
     }

@@ -158,11 +158,11 @@ public class WebConfigurationLoader
             { "selenium_version", "4.21.0" }
         };
 
-        WebSettings.EnableBDDLogging = false;
-        WebSettings.EnableHighlight = false;
-        WebSettings.EnableScrollIntoView = false;
-        WebSettings.EnableToastMessages = false;
-        WebSettings.ScreenshotsOnFailure = false;
+        WebSettings.EnableBDDLogging = true;
+        WebSettings.EnableHighlight = true;
+        WebSettings.EnableScrollIntoView = true;
+        WebSettings.EnableToastMessages = true;
+        WebSettings.ScreenshotsOnFailure = true;
         WebSettings.EnableExceptionAnalysis = false;
 
         WebSettings.ScreenshotsSaveLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Polaris", "ScreenshotsOnFailure");
@@ -170,6 +170,6 @@ public class WebConfigurationLoader
         GlobalSettings.LoggingSettings.IsEnabled = true;
         GlobalSettings.LoggingSettings.IsConsoleLoggingEnabled = true;
         GlobalSettings.LoggingSettings.IsFileLoggingEnabled = false;
-        GlobalSettings.LoggingSettings.IsDebugLoggingEnabled = false;
+        GlobalSettings.LoggingSettings.IsDebugLoggingEnabled = true;
     }
 }

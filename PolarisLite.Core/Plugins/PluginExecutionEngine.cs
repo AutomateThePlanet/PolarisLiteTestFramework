@@ -40,6 +40,14 @@ public static class PluginExecutionEngine
         }
     }
 
+    public static async Task OnBeforeTestInitializeAsync(MethodInfo memberInfo)
+    {
+        foreach (var plugin in Plugins)
+        {
+            await plugin?.OnBeforeTestInitializeAsync(memberInfo);
+        }
+    }
+
     public static void OnAfterTestInitialize(MethodInfo memberInfo)
     {
         foreach (var plugin in Plugins)

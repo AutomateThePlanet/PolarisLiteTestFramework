@@ -12,7 +12,7 @@ public class InitializeHighlightScriptsPlugin : Plugin
         if (WebSettings.EnableHighlight)
         {
             var devToolsService = new DriverAdapter();
-            devToolsService.DevToolsSessionDomains.Page.Enable(new PAGE.EnableCommandSettings());
+            devToolsService.DevToolsSessionDomains.Page.Enable(new PAGE.EnableCommandSettings()).Wait();
             devToolsService.DevToolsSessionDomains.Page.AddScriptToEvaluateOnNewDocument(new PAGE.AddScriptToEvaluateOnNewDocumentCommandSettings()
             {
                 Source = @"
@@ -28,7 +28,7 @@ public class InitializeHighlightScriptsPlugin : Plugin
                                 }, 1000);
                             }
                         "
-            });
+            }).Wait();
         }
     }
 }

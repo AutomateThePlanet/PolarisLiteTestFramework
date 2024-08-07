@@ -12,6 +12,7 @@ public class InitializeToastMessagesScriptsPlugin : Plugin
         if (WebSettings.EnableToastMessages)
         {
             var devToolsService = new DriverAdapter();
+            devToolsService.DevToolsSessionDomains.Page.Enable(new PAGE.EnableCommandSettings()).Wait();
             devToolsService.DevToolsSessionDomains.Page.AddScriptToEvaluateOnNewDocument(new PAGE.AddScriptToEvaluateOnNewDocumentCommandSettings()
             {
                 Source = @"window.onload = () => {
@@ -28,7 +29,7 @@ public class InitializeToastMessagesScriptsPlugin : Plugin
                                 $('head').append('<link rel=""stylesheet"" href=""https://cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.8/jquery.jgrowl.min.css"" type=""text/css"" />');
                             };
                         "
-            });
+            }).Wait();
         }
     }
 }

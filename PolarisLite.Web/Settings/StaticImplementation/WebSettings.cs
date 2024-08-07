@@ -25,4 +25,5 @@ public class WebSettings
     public static bool ScreenshotsOnFailure { get; set; } = true;
     public static string ScreenshotsSaveLocation { get; set; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Polaris", "ScreenshotsOnFailure");
     public static bool EnableExceptionAnalysis { get; set; } = true;
+    public static bool EnableCheckForJavaScriptErrors { get; set; } = true;
 }

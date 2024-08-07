@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
+using PolarisLite.Web.Configuration.StaticImplementation;
 using System.Collections.ObjectModel;
 using System.Reflection;
 namespace PolarisLite.Web.Plugins.Browser;
@@ -12,11 +13,10 @@ public class JavaScriptErrorsPlugin : Plugin
         // TODO: refactor DriverFactory to collect logs
         // chromeOptions.SetLoggingPreference(LogType.Browser, LogLevel.All);
         var driver = DriverFactory.WrappedDriver;
-        //bool shouldCheckForJsErrors = ConfigurationService.GetSection<WebSettings>().ShouldCheckForJavaScriptErrors;
-        //if (driver == null || !shouldCheckForJsErrors)
-        //{
-        //    return;
-        //}
+        if (driver == null || !WebSettings.EnableCheckForJavaScriptErrors)
+        {
+            return;
+        }
 
         var errorStrings = new List<string>
          {

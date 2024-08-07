@@ -68,6 +68,7 @@ public class ProductPurchaseTests : WebTest
     }
 
     [Test]
+    //[LocalExecution()]
     public void PurchaseTwoSameProduct()
     {
         var expectedProduct1 = new ProductDetails

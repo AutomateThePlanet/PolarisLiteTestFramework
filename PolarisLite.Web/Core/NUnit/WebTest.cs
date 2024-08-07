@@ -26,7 +26,6 @@ public class WebTest : BaseTest
             PluginExecutionEngine.AddPlugin(new LambdaTestResultsPlugin());
             PluginExecutionEngine.AddPlugin(new ExceptionAnalysationPlugin());
             PluginExecutionEngine.AddPlugin(new WebScreenshotPlugin());
-            //PluginExecutionEngine.AddPlugin(new WebScreenshotPlugin());
             WebComponentPluginExecutionEngine.AddPlugin(new HighlightElementPlugin());
             WebComponentPluginExecutionEngine.AddPlugin(new ScrollIntoViewPlugin());
 
@@ -45,6 +44,7 @@ public class WebTest : BaseTest
     {
         if ( WebSettings.EnableBDDLogging)
         {
+            new BDDLoggingButtonEventHandlers().SubscribeToAll();
             new BDDLoggingTextFieldEventHandlers().SubscribeToAll();
             new BDDLoggingDateEventHandlers().SubscribeToAll();
             new BDDLoggingCheckboxEventHandlers().SubscribeToAll();
@@ -59,6 +59,7 @@ public class WebTest : BaseTest
     {
         if (WebSettings.EnableToastMessages)
         {
+            new ToastMessagesButtonEventHandlers().SubscribeToAll();
             new ToastMessagesTextFieldEventHandlers().SubscribeToAll();
             new ToastMessagesDateEventHandlers().SubscribeToAll();
             new ToastMessagesCheckboxEventHandlers().SubscribeToAll();

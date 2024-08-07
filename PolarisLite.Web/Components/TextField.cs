@@ -23,5 +23,8 @@ public class TextField : WebComponent, IComponentText, IComponentDisabled, IComp
 
     public new string Value => base.Value;
 
-    public void TypeText(string text) => base.TypeText(text, TextSet);
+    public void TypeText(string text)
+    {
+        base.TypeText(text, TextSet);
+    }
 }
