@@ -18,14 +18,16 @@ public class WebTest : BaseTest
     {
         if (!_arePluginsAlreadyInitialized)
         {
+            PluginExecutionEngine.AddPlugin(new JavaScriptErrorsPlugin());
+            PluginExecutionEngine.AddPlugin(new LambdaTestResultsPlugin());
+            PluginExecutionEngine.AddPlugin(new ExceptionAnalysationPlugin());
+            PluginExecutionEngine.AddPlugin(new WebScreenshotPlugin());
             PluginExecutionEngine.AddPlugin(new BrowserLifecyclePlugin());
             PluginExecutionEngine.AddPlugin(new InitializeHighlightScriptsPlugin());
             PluginExecutionEngine.AddPlugin(new InitializeToastMessagesScriptsPlugin());
             PluginExecutionEngine.AddPlugin(new LogLifecyclePlugin());
             PluginExecutionEngine.AddPlugin(new JavaScriptErrorsPlugin());
             PluginExecutionEngine.AddPlugin(new LambdaTestResultsPlugin());
-            PluginExecutionEngine.AddPlugin(new ExceptionAnalysationPlugin());
-            PluginExecutionEngine.AddPlugin(new WebScreenshotPlugin());
             WebComponentPluginExecutionEngine.AddPlugin(new HighlightElementPlugin());
             WebComponentPluginExecutionEngine.AddPlugin(new ScrollIntoViewPlugin());
 

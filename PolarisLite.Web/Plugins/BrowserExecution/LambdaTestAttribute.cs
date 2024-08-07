@@ -20,10 +20,11 @@ public class LambdaTestAttribute : GridAttribute
             { "platform", "Windows 10" },
             { "visual", "true" },
             { "video", "true" },
-            { "seCdp ", true },
-            { "w3c", true },
+            { "seCdp", "true" },
+            { "console", "true" },
+            { "w3c", "true" },
             { "plugin", "c#-c#" },
-            { "build", "1.2" },
+            { "build", "2.1" },
             { "project", "POLARIS_RUN" },
             { "selenium_version", "4.22.0" }
         };

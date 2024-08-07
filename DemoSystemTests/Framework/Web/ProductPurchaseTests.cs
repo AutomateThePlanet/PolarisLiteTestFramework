@@ -68,7 +68,7 @@ public class ProductPurchaseTests : WebTest
     }
 
     [Test]
-    //[LocalExecution()]
+    [LambdaTest(BrowserType.Chrome, 125)]
     public void PurchaseTwoSameProduct()
     {
         var expectedProduct1 = new ProductDetails

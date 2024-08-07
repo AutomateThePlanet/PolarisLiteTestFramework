@@ -35,7 +35,8 @@ public partial class DriverAdapter : IBrowserService
     {
         if (WebSettings.EnableToastMessages)
         {
-            Execute(string.Format("$.jGrowl('{0}', {{ header: 'Error', theme: 'error' }});", message));
+            var script = PrepareScript(message, "{ header: 'Error', theme: 'error' }");
+            Execute(script);
         }
     }
 
@@ -43,27 +44,41 @@ public partial class DriverAdapter : IBrowserService
     {
         if (WebSettings.EnableToastMessages)
         {
-            Execute(string.Format("$.jGrowl('{0}', {{ header: 'Warning', theme: 'warning' }});", message));
+            var script = PrepareScript(message, "{ header: 'Warning', theme: 'warning' }");
+            Execute(script);
         }
     }
 
     public void InfoToastMessage(string message)
     {
-        try
+        if (WebSettings.EnableToastMessages)
         {
             if (WebSettings.EnableToastMessages)
             {
-                var webDriverWait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(30));
-                webDriverWait.Until(d => (bool)((IJavaScriptExecutor)d).ExecuteScript("return typeof $.jGrowl === 'function';"));
-                string escapedMessage = EscapeJavaScriptString(message);
-                string script = string.Format("$.jGrowl('{0}', {{ header: 'Info', theme: 'info', life: 2000, speed: 'fast' }});", escapedMessage);
+                var script = PrepareScript(message, "{ header: 'Info', theme: 'info', life: 2000, speed: 'fast' }");
                 Execute(script);
             }
         }
-        catch (Exception ex)
+        return sb.ToString();
+    }
+
+    public void SuccessToastMessage(string message)
+    {
+        if (WebSettings.EnableToastMessages)
         {
-            Console.WriteLine(ex);
+            var script = PrepareScript(message, "{ header: 'Success', theme: 'success' }");
+            Execute(script);
         }
+    }
+
+    private string PrepareScript(string message, string settings)
+    {
+        var webDriverWait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
+        webDriverWait.Until(d => (bool)((IJavaScriptExecutor)d).ExecuteScript("return typeof $.jGrowl === 'function';"));
+
+        string escapedMessage = EscapeJavaScriptString(message);
+        string script = string.Format("$.jGrowl('{0}', {1});", escapedMessage, settings);
+        return script;
     }
 
     private string EscapeJavaScriptString(string value)
@@ -115,13 +130,5 @@ public partial class DriverAdapter : IBrowserService
             }
         }
         return sb.ToString();
-    }
-
-    public void SuccessToastMessage(string message)
-    {
-        if (WebSettings.EnableToastMessages)
-        {
-            Execute(string.Format("$.jGrowl('{0}', {{ header: 'Success', theme: 'success' }});", message));
-        }
     }
 }

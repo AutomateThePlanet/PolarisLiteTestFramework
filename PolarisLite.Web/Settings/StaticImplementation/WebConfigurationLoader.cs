@@ -162,7 +162,7 @@ public class WebConfigurationLoader
         WebSettings.EnableHighlight = true;
         WebSettings.EnableScrollIntoView = true;
         WebSettings.EnableToastMessages = true;
-        WebSettings.ScreenshotsOnFailure = true;
+        WebSettings.ScreenshotsOnFailure = false;
         WebSettings.EnableExceptionAnalysis = false;
 
         WebSettings.ScreenshotsSaveLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Polaris", "ScreenshotsOnFailure");
