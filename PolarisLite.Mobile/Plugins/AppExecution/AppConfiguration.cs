@@ -1,6 +1,4 @@
-﻿using PolarisLite.Mobile.Settings.StaticImplementation;
-
-namespace PolarisLite.Mobile.Plugins;
+﻿namespace PolarisLite.Mobile.Plugins;
 public class AppConfiguration
 {
     public ExecutionType ExecutionType { get; private set; } = ExecutionType.Local;

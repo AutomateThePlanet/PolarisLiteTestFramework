@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium.Appium.Enums;
-using PolarisLite.Mobile.Settings.StaticImplementation;
 
 namespace PolarisLite.Mobile.Plugins.AppExecution;
 public class DriverFactory

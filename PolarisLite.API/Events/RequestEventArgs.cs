@@ -1,6 +1,4 @@
-﻿using RestSharp;
-
-namespace PolarisLite.API;
+﻿namespace PolarisLite.API;
 
 public class RequestEventArgs
 {

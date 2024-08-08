@@ -6,8 +6,6 @@ using RestSharp.Serializers.NewtonsoftJson;
 namespace PolarisLite.API;
 public class ApiClientService : IDisposable
 {
-    private readonly int _maxRetryAttempts;
-    private readonly TimeSpan _pauseBetweenFailures;
     private bool _isDisposed;
 
     public ApiClientService(string baseUrl, int maxRetryAttempts = 3, int pauseBetweenFailuresMilliseconds = 500, IAuthenticator authenticator = null)
@@ -20,7 +18,9 @@ public class ApiClientService : IDisposable
         };
         if (authenticator != null)
         {
-            options.Authenticator = authenticator;
+            // initialized via plugin
+            // TODO: to be extended to support parallel test execution.
+            options.Authenticator = authenticator ?? Authenticator;
         }
 
         var settings = new JsonSerializerSettings()
@@ -29,11 +29,26 @@ public class ApiClientService : IDisposable
         };
         WrappedClient = new RestClient(configureSerialization: s => s.UseNewtonsoftJson(settings));
 
-        _maxRetryAttempts = maxRetryAttempts;
-        _pauseBetweenFailures = TimeSpan.FromMilliseconds(pauseBetweenFailuresMilliseconds);
+        Policy.Timeout(ApiSettings.ClientTimeoutSeconds, onTimeout: (context, timespan, task) =>
+        {
+            task.ContinueWith(t =>
+            {
+                if (t.IsFaulted)
+                {
+                    ApiClientPluginExecutionEngine.OnRequestTimeout(WrappedClient);
+                }
+            });
+        });
+
+        MaxRetryAttempts = maxRetryAttempts;
+        PauseBetweenFailures = TimeSpan.FromMilliseconds(pauseBetweenFailuresMilliseconds);
 
         _isDisposed = false;
     }
+
+    public static int MaxRetryAttempts { get; set; }
+    public static TimeSpan PauseBetweenFailures { get; set; }
+    public static IAuthenticator Authenticator { get; set; }
 
     public RestClient WrappedClient { get; set; }
 
@@ -44,7 +59,7 @@ public class ApiClientService : IDisposable
             cancellationTokenSource = new CancellationTokenSource();
         }
 
-        var retryPolicy = Policy.Handle<NotSuccessfulRequestException>().WaitAndRetryAsync(_maxRetryAttempts, i => _pauseBetweenFailures);
+        var retryPolicy = Policy.Handle<NotSuccessfulRequestException>().WaitAndRetryAsync(MaxRetryAttempts, i => PauseBetweenFailures);
 
         var result = await retryPolicy.ExecuteAsync(async () =>
         {
@@ -163,21 +178,26 @@ public class ApiClientService : IDisposable
             cancellationTokenSource = new CancellationTokenSource();
         }
 
-        var retryPolicy = Policy.Handle<NotSuccessfulRequestException>().WaitAndRetryAsync(_maxRetryAttempts, i => _pauseBetweenFailures);
+        var retryPolicy = Policy.Handle<NotSuccessfulRequestException>().WaitAndRetryAsync(MaxRetryAttempts, i => PauseBetweenFailures);
 
         var response = await retryPolicy.ExecuteAsync(async () =>
         {
             var watch = Stopwatch.StartNew();
 
+            ApiClientPluginExecutionEngine.OnMakingRequest(request, request.Resource);
+
             request.Method = method;
             var measuredResponse = default(MeasuredResponse<TReturnType>);
             var response = await WrappedClient.ExecuteAsync<TReturnType>(request, cancellationTokenSource.Token);
+
+            ApiClientPluginExecutionEngine.OnRequestMade(response, request.Resource);
 
             watch.Stop();
             measuredResponse = new MeasuredResponse<TReturnType>(response, watch.Elapsed);
 
             if (!measuredResponse.IsSuccessful)
             {
+                ApiClientPluginExecutionEngine.OnRequestFailed(response, request.Resource);
                 throw new NotSuccessfulRequestException();
             }
 
@@ -194,7 +214,7 @@ public class ApiClientService : IDisposable
             cancellationTokenSource = new CancellationTokenSource();
         }
 
-        var retryPolicy = Policy.Handle<NotSuccessfulRequestException>().WaitAndRetryAsync(_maxRetryAttempts, i => _pauseBetweenFailures);
+        var retryPolicy = Policy.Handle<NotSuccessfulRequestException>().WaitAndRetryAsync(MaxRetryAttempts, i => PauseBetweenFailures);
 
         var response = await retryPolicy.ExecuteAsync(async () =>
         {
@@ -202,13 +222,18 @@ public class ApiClientService : IDisposable
 
             request.Method = method;
 
+            ApiClientPluginExecutionEngine.OnMakingRequest(request, request.Resource);
+
             var response = await WrappedClient.ExecuteAsync(request, cancellationTokenSource.Token);
+
+            ApiClientPluginExecutionEngine.OnRequestMade(response, request.Resource);
 
             watch.Stop();
             var measuredResponse = new MeasuredResponse(response, watch.Elapsed);
 
             if (!measuredResponse.IsSuccessful)
             {
+                ApiClientPluginExecutionEngine.OnRequestFailed(response, request.Resource);
                 throw new NotSuccessfulRequestException();
             }
 

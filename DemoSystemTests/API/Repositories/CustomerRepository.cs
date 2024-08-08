@@ -1,4 +1,5 @@
 ﻿using DemoSystemTests;
+using PolarisLite.API;
 using RestSharp;
 
 namespace RepositoryDesignPatternTests.Data.Repositories;
@@ -20,6 +21,6 @@ public class CustomerRepository : HttpRepository<Customers>
             throw new ApplicationException($"Error searching customers by name: {response.ErrorMessage}");
         }
 
-        return response.Response.Data;
+        return response.Data;
     }
 }

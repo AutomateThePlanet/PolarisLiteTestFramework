@@ -1,14 +1,17 @@
-﻿using PolarisLite.API;
+﻿using Polaris.API.NUnit;
+using PolarisLite.API;
 using RestSharp;
 using RestSharp.Authenticators.OAuth2;
 namespace DemoSystemTests;
 
 [TestFixture]
-public class UtilitiesTests
+public class UtilitiesTests : APITest
 {
     private const string BASE_URL = "http://localhost:60715/";
     private static ApiClientService _restClient;
 
+    // TODO: use base class methods + authentication plugins
+    // TODO: in security module --> improve plugin to get it from env_variables or keyvault
     [OneTimeSetUp]
     public void ClassSetup()
     {
@@ -106,7 +109,7 @@ public class UtilitiesTests
 
         var response = await _restClient.GetAsync<List<Albums>>(request);
 
-        Assert.That(response.Response.Data.Count, Is.EqualTo(347));
+        Assert.That(response.Data.Count, Is.EqualTo(347));
     }
 
     [Test]
@@ -116,7 +119,7 @@ public class UtilitiesTests
 
         var response = await _restClient.GetAsync<Albums>(request);
 
-        Assert.That(response.Response.Data.AlbumId, Is.EqualTo(10));
+        Assert.That(response.Data.AlbumId, Is.EqualTo(10));
     }
 
     [Test]
@@ -139,14 +142,14 @@ public class UtilitiesTests
 
         var insertedGenres = await _restClient.PostAsync<Genres>(request);
 
-        var putRequest = new RestRequest($"api/Genres/{insertedGenres.Response.Data.GenreId}", Method.Put);
+        var putRequest = new RestRequest($"api/Genres/{insertedGenres.Data.GenreId}", Method.Put);
         string updatedName = Guid.NewGuid().ToString();
-        insertedGenres.Response.Data.Name = updatedName;
-        putRequest.AddJsonBody(insertedGenres.Response.Data);
+        insertedGenres.Data.Name = updatedName;
+        putRequest.AddJsonBody(insertedGenres.Data);
 
         await _restClient.PutAsync<Genres>(putRequest);
 
-        request = new RestRequest($"api/Genres/{insertedGenres.Response.Data.GenreId}", Method.Get);
+        request = new RestRequest($"api/Genres/{insertedGenres.Data.GenreId}", Method.Get);
 
         var getUpdatedResponse = await _restClient.GetAsync<Genres>(request);
 
@@ -163,14 +166,14 @@ public class UtilitiesTests
 
         var insertedGenres = await _restClient.PostAsync<Genres>(request);
 
-        var putRequest = new RestRequest($"api/Genres/{insertedGenres.Response.Data.GenreId}", Method.Put);
+        var putRequest = new RestRequest($"api/Genres/{insertedGenres.Data.GenreId}", Method.Put);
         string updatedName = Guid.NewGuid().ToString();
-        insertedGenres.Response.Data.Name = updatedName;
-        putRequest.AddJsonBody(insertedGenres.Response.Data);
+        insertedGenres.Data.Name = updatedName;
+        putRequest.AddJsonBody(insertedGenres.Data);
 
         await _restClient.PutAsync(putRequest);
 
-        request = new RestRequest($"api/Genres/{insertedGenres.Response.Data.GenreId}", Method.Get);
+        request = new RestRequest($"api/Genres/{insertedGenres.Data.GenreId}", Method.Get);
 
         var getUpdatedResponse = await _restClient.GetAsync<Genres>(request);
 
@@ -200,7 +203,7 @@ public class UtilitiesTests
 
         var response = await _restClient.PostAsync<Genres>(request);
 
-        Assert.That(response.Response.Data.Name, Is.EqualTo(newAlbum.Name));
+        Assert.That(response.Data.Name, Is.EqualTo(newAlbum.Name));
     }
 
     [Test]
@@ -237,7 +240,7 @@ public class UtilitiesTests
         var newArtists = new Artists
         {
             Name = Guid.NewGuid().ToString(),
-            ArtistId = artists.Response.Data.OrderBy(x => x.ArtistId).Last().ArtistId + 1,
+            ArtistId = artists.Data.OrderBy(x => x.ArtistId).Last().ArtistId + 1,
         };
         return newArtists;
     }
@@ -248,7 +251,7 @@ public class UtilitiesTests
         var newGenres = new Genres
         {
             Name = Guid.NewGuid().ToString(),
-            GenreId = genres.Response.Data.OrderBy(x => x.GenreId).Last().GenreId + 1,
+            GenreId = genres.Data.OrderBy(x => x.GenreId).Last().GenreId + 1,
         };
         return newGenres;
     }

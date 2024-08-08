@@ -1,4 +1,5 @@
 ﻿using DemoSystemTests;
+using PolarisLite.API;
 using RestSharp;
 
 namespace RepositoryDesignPatternTests.Data.Repositories;
@@ -19,6 +20,6 @@ public class InvoiceRepository : HttpRepository<Invoices>
             throw new ApplicationException($"Error fetching invoice items: {response.ErrorMessage}");
         }
 
-        return response.Response.Data;
+        return response.Data;
     }
 }

@@ -12,13 +12,22 @@ public abstract class APITest : BaseTest
 
     public App App => new App();
 
+    protected override void ClassCleanup()
+    {
+        App.ApiClient.Dispose();
+    }
+
     protected override void Configure()
     {
         if (!_arePluginsAlreadyInitialized)
         {
             PluginExecutionEngine.AddPlugin(new LogLifecyclePlugin());
             PluginExecutionEngine.AddPlugin(new ExecutionTimeUnderPlugin());
-            new ApiBddPlugin().Enable();
+            PluginExecutionEngine.AddPlugin(new RetryFailedRequestsWorkflowPlugin());
+            PluginExecutionEngine.AddPlugin(new RetryFailedRequestsWorkflowPlugin());
+
+            App.AddApiClientExecutionPlugin<ApiBddPlugin>();
+            App.AddAssertionsEventHandler<BDDLoggingAssertExtensions>();
             //ExecutionTimePlugin.Add();
             //APIPluginsConfiguration.AddAssertExtensionsBddLogging();
             //APIPluginsConfiguration.AddRetryFailedRequests();

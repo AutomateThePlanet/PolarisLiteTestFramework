@@ -1,6 +1,4 @@
-﻿using PolarisLite.Mobile.Settings.StaticImplementation;
-
-namespace PolarisLite.Mobile.Plugins;
+﻿namespace PolarisLite.Mobile.Plugins;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
 public class GridAttribute : LocalExecutionAttribute

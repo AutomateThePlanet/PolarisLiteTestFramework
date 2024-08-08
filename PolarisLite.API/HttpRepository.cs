@@ -1,7 +1,4 @@
-﻿using PolarisLite.API;
-using RestSharp;
-
-namespace PolarisLite.API;
+﻿namespace PolarisLite.API;
 
 
 public abstract class HttpRepository<TEntity> where TEntity : new()

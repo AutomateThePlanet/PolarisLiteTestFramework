@@ -1,8 +1,25 @@
 ﻿using PolarisLite.Logging;
+using System.Reflection;
 
 namespace PolarisLite.API;
 public class BDDLoggingAssertExtensions : AssertExtensionsEventHandlers
 {
+    public override void SubscribeToAll()
+    {
+        if (ApiSettings.EnableBDDLogging)
+        {
+            base.SubscribeToAll();
+        }
+    }
+
+    public override void UnsubscribeToAll()
+    {
+        if (ApiSettings.EnableBDDLogging)
+        {
+            base.UnsubscribeToAll();
+        }
+    }
+
     protected override void AssertContentContainsEventHandler(object sender, ApiAssertEventArgs arg)
     {
         Logger.LogInfo($"Assert response content contains {arg.ActionValue}.");

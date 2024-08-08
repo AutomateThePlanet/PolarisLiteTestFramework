@@ -4,7 +4,6 @@ using PolarisLite.Web.Plugins;
 using Bellatrix.Web.Extensions.Controls.Controls.EventHandlers;
 using PolarisLite.Web.Extensions.Controls.Controls.EventHandlers;
 using PolarisLite.Web.Configuration.StaticImplementation;
-using PolarisLite.Web.Plugins.Browser;
 using PolarisLite.Web.Troubshoting;
 
 namespace PolarisLite.Web.Core.NUnit;

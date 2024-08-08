@@ -7,6 +7,9 @@ public class LogLifecyclePlugin : Plugin
 {
     public override void OnBeforeTestInitialize(MethodInfo memberInfo)
     {
-        Logger.LogInfo($"Start Test {memberInfo.GetType().Name}.{memberInfo.Name}");
+        if (ApiSettings.EnableBDDLogging)
+        {
+            Logger.LogInfo($"Start Test {memberInfo.GetType().Name}.{memberInfo.Name}");
+        }
     }
 }

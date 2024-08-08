@@ -1,5 +1,4 @@
-﻿using PolarisLite.Mobile.Plugins;
-using PolarisLite.Web.Plugins;
+﻿using PolarisLite.Web.Plugins;
 
 namespace PolarisLite.Mobile.Settings.StaticImplementation;
 

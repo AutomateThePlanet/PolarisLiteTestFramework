@@ -1,6 +1,4 @@
-﻿using PolarisLite.Mobile.Settings.StaticImplementation;
-
-namespace PolarisLite.Mobile.Settings.FilesImplementation;
+﻿namespace PolarisLite.Mobile.Settings.FilesImplementation;
 
 public sealed class AndroidSettings
 {

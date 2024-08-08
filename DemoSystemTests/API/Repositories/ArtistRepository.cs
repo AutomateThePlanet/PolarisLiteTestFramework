@@ -1,6 +1,6 @@
 ﻿namespace DemoSystemTests;
 
-using RepositoryDesignPatternTests.Data.Repositories;
+using PolarisLite.API;
 using RestSharp;
 using System.Collections.Generic;
 
@@ -21,7 +21,7 @@ public class ArtistRepository : HttpRepository<Artists>
             throw new ApplicationException($"Error searching artists by name: {response.ErrorMessage}");
         }
 
-        return response.Response.Data;
+        return response.Data;
     }
 }
 

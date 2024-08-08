@@ -22,6 +22,20 @@ public class App
 
     public bool ShouldReuseRestClient { get; set; } = true;
 
+    public void AddApiClientExecutionPlugin<TApiClientPlugin>()
+        where TApiClientPlugin : ApiClientPlugin
+    {
+        var apiClientPlugin = (TApiClientPlugin)Activator.CreateInstance(typeof(TApiClientPlugin));
+        apiClientPlugin?.Enable();
+    }
+
+    public void RemoveApiClientExecutionPlugin<TApiClientPlugin>()
+     where TApiClientPlugin : ApiClientPlugin
+    {
+        var apiClientPlugin = (TApiClientPlugin)Activator.CreateInstance(typeof(TApiClientPlugin));
+        apiClientPlugin?.Disable();
+    }
+
     public void AddAssertionsEventHandler<TApiAssertionsEventHandler>()
         where TApiAssertionsEventHandler : AssertExtensionsEventHandlers
     {

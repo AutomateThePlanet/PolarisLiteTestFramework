@@ -1,4 +1,4 @@
-﻿using RepositoryDesignPatternTests.Data.Repositories;
+﻿using PolarisLite.API;
 
 namespace DemoSystemTests;
 public class AlbumRepository : HttpRepository<Albums>

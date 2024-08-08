@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
+using Polaris.API.NUnit;
 using PolarisLite.API;
-using PolarisLite.API.Assertions;
 using RestSharp;
 using RestSharp.Authenticators.OAuth2;
 using System.Net;
@@ -8,36 +8,43 @@ using System.Net;
 namespace DemoSystemTests;
 
 [TestFixture]
-public class AssertApiAssertionsTests
+[OAuth2AuthorizationRequestHeaderAuthenticationStrategyAttribute("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiZWxsYXRyaXhVc2VyIiwianRpIjoiNjEyYjIzOTktNDUzMS00NmU0LTg5NjYtN2UxYmRhY2VmZTFlIiwibmJmIjoxNTE4NTI0NDg0LCJleHAiOjE1MjM3MDg0ODQsImlzcyI6ImF1dG9tYXRldGhlcGxhbmV0LmNvbSIsImF1ZCI6ImF1dG9tYXRldGhlcGxhbmV0LmNvbSJ9.Nq6OXqrK82KSmWNrpcokRIWYrXHanpinrqwbUlKT_cs")]
+public class AssertApiAssertionsTests : APITest
 {
-    private const string BASE_URL = "http://localhost:60715/";
-    private static ApiClientService _restClient;
+    //private const string BASE_URL = "http://localhost:60715/";
+    //private static ApiClientService _restClient;
     private Fixture _fixture;
 
-    [OneTimeSetUp]
-    public void ClassSetup()
+    protected override void ClassInitialize()
     {
-        var authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(
-                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiZWxsYXRyaXhVc2VyIiwianRpIjoiNjEyYjIzOTktNDUzMS00NmU0LTg5NjYtN2UxYmRhY2VmZTFlIiwibmJmIjoxNTE4NTI0NDg0LCJleHAiOjE1MjM3MDg0ODQsImlzcyI6ImF1dG9tYXRldGhlcGxhbmV0LmNvbSIsImF1ZCI6ImF1dG9tYXRldGhlcGxhbmV0LmNvbSJ9.Nq6OXqrK82KSmWNrpcokRIWYrXHanpinrqwbUlKT_cs",
-                 "Bearer");
-        _restClient = new ApiClientService("http://localhost:60715/", authenticator: authenticator);
-
-        _restClient.WrappedClient.AddDefaultHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
         _fixture = new Fixture();
+        App.ApiClient.WrappedClient.AddDefaultHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
     }
 
-    [OneTimeTearDown]
-    public void TestCleanup()
-    {
-        _restClient.Dispose();
-    }
+    //[OneTimeSetUp]
+    //public void ClassSetup()
+    //{
+    //    var authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(
+    //             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiZWxsYXRyaXhVc2VyIiwianRpIjoiNjEyYjIzOTktNDUzMS00NmU0LTg5NjYtN2UxYmRhY2VmZTFlIiwibmJmIjoxNTE4NTI0NDg0LCJleHAiOjE1MjM3MDg0ODQsImlzcyI6ImF1dG9tYXRldGhlcGxhbmV0LmNvbSIsImF1ZCI6ImF1dG9tYXRldGhlcGxhbmV0LmNvbSJ9.Nq6OXqrK82KSmWNrpcokRIWYrXHanpinrqwbUlKT_cs",
+    //             "Bearer");
+    //    _restClient = new ApiClientService("http://localhost:60715/", authenticator: authenticator);
+
+    //    _restClient.WrappedClient.AddDefaultHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
+    //    _fixture = new Fixture();
+    //}
+
+    //[OneTimeTearDown]
+    //public void TestCleanup()
+    //{
+    //    _restClient.Dispose();
+    //}
 
     [Test]
     public async Task AssertSuccessStatusCode()
     {
         var request = new RestRequest("api/Albums", Method.Get);
 
-        var response = await _restClient.GetAsync(request);
+        var response = await App.ApiClient.GetAsync(request);
 
         response.AssertSuccessStatusCode();
     }
@@ -47,7 +54,7 @@ public class AssertApiAssertionsTests
     {
         var request = new RestRequest("api/Albums", Method.Get);
 
-        var response = await _restClient.GetAsync(request);
+        var response = await App.ApiClient.GetAsync(request);
 
         response.AssertStatusCode(HttpStatusCode.OK);
     }
@@ -57,7 +64,7 @@ public class AssertApiAssertionsTests
     {
         var request = new RestRequest("api/Albums", Method.Get);
 
-        var response = await _restClient.GetAsync(request);
+        var response = await App.ApiClient.GetAsync(request);
 
         response.AssertResponseHeader("server", "Kestrel");
     }
@@ -67,7 +74,7 @@ public class AssertApiAssertionsTests
     {
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await _restClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Albums>(request);
 
         response.AssertContentType("application/json");
     }
@@ -77,7 +84,7 @@ public class AssertApiAssertionsTests
     {
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await _restClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Albums>(request);
 
         response.AssertContentContains("Audioslave");
     }
@@ -88,7 +95,7 @@ public class AssertApiAssertionsTests
     {
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await _restClient.GetAsync<Albums>(request).ConfigureAwait(false);
+        var response = await App.ApiClient.GetAsync<Albums>(request).ConfigureAwait(false);
 
         response.AssertContentEncoding("gzip");
     }
@@ -98,7 +105,7 @@ public class AssertApiAssertionsTests
     {
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await _restClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Albums>(request);
 
         response.AssertContentEquals("{\"albumId\":10,\"title\":\"Audioslave\",\"artistId\":8,\"artist\":null,\"tracks\":[]}");
     }
@@ -108,7 +115,7 @@ public class AssertApiAssertionsTests
     {
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await _restClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Albums>(request);
 
         response.AssertContentNotContains("Rammstein");
     }
@@ -118,7 +125,7 @@ public class AssertApiAssertionsTests
     {
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await _restClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Albums>(request);
 
         response.AssertContentNotEquals("Rammstein");
     }
@@ -132,9 +139,9 @@ public class AssertApiAssertionsTests
         };
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await _restClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Albums>(request);
 
-        response.Response.AssertResultEquals(expectedAlbum);
+        response.AssertResultEquals(expectedAlbum);
     }
 
     [Test]
@@ -146,9 +153,9 @@ public class AssertApiAssertionsTests
         };
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await _restClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Albums>(request);
 
-        response.Response.AssertResultNotEquals(expectedAlbum);
+        response.AssertResultNotEquals(expectedAlbum);
     }
 
     [Test]
@@ -157,7 +164,7 @@ public class AssertApiAssertionsTests
     {
         var request = new RestRequest("api/Albums/10");
 
-        var response = await _restClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Albums>(request);
 
         response.AssertCookieExists("whoIs");
     }
@@ -168,7 +175,7 @@ public class AssertApiAssertionsTests
     {
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await _restClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Albums>(request);
 
         response.AssertCookie("whoIs", "Bella");
     }
@@ -178,7 +185,7 @@ public class AssertApiAssertionsTests
     {
         var request = new RestRequest("api/Albums/10");
 
-        var response = await _restClient.GetAsync<Albums>(request).ConfigureAwait(false);
+        var response = await App.ApiClient.GetAsync<Albums>(request).ConfigureAwait(false);
 
         // http://json-schema.org/examples.html
         var expectedSchema = @"{
