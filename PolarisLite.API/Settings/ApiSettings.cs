@@ -8,4 +8,5 @@ public static class ApiSettings
     public static int PauseBetweenFailures { get; set; }
     public static TimeUnit TimeUnit { get; set; }
     public static bool EnableBDDLogging { get; set; }
+    public static bool EnableToastMessages { get; set; }
 }

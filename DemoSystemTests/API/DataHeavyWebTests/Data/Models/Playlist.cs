@@ -1,7 +1,7 @@
-﻿namespace DemoSystemTests;
-public class Playlists
+﻿namespace DemoSystemTests.Builder;
+public class Playlist
 {
-    public Playlists() => PlaylistTrack = new HashSet<PlaylistTrack>();
+    public Playlist() => PlaylistTrack = new HashSet<PlaylistTrack>();
 
     public long PlaylistId { get; set; }
     public string Name { get; set; }

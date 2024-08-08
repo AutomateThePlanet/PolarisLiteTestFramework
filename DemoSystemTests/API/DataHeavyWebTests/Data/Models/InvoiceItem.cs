@@ -1,5 +1,5 @@
-﻿namespace DemoSystemTests;
-public class InvoiceItems
+﻿namespace DemoSystemTests.Builder;
+public class InvoiceItem
 {
     public long InvoiceLineId { get; set; }
     public long InvoiceId { get; set; }
@@ -7,6 +7,6 @@ public class InvoiceItems
     public string UnitPrice { get; set; }
     public long Quantity { get; set; }
 
-    public Invoices Invoice { get; set; }
-    public Tracks Track { get; set; }
+    public Invoice Invoice { get; set; }
+    public Track Track { get; set; }
 }

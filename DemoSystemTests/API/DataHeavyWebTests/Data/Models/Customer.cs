@@ -1,9 +1,9 @@
-﻿namespace DemoSystemTests;
-public class Customers
+﻿namespace DemoSystemTests.Builder;
+public class Customer
 {
-    public Customers() => Invoices = new HashSet<Invoices>();
+    public Customer() => Invoices = new HashSet<Invoice>();
 
-    public long CustomerId { get; set; }
+    public int CustomerId { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Company { get; set; }
@@ -17,6 +17,6 @@ public class Customers
     public string Email { get; set; }
     public long? SupportRepId { get; set; }
 
-    public Employees SupportRep { get; set; }
-    public ICollection<Invoices> Invoices { get; set; }
+    public Employee SupportRep { get; set; }
+    public ICollection<Invoice> Invoices { get; set; }
 }

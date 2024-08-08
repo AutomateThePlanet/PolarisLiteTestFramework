@@ -12,11 +12,14 @@ public class WebTest : BaseTest
     private static bool _arePluginsAlreadyInitialized = false;
 
     public App App => new App();
+    public API.App ApiApp => new API.App();
 
     protected override void Configure()
     {
         if (!_arePluginsAlreadyInitialized)
         {
+            // TODO: enable API related plugins
+
             PluginExecutionEngine.AddPlugin(new BrowserLifecyclePlugin());
             PluginExecutionEngine.AddPlugin(new InitializeHighlightScriptsPlugin());
             PluginExecutionEngine.AddPlugin(new InitializeToastMessagesScriptsPlugin());

@@ -1,9 +1,10 @@
 ﻿using Newtonsoft.Json;
 
-namespace DemoSystemTests;
-public class Albums : IEquatable<Albums>
+namespace DemoSystemTests.Builder;
+
+public class Album : IEquatable<Album>
 {
-    public Albums() => Tracks = new HashSet<Tracks>();
+    public Album() => Tracks = new HashSet<Track>();
 
     [JsonProperty(Required = Required.Always)]
     public long AlbumId { get; set; }
@@ -13,17 +14,17 @@ public class Albums : IEquatable<Albums>
     public long ArtistId { get; set; }
 
     [JsonProperty(Required = Required.AllowNull)]
-    public Artists Artist { get; set; }
+    public Artist Artist { get; set; }
     [JsonProperty(Required = Required.AllowNull)]
-    public ICollection<Tracks> Tracks { get; set; }
+    public ICollection<Track> Tracks { get; set; }
 
-    public bool Equals(Albums other)
+    public bool Equals(Album other)
     {
         return AlbumId.Equals(other.AlbumId);
     }
 
     public override bool Equals(object obj)
     {
-        return Equals(obj as Albums);
+        return Equals(obj as Album);
     }
 }

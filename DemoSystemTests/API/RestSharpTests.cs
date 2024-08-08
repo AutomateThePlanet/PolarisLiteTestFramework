@@ -1,33 +1,21 @@
-﻿using Polaris.API.NUnit;
+﻿using AutoFixture;
+using DemoSystemTests.Builder;
+using Polaris.API.NUnit;
 using PolarisLite.API;
 using RestSharp;
 using RestSharp.Authenticators.OAuth2;
 namespace DemoSystemTests;
 
 [TestFixture]
+[OAuth2AuthorizationRequestHeaderAuthenticationStrategyAttribute("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiZWxsYXRyaXhVc2VyIiwianRpIjoiNjEyYjIzOTktNDUzMS00NmU0LTg5NjYtN2UxYmRhY2VmZTFlIiwibmJmIjoxNTE4NTI0NDg0LCJleHAiOjE1MjM3MDg0ODQsImlzcyI6ImF1dG9tYXRldGhlcGxhbmV0LmNvbSIsImF1ZCI6ImF1dG9tYXRldGhlcGxhbmV0LmNvbSJ9.Nq6OXqrK82KSmWNrpcokRIWYrXHanpinrqwbUlKT_cs")]
 public class UtilitiesTests : APITest
 {
-    private const string BASE_URL = "http://localhost:60715/";
-    private static ApiClientService _restClient;
+    private Fixture _fixture;
 
-    // TODO: use base class methods + authentication plugins
-    // TODO: in security module --> improve plugin to get it from env_variables or keyvault
-    [OneTimeSetUp]
-    public void ClassSetup()
+    protected override void ClassInitialize()
     {
-        var authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(
-                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiZWxsYXRyaXhVc2VyIiwianRpIjoiNjEyYjIzOTktNDUzMS00NmU0LTg5NjYtN2UxYmRhY2VmZTFlIiwibmJmIjoxNTE4NTI0NDg0LCJleHAiOjE1MjM3MDg0ODQsImlzcyI6ImF1dG9tYXRldGhlcGxhbmV0LmNvbSIsImF1ZCI6ImF1dG9tYXRldGhlcGxhbmV0LmNvbSJ9.Nq6OXqrK82KSmWNrpcokRIWYrXHanpinrqwbUlKT_cs",
-                 "Bearer");
-        _restClient = new ApiClientService("http://localhost:60715/", authenticator: authenticator);
-
-        _restClient.WrappedClient.AddDefaultHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
-
-    }
-
-    [OneTimeTearDown]
-    public void TestCleanup()
-    {
-        _restClient.Dispose();
+        _fixture = new Fixture();
+        App.ApiClient.WrappedClient.AddDefaultHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
     }
 
     [Test]
@@ -35,7 +23,7 @@ public class UtilitiesTests : APITest
     public async Task HeadRequestExample()
     {
         var request = new RestRequest("api/Albums", Method.Head);
-        var response = await _restClient.HeadAsync(request);
+        var response = await App.ApiClient.HeadAsync(request);
 
         Assert.IsTrue(response.IsSuccessful);
     }
@@ -48,7 +36,7 @@ public class UtilitiesTests : APITest
         request.AddQueryParameter("id", 12556);
         request.AddQueryParameter("shouldRegister", "True");
         request.AddQueryParameter("redirectUrl", "automatetheplanet");
-        var response = await _restClient.GetAsync(request);
+        var response = await App.ApiClient.GetAsync(request);
 
         // if send via form
         // POST requests are often sent via a post form. The type of the body of the request is indicated
@@ -60,7 +48,7 @@ public class UtilitiesTests : APITest
         request1.AddParameter("lastName", "Angelov");
         request1.AddParameter("company", "Automate The Planet");
 
-        var response1 = await _restClient.PostAsync(request1);
+        var response1 = await App.ApiClient.PostAsync(request1);
 
         //{
         //  "args": {},
@@ -97,7 +85,7 @@ public class UtilitiesTests : APITest
     public async Task ContentPopulated_When_GetAlbums()
     {
         var request = new RestRequest("api/Albums", Method.Get);
-        var response = await _restClient.GetAsync(request);
+        var response = await App.ApiClient.GetAsync(request);
 
         Assert.IsNotNull(response.Content);
     }
@@ -107,7 +95,7 @@ public class UtilitiesTests : APITest
     {
         var request = new RestRequest("api/Albums", Method.Get);
 
-        var response = await _restClient.GetAsync<List<Albums>>(request);
+        var response = await App.ApiClient.GetAsync<List<Album>>(request);
 
         Assert.That(response.Data.Count, Is.EqualTo(347));
     }
@@ -117,7 +105,7 @@ public class UtilitiesTests : APITest
     {
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await _restClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Album>(request);
 
         Assert.That(response.Data.AlbumId, Is.EqualTo(10));
     }
@@ -127,7 +115,7 @@ public class UtilitiesTests : APITest
     {
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await _restClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Album>(request);
 
         Assert.IsNotNull(response.Content);
     }
@@ -140,18 +128,18 @@ public class UtilitiesTests : APITest
         var request = new RestRequest("api/Genres", Method.Post);
         request.AddJsonBody(newGenres);
 
-        var insertedGenres = await _restClient.PostAsync<Genres>(request);
+        var insertedGenres = await App.ApiClient.PostAsync<Genre>(request);
 
         var putRequest = new RestRequest($"api/Genres/{insertedGenres.Data.GenreId}", Method.Put);
         string updatedName = Guid.NewGuid().ToString();
         insertedGenres.Data.Name = updatedName;
         putRequest.AddJsonBody(insertedGenres.Data);
 
-        await _restClient.PutAsync<Genres>(putRequest);
+        await App.ApiClient.PutAsync<Genre>(putRequest);
 
         request = new RestRequest($"api/Genres/{insertedGenres.Data.GenreId}", Method.Get);
 
-        var getUpdatedResponse = await _restClient.GetAsync<Genres>(request);
+        var getUpdatedResponse = await App.ApiClient.GetAsync<Genre>(request);
 
         Assert.IsNotNull(getUpdatedResponse.Content);
     }
@@ -164,18 +152,18 @@ public class UtilitiesTests : APITest
         var request = new RestRequest("api/Genres", Method.Post);
         request.AddJsonBody(newGenres);
 
-        var insertedGenres = await _restClient.PostAsync<Genres>(request);
+        var insertedGenres = await App.ApiClient.PostAsync<Genre>(request);
 
         var putRequest = new RestRequest($"api/Genres/{insertedGenres.Data.GenreId}", Method.Put);
         string updatedName = Guid.NewGuid().ToString();
         insertedGenres.Data.Name = updatedName;
         putRequest.AddJsonBody(insertedGenres.Data);
 
-        await _restClient.PutAsync(putRequest);
+        await App.ApiClient.PutAsync(putRequest);
 
         request = new RestRequest($"api/Genres/{insertedGenres.Data.GenreId}", Method.Get);
 
-        var getUpdatedResponse = await _restClient.GetAsync<Genres>(request);
+        var getUpdatedResponse = await App.ApiClient.GetAsync<Genre>(request);
 
         Assert.IsNotNull(getUpdatedResponse.Content);
     }
@@ -188,7 +176,7 @@ public class UtilitiesTests : APITest
         var request = new RestRequest("api/Genres");
         request.AddJsonBody(newAlbum);
 
-        var response = await _restClient.PostAsync(request);
+        var response = await App.ApiClient.PostAsync(request);
 
         Assert.IsTrue(response.IsSuccessful);
     }
@@ -201,7 +189,7 @@ public class UtilitiesTests : APITest
         var request = new RestRequest("api/Genres", Method.Post);
         request.AddJsonBody(newAlbum);
 
-        var response = await _restClient.PostAsync<Genres>(request);
+        var response = await App.ApiClient.PostAsync<Genre>(request);
 
         Assert.That(response.Data.Name, Is.EqualTo(newAlbum.Name));
     }
@@ -212,10 +200,10 @@ public class UtilitiesTests : APITest
         var newArtist = await CreateUniqueArtists();
         var request = new RestRequest("api/Artists", Method.Post);
         request.AddJsonBody(newArtist);
-        await _restClient.PostAsync<Artists>(request);
+        await App.ApiClient.PostAsync<Artist>(request);
 
         var deleteRequest = new RestRequest($"api/Artists/{newArtist.ArtistId}", Method.Delete);
-        var response = await _restClient.DeleteAsync(deleteRequest);
+        var response = await App.ApiClient.DeleteAsync(deleteRequest);
 
         Assert.IsTrue(response.IsSuccessful);
     }
@@ -226,18 +214,18 @@ public class UtilitiesTests : APITest
         var newArtist = await CreateUniqueArtists();
         var request = new RestRequest("api/Artists", Method.Post);
         request.AddJsonBody(newArtist);
-        await _restClient.PostAsync<Artists>(request);
+        await App.ApiClient.PostAsync<Artist>(request);
 
         var deleteRequest = new RestRequest($"api/Artists/{newArtist.ArtistId}", Method.Delete);
-        var response = await _restClient.PostAsync<Artists>(deleteRequest);
+        var response = await App.ApiClient.PostAsync<Artist>(deleteRequest);
 
         Assert.IsTrue(response.IsSuccessful);
     }
 
-    private async Task<Artists> CreateUniqueArtists()
+    private async Task<Artist> CreateUniqueArtists()
     {
-        var artists = await _restClient.GetAsync<List<Artists>>(new RestRequest("api/Artists"));
-        var newArtists = new Artists
+        var artists = await App.ApiClient.GetAsync<List<Artist>>(new RestRequest("api/Artists"));
+        var newArtists = new Artist
         {
             Name = Guid.NewGuid().ToString(),
             ArtistId = artists.Data.OrderBy(x => x.ArtistId).Last().ArtistId + 1,
@@ -245,10 +233,10 @@ public class UtilitiesTests : APITest
         return newArtists;
     }
 
-    private async Task<Genres> CreateUniqueGenres()
+    private async Task<Genre> CreateUniqueGenres()
     {
-        var genres = await _restClient.GetAsync<List<Genres>>(new RestRequest("api/Genres"));
-        var newGenres = new Genres
+        var genres = await App.ApiClient.GetAsync<List<Genre>>(new RestRequest("api/Genres"));
+        var newGenres = new Genre
         {
             Name = Guid.NewGuid().ToString(),
             GenreId = genres.Data.OrderBy(x => x.GenreId).Last().GenreId + 1,

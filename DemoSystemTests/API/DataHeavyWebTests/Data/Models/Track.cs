@@ -1,9 +1,9 @@
-﻿namespace DemoSystemTests;
-public class Tracks
+﻿namespace DemoSystemTests.Builder;
+public class Track
 {
-    public Tracks()
+    public Track()
     {
-        InvoiceItems = new HashSet<InvoiceItems>();
+        InvoiceItems = new HashSet<InvoiceItem>();
         PlaylistTrack = new HashSet<PlaylistTrack>();
     }
 
@@ -17,9 +17,9 @@ public class Tracks
     public long? Bytes { get; set; }
     public string UnitPrice { get; set; }
 
-    public Albums Album { get; set; }
-    public Genres Genre { get; set; }
-    public MediaTypes MediaType { get; set; }
-    public ICollection<InvoiceItems> InvoiceItems { get; set; }
+    public Album Album { get; set; }
+    public Genre Genre { get; set; }
+    public MediaType MediaType { get; set; }
+    public ICollection<InvoiceItem> InvoiceItems { get; set; }
     public ICollection<PlaylistTrack> PlaylistTrack { get; set; }
 }

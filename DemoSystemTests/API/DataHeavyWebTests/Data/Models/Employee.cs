@@ -1,10 +1,10 @@
-﻿namespace DemoSystemTests;
-public class Employees
+﻿namespace DemoSystemTests.Builder;
+public class Employee
 {
-    public Employees()
+    public Employee()
     {
-        Customers = new HashSet<Customers>();
-        InverseReportsToNavigation = new HashSet<Employees>();
+        Customers = new HashSet<Customer>();
+        InverseReportsToNavigation = new HashSet<Employee>();
     }
 
     public long EmployeeId { get; set; }
@@ -23,7 +23,7 @@ public class Employees
     public string Fax { get; set; }
     public string Email { get; set; }
 
-    public Employees ReportsToNavigation { get; set; }
-    public ICollection<Customers> Customers { get; set; }
-    public ICollection<Employees> InverseReportsToNavigation { get; set; }
+    public Employee ReportsToNavigation { get; set; }
+    public ICollection<Customer> Customers { get; set; }
+    public ICollection<Employee> InverseReportsToNavigation { get; set; }
 }

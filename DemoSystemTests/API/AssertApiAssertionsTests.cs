@@ -2,10 +2,9 @@
 using Polaris.API.NUnit;
 using PolarisLite.API;
 using RestSharp;
-using RestSharp.Authenticators.OAuth2;
 using System.Net;
 
-namespace DemoSystemTests;
+namespace DemoSystemTests.Builder;
 
 [TestFixture]
 [OAuth2AuthorizationRequestHeaderAuthenticationStrategyAttribute("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiZWxsYXRyaXhVc2VyIiwianRpIjoiNjEyYjIzOTktNDUzMS00NmU0LTg5NjYtN2UxYmRhY2VmZTFlIiwibmJmIjoxNTE4NTI0NDg0LCJleHAiOjE1MjM3MDg0ODQsImlzcyI6ImF1dG9tYXRldGhlcGxhbmV0LmNvbSIsImF1ZCI6ImF1dG9tYXRldGhlcGxhbmV0LmNvbSJ9.Nq6OXqrK82KSmWNrpcokRIWYrXHanpinrqwbUlKT_cs")]
@@ -74,7 +73,7 @@ public class AssertApiAssertionsTests : APITest
     {
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await App.ApiClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Album>(request);
 
         response.AssertContentType("application/json");
     }
@@ -84,7 +83,7 @@ public class AssertApiAssertionsTests : APITest
     {
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await App.ApiClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Album>(request);
 
         response.AssertContentContains("Audioslave");
     }
@@ -95,7 +94,7 @@ public class AssertApiAssertionsTests : APITest
     {
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await App.ApiClient.GetAsync<Albums>(request).ConfigureAwait(false);
+        var response = await App.ApiClient.GetAsync<Album>(request).ConfigureAwait(false);
 
         response.AssertContentEncoding("gzip");
     }
@@ -105,7 +104,7 @@ public class AssertApiAssertionsTests : APITest
     {
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await App.ApiClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Album>(request);
 
         response.AssertContentEquals("{\"albumId\":10,\"title\":\"Audioslave\",\"artistId\":8,\"artist\":null,\"tracks\":[]}");
     }
@@ -115,7 +114,7 @@ public class AssertApiAssertionsTests : APITest
     {
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await App.ApiClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Album>(request);
 
         response.AssertContentNotContains("Rammstein");
     }
@@ -125,7 +124,7 @@ public class AssertApiAssertionsTests : APITest
     {
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await App.ApiClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Album>(request);
 
         response.AssertContentNotEquals("Rammstein");
     }
@@ -133,13 +132,13 @@ public class AssertApiAssertionsTests : APITest
     [Test]
     public async Task AssertResultEquals()
     {
-        var expectedAlbum = new Albums
+        var expectedAlbum = new Album
         {
             AlbumId = 10,
         };
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await App.ApiClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Album>(request);
 
         response.AssertResultEquals(expectedAlbum);
     }
@@ -147,13 +146,13 @@ public class AssertApiAssertionsTests : APITest
     [Test]
     public async Task AssertResultNotEquals()
     {
-        var expectedAlbum = new Albums
+        var expectedAlbum = new Album
         {
             AlbumId = 11,
         };
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await App.ApiClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Album>(request);
 
         response.AssertResultNotEquals(expectedAlbum);
     }
@@ -164,7 +163,7 @@ public class AssertApiAssertionsTests : APITest
     {
         var request = new RestRequest("api/Albums/10");
 
-        var response = await App.ApiClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Album>(request);
 
         response.AssertCookieExists("whoIs");
     }
@@ -175,7 +174,7 @@ public class AssertApiAssertionsTests : APITest
     {
         var request = new RestRequest("api/Albums/10", Method.Get);
 
-        var response = await App.ApiClient.GetAsync<Albums>(request);
+        var response = await App.ApiClient.GetAsync<Album>(request);
 
         response.AssertCookie("whoIs", "Bella");
     }
@@ -185,7 +184,7 @@ public class AssertApiAssertionsTests : APITest
     {
         var request = new RestRequest("api/Albums/10");
 
-        var response = await App.ApiClient.GetAsync<Albums>(request).ConfigureAwait(false);
+        var response = await App.ApiClient.GetAsync<Album>(request).ConfigureAwait(false);
 
         // http://json-schema.org/examples.html
         var expectedSchema = @"{
