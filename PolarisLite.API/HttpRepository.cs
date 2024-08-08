@@ -1,7 +1,7 @@
 ﻿using PolarisLite.API;
 using RestSharp;
 
-namespace RepositoryDesignPatternTests.Data.Repositories;
+namespace PolarisLite.API;
 
 
 public abstract class HttpRepository<TEntity> where TEntity : new()
@@ -25,7 +25,7 @@ public abstract class HttpRepository<TEntity> where TEntity : new()
             throw new ApplicationException($"Error fetching entity by ID: {response.ErrorMessage}");
         }
 
-        return response.Response.Data;
+        return response.Data;
     }
 
     public async Task<List<TEntity>> GetAllAsync()
@@ -38,7 +38,7 @@ public abstract class HttpRepository<TEntity> where TEntity : new()
             throw new ApplicationException($"Error fetching entities: {response.ErrorMessage}");
         }
 
-        return response.Response.Data;
+        return response.Data;
     }
 
     public async Task<TEntity> CreateAsync(TEntity entity)
@@ -52,7 +52,7 @@ public abstract class HttpRepository<TEntity> where TEntity : new()
             throw new ApplicationException($"Error creating entity: {response.ErrorMessage}");
         }
 
-        return response.Response.Data;
+        return response.Data;
     }
 
     public async Task<TEntity> UpdateAsync(int id, TEntity entity)
@@ -66,7 +66,7 @@ public abstract class HttpRepository<TEntity> where TEntity : new()
             throw new ApplicationException($"Error updating entity: {response.ErrorMessage}");
         }
 
-        return response.Response.Data;
+        return response.Data;
     }
 
     public async Task DeleteAsync(int id)

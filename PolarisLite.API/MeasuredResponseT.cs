@@ -1,13 +1,14 @@
 ﻿namespace PolarisLite.API;
-public class MeasuredResponse<TReturnType> : RestResponse
-        where TReturnType : new()
+public class MeasuredResponse<TReturnType> : MeasuredResponse
+    where TReturnType : new()
 {
+    private readonly RestResponse<TReturnType> _restResponse;
+
     public MeasuredResponse(RestResponse<TReturnType> restResponse, TimeSpan executionTime)
+        : base(restResponse, executionTime)
     {
-        Response = restResponse;
-        ExecutionTime = executionTime;
+        _restResponse = restResponse;
     }
 
-    public TimeSpan ExecutionTime { get; set; }
-    public RestResponse<TReturnType> Response { get; set; }
+    public TReturnType Data { get => _restResponse.Data; set => _restResponse.Data = value; }
 }

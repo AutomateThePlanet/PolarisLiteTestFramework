@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using PolarisLite.API;
+using PolarisLite.API.Assertions;
 using RestSharp;
 using RestSharp.Authenticators.OAuth2;
 using System.Net;
