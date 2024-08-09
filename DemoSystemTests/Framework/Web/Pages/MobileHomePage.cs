@@ -1,6 +1,6 @@
 ﻿using PolarisLite.Web;
 
-namespace DemoSystemTests.Web;
+namespace DemoSystemTests.Framework.Web.Pages;
 
 // NOTE: Move common logic to base class for home page and mark fields as abstract so that
 // we can implmenent the right locator for each version.

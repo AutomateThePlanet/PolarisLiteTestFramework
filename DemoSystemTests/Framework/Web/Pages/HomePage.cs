@@ -1,6 +1,6 @@
 ﻿using PolarisLite.Web;
 
-namespace DemoSystemTests.Web;
+namespace DemoSystemTests.Framework.Web.Pages;
 public class HomePage : WebPage
 {
     public TextField SearchInput => App.Elements.FindAllByXPath<TextField>("//input[@name='search']").First();

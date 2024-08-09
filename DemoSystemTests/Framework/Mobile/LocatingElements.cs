@@ -3,7 +3,7 @@ using PolarisLite.Mobile.Components;
 using PolarisLite.Mobile.Core.NUnit;
 using PolarisLite.Mobile.Plugins;
 
-namespace DemoSystemTests.Mobile.Framework;
+namespace DemoSystemTests.Mobile.Web.Framework;
 
 [LocalExecution(AndroidVersion = "13.0",
     DeviceName = "pixel5-test-device-13-new",

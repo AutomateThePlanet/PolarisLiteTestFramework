@@ -1,6 +1,5 @@
 ﻿using DemoSystemTests.Framework.Web.Pages;
 using DemoSystemTests.Framework.Web.Pages.Models;
-using DemoSystemTests.Web;
 using PolarisLite.Core.Layout.Second;
 using PolarisLite.Web;
 using PolarisLite.Web.Core.NUnit;
@@ -68,7 +67,6 @@ public class ProductPurchaseTests : WebTest
     }
 
     [Test]
-    [LambdaTest(BrowserType.Chrome, 125)]
     public void PurchaseTwoSameProduct()
     {
         var expectedProduct1 = new ProductDetails
@@ -192,8 +190,8 @@ public class ProductPurchaseTests : WebTest
             Quantity = "2"
         };
 
-        HomePage.SearchProduct("iPod Tou");
-        HomePage.SearchButton.Click();
+        MobileHomePage.SearchProduct("iPod Tou");
+        MobileHomePage.SearchButton.Click();
         //SearchProductPage.OpenItem(expectedProduct1.Id);
 
         // version 1

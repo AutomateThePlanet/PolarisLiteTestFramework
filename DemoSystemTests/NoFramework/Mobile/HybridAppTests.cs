@@ -61,7 +61,7 @@ public class HybridAppTests
         link.Click();
 
         var body = _driver.FindElement(By.TagName("body"));
-        Assert.IsTrue(body.Text.Contains("I am some other page content"));
+        Assert.That(body.Text.Contains("I am some other page content"), Is.True);
     }
 
     private void SwitchToWebView(Func<bool> filterConditionToSwitchWebView)

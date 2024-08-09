@@ -1,6 +1,7 @@
 using PolarisLite.Web.ComponentsJS.CKEditor;
 using PolarisLite.Web.Core.NUnit;
 using PolarisLite.Web;
+using NUnit.Framework.Legacy;
 
 namespace DemoSystemTests.Web;
 

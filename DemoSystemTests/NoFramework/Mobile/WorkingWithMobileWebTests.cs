@@ -39,6 +39,6 @@ public class WorkingWithMobileWebTests
     {
         _driver.Navigate().GoToUrl("http://demos.bellatrix.solutions/");
         Console.WriteLine(_driver.PageSource);
-        Assert.IsTrue(_driver.PageSource.Contains("Shop"));
+        Assert.That(_driver.PageSource.Contains("Shop"), Is.True);
     }
 }

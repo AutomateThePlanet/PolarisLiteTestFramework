@@ -1,4 +1,5 @@
-﻿using PolarisLite.Mobile.Settings.StaticImplementation;
+﻿using PolarisLite.Api.Configuration;
+using PolarisLite.Mobile.Settings.StaticImplementation;
 using PolarisLite.Web.Configuration.StaticImplementation;
 
 namespace DemoSystemTests;
@@ -10,6 +11,7 @@ public class AssemblySetup
     {
         MobileConfigurationLoader.LoadConfiguration();
         WebConfigurationLoader.LoadConfiguration();
+        ApiConfigurationLoader.LoadConfiguration();
     }
 
     //[OneTimeTearDown]

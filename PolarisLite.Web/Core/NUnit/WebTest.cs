@@ -4,8 +4,9 @@ using PolarisLite.Web.Plugins;
 using Bellatrix.Web.Extensions.Controls.Controls.EventHandlers;
 using PolarisLite.Web.Extensions.Controls.Controls.EventHandlers;
 using PolarisLite.Web.Configuration.StaticImplementation;
-using PolarisLite.Web.Plugins.Browser;
 using PolarisLite.Web.Troubshoting;
+using PolarisLite.Api.Configuration;
+using PolarisLite.Web.Plugins.Browser;
 
 namespace PolarisLite.Web.Core.NUnit;
 public class WebTest : BaseTest
@@ -13,19 +14,23 @@ public class WebTest : BaseTest
     private static bool _arePluginsAlreadyInitialized = false;
 
     public App App => new App();
+    public API.App ApiApp => new API.App();
 
     protected override void Configure()
     {
+        WebConfigurationLoader.LoadConfiguration();
+        ApiConfigurationLoader.LoadConfiguration();
         if (!_arePluginsAlreadyInitialized)
         {
             PluginExecutionEngine.AddPlugin(new JavaScriptErrorsPlugin());
             PluginExecutionEngine.AddPlugin(new LambdaTestResultsPlugin());
-            PluginExecutionEngine.AddPlugin(new ExceptionAnalysationPlugin());
-            PluginExecutionEngine.AddPlugin(new WebScreenshotPlugin());
+            //PluginExecutionEngine.AddPlugin(new ExceptionAnalysationPlugin());
+            //PluginExecutionEngine.AddPlugin(new WebScreenshotPlugin());
             PluginExecutionEngine.AddPlugin(new BrowserLifecyclePlugin());
             PluginExecutionEngine.AddPlugin(new InitializeHighlightScriptsPlugin());
             PluginExecutionEngine.AddPlugin(new InitializeToastMessagesScriptsPlugin());
             PluginExecutionEngine.AddPlugin(new LogLifecyclePlugin());
+
             WebComponentPluginExecutionEngine.AddPlugin(new HighlightElementPlugin());
             WebComponentPluginExecutionEngine.AddPlugin(new ScrollIntoViewPlugin());
 
@@ -42,9 +47,8 @@ public class WebTest : BaseTest
 
     public static void AddBddLogging()
     {
-        if ( WebSettings.EnableBDDLogging)
+        if (WebSettings.EnableBDDLogging)
         {
-            new BDDLoggingButtonEventHandlers().SubscribeToAll();
             new BDDLoggingTextFieldEventHandlers().SubscribeToAll();
             new BDDLoggingDateEventHandlers().SubscribeToAll();
             new BDDLoggingCheckboxEventHandlers().SubscribeToAll();
@@ -59,7 +63,6 @@ public class WebTest : BaseTest
     {
         if (WebSettings.EnableToastMessages)
         {
-            new ToastMessagesButtonEventHandlers().SubscribeToAll();
             new ToastMessagesTextFieldEventHandlers().SubscribeToAll();
             new ToastMessagesDateEventHandlers().SubscribeToAll();
             new ToastMessagesCheckboxEventHandlers().SubscribeToAll();

@@ -2,7 +2,7 @@
 
 public class ProductPage : WebPage
 {
-    public ProductPage(IWebDriver driver, WebDriverWait wait, Actions actions) 
+    public ProductPage(IWebDriver driver, WebDriverWait wait, Actions actions)
         : base(driver, wait, actions)
     {
     }

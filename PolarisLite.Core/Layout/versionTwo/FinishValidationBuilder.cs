@@ -24,6 +24,6 @@ public class FinishValidationBuilder
     public void Validate()
     {
         Console.WriteLine(notificationMessage);
-        Assert.IsTrue(ComparingFunction.Invoke(), failedAssertionMessage);
+        Assert.That(ComparingFunction.Invoke(), Is.True, failedAssertionMessage);
     }
 }
