@@ -46,6 +46,7 @@ public class ApiConfigurationLoader
         ApiSettings.TimeUnit = TimeUnit.Seconds;
         ApiSettings.MaxRetryAttempts = 3;
         ApiSettings.EnableBDDLogging = true;
+        ApiSettings.EnableToastMessages = false;
 
         GlobalSettings.LoggingSettings.IsEnabled = true;
         GlobalSettings.LoggingSettings.IsConsoleLoggingEnabled = true;
@@ -62,10 +63,11 @@ public class ApiConfigurationLoader
     {
         ApiSettings.PauseBetweenFailures = 3;
         ApiSettings.ClientTimeoutSeconds = 15;
-        ApiSettings.BaseUrl = "http://localhost:60715/";
+        ApiSettings.BaseUrl = "http://localhost:3001/api/";
         ApiSettings.TimeUnit = TimeUnit.Seconds;
         ApiSettings.MaxRetryAttempts = 3;
         ApiSettings.EnableBDDLogging = true;
+        ApiSettings.EnableToastMessages = true;
 
         GlobalSettings.LoggingSettings.IsEnabled = true;
         GlobalSettings.LoggingSettings.IsConsoleLoggingEnabled = true;

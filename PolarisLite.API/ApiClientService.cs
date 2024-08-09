@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Polly;
 using RestSharp.Authenticators;
 using RestSharp.Serializers.NewtonsoftJson;
@@ -10,11 +11,12 @@ public class ApiClientService : IDisposable
 
     public ApiClientService(string baseUrl, int maxRetryAttempts = 3, int pauseBetweenFailuresMilliseconds = 500, IAuthenticator authenticator = null)
     {
-        var options = new RestClientOptions(baseUrl)
+        var options = new RestClientOptions()
         {
             ThrowOnAnyError = true,
             FollowRedirects = true,
-            MaxRedirects = 10
+            MaxRedirects = 10,
+            BaseUrl = new Uri(baseUrl)
         };
         if (authenticator != null)
         {
@@ -22,12 +24,12 @@ public class ApiClientService : IDisposable
             // TODO: to be extended to support parallel test execution.
             options.Authenticator = authenticator ?? Authenticator;
         }
-
         var settings = new JsonSerializerSettings()
         {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            //ContractResolver = new CamelCasePropertyNamesContractResolver()
         };
-        WrappedClient = new RestClient(configureSerialization: s => s.UseNewtonsoftJson(settings));
+        WrappedClient = new RestClient(options, configureSerialization: s => s.UseNewtonsoftJson(settings));
 
         Policy.Timeout(ApiSettings.ClientTimeoutSeconds, onTimeout: (context, timespan, task) =>
         {
@@ -195,7 +197,7 @@ public class ApiClientService : IDisposable
             watch.Stop();
             measuredResponse = new MeasuredResponse<TReturnType>(response, watch.Elapsed);
 
-            if (!measuredResponse.IsSuccessful)
+            if (!measuredResponse.Response.IsSuccessful)
             {
                 ApiClientPluginExecutionEngine.OnRequestFailed(response, request.Resource);
                 throw new NotSuccessfulRequestException();
@@ -231,7 +233,7 @@ public class ApiClientService : IDisposable
             watch.Stop();
             var measuredResponse = new MeasuredResponse(response, watch.Elapsed);
 
-            if (!measuredResponse.IsSuccessful)
+            if (!measuredResponse.Response.IsSuccessful)
             {
                 ApiClientPluginExecutionEngine.OnRequestFailed(response, request.Resource);
                 throw new NotSuccessfulRequestException();

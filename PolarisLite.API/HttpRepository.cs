@@ -7,6 +7,12 @@ public abstract class HttpRepository<TEntity>
     protected ApiClientService client;
     protected string entityEndpoint;
 
+    public HttpRepository(ApiClientService apiClientService, string baseUrl, string entityEndpoint)
+    : this(baseUrl, entityEndpoint)
+    {
+        this.client = apiClientService;
+    }
+
     public HttpRepository(string baseUrl, string entityEndpoint)
     {
         this.client = new ApiClientService(baseUrl);
@@ -18,11 +24,6 @@ public abstract class HttpRepository<TEntity>
         var request = new RestRequest($"{entityEndpoint}/{id}", Method.Get);
         var response = await client.GetAsync<TEntity>(request);
 
-        if (!response.IsSuccessful)
-        {
-            throw new ApplicationException($"Error fetching entity by ID: {response.ErrorMessage}");
-        }
-
         return response.Data;
     }
 
@@ -30,11 +31,6 @@ public abstract class HttpRepository<TEntity>
     {
         var request = new RestRequest(entityEndpoint, Method.Get);
         var response = await client.GetAsync<List<TEntity>>(request);
-
-        if (!response.IsSuccessful)
-        {
-            throw new ApplicationException($"Error fetching entities: {response.ErrorMessage}");
-        }
 
         return response.Data;
     }
@@ -45,11 +41,6 @@ public abstract class HttpRepository<TEntity>
         request.AddBody(entity, ContentType.Json);
         var response = await client.PostAsync<TEntity>(request);
 
-        if (!response.IsSuccessful)
-        {
-            throw new ApplicationException($"Error creating entity: {response.ErrorMessage}");
-        }
-
         return response.Data;
     }
 
@@ -59,11 +50,6 @@ public abstract class HttpRepository<TEntity>
         request.AddBody(entity, ContentType.Json);
         var response = await client.PutAsync<TEntity>(request);
 
-        if (!response.IsSuccessful)
-        {
-            throw new ApplicationException($"Error updating entity: {response.ErrorMessage}");
-        }
-
         return response.Data;
     }
 
@@ -71,11 +57,6 @@ public abstract class HttpRepository<TEntity>
     {
         var request = new RestRequest($"{entityEndpoint}/{id}", Method.Delete);
         var response = await client.DeleteAsync(request);
-
-        if (!response.IsSuccessful)
-        {
-            throw new ApplicationException($"Error deleting entity: {response.ErrorMessage}");
-        }
     }
 
     // Implement other necessary methods (e.g., aggregate queries) as needed

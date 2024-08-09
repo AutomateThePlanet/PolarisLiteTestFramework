@@ -24,8 +24,6 @@ public abstract class APITest : BaseTest
             PluginExecutionEngine.AddPlugin(new LogLifecyclePlugin());
             PluginExecutionEngine.AddPlugin(new ExecutionTimeUnderPlugin());
             PluginExecutionEngine.AddPlugin(new RetryFailedRequestsWorkflowPlugin());
-            PluginExecutionEngine.AddPlugin(new RetryFailedRequestsWorkflowPlugin());
-
             App.AddApiClientExecutionPlugin<ApiBddPlugin>();
             App.AddAssertionsEventHandler<BDDLoggingAssertExtensions>();
             //ExecutionTimePlugin.Add();

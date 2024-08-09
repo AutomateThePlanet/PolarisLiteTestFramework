@@ -6,4 +6,11 @@ public class PlaylistTrack
 
     public Playlist Playlist { get; set; }
     public Track Track { get; set; }
+
+    public override string ToString()
+    {
+        var playlistName = Playlist != null ? Playlist.Name : "Unknown Playlist";
+        var trackTitle = Track != null ? Track.Name : "Unknown Track";
+        return $"PlaylistId: {PlaylistId} ({playlistName}), TrackId: {TrackId} ({trackTitle})";
+    }
 }

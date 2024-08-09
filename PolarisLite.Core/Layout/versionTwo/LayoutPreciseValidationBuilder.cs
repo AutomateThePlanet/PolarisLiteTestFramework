@@ -71,6 +71,6 @@ public class LayoutPreciseValidationBuilder
 
     public void Validate()
     {
-        Assert.IsTrue(actualDistance > 0, failedAssertionMessage);
+        Assert.That(actualDistance > 0, Is.True, failedAssertionMessage);
     }
 }

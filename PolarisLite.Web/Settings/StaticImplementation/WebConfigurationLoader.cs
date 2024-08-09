@@ -161,9 +161,9 @@ public class WebConfigurationLoader
         };
 
         WebSettings.EnableBDDLogging = false;
-        WebSettings.EnableHighlight = false;
-        WebSettings.EnableScrollIntoView = false;
-        WebSettings.EnableToastMessages = false;
+        WebSettings.EnableHighlight = true;
+        WebSettings.EnableScrollIntoView = true;
+        WebSettings.EnableToastMessages = true;
         WebSettings.ScreenshotsOnFailure = false;
         WebSettings.EnableExceptionAnalysis = false;
 

@@ -47,6 +47,6 @@ public class AppiumTests
         lightThemeButton.Click();
         var saveButton = _driver.FindElement(By.XPath("//*[@text=\"Save\"]"));
 
-        Assert.IsTrue(saveButton.Enabled);
+        Assert.That(saveButton.Enabled, Is.True);
     }
 }

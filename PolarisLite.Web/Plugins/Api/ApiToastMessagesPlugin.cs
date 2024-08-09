@@ -45,7 +45,7 @@ public class ApiToastMessagesPlugin : ApiClientPlugin
 
     protected override void OnRequestMade(object sender, ResponseEventArgs responseEventArgs)
     {
-        new DriverAdapter().InfoToastMessage($"Response of request {responseEventArgs.Response.Request.Method} against resource {responseEventArgs.RequestUri} - {responseEventArgs.Response.ResponseStatus}");
+        //new DriverAdapter().InfoToastMessage($"Response of request {responseEventArgs.Response.Request.Method} against resource {responseEventArgs.RequestUri} - {responseEventArgs.Response.ResponseStatus}");
     }
 
     protected override void OnRequestFailed(object sender, ResponseEventArgs responseEventArgs)

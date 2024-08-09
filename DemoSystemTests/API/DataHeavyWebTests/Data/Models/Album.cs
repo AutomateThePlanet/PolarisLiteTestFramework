@@ -2,29 +2,19 @@
 
 namespace DemoSystemTests.Builder;
 
-public class Album : IEquatable<Album>
+public class Album
 {
     public Album() => Tracks = new HashSet<Track>();
 
-    [JsonProperty(Required = Required.Always)]
     public long AlbumId { get; set; }
-    [JsonProperty(Required = Required.AllowNull)]
     public string Title { get; set; }
-    [JsonProperty(Required = Required.AllowNull)]
     public long ArtistId { get; set; }
-
-    [JsonProperty(Required = Required.AllowNull)]
     public Artist Artist { get; set; }
-    [JsonProperty(Required = Required.AllowNull)]
     public ICollection<Track> Tracks { get; set; }
 
-    public bool Equals(Album other)
+    public override string ToString()
     {
-        return AlbumId.Equals(other.AlbumId);
-    }
-
-    public override bool Equals(object obj)
-    {
-        return Equals(obj as Album);
+        var artistName = Artist != null ? Artist.Name : "Unknown Artist";
+        return $"AlbumId: {AlbumId}, Title: {Title}, ArtistId: {ArtistId}, Artist: {artistName}";
     }
 }

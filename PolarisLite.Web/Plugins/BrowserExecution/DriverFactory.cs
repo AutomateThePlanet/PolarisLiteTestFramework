@@ -98,7 +98,7 @@ public class DriverFactory
     {
         var options = InitializeOptions(browserConfiguration.Browser, browserConfiguration.BrowserVersion);
         AddGridOptions(options, gridSettings);
-
+        ExecutionType = browserConfiguration.ExecutionType;
         WrappedDriver = new RemoteWebDriver(new Uri(gridSettings.Url), options);
         WrappedDriver.Manage().Window.Maximize();
         Disposed = false;

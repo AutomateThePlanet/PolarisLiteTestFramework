@@ -3,6 +3,7 @@ using DemoSystemTests.Builder;
 using Polaris.API.NUnit;
 using PolarisLite.API;
 using RestSharp;
+
 namespace DemoSystemTests;
 
 [TestFixture]
@@ -24,7 +25,7 @@ public class UtilitiesTests : APITest
         var request = new RestRequest("api/Albums", Method.Head);
         var response = await App.ApiClient.HeadAsync(request);
 
-        Assert.IsTrue(response.IsSuccessful);
+        Assert.That(response.IsSuccessful, Is.True);
     }
 
     [Test]
@@ -37,11 +38,6 @@ public class UtilitiesTests : APITest
         request.AddQueryParameter("redirectUrl", "automatetheplanet");
         var response = await App.ApiClient.GetAsync(request);
 
-        // if send via form
-        // POST requests are often sent via a post form. The type of the body of the request is indicated
-        // by the Content-Type header. The FormUrlEncodedContent is a container for name/value tuples encoded
-        // using application/x-www-form-urlencoded MIME type.
-
         var request1 = new RestRequest("api/Albums");
         request1.AddParameter("firstName", "Anton");
         request1.AddParameter("lastName", "Angelov");
@@ -49,36 +45,8 @@ public class UtilitiesTests : APITest
 
         var response1 = await App.ApiClient.PostAsync(request1);
 
-        //{
-        //  "args": {},
-        //  "data": "",
-        //  "files": {},
-        //  "form": {
-        //    "firstName": "Anton",
-        //    "lastName": "Angelov"
-        //    "company": "AutomateThePlanet"
-        //  },
-        //  "headers": {
-        //    "Content-Length": "33",
-        //    "Content-Type": "application/x-www-form-urlencoded",
-        //    "Host": "localhost",
-        //  },
-        //  "json": null,
-        //  ...
-        //  "url": "http://localhost:60715/"
-        //}
+        Assert.That(response1.IsSuccessful, Is.True);
     }
-
-    //[Test]
-    //public async Task DownloadImage()
-    //{
-    //    var request = new RestRequest("https://www.automatetheplanet.com/wp-content/uploads/2020/03/atp_logo.svg", Method.Get);
-    //    byte[] imageBytes = await _restClient.DownloadDataAsync(request);
-    //    string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-    //    string localFilename = "atp_logo.svg";
-    //    string localPath = Path.Combine(documentsPath, localFilename);
-    //    File.WriteAllBytes(localPath, imageBytes);
-    //}
 
     [Test]
     public async Task ContentPopulated_When_GetAlbums()
@@ -86,14 +54,13 @@ public class UtilitiesTests : APITest
         var request = new RestRequest("api/Albums", Method.Get);
         var response = await App.ApiClient.GetAsync(request);
 
-        Assert.IsNotNull(response.Content);
+        Assert.That(response.Content, Is.Not.Null);
     }
 
     [Test]
     public async Task DataPopulatedAsList_When_GetGenericAlbums()
     {
         var request = new RestRequest("api/Albums", Method.Get);
-
         var response = await App.ApiClient.GetAsync<List<Album>>(request);
 
         Assert.That(response.Data.Count, Is.EqualTo(347));
@@ -103,7 +70,6 @@ public class UtilitiesTests : APITest
     public async Task DataPopulatedAsList_When_GetGenericAlbumsById()
     {
         var request = new RestRequest("api/Albums/10", Method.Get);
-
         var response = await App.ApiClient.GetAsync<Album>(request);
 
         Assert.That(response.Data.AlbumId, Is.EqualTo(10));
@@ -113,10 +79,9 @@ public class UtilitiesTests : APITest
     public async Task ContentPopulated_When_GetGenericAlbumsById()
     {
         var request = new RestRequest("api/Albums/10", Method.Get);
-
         var response = await App.ApiClient.GetAsync<Album>(request);
 
-        Assert.IsNotNull(response.Content);
+        Assert.That(response.Content, Is.Not.Null);
     }
 
     [Test]
@@ -137,10 +102,9 @@ public class UtilitiesTests : APITest
         await App.ApiClient.PutAsync<Genre>(putRequest);
 
         request = new RestRequest($"api/Genres/{insertedGenres.Data.GenreId}", Method.Get);
-
         var getUpdatedResponse = await App.ApiClient.GetAsync<Genre>(request);
 
-        Assert.IsNotNull(getUpdatedResponse.Content);
+        Assert.That(getUpdatedResponse.Content, Is.Not.Null);
     }
 
     [Test]
@@ -161,10 +125,9 @@ public class UtilitiesTests : APITest
         await App.ApiClient.PutAsync(putRequest);
 
         request = new RestRequest($"api/Genres/{insertedGenres.Data.GenreId}", Method.Get);
-
         var getUpdatedResponse = await App.ApiClient.GetAsync<Genre>(request);
 
-        Assert.IsNotNull(getUpdatedResponse.Content);
+        Assert.That(getUpdatedResponse.Content, Is.Not.Null);
     }
 
     [Test]
@@ -177,7 +140,7 @@ public class UtilitiesTests : APITest
 
         var response = await App.ApiClient.PostAsync(request);
 
-        Assert.IsTrue(response.IsSuccessful);
+        Assert.That(response.IsSuccessful, Is.True);
     }
 
     [Test]
@@ -204,7 +167,7 @@ public class UtilitiesTests : APITest
         var deleteRequest = new RestRequest($"api/Artists/{newArtist.ArtistId}", Method.Delete);
         var response = await App.ApiClient.DeleteAsync(deleteRequest);
 
-        Assert.IsTrue(response.IsSuccessful);
+        Assert.That(response.IsSuccessful, Is.True);
     }
 
     [Test]
@@ -218,7 +181,7 @@ public class UtilitiesTests : APITest
         var deleteRequest = new RestRequest($"api/Artists/{newArtist.ArtistId}", Method.Delete);
         var response = await App.ApiClient.PostAsync<Artist>(deleteRequest);
 
-        Assert.IsTrue(response.IsSuccessful);
+        Assert.That(response.IsSuccessful, Is.True);
     }
 
     private async Task<Artist> CreateUniqueArtists()

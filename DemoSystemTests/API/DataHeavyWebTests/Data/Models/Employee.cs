@@ -26,4 +26,13 @@ public class Employee
     public Employee ReportsToNavigation { get; set; }
     public ICollection<Customer> Customers { get; set; }
     public ICollection<Employee> InverseReportsToNavigation { get; set; }
+
+    public override string ToString()
+    {
+        var reportsToName = ReportsToNavigation != null ? $"{ReportsToNavigation.FirstName} {ReportsToNavigation.LastName}" : "None";
+        return $"EmployeeId: {EmployeeId}, Name: {FirstName} {LastName}, Title: {Title}, ReportsTo: {reportsToName}, " +
+               $"BirthDate: {BirthDate}, HireDate: {HireDate}, Address: {Address}, City: {City}, State: {State}, Country: {Country}, " +
+               $"PostalCode: {PostalCode}, Phone: {Phone}, Fax: {Fax}, Email: {Email}, " +
+               $"Customers Count: {Customers.Count}, ReportsTo Count: {InverseReportsToNavigation.Count}";
+    }
 }

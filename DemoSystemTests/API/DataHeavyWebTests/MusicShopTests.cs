@@ -1,4 +1,5 @@
 ﻿using DemoSystemTests.Builder;
+using PolarisLite.API;
 using PolarisLite.Web;
 using PolarisLite.Web.Core.NUnit;
 using PolarisLite.Web.Plugins;
@@ -6,13 +7,34 @@ using PolarisLite.Web.Plugins;
 namespace RepositoryDesignPatternTests;
 
 [TestFixture]
-[LambdaTest(BrowserType.Chrome, 125)]
+//[LambdaTest(BrowserType.Chrome, 125)]
+//[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
+[LambdaTest(BrowserType.Chrome, 127)]
 public class MusicShopTests : WebTest
 {
     private CustomerRepository _customerRepository;
 
+    protected override void ClassInitialize()
+    {
+        ApiApp.AddApiClientExecutionPlugin<ApiBddPlugin>();
+        ApiApp.AddApiClientExecutionPlugin<ApiToastMessagesPlugin>();
+        ApiApp.AddAssertionsEventHandler<BDDLoggingAssertExtensions>();
+        ApiApp.AddAssertionsEventHandler<ToastMessagesLoggingAssertExtensions>();
+    }
+
+    protected override void ClassCleanup()
+    {
+        ApiApp.RemoveApiClientExecutionPlugin<ApiBddPlugin>();
+        ApiApp.RemoveApiClientExecutionPlugin<ApiToastMessagesPlugin>();
+        ApiApp.RemoveAssertionsEventHandler<BDDLoggingAssertExtensions>();
+        ApiApp.RemoveAssertionsEventHandler<ToastMessagesLoggingAssertExtensions>();
+    }
+
     protected override void TestInitialize()
     {
+        App.Navigation.GoToUrl(Urls.BASE_URL);
+        App.Cookies.DeleteAllCookies();
+
         _customerRepository = new CustomerRepository(Urls.BASE_API_URL);
         var artistRepository = new ArtistRepository(Urls.BASE_API_URL);
         var albumRepository = new AlbumRepository(Urls.BASE_API_URL);
@@ -68,18 +90,15 @@ public class MusicShopTests : WebTest
                 }
             }
         }
-
-        App.Navigation.GoToUrl(Urls.BASE_URL);
-        App.Cookies.DeleteAllCookies();
     }
 
     [Test]
     public void RightCustomersDisplayed_When_SearchViaUI()
     {
-        var director = new TestDataDirector();
+        //var director = new TestDataDirector();
 
         //// Now, use the director to create data with the complexity and relationships needed
-        Artist artist = director.CreateArtistWithDiscographyAndSales("New Artist", 3, 10, 100);
+       // Artist artist = director.CreateArtistWithDiscographyAndSales("New Artist", 3, 10, 100);
 
         // Arrange
         var customer1 = _customerRepository.CreateAsync(CustomerFactory.GenerateCustomer(lastName: "Doe", email: "john.doe@example.com")).Result;
@@ -104,8 +123,8 @@ public class MusicShopTests : WebTest
         //allLastNames.ToList().ForEach(s => Logger.LogMessage(s.Text));
         var allEmails = App.Elements.FindAllByXPath<Label>($"//tbody[@id='customerList']/tr/td[{indexOfEmail}]");
 
-        Assert.IsTrue(allLastNames.Any(c => c.Text.Contains("Doe")));
-        Assert.IsTrue(allEmails.Any(c => c.Text.Contains(".com")));
+        Assert.That(allLastNames.Any(c => c.Text.Contains("Doe")), Is.True, "Expected at least one last name to contain 'Doe'.");
+        Assert.That(allEmails.Any(c => c.Text.Contains(".com")), Is.True, "Expected at least one email to contain '.com'.");
 
         // Cleanup
         _customerRepository.DeleteAsync(customer1.CustomerId).Wait();

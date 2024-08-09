@@ -5,6 +5,8 @@ using Bellatrix.Web.Extensions.Controls.Controls.EventHandlers;
 using PolarisLite.Web.Extensions.Controls.Controls.EventHandlers;
 using PolarisLite.Web.Configuration.StaticImplementation;
 using PolarisLite.Web.Troubshoting;
+using PolarisLite.Api.Configuration;
+using PolarisLite.Web.Plugins.Browser;
 
 namespace PolarisLite.Web.Core.NUnit;
 public class WebTest : BaseTest
@@ -16,19 +18,19 @@ public class WebTest : BaseTest
 
     protected override void Configure()
     {
+        WebConfigurationLoader.LoadConfiguration();
+        ApiConfigurationLoader.LoadConfiguration();
         if (!_arePluginsAlreadyInitialized)
         {
-            // TODO: enable API related plugins
-
+            PluginExecutionEngine.AddPlugin(new JavaScriptErrorsPlugin());
+            PluginExecutionEngine.AddPlugin(new LambdaTestResultsPlugin());
+            //PluginExecutionEngine.AddPlugin(new ExceptionAnalysationPlugin());
+            //PluginExecutionEngine.AddPlugin(new WebScreenshotPlugin());
             PluginExecutionEngine.AddPlugin(new BrowserLifecyclePlugin());
             PluginExecutionEngine.AddPlugin(new InitializeHighlightScriptsPlugin());
             PluginExecutionEngine.AddPlugin(new InitializeToastMessagesScriptsPlugin());
             PluginExecutionEngine.AddPlugin(new LogLifecyclePlugin());
-            //PluginExecutionEngine.AddPlugin(new JavaScriptErrorsPlugin());
-            //PluginExecutionEngine.AddPlugin(new LambdaTestResultsPlugin());
-            //PluginExecutionEngine.AddPlugin(new ExceptionAnalysationPlugin());
-            //PluginExecutionEngine.AddPlugin(new WebScreenshotPlugin());
-            //PluginExecutionEngine.AddPlugin(new WebScreenshotPlugin());
+          
             WebComponentPluginExecutionEngine.AddPlugin(new HighlightElementPlugin());
             WebComponentPluginExecutionEngine.AddPlugin(new ScrollIntoViewPlugin());
 

@@ -18,9 +18,9 @@ public class InvoiceItemBuilder
         return this;
     }
 
-    public InvoiceItemBuilder WithInvoiceLineId(long invoiceLineId)
+    public InvoiceItemBuilder WithInvoiceItemId(long invoiceItemId)
     {
-        _invoiceItem.InvoiceLineId = invoiceLineId;
+        _invoiceItem.InvoiceLineId = invoiceItemId;
         return this;
     }
 

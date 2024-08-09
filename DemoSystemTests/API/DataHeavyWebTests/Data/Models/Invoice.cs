@@ -15,4 +15,13 @@ public class Invoice
 
     public Customer Customer { get; set; }
     public ICollection<InvoiceItem> InvoiceItems { get; set; }
+
+    public override string ToString()
+    {
+        var customerName = Customer != null ? $"{Customer.FirstName} {Customer.LastName}" : "Unknown Customer";
+        return $"InvoiceId: {InvoiceId}, CustomerId: {CustomerId} ({customerName}), InvoiceDate: {InvoiceDate}, " +
+               $"BillingAddress: {BillingAddress}, BillingCity: {BillingCity}, BillingState: {BillingState}, " +
+               $"BillingCountry: {BillingCountry}, BillingPostalCode: {BillingPostalCode}, Total: {Total}, " +
+               $"InvoiceItems Count: {InvoiceItems.Count}";
+    }
 }

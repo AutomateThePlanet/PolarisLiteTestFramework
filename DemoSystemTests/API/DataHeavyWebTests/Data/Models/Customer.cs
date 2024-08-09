@@ -19,4 +19,13 @@ public class Customer
 
     public Employee SupportRep { get; set; }
     public ICollection<Invoice> Invoices { get; set; }
+
+
+    public override string ToString()
+    {
+        var supportRepName = SupportRep != null ? SupportRep.FirstName + " " + SupportRep.LastName : "None";
+        return $"CustomerId: {CustomerId}, Name: {FirstName} {LastName}, Company: {Company}, " +
+               $"Address: {Address}, City: {City}, State: {State}, Country: {Country}, PostalCode: {PostalCode}, " +
+               $"Phone: {Phone}, Fax: {Fax}, Email: {Email}, SupportRep: {supportRepName}, Invoices Count: {Invoices.Count}";
+    }
 }
