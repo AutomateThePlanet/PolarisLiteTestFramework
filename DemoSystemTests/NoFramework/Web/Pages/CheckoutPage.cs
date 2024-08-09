@@ -1,7 +1,7 @@
 ﻿namespace DemoSystemTests.NoFramework;
 public class CheckoutPage : WebPage
 {
-    public CheckoutPage(IWebDriver driver, WebDriverWait wait, Actions actions) 
+    public CheckoutPage(IWebDriver driver, WebDriverWait wait, Actions actions)
         : base(driver, wait, actions)
     {
     }

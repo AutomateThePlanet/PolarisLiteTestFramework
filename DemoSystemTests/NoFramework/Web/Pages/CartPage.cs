@@ -1,7 +1,7 @@
 ﻿namespace DemoSystemTests.NoFramework;
 public class CartPage : WebPage
 {
-    public CartPage(IWebDriver driver, WebDriverWait wait, Actions actions) 
+    public CartPage(IWebDriver driver, WebDriverWait wait, Actions actions)
         : base(driver, wait, actions)
     {
     }

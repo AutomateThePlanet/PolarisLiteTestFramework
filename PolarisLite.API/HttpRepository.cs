@@ -1,7 +1,8 @@
 ﻿namespace PolarisLite.API;
 
 
-public abstract class HttpRepository<TEntity> where TEntity : new()
+public abstract class HttpRepository<TEntity> 
+    where TEntity : class
 {
     protected ApiClientService client;
     protected string entityEndpoint;

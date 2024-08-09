@@ -13,7 +13,7 @@ public class CustomControlsTests : WebTest
     {
         App.Navigation.GoToUrl("http://demos.telerik.com/kendo-ui/datepicker/index");
         var datePicket = App.Elements.FindById<KendoDatePicker>("datepicker");
-        
+
         datePicket.SetDate(DateTime.Now);
     }
 

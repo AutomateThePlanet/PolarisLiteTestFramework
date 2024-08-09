@@ -77,7 +77,7 @@ public class ApiClientService : IDisposable
     }
 
     public async Task<MeasuredResponse<TReturnType>> GetAsync<TReturnType>(RestRequest request, CancellationTokenSource cancellationTokenSource = null)
-        where TReturnType : new()
+        where TReturnType : class
     {
         return await ExecuteMeasuredRequestAsync<TReturnType>(request, Method.Get, cancellationTokenSource);
     }
@@ -88,7 +88,7 @@ public class ApiClientService : IDisposable
     }
 
     public async Task<MeasuredResponse<TReturnType>> PutAsync<TReturnType>(RestRequest request, CancellationTokenSource cancellationTokenSource = null)
-        where TReturnType : new()
+        where TReturnType : class
     {
         return await ExecuteMeasuredRequestAsync<TReturnType>(request, Method.Put, cancellationTokenSource);
     }
@@ -99,7 +99,7 @@ public class ApiClientService : IDisposable
     }
 
     public async Task<MeasuredResponse<TReturnType>> PostAsync<TReturnType>(RestRequest request, CancellationTokenSource cancellationTokenSource = null)
-        where TReturnType : new()
+        where TReturnType : class
     {
         return await ExecuteMeasuredRequestAsync<TReturnType>(request, Method.Post, cancellationTokenSource);
     }
@@ -110,7 +110,7 @@ public class ApiClientService : IDisposable
     }
 
     public async Task<MeasuredResponse<TReturnType>> DeleteAsync<TReturnType>(RestRequest request, CancellationTokenSource cancellationTokenSource = null)
-        where TReturnType : new()
+        where TReturnType : class
     {
         return await ExecuteMeasuredRequestAsync<TReturnType>(request, Method.Delete, cancellationTokenSource);
     }
@@ -121,7 +121,7 @@ public class ApiClientService : IDisposable
     }
 
     public async Task<MeasuredResponse<TReturnType>> CopyAsync<TReturnType>(RestRequest request, CancellationTokenSource cancellationTokenSource = null)
-        where TReturnType : new()
+        where TReturnType : class
     {
         return await ExecuteMeasuredRequestAsync<TReturnType>(request, Method.Copy, cancellationTokenSource);
     }
@@ -132,7 +132,7 @@ public class ApiClientService : IDisposable
     }
 
     public async Task<MeasuredResponse<TReturnType>> HeadAsync<TReturnType>(RestRequest request, CancellationTokenSource cancellationTokenSource = null)
-        where TReturnType : new()
+        where TReturnType : class
     {
         return await ExecuteMeasuredRequestAsync<TReturnType>(request, Method.Head, cancellationTokenSource);
     }
@@ -143,7 +143,7 @@ public class ApiClientService : IDisposable
     }
 
     public async Task<MeasuredResponse<TReturnType>> MergeAsync<TReturnType>(RestRequest request, CancellationTokenSource cancellationTokenSource = null)
-        where TReturnType : new()
+        where TReturnType : class
     {
         return await ExecuteMeasuredRequestAsync<TReturnType>(request, Method.Merge, cancellationTokenSource);
     }
@@ -154,7 +154,7 @@ public class ApiClientService : IDisposable
     }
 
     public async Task<MeasuredResponse<TReturnType>> OptionsAsync<TReturnType>(RestRequest request, CancellationTokenSource cancellationTokenSource = null)
-        where TReturnType : new()
+        where TReturnType : class
     {
         return await ExecuteMeasuredRequestAsync<TReturnType>(request, Method.Options, cancellationTokenSource);
     }
@@ -165,13 +165,13 @@ public class ApiClientService : IDisposable
     }
 
     public async Task<MeasuredResponse<TReturnType>> PatchAsync<TReturnType>(RestRequest request, CancellationTokenSource cancellationTokenSource = null)
-        where TReturnType : new()
+        where TReturnType : class
     {
         return await ExecuteMeasuredRequestAsync<TReturnType>(request, Method.Patch, cancellationTokenSource);
     }
 
     private async Task<MeasuredResponse<TReturnType>> ExecuteMeasuredRequestAsync<TReturnType>(RestRequest request, Method method, CancellationTokenSource cancellationTokenSource = null)
-      where TReturnType : new()
+      where TReturnType : class
     {
         if (cancellationTokenSource == null)
         {

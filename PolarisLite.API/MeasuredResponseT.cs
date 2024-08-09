@@ -1,6 +1,6 @@
 ﻿namespace PolarisLite.API;
 public class MeasuredResponse<TReturnType> : MeasuredResponse
-    where TReturnType : new()
+    where TReturnType : class
 {
     private readonly RestResponse<TReturnType> _restResponse;
 

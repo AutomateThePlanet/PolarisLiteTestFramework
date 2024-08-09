@@ -77,7 +77,7 @@ public static class ApiAssertExtensions
     }
 
     public static void AssertResultEquals<TResultType>(this MeasuredResponse<TResultType> response, TResultType result)
-        where TResultType : IEquatable<TResultType>, new()
+        where TResultType : class, IEquatable<TResultType>
     {
         AssertResultEqualsEvent?.Invoke(response, new ApiAssertEventArgs(response, result.ToString()));
         if (!response.Data.Equals(result))
@@ -87,7 +87,7 @@ public static class ApiAssertExtensions
     }
 
     public static void AssertResultNotEquals<TResultType>(this MeasuredResponse<TResultType> response, TResultType result)
-        where TResultType : IEquatable<TResultType>, new()
+        where TResultType : class, IEquatable<TResultType>
     {
         AssertResultNotEqualsEvent?.Invoke(response, new ApiAssertEventArgs(response, result.ToString()));
         if (response.Data.Equals(result))

@@ -3,7 +3,6 @@ using DemoSystemTests.Builder;
 using Polaris.API.NUnit;
 using PolarisLite.API;
 using RestSharp;
-using RestSharp.Authenticators.OAuth2;
 namespace DemoSystemTests;
 
 [TestFixture]

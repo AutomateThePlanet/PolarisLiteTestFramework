@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using DemoSystemTests.Builder;
+﻿using DemoSystemTests.Builder;
 using PolarisLite.Web;
 using PolarisLite.Web.Core.NUnit;
 using PolarisLite.Web.Plugins;
@@ -99,7 +98,7 @@ public class MusicShopTests : WebTest
         var allHeaders = App.Elements.FindAllByXPath<Label>("//tbody[@id='customerList']/preceding-sibling::thead/tr/th").Select(x => x.Text).ToList();
         int indexOfFirstName = allHeaders.FindIndex(0, allHeaders.Count, s => s.Equals("First Name")) + 1;
         int indexOfLastName = allHeaders.FindIndex(0, allHeaders.Count, s => s.Equals("Last Name")) + 1;
-        int indexOfEmail= allHeaders.FindIndex(0, allHeaders.Count, s => s.Equals("Email")) + 1;
+        int indexOfEmail = allHeaders.FindIndex(0, allHeaders.Count, s => s.Equals("Email")) + 1;
 
         var allLastNames = App.Elements.FindAllByXPath<Label>($"//tbody[@id='customerList']/tr/td[{indexOfLastName}]");
         //allLastNames.ToList().ForEach(s => Logger.LogMessage(s.Text));
