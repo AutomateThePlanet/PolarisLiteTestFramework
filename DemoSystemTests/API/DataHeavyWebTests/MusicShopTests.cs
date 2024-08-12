@@ -9,7 +9,7 @@ namespace RepositoryDesignPatternTests;
 [TestFixture]
 //[LambdaTest(BrowserType.Chrome, 125)]
 //[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
-[LambdaTest(BrowserType.Chrome, 127)]
+[LambdaTest(BrowserType.Chrome, 127, DesktopWindowSize._1920_1080)]
 public class MusicShopTests : WebTest
 {
     private CustomerRepository _customerRepository;

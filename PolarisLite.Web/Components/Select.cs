@@ -38,7 +38,7 @@ public class Select : WebComponent, IComponentDisabled, IComponentClick
         return options;
     }
 
-    public virtual void SelecTFindStrategyText(string text)
+    public virtual void SelectByText(string text)
     {
         var nativeSelect = new SelectElement(WrappedElement);
         nativeSelect.SelectByText(text);
@@ -47,7 +47,7 @@ public class Select : WebComponent, IComponentDisabled, IComponentClick
         Selected?.Invoke(this, new ComponentActionEventArgs(this));
     }
 
-    public virtual void SelecTFindStrategyIndex(int index)
+    public virtual void SelectByIndex(int index)
     {
         var nativeSelect = new SelectElement(WrappedElement);
         nativeSelect.SelectByIndex(index);

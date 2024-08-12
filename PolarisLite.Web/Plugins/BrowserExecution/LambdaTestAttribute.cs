@@ -30,4 +30,11 @@ public class LambdaTestAttribute : GridAttribute
             { "selenium_version", "4.22.0" }
         };
     }
+
+    public LambdaTestAttribute(BrowserType browser = BrowserType.Chrome, int browserVersion = 0, DesktopWindowSize desktopWindowSize = DesktopWindowSize._1920_1080, bool enableAutoHealing = false, int smartWait = 0)
+        : this(browser, browserVersion, desktopWindowSize)
+    {
+        GridSettings.Arguments.Add("autoHeal", enableAutoHealing);
+        GridSettings.Arguments.Add("smartWait", enableAutoHealing);
+    }
 }
