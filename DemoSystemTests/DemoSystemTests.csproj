@@ -74,8 +74,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="API\CustomPlugins\" />
-  </ItemGroup>
 </Project>
