@@ -10,8 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="API\CustomPlugins\**" />
     <Compile Remove="Plugins\**" />
+    <EmbeddedResource Remove="API\CustomPlugins\**" />
     <EmbeddedResource Remove="Plugins\**" />
+    <None Remove="API\CustomPlugins\**" />
     <None Remove="Plugins\**" />
   </ItemGroup>
 
@@ -76,9 +79,5 @@
     <None Update="testFrameworkSettings.$(Configuration).json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="API\CustomPlugins\" />
   </ItemGroup>
 </Project>
