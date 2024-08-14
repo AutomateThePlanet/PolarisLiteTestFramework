@@ -40,7 +40,7 @@ public interface IBuildApiClient
     /// <param name="buildId">Build ID for which details are to be fetched.</param>
     /// <param name="shareExpiryLimit">Days after which share link will expire (3, 7, 10, 30)</param>
     /// <returns>SingleBuildResponse</returns>
-    Task<MeasuredResponse<SingleBuildResponse>> SinglebuildAsync(int? buildId, string shareExpiryLimit);
+    Task<MeasuredResponse<SingleBuildResponse>> SingleBuildAsync(int? buildId, string shareExpiryLimit);
 
     /// <summary>
     /// Delete Build. To delete a specified Build from the dashboard.
