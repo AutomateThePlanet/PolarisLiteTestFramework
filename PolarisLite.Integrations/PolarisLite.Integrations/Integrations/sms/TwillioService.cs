@@ -5,11 +5,11 @@ using Twilio.Rest.Api.V2010.Account;
 
 namespace PolarisLite.Integrations;
 
-public class SmsService
+public class TwillioService
 {
     private static readonly TwilioSettings settings;
 
-    static SmsService()
+    static TwillioService()
     {
         settings = IntegrationSettings.TwilioSettings;
         TwilioClient.Init(settings.AccountSID, settings.AuthToken);
