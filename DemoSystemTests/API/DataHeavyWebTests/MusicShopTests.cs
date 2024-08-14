@@ -8,8 +8,8 @@ namespace RepositoryDesignPatternTests;
 
 [TestFixture]
 //[LambdaTest(BrowserType.Chrome, 125)]
-//[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
-[LambdaTest(BrowserType.Chrome, 127)]
+[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
+//[LambdaTest(BrowserType.Chrome, 127)]
 public class MusicShopTests : WebTest
 {
     private CustomerRepository _customerRepository;

@@ -87,7 +87,7 @@ public class BrowserLifecyclePlugin : Plugin
         var classGridSettings = GetLambdaTestClassLevel(testMethod.DeclaringType);
         var methodGridSettings = GetLambdaTestMethodLevel(testMethod);
         GridSettings gridSettings = methodGridSettings != null ? methodGridSettings : classGridSettings;
-        gridSettings.Arguments.Add("name", $"{testMethod.DeclaringType.Name}.{testMethod.Name}");
+        gridSettings?.Arguments?.Add("name", $"{testMethod.DeclaringType.Name}.{testMethod.Name}");
         
         return gridSettings;
     }
