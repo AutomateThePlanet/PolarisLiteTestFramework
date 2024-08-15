@@ -8,13 +8,13 @@ namespace DemoSystemTests;
 /// </summary>
 public class TunnelApiClient : ITunnelApiClient
 {
-    private readonly ApiClientService _apiClientService;
+    private readonly ApiClientAdapter _apiClientService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TunnelApiClient"/> class.
     /// </summary>
     /// <param name="apiClientService">An instance of ApiClientService</param>
-    public TunnelApiClient(ApiClientService apiClientService)
+    public TunnelApiClient(ApiClientAdapter apiClientService)
     {
         _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
     }

@@ -8,13 +8,13 @@ namespace DemoSystemTests;
 /// </summary>
 public class PrerunApiClient : IPrerunApiClient
 {
-    private readonly ApiClientService _apiClientService;
+    private readonly ApiClientAdapter _apiClientService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PrerunApiClient"/> class.
     /// </summary>
     /// <param name="apiClientService">An instance of ApiClientService (optional)</param>
-    public PrerunApiClient(ApiClientService apiClientService = null)
+    public PrerunApiClient(ApiClientAdapter apiClientService = null)
     {
         _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
     }

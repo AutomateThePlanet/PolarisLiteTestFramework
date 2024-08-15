@@ -4,10 +4,10 @@
 public abstract class HttpRepository<TEntity> 
     where TEntity : class
 {
-    protected ApiClientService client;
+    protected ApiClientAdapter client;
     protected string entityEndpoint;
 
-    public HttpRepository(ApiClientService apiClientService, string baseUrl, string entityEndpoint)
+    public HttpRepository(ApiClientAdapter apiClientService, string baseUrl, string entityEndpoint)
     : this(baseUrl, entityEndpoint)
     {
         this.client = apiClientService;
@@ -15,7 +15,7 @@ public abstract class HttpRepository<TEntity>
 
     public HttpRepository(string baseUrl, string entityEndpoint)
     {
-        this.client = new ApiClientService(baseUrl);
+        this.client = new ApiClientAdapter(baseUrl);
         this.entityEndpoint = entityEndpoint;
     }
 

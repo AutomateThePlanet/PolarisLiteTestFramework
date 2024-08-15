@@ -8,13 +8,13 @@ namespace DemoSystemTests;
 /// </summary>
 public class TestApiClient : ITestApiClient
 {
-    private readonly ApiClientService _apiClientService;
+    private readonly ApiClientAdapter _apiClientService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TestApiClient"/> class.
     /// </summary>
     /// <param name="apiClientService">An instance of ApiClientService</param>
-    public TestApiClient(ApiClientService apiClientService)
+    public TestApiClient(ApiClientAdapter apiClientService)
     {
         _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
     }

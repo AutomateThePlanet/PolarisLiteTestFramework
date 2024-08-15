@@ -8,13 +8,13 @@ namespace DemoSystemTests;
 /// </summary>
 public class LighthouseApiClient : ILighthouseApiClient
 {
-    private readonly ApiClientService _apiClientService;
+    private readonly ApiClientAdapter _apiClientService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LighthouseApiClient"/> class.
     /// </summary>
     /// <param name="apiClientService">An instance of ApiClientService (optional)</param>
-    public LighthouseApiClient(ApiClientService apiClientService = null)
+    public LighthouseApiClient(ApiClientAdapter apiClientService = null)
     {
         _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
     }

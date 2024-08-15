@@ -73,10 +73,5 @@ public class ApiConfigurationLoader
         GlobalSettings.LoggingSettings.IsConsoleLoggingEnabled = true;
         GlobalSettings.LoggingSettings.IsFileLoggingEnabled = false;
         GlobalSettings.LoggingSettings.IsDebugLoggingEnabled = false;
-
-        GlobalSettings.LoggingSettings.IsEnabled = true;
-        GlobalSettings.LoggingSettings.IsConsoleLoggingEnabled = true;
-        GlobalSettings.LoggingSettings.IsFileLoggingEnabled = false;
-        GlobalSettings.LoggingSettings.IsDebugLoggingEnabled = false;
     }
 }

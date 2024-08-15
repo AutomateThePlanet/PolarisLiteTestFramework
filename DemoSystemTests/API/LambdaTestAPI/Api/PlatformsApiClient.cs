@@ -8,13 +8,13 @@ namespace DemoSystemTests;
 /// </summary>
 public class PlatformsApiClient : IPlatformsApiClient
 {
-    private readonly ApiClientService _apiClientService;
+    private readonly ApiClientAdapter _apiClientService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PlatformsApiClient"/> class.
     /// </summary>
     /// <param name="apiClientService">An instance of ApiClientService (optional)</param>
-    public PlatformsApiClient(ApiClientService apiClientService = null)
+    public PlatformsApiClient(ApiClientAdapter apiClientService = null)
     {
         _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
     }

@@ -8,14 +8,14 @@ namespace DemoSystemTests;
 /// </summary>
 public class ExtensionsApiClient : IExtensionsClientApi
 {
-    private readonly ApiClientService _apiClientService;
+    private readonly ApiClientAdapter _apiClientService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ExtensionsApiClient"/> class.
     /// </summary>
     /// <param name="apiClientService"> an instance of ApiClientService (optional)</param>
     /// <returns></returns>
-    public ExtensionsApiClient(ApiClientService apiClientService = null)
+    public ExtensionsApiClient(ApiClientAdapter apiClientService = null)
     {
         _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
     }

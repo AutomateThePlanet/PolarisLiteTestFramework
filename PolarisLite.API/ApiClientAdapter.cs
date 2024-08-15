@@ -5,11 +5,11 @@ using RestSharp.Authenticators;
 using RestSharp.Serializers.NewtonsoftJson;
 
 namespace PolarisLite.API;
-public class ApiClientService : IDisposable
+public class ApiClientAdapter : IDisposable
 {
     private bool _isDisposed;
 
-    public ApiClientService(string baseUrl, int maxRetryAttempts = 3, int pauseBetweenFailuresMilliseconds = 500, IAuthenticator authenticator = null)
+    public ApiClientAdapter(string baseUrl, int maxRetryAttempts = 3, int pauseBetweenFailuresMilliseconds = 500, IAuthenticator authenticator = null)
     {
         var options = new RestClientOptions()
         {
@@ -20,14 +20,12 @@ public class ApiClientService : IDisposable
         };
         if (authenticator != null)
         {
-            // initialized via plugin
             // TODO: to be extended to support parallel test execution.
             options.Authenticator = authenticator ?? Authenticator;
         }
         var settings = new JsonSerializerSettings()
         {
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            //ContractResolver = new CamelCasePropertyNamesContractResolver()
         };
         WrappedClient = new RestClient(options, configureSerialization: s => s.UseNewtonsoftJson(settings));
 

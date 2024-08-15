@@ -8,13 +8,13 @@ namespace DemoSystemTests;
 /// </summary>
 public class ResolutionApiClient : IResolutionApiClient
 {
-    private readonly ApiClientService _apiClientService;
+    private readonly ApiClientAdapter _apiClientService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ResolutionApiClient"/> class.
     /// </summary>
     /// <param name="apiClientService">An instance of ApiClientService (optional)</param>
-    public ResolutionApiClient(ApiClientService apiClientService = null)
+    public ResolutionApiClient(ApiClientAdapter apiClientService = null)
     {
         _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
     }

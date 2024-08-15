@@ -8,13 +8,13 @@ namespace DemoSystemTests;
 /// </summary>
 public class SessionLogsApiClient : ISessionLogsApiClient
 {
-    private readonly ApiClientService _apiClientService;
+    private readonly ApiClientAdapter _apiClientService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SessionLogsApiClient"/> class.
     /// </summary>
     /// <param name="apiClientService">An instance of ApiClientService (optional)</param>
-    public SessionLogsApiClient(ApiClientService apiClientService = null)
+    public SessionLogsApiClient(ApiClientAdapter apiClientService = null)
     {
         _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
     }

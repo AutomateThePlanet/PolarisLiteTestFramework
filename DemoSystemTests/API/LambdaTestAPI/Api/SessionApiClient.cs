@@ -8,9 +8,9 @@ namespace DemoSystemTests;
 /// </summary>
 public class SessionApiClient : ISessionApiClient
 {
-    private readonly ApiClientService _apiClientService;
+    private readonly ApiClientAdapter _apiClientService;
 
-    public SessionApiClient(ApiClientService apiClientService = null)
+    public SessionApiClient(ApiClientAdapter apiClientService = null)
     {
         _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
     }

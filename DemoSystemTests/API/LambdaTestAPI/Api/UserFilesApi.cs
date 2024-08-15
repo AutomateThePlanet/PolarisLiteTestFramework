@@ -10,13 +10,13 @@ namespace DemoSystemTests;
 /// </summary>
 public class UserFilesApi : IUserFilesApiClient
 {
-    private readonly ApiClientService _apiClientService;
+    private readonly ApiClientAdapter _apiClientService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UserFilesApi"/> class.
     /// </summary>
     /// <param name="apiClientService">An instance of ApiClientService</param>
-    public UserFilesApi(ApiClientService apiClientService)
+    public UserFilesApi(ApiClientAdapter apiClientService)
     {
         _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
     }
