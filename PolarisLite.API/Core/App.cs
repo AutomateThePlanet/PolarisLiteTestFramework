@@ -4,14 +4,14 @@ namespace PolarisLite.API;
 
 public class App
 {
-    private ApiClientService _apiClientService;
+    private ApiClientAdapter _apiClientService;
 
     public App()
     {
         _apiClientService = GetApiClientService();
     }
 
-    public ApiClientService ApiClient
+    public ApiClientAdapter ApiClient
     {
         get => _apiClientService;
         init
@@ -50,13 +50,13 @@ public class App
         elementEventHandler?.UnsubscribeToAll();
     }
 
-    public ApiClientService GetApiClientService(string url = null, bool sharedCookies = true, int maxRetryAttempts = 1, int pauseBetweenFailures = 1, TimeUnit timeUnit = TimeUnit.Seconds)
+    public ApiClientAdapter GetApiClientService(string url = null, bool sharedCookies = true, int maxRetryAttempts = 1, int pauseBetweenFailures = 1, TimeUnit timeUnit = TimeUnit.Seconds)
     {
         if (!ShouldReuseRestClient || _apiClientService == null)
         {
             var pauseBetweenFailuresConfig = TimeSpanConverter.Convert(pauseBetweenFailures, timeUnit);
 
-            _apiClientService = new ApiClientService(url ?? ApiSettings.BaseUrl, maxRetryAttempts, pauseBetweenFailuresConfig.Milliseconds);
+            _apiClientService = new ApiClientAdapter(url ?? ApiSettings.BaseUrl, maxRetryAttempts, pauseBetweenFailuresConfig.Milliseconds);
         }
 
         return _apiClientService;

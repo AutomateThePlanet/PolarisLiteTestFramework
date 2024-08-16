@@ -6,19 +6,8 @@ namespace DemoSystemTests;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class OrganisationApiClient : IOrganisationApiClient
+public class OrganisationApiClient : LambdaTestApiClient, IOrganisationApiClient
 {
-    private readonly ApiClientService _apiClientService;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="OrganisationApiClient"/> class.
-    /// </summary>
-    /// <param name="apiClientService">An instance of ApiClientService (optional)</param>
-    public OrganisationApiClient(ApiClientService apiClientService = null)
-    {
-        _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
-    }
-
     /// <summary>
     /// Get organisation concurrency. This API fetches the organisation level concurrency.
     /// </summary>

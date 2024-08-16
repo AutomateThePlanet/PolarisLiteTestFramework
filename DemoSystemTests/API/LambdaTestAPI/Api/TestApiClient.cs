@@ -6,19 +6,8 @@ namespace DemoSystemTests;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class TestApiClient : ITestApiClient
+public class TestApiClient : LambdaTestApiClient, ITestApiClient
 {
-    private readonly ApiClientService _apiClientService;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="TestApiClient"/> class.
-    /// </summary>
-    /// <param name="apiClientService">An instance of ApiClientService</param>
-    public TestApiClient(ApiClientService apiClientService)
-    {
-        _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
-    }
-
     /// <summary>
     /// Fetch recorded video of a test id. To fetch video of a recorded test.
     /// </summary>

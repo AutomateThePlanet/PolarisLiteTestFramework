@@ -6,19 +6,8 @@ namespace DemoSystemTests;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class PrerunApiClient : IPrerunApiClient
+public class PrerunApiClient : LambdaTestApiClient, IPrerunApiClient
 {
-    private readonly ApiClientService _apiClientService;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="PrerunApiClient"/> class.
-    /// </summary>
-    /// <param name="apiClientService">An instance of ApiClientService (optional)</param>
-    public PrerunApiClient(ApiClientService apiClientService = null)
-    {
-        _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
-    }
-
     /// <summary>
     /// Delete pre run from our lambda storage. This API deletes a pre run executable script from our lambda storage. Since pre run executable name should be unique, this API is useful if you want to re-upload your updated pre run script with the name same as the previous one.
     /// </summary>

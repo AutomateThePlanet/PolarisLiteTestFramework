@@ -11,7 +11,7 @@ public class ApiAuthenticationWorkflowPlugin : Plugin
         var authenticator = GetAuthenticatorByType(type);
         if (authenticator != null)
         {
-            ApiClientService.Authenticator = authenticator;
+            ApiClientAdapter.Authenticator = authenticator;
         }
     }
 

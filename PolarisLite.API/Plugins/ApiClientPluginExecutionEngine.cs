@@ -8,12 +8,12 @@ public static class ApiClientPluginExecutionEngine
     public static event EventHandler<ResponseEventArgs> OnRequestMadeEvent;
     public static event EventHandler<ResponseEventArgs> OnRequestFailedEvent;
 
-    public static void OnClientInitialized(IRestClient client)
+    public static void OnClientInitialized(RestClient client)
     {
         OnClientInitializedEvent?.Invoke(client, new ClientEventArgs(client));
     }
 
-    public static void OnRequestTimeout(IRestClient client)
+    public static void OnRequestTimeout(RestClient client)
     {
         OnRequestTimeoutEvent?.Invoke(client, new ClientEventArgs(client));
     }

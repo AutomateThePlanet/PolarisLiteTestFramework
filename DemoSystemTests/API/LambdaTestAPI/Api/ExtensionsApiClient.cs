@@ -6,20 +6,8 @@ namespace DemoSystemTests;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class ExtensionsApiClient : IExtensionsClientApi
+public class ExtensionsApiClient : LambdaTestApiClient, IExtensionsClientApi
 {
-    private readonly ApiClientService _apiClientService;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ExtensionsApiClient"/> class.
-    /// </summary>
-    /// <param name="apiClientService"> an instance of ApiClientService (optional)</param>
-    /// <returns></returns>
-    public ExtensionsApiClient(ApiClientService apiClientService = null)
-    {
-        _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
-    }
-
     /// <summary>
     /// Delete extension from our lambda storage This API deletes extension from lambda storage
     /// </summary>

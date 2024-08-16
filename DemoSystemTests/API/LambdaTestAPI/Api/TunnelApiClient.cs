@@ -6,19 +6,8 @@ namespace DemoSystemTests;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class TunnelApiClient : ITunnelApiClient
+public class TunnelApiClient : LambdaTestApiClient, ITunnelApiClient
 {
-    private readonly ApiClientService _apiClientService;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="TunnelApiClient"/> class.
-    /// </summary>
-    /// <param name="apiClientService">An instance of ApiClientService</param>
-    public TunnelApiClient(ApiClientService apiClientService)
-    {
-        _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
-    }
-
     /// <summary>
     /// Fetch running tunnels of your account. To fetch lists of all tunnels running in an account.
     /// </summary>

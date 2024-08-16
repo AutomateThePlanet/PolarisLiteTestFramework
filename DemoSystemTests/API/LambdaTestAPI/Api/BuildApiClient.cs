@@ -6,19 +6,8 @@ namespace DemoSystemTests;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class BuildApiClient : IBuildApiClient
+public class BuildApiClient : LambdaTestApiClient, IBuildApiClient
 {
-    private readonly ApiClientService _apiClientService;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="BuildApiClient"/> class.
-    /// </summary>
-    /// <param name="apiClientService">An instance of ApiClientService (optional)</param>
-    public BuildApiClient(ApiClientService apiClientService = null)
-    {
-        _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
-    }
-
     /// <summary>
     /// Update Build Name or Status. To change build name or status.
     /// </summary>

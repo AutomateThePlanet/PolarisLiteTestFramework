@@ -12,6 +12,7 @@ public class AssemblySetup
         MobileConfigurationLoader.LoadConfiguration();
         WebConfigurationLoader.LoadConfiguration();
         ApiConfigurationLoader.LoadConfiguration();
+        IntegrationsConfigurationLoader.LoadConfiguration();
     }
 
     //[OneTimeTearDown]

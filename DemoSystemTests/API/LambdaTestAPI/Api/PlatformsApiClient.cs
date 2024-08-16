@@ -6,19 +6,8 @@ namespace DemoSystemTests;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class PlatformsApiClient : IPlatformsApiClient
+public class PlatformsApiClient : LambdaTestApiClient, IPlatformsApiClient
 {
-    private readonly ApiClientService _apiClientService;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="PlatformsApiClient"/> class.
-    /// </summary>
-    /// <param name="apiClientService">An instance of ApiClientService (optional)</param>
-    public PlatformsApiClient(ApiClientService apiClientService = null)
-    {
-        _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
-    }
-
     /// <summary>
     /// Fetch platforms. Fetch platforms along with browsers and versions supported.
     /// </summary>

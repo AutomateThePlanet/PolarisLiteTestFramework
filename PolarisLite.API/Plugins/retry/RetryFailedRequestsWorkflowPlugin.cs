@@ -12,8 +12,8 @@ public class RetryFailedRequestsWorkflowPlugin : Plugin
 
         if (retryFailedRequestsInfo != null)
         {
-            ApiClientService.PauseBetweenFailures = TimeSpanConverter.Convert(retryFailedRequestsInfo.PauseBetweenFailures, retryFailedRequestsInfo.TimeUnit);
-            ApiClientService.MaxRetryAttempts = retryFailedRequestsInfo.MaxRetryAttempts;
+            ApiClientAdapter.PauseBetweenFailures = TimeSpanConverter.Convert(retryFailedRequestsInfo.PauseBetweenFailures, retryFailedRequestsInfo.TimeUnit);
+            ApiClientAdapter.MaxRetryAttempts = retryFailedRequestsInfo.MaxRetryAttempts;
         }
     }
 

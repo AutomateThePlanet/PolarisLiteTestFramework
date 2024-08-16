@@ -6,15 +6,8 @@ namespace DemoSystemTests;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class SessionApiClient : ISessionApiClient
+public class SessionApiClient : LambdaTestApiClient, ISessionApiClient
 {
-    private readonly ApiClientService _apiClientService;
-
-    public SessionApiClient(ApiClientService apiClientService = null)
-    {
-        _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
-    }
-
     public async Task<MeasuredResponse<LogResponse>> SessionAsync(string sessionId)
     {
         ValidateSessionId(sessionId);

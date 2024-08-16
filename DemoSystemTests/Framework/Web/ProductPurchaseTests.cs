@@ -1,5 +1,7 @@
 ﻿using DemoSystemTests.Framework.Web.Pages;
 using DemoSystemTests.Framework.Web.Pages.Models;
+using DemoSystemTests.Integrations.Authentication.Plugins.Sms;
+using PolarisLite.Core;
 using PolarisLite.Core.Layout.Second;
 using PolarisLite.Web;
 using PolarisLite.Web.Core.NUnit;
@@ -8,7 +10,8 @@ using PolarisLite.Web.Plugins;
 namespace DemoSystemTests.Framework.Web;
 
 [TestFixture]
-[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
+//[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
+[LambdaTest]
 public class ProductPurchaseTests : WebTest
 {
     public HomePage HomePage { get; private set; }
@@ -17,6 +20,12 @@ public class ProductPurchaseTests : WebTest
     public CartPage CartPage { get; private set; }
     public CheckoutPage CheckoutPage { get; private set; }
     public SearchProductPage SearchProductPage { get; private set; }
+
+    protected override void Configure()
+    {
+        PluginExecutionEngine.AddPlugin(new TroubleshootingInfoAzurePublisherPlugin());
+        base.Configure();
+    }
 
     protected override void TestInitialize()
     {

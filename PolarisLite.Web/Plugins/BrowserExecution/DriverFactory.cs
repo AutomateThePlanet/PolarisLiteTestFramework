@@ -111,6 +111,7 @@ public class DriverFactory
         {
             case BrowserType.Chrome:
                 options = new ChromeOptions();
+                options.AcceptInsecureCertificates = true;
                 break;
             case BrowserType.Firefox:
                 options = new FirefoxOptions();
@@ -118,6 +119,7 @@ public class DriverFactory
 
             case BrowserType.Edge:
                 options = new EdgeOptions();
+                options.AcceptInsecureCertificates = true;
                 break;
 
             case BrowserType.Safari:

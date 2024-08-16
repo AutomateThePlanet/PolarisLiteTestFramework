@@ -6,19 +6,8 @@ namespace DemoSystemTests;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class LighthouseApiClient : ILighthouseApiClient
+public class LighthouseApiClient : LambdaTestApiClient, ILighthouseApiClient
 {
-    private readonly ApiClientService _apiClientService;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="LighthouseApiClient"/> class.
-    /// </summary>
-    /// <param name="apiClientService">An instance of ApiClientService (optional)</param>
-    public LighthouseApiClient(ApiClientService apiClientService = null)
-    {
-        _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
-    }
-
     /// <summary>
     /// To fetch the Lighthouse performance report data. To fetch URL to download the generated Lighthouse performance report JSON data.
     /// </summary>

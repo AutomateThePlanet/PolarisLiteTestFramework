@@ -49,7 +49,11 @@ public partial class DriverAdapter : IBrowserService
     {
         if (WebSettings.EnableToastMessages)
         {
-            Execute(string.Format("$.jGrowl('{0}', {{ header: 'Info', theme: 'info' }});", message));
+            try
+            {
+                Execute(string.Format("$.jGrowl('{0}', {{ header: 'Info', theme: 'info' }});", message));
+            }
+            catch { }
         }
     }
 

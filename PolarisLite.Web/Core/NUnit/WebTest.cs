@@ -22,7 +22,7 @@ public class WebTest : BaseTest
         ApiConfigurationLoader.LoadConfiguration();
         if (!_arePluginsAlreadyInitialized)
         {
-            PluginExecutionEngine.AddPlugin(new JavaScriptErrorsPlugin());
+            //PluginExecutionEngine.AddPlugin(new JavaScriptErrorsPlugin());
             PluginExecutionEngine.AddPlugin(new LambdaTestResultsPlugin());
             //PluginExecutionEngine.AddPlugin(new ExceptionAnalysationPlugin());
             //PluginExecutionEngine.AddPlugin(new WebScreenshotPlugin());

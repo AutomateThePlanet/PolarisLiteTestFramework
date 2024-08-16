@@ -6,19 +6,8 @@ namespace DemoSystemTests;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class SessionLogsApiClient : ISessionLogsApiClient
+public class SessionLogsApiClient : LambdaTestApiClient, ISessionLogsApiClient
 {
-    private readonly ApiClientService _apiClientService;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="SessionLogsApiClient"/> class.
-    /// </summary>
-    /// <param name="apiClientService">An instance of ApiClientService (optional)</param>
-    public SessionLogsApiClient(ApiClientService apiClientService = null)
-    {
-        _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
-    }
-
     /// <summary>
     /// Console/browser log of a test session. Fetches console/browser log that contains console errors thrown by the application during a test session in plain JSON text.
     /// </summary>

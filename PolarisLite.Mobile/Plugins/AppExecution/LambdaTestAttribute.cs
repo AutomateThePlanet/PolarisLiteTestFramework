@@ -17,7 +17,7 @@ public class LambdaTestAttribute : GridAttribute
             { "isRealMobile", "true" },
             { "build", "1.3" },
             { "video", "true" },
-            { "visual", "true" },
+            { "visual", "false" },
             { "w3c", "true" },
             { "autoGrantPermissions", "true" },
             { "project", "POLARIS_ANDROID_RUN" },

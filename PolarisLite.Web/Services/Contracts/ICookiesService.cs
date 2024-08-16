@@ -10,5 +10,5 @@ public interface ICookiesService
 
     List<OpenQA.Selenium.Cookie> GetAllCookies();
 
-    string GetCookie(string cookieName);
+    Cookie GetCookie(string cookieName);
 }

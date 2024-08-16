@@ -8,19 +8,8 @@ namespace DemoSystemTests;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class UserFilesApi : IUserFilesApiClient
+public class UserFilesApi : LambdaTestApiClient, IUserFilesApiClient
 {
-    private readonly ApiClientService _apiClientService;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="UserFilesApi"/> class.
-    /// </summary>
-    /// <param name="apiClientService">An instance of ApiClientService</param>
-    public UserFilesApi(ApiClientService apiClientService)
-    {
-        _apiClientService = apiClientService ?? throw new ArgumentNullException(nameof(apiClientService));
-    }
-
     /// <summary>
     /// Fetch all user files uploaded by the user This API fetches all the user files which are uploaded to our lambda storage.
     /// </summary>
