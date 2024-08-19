@@ -6,13 +6,19 @@ using PolarisLite.Web.Plugins;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
 using Allure.Net.Commons;
+using DemoSystemTests.Results;
 
-namespace DemoSystemTests.Web;
+namespace DemoSystemTests.Web.Results;
 
 //[Browser(Browser.Chrome, Lifecycle.RestartEveryTime)]
 [LambdaTest]
 //[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
-public class CKEditorTests : WebTest
+[AllureNUnit]
+[AllureParentSuite("Advanced Custom Components")]
+[AllureSuite("CKEditor")]
+[AllureSeverity(SeverityLevel.critical)]
+[AllureOwner("Anton Angelov")]
+public class CKEditorTests : ResultsWebTest
 {
     protected override void TestInitialize()
     {
@@ -20,6 +26,8 @@ public class CKEditorTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void AllTextSelected_When_CallSelectAllMethodCkEditorComponent()
     {
         var editor = App.Elements.FindById<CkEditorComponent>("demo").ToBeClickable();
@@ -28,6 +36,8 @@ public class CKEditorTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void AllTextSelectedBolded_When_CallSelectAllMethod_And_SendBoldCommand()
     {
         var editor = App.Elements.FindById<CkEditorComponent>("demo").ToBeClickable();
@@ -37,6 +47,8 @@ public class CKEditorTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void ReturnCorrectText_When_CallGetTextMethodCkEditorComponent()
     {
         var editor = App.Elements.FindById<CkEditorComponent>("demo").ToBeClickable();
@@ -47,6 +59,8 @@ public class CKEditorTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void ReturnCorrectHtml_When_CallGetHtmlMethodCkEditorComponent()
     {
         var editor = App.Elements.FindById<CkEditorComponent>("demo").ToBeClickable();

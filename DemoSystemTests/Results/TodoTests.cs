@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium.Chrome;
 
-namespace DemoSystemTests.Allure;
+namespace DemoSystemTests.Web.Results;
 
 [TestFixture]
 public class TodoTests

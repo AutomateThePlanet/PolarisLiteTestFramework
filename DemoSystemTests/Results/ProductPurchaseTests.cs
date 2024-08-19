@@ -1,21 +1,26 @@
 ﻿using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using DemoSystemTests.Framework.Web.Pages;
-using DemoSystemTests.Framework.Web.Pages.Models;
 using DemoSystemTests.Integrations.Authentication.Plugins.Sms;
+using DemoSystemTests.Results;
 using PolarisLite.Core;
 using PolarisLite.Core.Layout.Second;
 using PolarisLite.Web;
 using PolarisLite.Web.Core.NUnit;
 using PolarisLite.Web.Plugins;
 
-namespace DemoSystemTests.Framework.Web;
+namespace DemoSystemTests.Web.Results;
 
 [TestFixture]
+[AllureNUnit]
 //[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
 [LambdaTest]
-public class ProductPurchaseTests : WebTest
+[AllureEpic("E-commerce System Tests")]
+[AllureFeature("Online Shopping Cart")]
+[AllureParentSuite("EShop Tests")]
+[AllureSeverity(SeverityLevel.critical)]
+[AllureOwner("Anton Angelov")]
+public class ProductPurchaseTests : ResultsWebTest
 {
     public HomePage HomePage { get; private set; }
     public MobileHomePage MobileHomePage { get; private set; }
@@ -42,6 +47,12 @@ public class ProductPurchaseTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CI)]
+    [Category(Categories.WEB_SYSTEM_TESTS)]
+    [AllureSuite("EShop Compare Products")]
+    [AllureLink("LT Web", "https://www.lambdatest.com/support/api-doc/?key=selenium-automation-api/swagger.json")]
+    [AllureIssue("UI-123")]
+    [AllureTms("TMS-456")]
     public void CorrectInformationDisplayedInCompareScreen_WhenOpenProductFromSearchResults_TwoProducts()
     {
         // Arrange
@@ -79,6 +90,8 @@ public class ProductPurchaseTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CI)]
+    [Category(Categories.WEB_SYSTEM_TESTS)]
     public void PurchaseTwoSameProduct()
     {
         var expectedProduct1 = new ProductDetails
@@ -132,6 +145,7 @@ public class ProductPurchaseTests : WebTest
     }
 
     [Test]
+    [Category(Categories.WEB_SYSTEM_TESTS)]
     [LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime, mobileEmulation: true, deviceName: MobileDevices.GalaxyS20Ultra, MobileWindowSize._412_915, 1.0, userAgent: MobileUserAgents.GalaxyS20Ultra)]
     public void PurchaseTwoSameProduct_WhenSearchingWithoutAutocomplete_And_MobileEmulation()
     {
@@ -189,6 +203,7 @@ public class ProductPurchaseTests : WebTest
 
     [Test]
     [LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime, mobileEmulation: true, deviceName: MobileDevices.GalaxyS20Ultra, MobileWindowSize._412_915, 1.0, userAgent: MobileUserAgents.GalaxyS20Ultra)]
+    [Category(Categories.WEB_SYSTEM_TESTS)]
     public void SearchProducts_TestResponsiveDesign_And_MobileEmulation()
     {
         var expectedProduct1 = new ProductDetails
@@ -229,6 +244,8 @@ public class ProductPurchaseTests : WebTest
 
     [Test]
     [LambdaTest(BrowserType.Chrome, 120, DesktopWindowSize._1366_768)]
+    [Category(Categories.WEB_SYSTEM_TESTS)]
+    [Category(Categories.CI)]
 
     //[LocalExecution(Browser.Chrome, Lifecycle.RestartEveryTime, size: DesktopWindowSize._1366_768)]
 

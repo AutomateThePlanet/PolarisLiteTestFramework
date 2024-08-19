@@ -1,17 +1,24 @@
 using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using DemoSystemTests.Framework.Web.Pages.Models;
+using DemoSystemTests.Results;
 using PolarisLite.Web;
 using PolarisLite.Web.Core.NUnit;
 using PolarisLite.Web.Plugins;
 
-namespace DemoSystemTests.Web;
+namespace DemoSystemTests.Web.Results;
 
 [TestFixture]
 //[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
 [LambdaTest]
-public class KendoGridTests : WebTest
+[AllureNUnit]
+[AllureParentSuite("Advanced Custom Components")]
+[AllureEpic("Web Components")]
+[AllureFeature("Custom Components")]
+[AllureSuite("Kendo Grid")]
+[AllureSeverity(SeverityLevel.normal)]
+[AllureOwner("Anton Angelov")]
+public class KendoGridTests : ResultsWebTest
 {
     private KendoGrid _kendoGrid;
 
@@ -25,6 +32,8 @@ public class KendoGridTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void FilterContactName()
     {
         _kendoGrid.Filter("ContactName", FilterOperator.Contains, "Thomas");
@@ -34,6 +43,8 @@ public class KendoGridTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void SortContactTitleDesc()
     {
         _kendoGrid.Sort("ContactTitle", SortType.Desc);
@@ -44,6 +55,8 @@ public class KendoGridTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void TestCurrentPage()
     {
         var pageNumber = _kendoGrid.GetCurrentPageNumber();
@@ -52,6 +65,8 @@ public class KendoGridTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void GetPageSize()
     {
         var pageNumber = _kendoGrid.GetPageSize();
@@ -60,6 +75,8 @@ public class KendoGridTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void GetAllItems()
     {
         var items = _kendoGrid.GetItems<GridItem>();
