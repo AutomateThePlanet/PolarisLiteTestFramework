@@ -9,8 +9,8 @@ public class LambdaTestAttribute : GridAttribute
         BrowserConfiguration = new BrowserConfiguration(browser, Lifecycle.RestartEveryTime, ExecutionType.LambdaTest, browserVersionString);
         GridSettings = new GridSettings();
         GridSettings.OptionsName = "LT:Options";
-        string userName = Environment.GetEnvironmentVariable("LT_USERNAME", EnvironmentVariableTarget.Machine);
-        string accessKey = Environment.GetEnvironmentVariable("LT_ACCESSKEY", EnvironmentVariableTarget.Machine);
+        string userName = Environment.GetEnvironmentVariable("LT_USERNAME");
+        string accessKey = Environment.GetEnvironmentVariable("LT_ACCESSKEY");
         GridSettings.Url = $"https://{userName}:{accessKey}@hub.lambdatest.com/wd/hub";
 
         string resolution = WindowsSizeResolver.GetWindowSize(desktopWindowSize).ConvertToString();
