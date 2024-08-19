@@ -1,4 +1,6 @@
+using Allure.Net.Commons;
 using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using PolarisLite.Web;
 using PolarisLite.Web.Core.NUnit;
 using PolarisLite.Web.Plugins;
@@ -9,11 +11,17 @@ namespace DemoSystemTests.Web;
 [LambdaTest]
 //[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
 [AllureNUnit]
+[AllureParentSuite("Advanced Custom Components")]
+[AllureEpic("Web Components")]
+[AllureFeature("Custom Components")]
+[AllureSeverity(SeverityLevel.minor)]
+[AllureOwner("Anton Angelov")]
 public class CustomControlsTests : WebTest
 {
     [Test]
     [Category(Categories.CUSTOM_CONTROLS)]
     [Category(Categories.CI)]
+    [AllureSuite("Kendo DatePicker")]
     public void SetDateKendoDatePickerCustomControl()
     {
         App.Navigation.GoToUrl("http://demos.telerik.com/kendo-ui/datepicker/index");
@@ -25,6 +33,7 @@ public class CustomControlsTests : WebTest
     [Test]
     [Category(Categories.CUSTOM_CONTROLS)]
     [Category(Categories.CI)]
+    [AllureSuite("Gauge Needle")]
     public void SetValueGaugeNeedleCustomControl()
     {
         App.Navigation.GoToUrl("http://www.igniteui.com/radial-gauge/gauge-needle");
@@ -35,6 +44,7 @@ public class CustomControlsTests : WebTest
     [Test]
     [Category(Categories.CUSTOM_CONTROLS)]
     [Category(Categories.CI)]
+    [AllureSuite("Full Calendar")]
     public void TestMethodsFullCalendarCustomControl()
     {
         App.Navigation.GoToUrl("https://fullcalendar.io/docs/v3/month-view-demo");
@@ -49,6 +59,7 @@ public class CustomControlsTests : WebTest
     [Test]
     [Category(Categories.CUSTOM_CONTROLS)]
     [Category(Categories.CI)]
+    [AllureSuite("Kendo Color Picker")]
     public void SetColorKendoColorPickerCustomControl()
     {
         App.Navigation.GoToUrl("http://demos.telerik.com/kendo-ui/colorpicker/index");

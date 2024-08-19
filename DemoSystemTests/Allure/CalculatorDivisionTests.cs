@@ -1,6 +1,6 @@
 ﻿using Allure.Net.Commons;
-using NUnit.Allure.Attributes;
-using NUnit.Allure.Core;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 
 namespace Examples.Tests;
 

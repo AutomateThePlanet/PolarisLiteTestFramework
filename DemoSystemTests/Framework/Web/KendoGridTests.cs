@@ -1,4 +1,6 @@
+using Allure.Net.Commons;
 using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using DemoSystemTests.Framework.Web.Pages.Models;
 using PolarisLite.Web;
 using PolarisLite.Web.Core.NUnit;
@@ -10,6 +12,12 @@ namespace DemoSystemTests.Web;
 //[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
 [LambdaTest]
 [AllureNUnit]
+[AllureParentSuite("Advanced Custom Components")]
+[AllureEpic("Web Components")]
+[AllureFeature("Custom Components")]
+[AllureSuite("Kendo Grid")]
+[AllureSeverity(SeverityLevel.normal)]
+[AllureOwner("Anton Angelov")]
 public class KendoGridTests : WebTest
 {
     private KendoGrid _kendoGrid;

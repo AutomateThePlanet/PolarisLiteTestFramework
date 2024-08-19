@@ -4,6 +4,8 @@ using PolarisLite.Web;
 using NUnit.Framework.Legacy;
 using PolarisLite.Web.Plugins;
 using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using Allure.Net.Commons;
 
 namespace DemoSystemTests.Web;
 
@@ -11,6 +13,10 @@ namespace DemoSystemTests.Web;
 [LambdaTest]
 //[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
 [AllureNUnit]
+[AllureParentSuite("Advanced Custom Components")]
+[AllureSuite("CKEditor")]
+[AllureSeverity(SeverityLevel.critical)]
+[AllureOwner("Anton Angelov")]
 public class CKEditorTests : WebTest
 {
     protected override void TestInitialize()

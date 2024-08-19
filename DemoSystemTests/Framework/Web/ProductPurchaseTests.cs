@@ -1,4 +1,6 @@
-﻿using Allure.NUnit;
+﻿using Allure.Net.Commons;
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using DemoSystemTests.Framework.Web.Pages;
 using DemoSystemTests.Framework.Web.Pages.Models;
 using DemoSystemTests.Integrations.Authentication.Plugins.Sms;
@@ -14,6 +16,11 @@ namespace DemoSystemTests.Framework.Web;
 [AllureNUnit]
 //[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
 [LambdaTest]
+[AllureEpic("E-commerce System Tests")]
+[AllureFeature("Online Shopping Cart")]
+[AllureParentSuite("EShop Tests")]
+[AllureSeverity(SeverityLevel.critical)]
+[AllureOwner("Anton Angelov")]
 public class ProductPurchaseTests : WebTest
 {
     public HomePage HomePage { get; private set; }
@@ -43,6 +50,10 @@ public class ProductPurchaseTests : WebTest
     [Test]
     [Category(Categories.CI)]
     [Category(Categories.WEB_SYSTEM_TESTS)]
+    [AllureSuite("EShop Compare Products")]
+    [AllureLink("LT Web", "https://www.lambdatest.com/support/api-doc/?key=selenium-automation-api/swagger.json")]
+    [AllureIssue("UI-123")]
+    [AllureTms("TMS-456")]
     public void CorrectInformationDisplayedInCompareScreen_WhenOpenProductFromSearchResults_TwoProducts()
     {
         // Arrange
