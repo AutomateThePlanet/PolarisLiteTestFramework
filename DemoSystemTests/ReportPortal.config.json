@@ -1,12 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/reportportal/agent-net-nunit/master/src/ReportPortal.NUnitExtension/ReportPortal.config.schema",
   "enabled": true,
   "server": {
-    "url": "https://demo.reportportal.io/api/v1/",
+    "url": "http://127.0.0.1:8080",
     "project": "e-commerce",
-    "authentication": {
-      "uuid": "testkey_5wF1YRQxTiu5NIStx6pCInmidYOKHtTOqc6WPhqGDBiEdQsk8QCt4h4m8jY2X5DG"
-    }
+    "apiKey": "test_-3n9jxGYQeydb8LQmU4o2FnHuYo37G4SdqZVAnBziC_nuZymwswUTyO2K8OBTCml"
   },
   "launch": {
     "name": "E-commerce LT",

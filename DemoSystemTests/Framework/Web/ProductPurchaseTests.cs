@@ -1,4 +1,5 @@
-﻿using DemoSystemTests.Framework.Web.Pages;
+﻿using Allure.NUnit;
+using DemoSystemTests.Framework.Web.Pages;
 using DemoSystemTests.Framework.Web.Pages.Models;
 using DemoSystemTests.Integrations.Authentication.Plugins.Sms;
 using PolarisLite.Core;
@@ -10,6 +11,7 @@ using PolarisLite.Web.Plugins;
 namespace DemoSystemTests.Framework.Web;
 
 [TestFixture]
+[AllureNUnit]
 //[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
 [LambdaTest]
 public class ProductPurchaseTests : WebTest

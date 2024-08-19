@@ -2,12 +2,15 @@ using PolarisLite.Web.ComponentsJS.CKEditor;
 using PolarisLite.Web.Core.NUnit;
 using PolarisLite.Web;
 using NUnit.Framework.Legacy;
-using PolarisLite.Mobile.Plugins;
+using PolarisLite.Web.Plugins;
+using Allure.NUnit;
 
 namespace DemoSystemTests.Web;
 
 //[Browser(Browser.Chrome, Lifecycle.RestartEveryTime)]
 [LambdaTest]
+//[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
+[AllureNUnit]
 public class CKEditorTests : WebTest
 {
     protected override void TestInitialize()

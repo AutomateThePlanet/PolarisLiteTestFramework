@@ -30,7 +30,7 @@ public class LambdaTestAttribute : GridAttribute
             { "selenium_version", "4.22.0" }
         };
 
-        GridSettings.Arguments.Add("autoHeal", enableAutoHealing);
-        GridSettings.Arguments.Add("smartWait", enableAutoHealing);
+        //GridSettings.Arguments.Add("autoHeal", enableAutoHealing);
+        //GridSettings.Arguments.Add("smartWait", enableAutoHealing);
     }
 }

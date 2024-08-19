@@ -1,3 +1,4 @@
+using Allure.NUnit;
 using DemoSystemTests.Framework.Web.Pages.Models;
 using PolarisLite.Web;
 using PolarisLite.Web.Core.NUnit;
@@ -8,6 +9,7 @@ namespace DemoSystemTests.Web;
 [TestFixture]
 //[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
 [LambdaTest]
+[AllureNUnit]
 public class KendoGridTests : WebTest
 {
     private KendoGrid _kendoGrid;

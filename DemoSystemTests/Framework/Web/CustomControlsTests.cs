@@ -1,3 +1,4 @@
+using Allure.NUnit;
 using PolarisLite.Web;
 using PolarisLite.Web.Core.NUnit;
 using PolarisLite.Web.Plugins;
@@ -7,6 +8,7 @@ namespace DemoSystemTests.Web;
 [TestFixture]
 [LambdaTest]
 //[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
+[AllureNUnit]
 public class CustomControlsTests : WebTest
 {
     [Test]
