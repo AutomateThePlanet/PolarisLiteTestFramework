@@ -22,7 +22,7 @@ public class LambdaTestAttribute : GridAttribute
             { "video", "true" },
             { "seCdp", "true" },
             { "console", "true" },
-            { "tunnel", "true" },
+            //{ "tunnel", "true" },
             { "w3c", "true" },
             { "plugin", "c#-c#" },
             { "build", "2.2" },
