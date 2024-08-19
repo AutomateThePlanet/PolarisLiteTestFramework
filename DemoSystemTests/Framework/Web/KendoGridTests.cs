@@ -6,7 +6,8 @@ using PolarisLite.Web.Plugins;
 namespace DemoSystemTests.Web;
 
 [TestFixture]
-[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
+//[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
+[LambdaTest]
 public class KendoGridTests : WebTest
 {
     private KendoGrid _kendoGrid;
@@ -21,6 +22,8 @@ public class KendoGridTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void FilterContactName()
     {
         _kendoGrid.Filter("ContactName", FilterOperator.Contains, "Thomas");
@@ -30,6 +33,8 @@ public class KendoGridTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void SortContactTitleDesc()
     {
         _kendoGrid.Sort("ContactTitle", SortType.Desc);
@@ -40,6 +45,8 @@ public class KendoGridTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void TestCurrentPage()
     {
         var pageNumber = _kendoGrid.GetCurrentPageNumber();
@@ -48,6 +55,8 @@ public class KendoGridTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void GetPageSize()
     {
         var pageNumber = _kendoGrid.GetPageSize();
@@ -56,6 +65,8 @@ public class KendoGridTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void GetAllItems()
     {
         var items = _kendoGrid.GetItems<GridItem>();

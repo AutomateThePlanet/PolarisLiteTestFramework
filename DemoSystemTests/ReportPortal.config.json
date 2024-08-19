@@ -3,16 +3,16 @@
   "enabled": true,
   "server": {
     "url": "https://demo.reportportal.io/api/v1/",
-    "project": "default_personal",
+    "project": "e-commerce",
     "authentication": {
-      "uuid": "8fa588b5-80ae-453e-9df0-b0847b949a34"
+      "uuid": "testkey_5wF1YRQxTiu5NIStx6pCInmidYOKHtTOqc6WPhqGDBiEdQsk8QCt4h4m8jY2X5DG"
     }
   },
   "launch": {
-    "name": "NUnit 3 Demo Launch",
-    "description": "this is description",
+    "name": "E-commerce LT",
+    "description": "Many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected.",
     "debugMode": false,
-    "attributes": [ "t1", "t2", "platform:x64" ]
+    "attributes": [ "system-tests", "QA_Environment", "chrome-execution" ]
   },
   "rootNamespaces": [ "Example.dll", "Example", "Tests" ]
 }

@@ -40,7 +40,7 @@
 
     <PackageReference Include="Allure.NUnit" Version="2.12.1" />
 
-    <!--<PackageReference Include="ReportPortal.NUnit" Version="4.6.0" />-->
+    <PackageReference Include="ReportPortal.NUnit" Version="4.6.0" />
   </ItemGroup>
 
   <ItemGroup>

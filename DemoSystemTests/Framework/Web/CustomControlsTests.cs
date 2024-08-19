@@ -5,10 +5,13 @@ using PolarisLite.Web.Plugins;
 namespace DemoSystemTests.Web;
 
 [TestFixture]
-[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
+[LambdaTest]
+//[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
 public class CustomControlsTests : WebTest
 {
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void SetDateKendoDatePickerCustomControl()
     {
         App.Navigation.GoToUrl("http://demos.telerik.com/kendo-ui/datepicker/index");
@@ -18,6 +21,8 @@ public class CustomControlsTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void SetValueGaugeNeedleCustomControl()
     {
         App.Navigation.GoToUrl("http://www.igniteui.com/radial-gauge/gauge-needle");
@@ -26,6 +31,8 @@ public class CustomControlsTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void TestMethodsFullCalendarCustomControl()
     {
         App.Navigation.GoToUrl("https://fullcalendar.io/docs/v3/month-view-demo");
@@ -38,6 +45,8 @@ public class CustomControlsTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void SetColorKendoColorPickerCustomControl()
     {
         App.Navigation.GoToUrl("http://demos.telerik.com/kendo-ui/colorpicker/index");

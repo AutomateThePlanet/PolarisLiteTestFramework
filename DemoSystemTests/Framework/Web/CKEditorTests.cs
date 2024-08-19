@@ -2,10 +2,12 @@ using PolarisLite.Web.ComponentsJS.CKEditor;
 using PolarisLite.Web.Core.NUnit;
 using PolarisLite.Web;
 using NUnit.Framework.Legacy;
+using PolarisLite.Mobile.Plugins;
 
 namespace DemoSystemTests.Web;
 
 //[Browser(Browser.Chrome, Lifecycle.RestartEveryTime)]
+[LambdaTest]
 public class CKEditorTests : WebTest
 {
     protected override void TestInitialize()
@@ -14,6 +16,8 @@ public class CKEditorTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void AllTextSelected_When_CallSelectAllMethodCkEditorComponent()
     {
         var editor = App.Elements.FindById<CkEditorComponent>("demo").ToBeClickable();
@@ -22,6 +26,8 @@ public class CKEditorTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void AllTextSelectedBolded_When_CallSelectAllMethod_And_SendBoldCommand()
     {
         var editor = App.Elements.FindById<CkEditorComponent>("demo").ToBeClickable();
@@ -31,6 +37,8 @@ public class CKEditorTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void ReturnCorrectText_When_CallGetTextMethodCkEditorComponent()
     {
         var editor = App.Elements.FindById<CkEditorComponent>("demo").ToBeClickable();
@@ -41,6 +49,8 @@ public class CKEditorTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CUSTOM_CONTROLS)]
+    [Category(Categories.CI)]
     public void ReturnCorrectHtml_When_CallGetHtmlMethodCkEditorComponent()
     {
         var editor = App.Elements.FindById<CkEditorComponent>("demo").ToBeClickable();

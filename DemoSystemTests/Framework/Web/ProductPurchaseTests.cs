@@ -39,6 +39,8 @@ public class ProductPurchaseTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CI)]
+    [Category(Categories.WEB_SYSTEM_TESTS)]
     public void CorrectInformationDisplayedInCompareScreen_WhenOpenProductFromSearchResults_TwoProducts()
     {
         // Arrange
@@ -76,6 +78,8 @@ public class ProductPurchaseTests : WebTest
     }
 
     [Test]
+    [Category(Categories.CI)]
+    [Category(Categories.WEB_SYSTEM_TESTS)]
     public void PurchaseTwoSameProduct()
     {
         var expectedProduct1 = new ProductDetails
@@ -129,6 +133,7 @@ public class ProductPurchaseTests : WebTest
     }
 
     [Test]
+    [Category(Categories.WEB_SYSTEM_TESTS)]
     [LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime, mobileEmulation: true, deviceName: MobileDevices.GalaxyS20Ultra, MobileWindowSize._412_915, 1.0, userAgent: MobileUserAgents.GalaxyS20Ultra)]
     public void PurchaseTwoSameProduct_WhenSearchingWithoutAutocomplete_And_MobileEmulation()
     {
@@ -186,6 +191,7 @@ public class ProductPurchaseTests : WebTest
 
     [Test]
     [LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime, mobileEmulation: true, deviceName: MobileDevices.GalaxyS20Ultra, MobileWindowSize._412_915, 1.0, userAgent: MobileUserAgents.GalaxyS20Ultra)]
+    [Category(Categories.WEB_SYSTEM_TESTS)]
     public void SearchProducts_TestResponsiveDesign_And_MobileEmulation()
     {
         var expectedProduct1 = new ProductDetails
@@ -226,6 +232,9 @@ public class ProductPurchaseTests : WebTest
 
     [Test]
     [LambdaTest(BrowserType.Chrome, 120, DesktopWindowSize._1366_768)]
+    [Category(Categories.WEB_SYSTEM_TESTS)]
+    [Category(Categories.CI)]
+
     //[LocalExecution(Browser.Chrome, Lifecycle.RestartEveryTime, size: DesktopWindowSize._1366_768)]
 
     public void SearchProducts_TestResponsiveDesign_WhenResolutionIsSetTo_1366_768()
