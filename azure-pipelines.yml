@@ -17,7 +17,7 @@ jobs:
 - job: Job_1
   displayName: Agent job 1
   pool:
-    name: NUTEST
+    name: MY_MACHINES
   steps:
   - checkout: self
     clean: true
