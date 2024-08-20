@@ -1,5 +1,7 @@
 ﻿using Allure.EventHandlers;
+using PolarisLite.Core;
 using PolarisLite.Web.Core.NUnit;
+using PolarisLite.Web.Plugins.Browser;
 
 namespace DemoSystemTests.Results;
 public class ResultsWebTest : WebTest
@@ -11,6 +13,7 @@ public class ResultsWebTest : WebTest
 
         if (!_arePluginsAlreadyInitialized)
         {
+            PluginExecutionEngine.AddPlugin(new AppInsigtsPlugin());
             AddAllureSteps();
             _arePluginsAlreadyInitialized = true; 
         }

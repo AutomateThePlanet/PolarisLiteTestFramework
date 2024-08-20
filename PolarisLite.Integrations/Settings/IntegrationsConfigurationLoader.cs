@@ -24,17 +24,18 @@ public class IntegrationsConfigurationLoader
 
     private static void LoadQAConfiguration()
     {
-        IntegrationSettings.BlobStorageSettings.ConnectionString = Environment.GetEnvironmentVariable("BLOB_CS", EnvironmentVariableTarget.Machine);
+        IntegrationSettings.BlobStorageSettings.ConnectionString = Environment.GetEnvironmentVariable("BLOB_CS");
     }
 
     private static void LoadStagingConfiguration()
     {
-        IntegrationSettings.BlobStorageSettings.ConnectionString = Environment.GetEnvironmentVariable("BLOB_CS", EnvironmentVariableTarget.Machine);
+        IntegrationSettings.BlobStorageSettings.ConnectionString = Environment.GetEnvironmentVariable("BLOB_CS");
     }
 
     private static void LoadDevelopmentConfiguration()
     {
-        IntegrationSettings.BlobStorageSettings.ConnectionString = Environment.GetEnvironmentVariable("BLOB_CS", EnvironmentVariableTarget.Machine);
+        IntegrationSettings.BlobStorageSettings.ConnectionString = Environment.GetEnvironmentVariable("BLOB_CS");
+        IntegrationSettings.AppInsightsSettings.InstrumentationKey = Environment.GetEnvironmentVariable("APPINSIGHTS_KEY");
         IntegrationSettings.MailslurpSettings.ApiKey = "someKey";
         IntegrationSettings.TwilioSettings.AuthToken = "someAuthToken";
         IntegrationSettings.TwilioSettings.PhoneNumber = "+12312312321312";

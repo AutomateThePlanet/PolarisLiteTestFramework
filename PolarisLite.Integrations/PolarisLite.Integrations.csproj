@@ -12,10 +12,7 @@
     <PackageReference Include="Twilio" Version="7.2.2" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.22.0-beta.1" />
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Plugins\" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.22.0" />
   </ItemGroup>
 
   <ItemGroup>
