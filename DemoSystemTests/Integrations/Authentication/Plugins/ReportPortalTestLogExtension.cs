@@ -1,23 +1,20 @@
 ﻿//using Newtonsoft.Json.Linq;
 //using NUnit.Engine;
-//using NUnit.Framework.Interfaces;
 //using OpenQA.Selenium.Remote;
 //using PolarisLite.Core;
 //using PolarisLite.Secrets;
-//using PolarisLite.Web.Plugins.BrowserExecution;
 //using PolarisLite.Web.Settings.FilesImplementation;
 //using ReportPortal.Client.Abstractions.Models;
 //using ReportPortal.Client.Abstractions.Requests;
 //using ReportPortal.Client.Abstractions.Responses;
 //using ReportPortal.NUnitExtension;
-//using ReportPortal.Shared.Reporter;
 //using RestSharp;
 //using System.Text;
 //using LogLevel = ReportPortal.Client.Abstractions.Models.LogLevel;
 
 //namespace PolarisLite.Web.Plugins;
 
-//[NUnit.Engine.Extensibility.Extension]
+////[NUnit.Engine.Extensibility.Extension]
 //public class ReportPortalTestLogExtension : ITestEventListener
 //{
 //    private readonly bool _reportPortalEnabled;
@@ -97,6 +94,10 @@
 
 //            try
 //            {
+//                // TODO: Refactor with new clients + static settings
+//                // how to get Azure DevOps current build id
+//                // this part is missing
+
 //                var webSettings = ConfigurationService.GetSection<WebSettings>();
 //                bool isLambdaTestRun = webSettings.ExecutionType.Equals("lambda test", StringComparison.OrdinalIgnoreCase);
 //                if (isLambdaTestRun)
