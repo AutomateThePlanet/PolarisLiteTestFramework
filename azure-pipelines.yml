@@ -5,6 +5,7 @@
 # Variable 'TWILIO_ACCOUNT_SID' was defined in the Variables tab
 # Variable 'TWILIO_AUTH_TOKEN' was defined in the Variables tab
 variables:
+- group: 'Galaxy Variables'
 - name: BuildParameters.TestProjects
   value: '**/*[Tt]ests/*.csproj'
 name: $(date:yyyyMMdd)$(rev:.r)
