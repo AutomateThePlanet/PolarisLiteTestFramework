@@ -35,7 +35,7 @@ public class IntegrationsConfigurationLoader
     private static void LoadDevelopmentConfiguration()
     {
         IntegrationSettings.BlobStorageSettings.ConnectionString = Environment.GetEnvironmentVariable("BLOB_CS");
-        IntegrationSettings.AppInsightsSettings.InstrumentationKey = Environment.GetEnvironmentVariable("APPINSIGHTS_KEY");
+        IntegrationSettings.AppInsightsSettings.ConnectionString = Environment.GetEnvironmentVariable("APPINSIGHTS_CS");
         IntegrationSettings.AppInsightsSettings.IsEnabled = true;
         IntegrationSettings.MailslurpSettings.ApiKey = "someKey";
         IntegrationSettings.TwilioSettings.AuthToken = "someAuthToken";

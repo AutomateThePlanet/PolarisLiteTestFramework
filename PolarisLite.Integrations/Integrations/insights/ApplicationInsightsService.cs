@@ -11,7 +11,7 @@ public static class ApplicationInsightsService
     {
         var config = new TelemetryConfiguration
         {
-            ConnectionString = IntegrationSettings.AppInsightsSettings.InstrumentationKey
+            ConnectionString = IntegrationSettings.AppInsightsSettings.ConnectionString
         };
 
         TelemetryClient = new TelemetryClient(config);

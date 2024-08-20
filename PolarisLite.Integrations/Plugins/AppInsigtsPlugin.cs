@@ -37,7 +37,9 @@ public class AppInsigtsPlugin : Plugin
 
         EventTelemetry eventTelemetry = new EventTelemetry();
       
-        eventTelemetry.Name = testFullName;
+        eventTelemetry.Name = "Automated Test Result";
+        eventTelemetry.Properties["TestName"] = memberInfo.Name;
+        eventTelemetry.Properties["TestSuite"] = memberInfo.DeclaringType.FullName;
         eventTelemetry.Properties["TestOutcome"] = result.GetDescription();
         eventTelemetry.Properties["Duration"] = totalExecutionTime.ToString();
         if (result != TestOutcome.Passed && failedTestException != null)
@@ -46,6 +48,7 @@ public class AppInsigtsPlugin : Plugin
         }
       
         ApplicationInsightsService.TrackEvent(eventTelemetry);
+        ApplicationInsightsService.Flush();
     }
 
     private string GetTestFullName(MethodInfo memberInfo)
