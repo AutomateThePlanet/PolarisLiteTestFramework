@@ -1,5 +1,6 @@
 ﻿using DemoSystemTests.Framework.Web.Pages.Models;
 using PolarisLite.Web;
+using PolarisLite.Web.Assertions;
 
 namespace DemoSystemTests.Web.Results;
 
@@ -36,7 +37,8 @@ public class ProductPage : WebPage
     public void AssertCompareProductDetails(ProductDetails expectedProduct, int index)
     {
         var productName = App.Elements.FindByXPath<Label>(GetCompareProductDetailsCellXPath("Product", index));
-        Assert.That(productName.Text, Is.EqualTo(expectedProduct.Name));
+        //Assert.That(productName.Text, Is.EqualTo(expectedProduct.Name));
+        productName.ValidateInnerTextIs(expectedProduct.Name);
         // Add more assertions for Price, Model, Brand, Weight, etc.
     }
 

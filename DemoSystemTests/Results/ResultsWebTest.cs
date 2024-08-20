@@ -24,6 +24,7 @@ public class ResultsWebTest : WebTest
         new AllureStepsEmailEventHandlers().SubscribeToAll();
         new AllureStepsInputFileEventHandlers().SubscribeToAll();
         new AllureStepsSelectEventHandlers().SubscribeToAll();
+        new AllureStepsButtonEventHandlers().SubscribeToAll();
         new AllureStepsValidateExtensionsService().SubscribeToAll();
     }
 }

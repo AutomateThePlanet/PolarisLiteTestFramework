@@ -6,7 +6,7 @@ namespace Allure.EventHandlers;
 
 public class AllureStepsTextFieldEventHandlers : TextFieldEventHandlers
 {
-    protected override void SettingTextEventHandler(object sender, ComponentActionEventArgs arg)
+    protected override void TextSetEventHandler(object sender, ComponentActionEventArgs arg)
     {
         AllureApi.Step($"Type '{arg.ActionValue}' into {arg.Element.FindStrategy.ToString()}");
     }
