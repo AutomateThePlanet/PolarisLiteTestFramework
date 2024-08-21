@@ -17,7 +17,9 @@ public class DriverFactory
     public static Dictionary<string, string> CustomDriverOptions { get; set; } = new Dictionary<string, string>();
 
     public static ExecutionType ExecutionType { get; set; }
+    public static GridSettings GridSettings { get; set; }
     public static IWebDriver WrappedDriver { get; set; }
+    public static string CurrentSessionId { get; set; }
 
     public static void Start(BrowserConfiguration browserConfiguration)
     {
@@ -98,8 +100,11 @@ public class DriverFactory
     {
         var options = InitializeOptions(browserConfiguration.Browser, browserConfiguration.BrowserVersion);
         AddGridOptions(options, gridSettings);
+        GridSettings = gridSettings;
+        BrowserConfiguration = browserConfiguration;
         ExecutionType = browserConfiguration.ExecutionType;
         WrappedDriver = new RemoteWebDriver(new Uri(gridSettings.Url), options);
+        CurrentSessionId = ((RemoteWebDriver)WrappedDriver).SessionId.ToString();
         WrappedDriver.Manage().Window.Maximize();
         Disposed = false;
     }

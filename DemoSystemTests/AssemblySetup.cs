@@ -9,6 +9,7 @@ public class AssemblySetup
     [OneTimeSetUp]
     public void GlobalSetup()
     {
+        ReportPortal.Shared.Context.Current.Log.Info("OneTimeSetUp message");
         MobileConfigurationLoader.LoadConfiguration();
         WebConfigurationLoader.LoadConfiguration();
         ApiConfigurationLoader.LoadConfiguration();

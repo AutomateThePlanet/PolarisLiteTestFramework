@@ -9,10 +9,10 @@
     "name": "E-commerce LT",
     "description": "Many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected.",
     "debugMode": false,
-    "attributes": [ "system-tests", "QA_Environment", "chrome-execution" ]
+    "attributes": [ "system-tests", "QA_Environment" ]
   },
   "logging": {
-    "level": "Info"
+    "level": "Debug"
   },
-  "rootNamespaces": [ "Example.dll", "Example", "Tests" ]
+  "rootNamespaces": [ "DemoSystemTests", "Example", "Tests" ]
 }

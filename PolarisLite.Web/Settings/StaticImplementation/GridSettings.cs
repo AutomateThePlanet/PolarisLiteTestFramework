@@ -5,6 +5,7 @@ public class GridSettings
     public string ProviderName { get; set; } = "lambda test";
     public string OptionsName { get; set; } = "LT:Options";
     public string TestName { get; set; }
+    public string BuildName { get; set; }
     public string Url { get; set; } = "https://{userName}:{accessKey}@hub.lambdatest.com/wd/hub";
     public Dictionary<string, object> Arguments { get; set; } = new Dictionary<string, object>
         {
