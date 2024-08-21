@@ -1,7 +1,6 @@
 ﻿using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using DemoSystemTests.Integrations.Plugins.Blob;
 using DemoSystemTests.Results;
 using PolarisLite.Core;
 using PolarisLite.Core.Layout.Second;
@@ -47,7 +46,7 @@ public class ProductPurchaseTests : ResultsWebTest
     }
 
     [Test]
-    //[Category(Categories.CI)]
+    [Category(Categories.CI)]
     [Category(Categories.WEB_SYSTEM_TESTS)]
     [AllureSuite("EShop Compare Products")]
     [AllureLink("LT Web", "https://www.lambdatest.com/support/api-doc/?key=selenium-automation-api/swagger.json")]
@@ -90,7 +89,7 @@ public class ProductPurchaseTests : ResultsWebTest
     }
 
     [Test]
-    //[Category(Categories.CI)]
+    [Category(Categories.CI)]
     [Category(Categories.WEB_SYSTEM_TESTS)]
     public void PurchaseTwoSameProduct()
     {
