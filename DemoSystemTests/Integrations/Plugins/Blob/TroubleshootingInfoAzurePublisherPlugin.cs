@@ -12,7 +12,7 @@ using System.IO.Compression;
 using System.Reflection;
 using System.Text;
 
-namespace DemoSystemTests.Integrations.Authentication.Plugins.Sms;
+namespace DemoSystemTests.Integrations.Plugins.Blob;
 public class TroubleshootingInfoAzurePublisherPlugin : Plugin
 {
     public override void OnAfterTestCleanup(TestOutcome result, MethodInfo memberInfo, Exception failedTestException)

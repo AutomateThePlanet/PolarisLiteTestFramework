@@ -6,19 +6,8 @@ namespace PolarisLite.Integrations.LambdaTestAPI;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class TunnelApiClient : ITunnelApiClient
+public class TunnelApiClient : LambdaTestApiClient, ITunnelApiClient
 {
-    private readonly ApiClientAdapter _ApiClientAdapter;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="TunnelApiClient"/> class.
-    /// </summary>
-    /// <param name="ApiClientAdapter">An instance of ApiClientAdapter</param>
-    public TunnelApiClient(ApiClientAdapter ApiClientAdapter)
-    {
-        _ApiClientAdapter = ApiClientAdapter ?? throw new ArgumentNullException(nameof(ApiClientAdapter));
-    }
-
     /// <summary>
     /// Fetch running tunnels of your account. To fetch lists of all tunnels running in an account.
     /// </summary>
@@ -27,7 +16,7 @@ public class TunnelApiClient : ITunnelApiClient
     {
         var request = new RestRequest("/tunnels", Method.Get);
 
-        var response = await _ApiClientAdapter.GetAsync<GetTunnelsResponse>(request);
+        var response = await _apiClientService.GetAsync<GetTunnelsResponse>(request);
         return response;
     }
 
@@ -46,7 +35,7 @@ public class TunnelApiClient : ITunnelApiClient
         var request = new RestRequest("/tunnels/{tunnel_id}", Method.Delete);
         request.AddUrlSegment("tunnel_id", tunnelId.ToString());
 
-        var response = await _ApiClientAdapter.DeleteAsync<TunnelsDeleteResponse>(request);
+        var response = await _apiClientService.DeleteAsync<TunnelsDeleteResponse>(request);
         return response;
     }
 }

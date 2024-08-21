@@ -4,23 +4,11 @@ using System;
 using System.Threading.Tasks;
 
 namespace PolarisLite.Integrations.LambdaTestAPI;
-
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class UserFilesApi : IUserFilesApiClient
+public class UserFilesApi : LambdaTestApiClient, IUserFilesApiClient
 {
-    private readonly ApiClientAdapter _ApiClientAdapter;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="UserFilesApi"/> class.
-    /// </summary>
-    /// <param name="ApiClientAdapter">An instance of ApiClientAdapter</param>
-    public UserFilesApi(ApiClientAdapter ApiClientAdapter)
-    {
-        _ApiClientAdapter = ApiClientAdapter ?? throw new ArgumentNullException(nameof(ApiClientAdapter));
-    }
-
     /// <summary>
     /// Fetch all user files uploaded by the user This API fetches all the user files which are uploaded to our lambda storage.
     /// </summary>
@@ -28,7 +16,7 @@ public class UserFilesApi : IUserFilesApiClient
     public async Task<MeasuredResponse<ListUserFileResponse>> ListUserFilesAsync()
     {
         var request = new RestRequest("/user-files", Method.Get);
-        var response = await _ApiClientAdapter.GetAsync<ListUserFileResponse>(request);
+        var response = await _apiClientService.GetAsync<ListUserFileResponse>(request);
         return response;
     }
 
@@ -47,7 +35,7 @@ public class UserFilesApi : IUserFilesApiClient
         var request = new RestRequest("/user-files", Method.Post);
         request.AddFile("files", files, "userfiles.zip");
 
-        var response = await _ApiClientAdapter.PostAsync<UploadUserFilesResponseData>(request);
+        var response = await _apiClientService.PostAsync<UploadUserFilesResponseData>(request);
         return response;
     }
 
@@ -69,7 +57,7 @@ public class UserFilesApi : IUserFilesApiClient
         };
         request.AddJsonBody(body);
 
-        var response = await _ApiClientAdapter.DeleteAsync<DeleteUserFileResponse>(request);
+        var response = await _apiClientService.DeleteAsync<DeleteUserFileResponse>(request);
         return response;
     }
 
@@ -91,7 +79,7 @@ public class UserFilesApi : IUserFilesApiClient
         };
         request.AddJsonBody(body);
 
-        var response = await _ApiClientAdapter.PutAsync<byte[]>(request);
+        var response = await _apiClientService.PutAsync<byte[]>(request);
         return response;
     }
 }

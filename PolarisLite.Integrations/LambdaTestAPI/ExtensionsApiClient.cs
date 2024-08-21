@@ -6,20 +6,8 @@ namespace PolarisLite.Integrations.LambdaTestAPI;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class ExtensionsApiClient : IExtensionsClientApi
+public class ExtensionsApiClient : LambdaTestApiClient, IExtensionsClientApi
 {
-    private readonly ApiClientAdapter _ApiClientAdapter;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ExtensionsApiClient"/> class.
-    /// </summary>
-    /// <param name="ApiClientAdapter"> an instance of ApiClientAdapter (optional)</param>
-    /// <returns></returns>
-    public ExtensionsApiClient(ApiClientAdapter ApiClientAdapter = null)
-    {
-        _ApiClientAdapter = ApiClientAdapter ?? throw new ArgumentNullException(nameof(ApiClientAdapter));
-    }
-
     /// <summary>
     /// Delete extension from our lambda storage This API deletes extension from lambda storage
     /// </summary>
@@ -38,7 +26,7 @@ public class ExtensionsApiClient : IExtensionsClientApi
         };
         request.AddJsonBody(body);
 
-        var response = await _ApiClientAdapter.DeleteAsync<DeleteExtensionResponse>(request);
+        var response = await _apiClientService.DeleteAsync<DeleteExtensionResponse>(request);
         return response;
     }
 
@@ -50,7 +38,7 @@ public class ExtensionsApiClient : IExtensionsClientApi
     {
         var request = new RestRequest("/files/extensions", Method.Get);
 
-        var response = await _ApiClientAdapter.GetAsync<ListExtensionResponse>(request);
+        var response = await _apiClientService.GetAsync<ListExtensionResponse>(request);
         return response;
     }
 
@@ -69,7 +57,7 @@ public class ExtensionsApiClient : IExtensionsClientApi
         var request = new RestRequest("/files/extensions", Method.Post);
         request.AddFile("extensions", extensions, "extensions.zip");
 
-        var response = await _ApiClientAdapter.PostAsync<UploadExtensionResponseData>(request);
+        var response = await _apiClientService.PostAsync<UploadExtensionResponseData>(request);
         return response;
     }
 }

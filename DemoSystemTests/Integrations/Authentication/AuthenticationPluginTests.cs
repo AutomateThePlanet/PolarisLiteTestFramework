@@ -1,6 +1,6 @@
 ﻿using DemoSystemTests.Integrations.Authentication.Factories;
-using DemoSystemTests.Integrations.Authentication.Plugins.Auth;
 using DemoSystemTests.Integrations.Authentication.Services;
+using DemoSystemTests.Integrations.Plugins.Auth;
 using PolarisLite.API;
 using PolarisLite.Core;
 using PolarisLite.Web;

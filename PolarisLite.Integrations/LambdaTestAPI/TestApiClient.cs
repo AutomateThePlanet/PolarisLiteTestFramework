@@ -6,19 +6,8 @@ namespace PolarisLite.Integrations.LambdaTestAPI;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class TestApiClient : ITestApiClient
+public class TestApiClient : LambdaTestApiClient, ITestApiClient
 {
-    private readonly ApiClientAdapter _ApiClientAdapter;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="TestApiClient"/> class.
-    /// </summary>
-    /// <param name="ApiClientAdapter">An instance of ApiClientAdapter</param>
-    public TestApiClient(ApiClientAdapter ApiClientAdapter)
-    {
-        _ApiClientAdapter = ApiClientAdapter ?? throw new ArgumentNullException(nameof(ApiClientAdapter));
-    }
-
     /// <summary>
     /// Fetch recorded video of a test id. To fetch video of a recorded test.
     /// </summary>
@@ -40,7 +29,7 @@ public class TestApiClient : ITestApiClient
             request.AddQueryParameter("video_generated_status", videoGeneratedStatus.ToString());
         }
 
-        var response = await _ApiClientAdapter.GetAsync<VideoResponse>(request);
+        var response = await _apiClientService.GetAsync<VideoResponse>(request);
         return response;
     }
 
@@ -68,7 +57,7 @@ public class TestApiClient : ITestApiClient
         request.AddUrlSegment("test_id", testId);
         request.AddJsonBody(body);
 
-        var response = await _ApiClientAdapter.PostAsync<UploadTerminalFileResposeData>(request);
+        var response = await _apiClientService.PostAsync<UploadTerminalFileResposeData>(request);
         return response;
     }
 }

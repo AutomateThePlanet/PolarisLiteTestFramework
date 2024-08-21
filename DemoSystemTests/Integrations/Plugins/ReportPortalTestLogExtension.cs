@@ -8,8 +8,9 @@ using NUnit.Engine;
 using ReportPortal.Client.Abstractions.Responses;
 using PolarisLite.Integrations.Settings;
 using PolarisLite.Logging;
+using PolarisLite.Web.Plugins;
 
-namespace PolarisLite.Web.Plugins;
+namespace DemoSystemTests.Integrations.Plugins;
 
 [NUnit.Engine.Extensibility.Extension]
 public class ReportPortalTestLogExtension : ITestEventListener
@@ -19,52 +20,73 @@ public class ReportPortalTestLogExtension : ITestEventListener
 
     public ReportPortalTestLogExtension()
     {
-        if (IntegrationSettings.ReportPortalEnabled)
+        try
         {
-            _sessionApiClient = new SessionApiClient();
-            _buildApiClient = new BuildApiClient();
+            if (IntegrationSettings.ReportPortalEnabled)
+            {
+                _sessionApiClient = new SessionApiClient();
+                _buildApiClient = new BuildApiClient();
 
-            ReportPortalListener.BeforeRunStarted += ReportPortalListener_BeforeRunStarted;
-            ReportPortalListener.AfterTestStarted += ReportPortalListener_AfterTestStarted;
-            ReportPortalListener.AfterTestFinished += ReportPortalListener_AfterTestFinished;
+                ReportPortalListener.BeforeRunStarted += ReportPortalListener_BeforeRunStarted;
+                ReportPortalListener.AfterTestStarted += ReportPortalListener_AfterTestStarted;
+                ReportPortalListener.AfterTestFinished += ReportPortalListener_AfterTestFinished;
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex.ToString());
         }
     }
 
     private void ReportPortalListener_BeforeRunStarted(object sender, ReportPortal.NUnitExtension.EventArguments.RunStartedEventArgs e)
     {
-        if (IntegrationSettings.ReportPortalEnabled)
+        try
         {
-            var buildName = Environment.GetEnvironmentVariable("BUILD_NAME");
-            // Add custom attributes
-            e.StartLaunchRequest.Attributes.Add(new ItemAttribute { Value = buildName });
+            if (IntegrationSettings.ReportPortalEnabled)
+            {
+                var buildName = Environment.GetEnvironmentVariable("BUILD_NAME");
+                // Add custom attributes
+                e.StartLaunchRequest.Attributes.Add(new ItemAttribute { Value = buildName });
 
-            // Change custom description
-            e.StartLaunchRequest.Description += Environment.NewLine + Environment.OSVersion;
+                // Change custom description
+                e.StartLaunchRequest.Description += Environment.NewLine + Environment.OSVersion;
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex.ToString());
         }
     }
 
     private void ReportPortalListener_AfterTestStarted(object sender, ReportPortal.NUnitExtension.EventArguments.TestItemStartedEventArgs e)
     {
-        if (IntegrationSettings.ReportPortalEnabled)
+        try
         {
-            e.TestReporter.Log(new CreateLogItemRequest
+            if (IntegrationSettings.ReportPortalEnabled)
             {
-                Level = LogLevel.Trace,
-                Time = DateTime.UtcNow,
-                Text = "This message is from 'ReportPortalListener_AfterTestStarted' event."
-            });
-
-            if (e.StartTestItemRequest.Name.StartsWith("Sync"))
-            {
-                e.TestReporter.StartTask.Wait();
-                var testInfo = e.Service.TestItem.GetAsync(e.TestReporter.Info.Uuid).Result;
                 e.TestReporter.Log(new CreateLogItemRequest
                 {
                     Level = LogLevel.Trace,
                     Time = DateTime.UtcNow,
-                    Text = $"Actual test ID: {testInfo.UniqueId}"
+                    Text = "This message is from 'ReportPortalListener_AfterTestStarted' event."
                 });
+
+                if (e.StartTestItemRequest.Name.StartsWith("Sync"))
+                {
+                    e.TestReporter.StartTask.Wait();
+                    var testInfo = e.Service.TestItem.GetAsync(e.TestReporter.Info.Uuid).Result;
+                    e.TestReporter.Log(new CreateLogItemRequest
+                    {
+                        Level = LogLevel.Trace,
+                        Time = DateTime.UtcNow,
+                        Text = $"Actual test ID: {testInfo.UniqueId}"
+                    });
+                }
             }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex.ToString());
         }
     }
 

@@ -5,7 +5,7 @@ using PolarisLite.Integrations;
 using PolarisLite.Web;
 using System.Text.RegularExpressions;
 
-namespace DemoSystemTests.Integrations.Authentication.Plugins.Auth;
+namespace DemoSystemTests.Integrations.Plugins.Auth;
 
 public class AuthenticationService
 {
@@ -138,7 +138,7 @@ public class AuthenticationService
 
         var emailInput = App.Elements.FindById<TextField>("usernameOrEmail");
         emailInput.TypeText(_config.User);
-       
+
         var passwordInput = App.Elements.FindById<Password>("password");
         passwordInput.SetPassword("password123");
 
@@ -159,7 +159,7 @@ public class AuthenticationService
     {
         if (_config.UseNewUser)
         {
-            return  TestUserFactory.CreateDefaultWithRealEmailAsync().Result;
+            return TestUserFactory.CreateDefaultWithRealEmailAsync().Result;
         }
 
         if (_config.UseExistingUser)

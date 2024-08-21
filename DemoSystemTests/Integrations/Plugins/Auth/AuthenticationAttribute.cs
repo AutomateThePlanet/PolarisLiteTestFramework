@@ -1,4 +1,4 @@
-﻿namespace DemoSystemTests.Integrations.Authentication.Plugins.Auth;
+﻿namespace DemoSystemTests.Integrations.Plugins.Auth;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
 public class AuthenticationAttribute : Attribute

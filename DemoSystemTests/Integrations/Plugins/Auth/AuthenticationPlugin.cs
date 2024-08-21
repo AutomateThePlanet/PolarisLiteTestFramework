@@ -1,11 +1,12 @@
-﻿using PolarisLite.Core;
+﻿using DemoSystemTests.Integrations.Authentication.Plugins.Auth;
+using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
 using PolarisLite.Integrations;
 using PolarisLite.Integrations.Settings;
 using PolarisLite.Web;
 using System.Reflection;
 
-namespace DemoSystemTests.Integrations.Authentication.Plugins.Auth;
+namespace DemoSystemTests.Integrations.Plugins.Auth;
 public class AuthenticationPlugin : Plugin
 {
     public App App => new App();

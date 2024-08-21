@@ -4,7 +4,7 @@ using PolarisLite.Integrations;
 using PolarisLite.Integrations.Settings;
 using System.Reflection;
 
-namespace DemoSystemTests.Integrations.Authentication.Plugins.Sms;
+namespace DemoSystemTests.Integrations.Plugins.Sms;
 public class ListenForSMSPlugin : Plugin
 {
     private static SmsListener _smsListener;

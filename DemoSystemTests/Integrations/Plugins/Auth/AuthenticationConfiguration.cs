@@ -1,4 +1,4 @@
-﻿namespace DemoSystemTests.Integrations.Authentication.Plugins.Auth;
+﻿namespace DemoSystemTests.Integrations.Plugins.Auth;
 public class AuthenticationConfiguration
 {
     public AuthenticationConfiguration()

@@ -6,19 +6,8 @@ namespace PolarisLite.Integrations.LambdaTestAPI;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class SessionLogsApiClient : ISessionLogsApiClient
+public class SessionLogsApiClient : LambdaTestApiClient, ISessionLogsApiClient
 {
-    private readonly ApiClientAdapter _ApiClientAdapter;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="SessionLogsApiClient"/> class.
-    /// </summary>
-    /// <param name="ApiClientAdapter">An instance of ApiClientAdapter (optional)</param>
-    public SessionLogsApiClient(ApiClientAdapter ApiClientAdapter = null)
-    {
-        _ApiClientAdapter = ApiClientAdapter ?? throw new ArgumentNullException(nameof(ApiClientAdapter));
-    }
-
     /// <summary>
     /// Console/browser log of a test session. Fetches console/browser log that contains console errors thrown by the application during a test session in plain JSON text.
     /// </summary>
@@ -33,7 +22,7 @@ public class SessionLogsApiClient : ISessionLogsApiClient
 
         var request = new RestRequest($"/sessions/{sessionId}/v2/log/console", Method.Get);
 
-        var response = await _ApiClientAdapter.GetAsync<LogNewResponse>(request);
+        var response = await _apiClientService.GetAsync<LogNewResponse>(request);
         return response;
     }
 
@@ -51,7 +40,7 @@ public class SessionLogsApiClient : ISessionLogsApiClient
 
         var request = new RestRequest($"/sessions/{sessionId}/v2/log/command", Method.Get);
 
-        var response = await _ApiClientAdapter.GetAsync<LogNewResponse>(request);
+        var response = await _apiClientService.GetAsync<LogNewResponse>(request);
         return response;
     }
 
@@ -69,7 +58,7 @@ public class SessionLogsApiClient : ISessionLogsApiClient
 
         var request = new RestRequest($"/sessions/{sessionId}/v2/log/full-har", Method.Get);
 
-        var response = await _ApiClientAdapter.GetAsync<LogNewResponse>(request);
+        var response = await _apiClientService.GetAsync<LogNewResponse>(request);
         return response;
     }
 
@@ -87,7 +76,7 @@ public class SessionLogsApiClient : ISessionLogsApiClient
 
         var request = new RestRequest($"/sessions/{sessionId}/v2/log/network.har", Method.Get);
 
-        var response = await _ApiClientAdapter.GetAsync<LogNewResponse>(request);
+        var response = await _apiClientService.GetAsync<LogNewResponse>(request);
         return response;
     }
 
@@ -105,7 +94,7 @@ public class SessionLogsApiClient : ISessionLogsApiClient
 
         var request = new RestRequest($"/sessions/{sessionId}/v2/log/network", Method.Get);
 
-        var response = await _ApiClientAdapter.GetAsync<LogNewResponse>(request);
+        var response = await _apiClientService.GetAsync<LogNewResponse>(request);
         return response;
     }
 
@@ -123,7 +112,7 @@ public class SessionLogsApiClient : ISessionLogsApiClient
 
         var request = new RestRequest($"/sessions/{sessionId}/v2/log/selenium", Method.Get);
 
-        var response = await _ApiClientAdapter.GetAsync<LogNewResponse>(request);
+        var response = await _apiClientService.GetAsync<LogNewResponse>(request);
         return response;
     }
 }

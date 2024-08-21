@@ -6,19 +6,8 @@ namespace PolarisLite.Integrations.LambdaTestAPI;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class ProjectApiClient : IProjectApiClient
+public class ProjectApiClient : LambdaTestApiClient, IProjectApiClient
 {
-    private readonly ApiClientAdapter _ApiClientAdapter;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ProjectApiClient"/> class.
-    /// </summary>
-    /// <param name="ApiClientAdapter">An instance of ApiClientAdapter (optional)</param>
-    public ProjectApiClient(ApiClientAdapter ApiClientAdapter = null)
-    {
-        _ApiClientAdapter = ApiClientAdapter ?? throw new ArgumentNullException(nameof(ApiClientAdapter));
-    }
-
     /// <summary>
     /// Get the details of a particular Project. Get the details of a particular Project in an Organisation.
     /// </summary>
@@ -63,7 +52,7 @@ public class ProjectApiClient : IProjectApiClient
             request.AddParameter("sort", sort);
         }
 
-        var response = await _ApiClientAdapter.GetAsync<ProjectDetailResponse>(request);
+        var response = await _apiClientService.GetAsync<ProjectDetailResponse>(request);
         return response;
     }
 
@@ -90,7 +79,7 @@ public class ProjectApiClient : IProjectApiClient
         };
         request.AddJsonBody(body);
 
-        var response = await _ApiClientAdapter.PutAsync<UpdateProjectResponse>(request);
+        var response = await _apiClientService.PutAsync<UpdateProjectResponse>(request);
         return response;
     }
 
@@ -112,7 +101,7 @@ public class ProjectApiClient : IProjectApiClient
         };
         request.AddJsonBody(body);
 
-        var response = await _ApiClientAdapter.PostAsync<CreateProjectResponse>(request);
+        var response = await _apiClientService.PostAsync<CreateProjectResponse>(request);
         return response;
     }
 
@@ -148,7 +137,7 @@ public class ProjectApiClient : IProjectApiClient
             request.AddParameter("todate", todate);
         }
 
-        var response = await _ApiClientAdapter.GetAsync<ProjectListResponse>(request);
+        var response = await _apiClientService.GetAsync<ProjectListResponse>(request);
         return response;
     }
 }

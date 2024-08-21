@@ -6,19 +6,8 @@ namespace PolarisLite.Integrations.LambdaTestAPI;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class PrerunApiClient : IPrerunApiClient
+public class PrerunApiClient : LambdaTestApiClient, IPrerunApiClient
 {
-    private readonly ApiClientAdapter _ApiClientAdapter;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="PrerunApiClient"/> class.
-    /// </summary>
-    /// <param name="ApiClientAdapter">An instance of ApiClientAdapter (optional)</param>
-    public PrerunApiClient(ApiClientAdapter ApiClientAdapter = null)
-    {
-        _ApiClientAdapter = ApiClientAdapter ?? throw new ArgumentNullException(nameof(ApiClientAdapter));
-    }
-
     /// <summary>
     /// Delete pre run from our lambda storage. This API deletes a pre run executable script from our lambda storage. Since pre run executable name should be unique, this API is useful if you want to re-upload your updated pre run script with the name same as the previous one.
     /// </summary>
@@ -37,7 +26,7 @@ public class PrerunApiClient : IPrerunApiClient
         };
         request.AddJsonBody(body);
 
-        var response = await _ApiClientAdapter.DeleteAsync<DeletePrerunResponse>(request);
+        var response = await _apiClientService.DeleteAsync<DeletePrerunResponse>(request);
         return response;
     }
 
@@ -59,7 +48,7 @@ public class PrerunApiClient : IPrerunApiClient
         };
         request.AddJsonBody(body);
 
-        var response = await _ApiClientAdapter.PutAsync<byte[]>(request);
+        var response = await _apiClientService.PutAsync<byte[]>(request);
         return response;
     }
 
@@ -81,7 +70,7 @@ public class PrerunApiClient : IPrerunApiClient
         };
         request.AddJsonBody(body);
 
-        var response = await _ApiClientAdapter.PostAsync<ValidatePrerunResponse>(request);
+        var response = await _apiClientService.PostAsync<ValidatePrerunResponse>(request);
         return response;
     }
 
@@ -93,7 +82,7 @@ public class PrerunApiClient : IPrerunApiClient
     {
         var request = new RestRequest("/files", Method.Get);
 
-        var response = await _ApiClientAdapter.GetAsync<ListPrerunFileResponse>(request);
+        var response = await _apiClientService.GetAsync<ListPrerunFileResponse>(request);
         return response;
     }
 
@@ -124,7 +113,7 @@ public class PrerunApiClient : IPrerunApiClient
         request.AddParameter("name", name);
         request.AddFile("post_run_file", postRunFile, "postRunFile.zip");
 
-        var response = await _ApiClientAdapter.PostAsync<CreatePrerunResponse>(request);
+        var response = await _apiClientService.PostAsync<CreatePrerunResponse>(request);
         return response;
     }
 }

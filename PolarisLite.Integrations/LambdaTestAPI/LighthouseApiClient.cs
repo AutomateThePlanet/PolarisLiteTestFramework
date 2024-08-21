@@ -6,19 +6,8 @@ namespace PolarisLite.Integrations.LambdaTestAPI;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class LighthouseApiClient : ILighthouseApiClient
+public class LighthouseApiClient : LambdaTestApiClient, ILighthouseApiClient
 {
-    private readonly ApiClientAdapter _ApiClientAdapter;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="LighthouseApiClient"/> class.
-    /// </summary>
-    /// <param name="ApiClientAdapter">An instance of ApiClientAdapter (optional)</param>
-    public LighthouseApiClient(ApiClientAdapter ApiClientAdapter = null)
-    {
-        _ApiClientAdapter = ApiClientAdapter ?? throw new ArgumentNullException(nameof(ApiClientAdapter));
-    }
-
     /// <summary>
     /// To fetch the Lighthouse performance report data. To fetch URL to download the generated Lighthouse performance report JSON data.
     /// </summary>
@@ -33,7 +22,7 @@ public class LighthouseApiClient : ILighthouseApiClient
 
         var request = new RestRequest($"/lighthouse/report/{sessionId}", Method.Get);
 
-        var response = await _ApiClientAdapter.GetAsync<LighthouseReportResponse>(request);
+        var response = await _apiClientService.GetAsync<LighthouseReportResponse>(request);
         return response;
     }
 }

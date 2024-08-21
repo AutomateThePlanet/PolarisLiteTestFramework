@@ -6,19 +6,8 @@ namespace PolarisLite.Integrations.LambdaTestAPI;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class BuildApiClient : IBuildApiClient
+public class BuildApiClient : LambdaTestApiClient, IBuildApiClient
 {
-    private readonly ApiClientAdapter _ApiClientAdapter;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="BuildApiClient"/> class.
-    /// </summary>
-    /// <param name="ApiClientAdapter">An instance of ApiClientAdapter (optional)</param>
-    public BuildApiClient(ApiClientAdapter ApiClientAdapter = null)
-    {
-        _ApiClientAdapter = ApiClientAdapter ?? throw new ArgumentNullException(nameof(ApiClientAdapter));
-    }
-
     /// <summary>
     /// Update Build Name or Status. To change build name or status.
     /// </summary>
@@ -42,7 +31,7 @@ public class BuildApiClient : IBuildApiClient
         };
         request.AddJsonBody(body);
 
-        var response = await _ApiClientAdapter.PatchAsync<EditBuildResponse>(request);
+        var response = await _apiClientService.PatchAsync<EditBuildResponse>(request);
         return response;
     }
 
@@ -60,7 +49,7 @@ public class BuildApiClient : IBuildApiClient
             request.AddParameter("build", build);
         }
 
-        var response = await _ApiClientAdapter.PutAsync<StopBuildResponse>(request);
+        var response = await _apiClientService.PutAsync<StopBuildResponse>(request);
         return response;
     }
 
@@ -108,7 +97,7 @@ public class BuildApiClient : IBuildApiClient
             request.AddParameter("sort", sort);
         }
 
-        var response = await _ApiClientAdapter.GetAsync<ListBuildResponse>(request);
+        var response = await _apiClientService.GetAsync<ListBuildResponse>(request);
         return response;
     }
 
@@ -132,7 +121,7 @@ public class BuildApiClient : IBuildApiClient
             request.AddParameter("shareExpiryLimit", shareExpiryLimit);
         }
 
-        var response = await _ApiClientAdapter.GetAsync<SingleBuildResponse>(request);
+        var response = await _apiClientService.GetAsync<SingleBuildResponse>(request);
         return response;
     }
 
@@ -150,7 +139,7 @@ public class BuildApiClient : IBuildApiClient
 
         var request = new RestRequest($"/builds/{buildId}", Method.Delete);
 
-        var response = await _ApiClientAdapter.DeleteAsync<DeleteBuildResponse>(request);
+        var response = await _apiClientService.DeleteAsync<DeleteBuildResponse>(request);
         return response;
     }
 }

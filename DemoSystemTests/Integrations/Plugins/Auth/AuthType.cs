@@ -1,4 +1,4 @@
-﻿namespace DemoSystemTests.Integrations.Authentication.Plugins.Auth;
+﻿namespace DemoSystemTests.Integrations.Plugins.Auth;
 public enum AuthType
 {
     PASSWORDLESS_EMAIL_NO_2FA,
