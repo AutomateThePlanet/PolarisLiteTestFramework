@@ -1,10 +1,19 @@
-﻿namespace PolarisLite.Web.Plugins;
+﻿using PolarisLite.Utilities;
+
+namespace PolarisLite.Web.Plugins;
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
 public class LambdaTestAttribute : GridAttribute
 {
     public LambdaTestAttribute(BrowserType browser = BrowserType.Chrome, int browserVersion = 0, DesktopWindowSize desktopWindowSize = DesktopWindowSize._1920_1080, bool enableAutoHealing = false, int smartWait = 0)
         : base(browser)
     {
+        var buildName = Environment.GetEnvironmentVariable("BUILD_NAME");
+        if (string.IsNullOrEmpty(buildName))
+        {
+            buildName = TimestampBuilder.BuildUniqueText("PO_");
+            Environment.SetEnvironmentVariable("BUILD_NAME", buildName);
+        }
+
         string browserVersionString = browserVersion <= 0 ? "latest" : browserVersion.ToString();
         BrowserConfiguration = new BrowserConfiguration(browser, Lifecycle.RestartEveryTime, ExecutionType.LambdaTest, browserVersionString);
         GridSettings = new GridSettings();
@@ -25,7 +34,7 @@ public class LambdaTestAttribute : GridAttribute
             //{ "tunnel", "true" },
             { "w3c", "true" },
             { "plugin", "c#-c#" },
-            { "build", "2.2" },
+            { "build", buildName },
             { "project", "POLARIS_RUN" },
             { "selenium_version", "4.22.0" }
         };

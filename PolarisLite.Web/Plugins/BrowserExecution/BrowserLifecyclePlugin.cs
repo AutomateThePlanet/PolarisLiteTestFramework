@@ -62,6 +62,7 @@ public class BrowserLifecyclePlugin : Plugin
 
     public override void OnAfterTestCleanup(TestOutcome testOutcome, MethodInfo memberInfo, Exception failedTestException)
     {
+        Environment.SetEnvironmentVariable("BUILD_NAME", "");
         if (_currentBrowserConfiguration.Lifecycle == Lifecycle.RestartOnFail && testOutcome == TestOutcome.Failed)
         {
             RestartBrowser();

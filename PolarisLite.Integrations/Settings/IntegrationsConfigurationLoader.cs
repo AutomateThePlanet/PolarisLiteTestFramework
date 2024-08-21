@@ -37,6 +37,7 @@ public class IntegrationsConfigurationLoader
         IntegrationSettings.BlobStorageSettings.ConnectionString = Environment.GetEnvironmentVariable("BLOB_CS");
         IntegrationSettings.AppInsightsSettings.ConnectionString = Environment.GetEnvironmentVariable("APPINSIGHTS_CS");
         IntegrationSettings.AppInsightsSettings.IsEnabled = true;
+        IntegrationSettings.AzureDevOpsBuildUrl = Environment.GetEnvironmentVariable("AzureDevOpsBuildUrl");
         IntegrationSettings.MailslurpSettings.ApiKey = "someKey";
         IntegrationSettings.TwilioSettings.AuthToken = "someAuthToken";
         IntegrationSettings.TwilioSettings.PhoneNumber = "+12312312321312";
