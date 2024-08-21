@@ -11,5 +11,8 @@
     "debugMode": false,
     "attributes": [ "system-tests", "QA_Environment", "chrome-execution" ]
   },
+  "logging": {
+    "level": "Info"
+  },
   "rootNamespaces": [ "Example.dll", "Example", "Tests" ]
 }
