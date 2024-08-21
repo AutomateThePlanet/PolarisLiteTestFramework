@@ -1,8 +1,5 @@
-﻿using DemoSystemTests.Integrations.Authentication.Plugins.Auth;
-using PolarisLite.Core;
+﻿using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
-using PolarisLite.Integrations;
-using PolarisLite.Integrations.Settings;
 using PolarisLite.Web;
 using System.Reflection;
 

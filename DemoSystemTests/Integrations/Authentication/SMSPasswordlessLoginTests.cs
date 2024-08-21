@@ -1,4 +1,4 @@
-﻿using DemoSystemTests.Integrations.Authentication.Plugins.Sms;
+﻿using DemoSystemTests.Integrations.Plugins.Sms;
 using PolarisLite.Integrations;
 using PolarisLite.Integrations.Settings;
 using PolarisLite.Web;

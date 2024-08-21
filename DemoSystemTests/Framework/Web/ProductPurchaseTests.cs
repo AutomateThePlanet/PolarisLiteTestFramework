@@ -3,7 +3,7 @@ using Allure.NUnit;
 using Allure.NUnit.Attributes;
 using DemoSystemTests.Framework.Web.Pages;
 using DemoSystemTests.Framework.Web.Pages.Models;
-using DemoSystemTests.Integrations.Authentication.Plugins.Sms;
+using DemoSystemTests.Integrations.Plugins.Blob;
 using PolarisLite.Core;
 using PolarisLite.Core.Layout.Second;
 using PolarisLite.Web;
