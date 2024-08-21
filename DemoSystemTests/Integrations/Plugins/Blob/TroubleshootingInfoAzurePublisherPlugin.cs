@@ -22,7 +22,7 @@ public class TroubleshootingInfoAzurePublisherPlugin : Plugin
 
         if (isLambdaTestRun)
         {
-            var sessionId = ((RemoteWebDriver)DriverFactory.WrappedDriver).SessionId.ToString();
+            var sessionId = DriverFactory.CurrentSessionId;
 
             var apiClient = new ApiClientAdapter();
             var sessionApiClient = new SessionApiClient();

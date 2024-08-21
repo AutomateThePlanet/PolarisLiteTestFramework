@@ -1,15 +1,11 @@
-﻿using PolarisLite.Integrations.LambdaTestAPI;
-using ReportPortal.Client.Abstractions.Models;
+﻿using ReportPortal.Client.Abstractions.Models;
 using ReportPortal.Client.Abstractions.Requests;
 using ReportPortal.NUnitExtension;
-using OpenQA.Selenium.Remote;
 using LogLevel = ReportPortal.Client.Abstractions.Models.LogLevel;
 using NUnit.Engine;
-using ReportPortal.Client.Abstractions.Responses;
 using PolarisLite.Integrations.Settings;
 using PolarisLite.Logging;
 using PolarisLite.Web.Plugins;
-using System.Diagnostics;
 
 namespace DemoSystemTests.Integrations.Plugins;
 
@@ -28,8 +24,7 @@ public class ReportPortalTestLogExtension : ITestEventListener
                 _sessionApiClient = new SessionApiClient();
                 _buildApiClient = new BuildApiClient();
 
-                //ReportPortalListener.AfterRunStarted += ReportPortalListener_BeforeRunStarted;
-                //ReportPortalListener.AfterTestStarted += ReportPortalListener_AfterTestStarted;
+                ReportPortalListener.BeforeRunStarted += ReportPortalListener_BeforeRunStarted;
                 ReportPortalListener.BeforeTestFinished += ReportPortalListener_AfterTestFinished;
             }
         }
@@ -39,57 +34,38 @@ public class ReportPortalTestLogExtension : ITestEventListener
         }
     }
 
-    //private void ReportPortalListener_BeforeRunStarted(object sender, ReportPortal.NUnitExtension.EventArguments.RunStartedEventArgs e)
-    //{
-    //    try
-    //    {
-    //        if (IntegrationSettings.ReportPortalEnabled)
-    //        {
-    //            var buildName = "random BUILD NAME";
-    //            // Add custom attributes
-    //            e.StartLaunchRequest.Attributes.Add(new ItemAttribute { Value = buildName });
+    private void ReportPortalListener_BeforeRunStarted(object sender, ReportPortal.NUnitExtension.EventArguments.RunStartedEventArgs e)
+    {
 
-    //            // Change custom description
-    //            e.StartLaunchRequest.Description += Environment.NewLine + Environment.OSVersion;
-    //        }
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        Logger.LogError(ex.ToString());
-    //    }
-    //}
+        var testCategory = Environment.GetEnvironmentVariable("TEST_CATEGORY", EnvironmentVariableTarget.Process);
+        var runEnvironment = Environment.GetEnvironmentVariable("RUN_ENVIRONMENT", EnvironmentVariableTarget.Process);
+        var releaseName = Environment.GetEnvironmentVariable("RELEASE_NAME", EnvironmentVariableTarget.Process);
+        var buildName = Environment.GetEnvironmentVariable("BUILD_NAME", EnvironmentVariableTarget.Process);
 
-    //private void ReportPortalListener_AfterTestStarted(object sender, ReportPortal.NUnitExtension.EventArguments.TestItemStartedEventArgs e)
-    //{
-    //    try
-    //    {
-    //        if (IntegrationSettings.ReportPortalEnabled)
-    //        {
-        
-    //            e.TestReporter.Log(new CreateLogItemRequest
-    //            {
-    //                Level = LogLevel.Trace,
-    //                Time = DateTime.UtcNow,
-    //                Text = "This message is from 'ReportPortalListener_AfterTestStarted' event."
-    //            });
+        if (testCategory != null)
+        {
+            e.StartLaunchRequest.Attributes.Add(new ItemAttribute { Value = $"suite:{testCategory}" });
+        }
 
-    //            e.TestReporter.StartTask.Wait();
-    //            var infoTask = Task.Run(async () => await e.Service.TestItem.GetAsync(e.TestReporter.Info.Uuid));
-    //            infoTask.Wait();
-    //            var testInfo = infoTask.Result;
-    //            e.TestReporter.Log(new CreateLogItemRequest
-    //            {
-    //                Level = LogLevel.Trace,
-    //                Time = DateTime.UtcNow,
-    //                Text = $"Actual test ID: {testInfo.UniqueId}"
-    //            });
-    //        }
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        Logger.LogError(ex.ToString());
-    //    }
-    //}
+        if (runEnvironment != null)
+        {
+            e.StartLaunchRequest.Attributes.Add(new ItemAttribute { Value = $"instance:{runEnvironment}" });
+        }
+
+        if (releaseName != null)
+        {
+            e.StartLaunchRequest.Attributes.Add(new ItemAttribute { Value = $"release:{releaseName}" });
+        }
+
+        if (buildName != null)
+        {
+            e.StartLaunchRequest.Attributes.Add(new ItemAttribute { Value = $"build:{buildName}" });
+
+            string lambdaTestBuildUrl = $"https://automation.lambdatest.com/build?&searchText={buildName}";
+
+            e.StartLaunchRequest.Description += Environment.NewLine + lambdaTestBuildUrl;
+        }
+    }
 
     private void ReportPortalListener_AfterTestFinished(object sender, ReportPortal.NUnitExtension.EventArguments.TestItemFinishedEventArgs e)
     {
@@ -112,7 +88,7 @@ public class ReportPortalTestLogExtension : ITestEventListener
                         {
                             Level = LogLevel.Debug,
                             Time = DateTime.UtcNow,
-                            Text = $"LambdaTest Video URL = {setExpiryLimitBuildPublicUrl}"
+                            Text = $"LambdaTest Video URL = {setExpiryLimitBuildPublicUrl}&testID={sessionDetailsResponse.Data.Data.TestId}"
                         });
 
                         var buildName = DriverFactory.GridSettings.BuildName;
@@ -130,7 +106,7 @@ public class ReportPortalTestLogExtension : ITestEventListener
                         if (!string.IsNullOrEmpty(azureBuildId))
                         {
                             Console.WriteLine($"Azure Build Id -> {azureBuildId}");
-                            string azureBuildUrl = $"https://dev.azure.com/atp/QA/_build/results?buildId={azureBuildId}";
+                            string azureBuildUrl = $"{IntegrationSettings.AzureDevOpsBuildUrl}{azureBuildId}";
 
                             e.TestReporter.Log(new CreateLogItemRequest
                             {
@@ -139,6 +115,15 @@ public class ReportPortalTestLogExtension : ITestEventListener
                                 Text = $"DevOps Build URL = {azureBuildUrl}"
                             });
                         }
+
+                        if (e.FinishTestItemRequest.Attributes == null)
+                        {
+                            e.FinishTestItemRequest.Attributes = new List<ItemAttribute>();
+                        }
+
+                        e.FinishTestItemRequest.Description = lambdaTestBuildUrl;
+                        e.FinishTestItemRequest.Attributes.Add(new ItemAttribute { Key = "build", Value = buildName });
+                        e.TestReporter.Finish(e.FinishTestItemRequest);
                     }
                 }
             }
@@ -146,13 +131,6 @@ public class ReportPortalTestLogExtension : ITestEventListener
             {
                 Logger.LogError(ex.ToString());
             }
-
-            e.TestReporter.Log(new CreateLogItemRequest
-            {
-                Level = LogLevel.Debug,
-                Time = DateTime.UtcNow,
-                Text = "TEST FINISHED"
-            });
         }
     }
 
