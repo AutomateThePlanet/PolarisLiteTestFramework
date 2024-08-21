@@ -42,9 +42,10 @@ public class ReportPortalTestLogExtension : ITestEventListener
         var releaseName = Environment.GetEnvironmentVariable("RELEASE_NAME", EnvironmentVariableTarget.Process);
         var buildName = Environment.GetEnvironmentVariable("BUILD_NAME", EnvironmentVariableTarget.Process);
 
+        e.StartLaunchRequest.Attributes.Clear();
         if (testCategory != null)
         {
-            e.StartLaunchRequest.Attributes.Add(new ItemAttribute { Value = $"suite:{testCategory}" });
+            e.StartLaunchRequest.Attributes.Add(new ItemAttribute { Key = "suite", Value = testCategory });
         }
 
         if (runEnvironment != null)
@@ -63,7 +64,7 @@ public class ReportPortalTestLogExtension : ITestEventListener
 
             string lambdaTestBuildUrl = $"https://automation.lambdatest.com/build?&searchText={buildName}";
 
-            e.StartLaunchRequest.Description += Environment.NewLine + lambdaTestBuildUrl;
+            e.StartLaunchRequest.Description = Environment.NewLine + lambdaTestBuildUrl;
         }
     }
 

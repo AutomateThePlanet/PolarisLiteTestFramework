@@ -1,4 +1,5 @@
 ﻿using PolarisLite.Core.Settings.StaticSettings;
+using ReportPortal.Serilog;
 using Serilog;
 
 namespace PolarisLite.Logging;
@@ -25,6 +26,11 @@ public static class Logger
             if (GlobalSettings.LoggingSettings.IsFileLoggingEnabled)
             {
                 loggerConfiguration.WriteTo.File("unicorn-log.txt", rollingInterval: RollingInterval.Day, outputTemplate: GlobalSettings.LoggingSettings.OutputTemplate);
+            }
+
+            if (GlobalSettings.LoggingSettings.IsReportPortalLoggingEnabled)
+            {
+                loggerConfiguration.WriteTo.ReportPortal();
             }
         }
 
