@@ -1,6 +1,7 @@
 ﻿using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
+using DemoSystemTests.Integrations.Plugins.Blob;
 using DemoSystemTests.Results;
 using PolarisLite.Core;
 using PolarisLite.Core.Layout.Second;

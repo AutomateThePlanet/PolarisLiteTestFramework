@@ -7,11 +7,14 @@ public class LambdaTestAttribute : GridAttribute
     public LambdaTestAttribute(BrowserType browser = BrowserType.Chrome, int browserVersion = 0, DesktopWindowSize desktopWindowSize = DesktopWindowSize._1920_1080, bool enableAutoHealing = false, int smartWait = 0, bool useTunnel = false)
         : base(browser)
     {
-        var buildName = Environment.GetEnvironmentVariable("BUILD_NAME");
-        if (string.IsNullOrEmpty(buildName))
+        if (string.IsNullOrEmpty(BuildName))
         {
-            buildName = TimestampBuilder.BuildUniqueText("PO_");
-            Environment.SetEnvironmentVariable("BUILD_NAME", buildName);
+            BuildName = Environment.GetEnvironmentVariable("BUILD_NAME");
+            if (string.IsNullOrEmpty(BuildName))
+            {
+                BuildName = TimestampBuilder.BuildUniqueText("PO_");
+                Environment.SetEnvironmentVariable("BUILD_NAME", BuildName);
+            }
         }
 
         string browserVersionString = browserVersion <= 0 ? "latest" : browserVersion.ToString();
@@ -34,7 +37,7 @@ public class LambdaTestAttribute : GridAttribute
             { "tunnel", useTunnel },
             { "w3c", "true" },
             { "plugin", "c#-c#" },
-            { "build", buildName },
+            { "build", BuildName },
             { "project", "POLARIS_RUN" },
             { "selenium_version", "4.22.0" }
         };
@@ -42,4 +45,6 @@ public class LambdaTestAttribute : GridAttribute
         //GridSettings.Arguments.Add("autoHeal", enableAutoHealing);
         //GridSettings.Arguments.Add("smartWait", enableAutoHealing);
     }
+
+    public static string BuildName { get; set; }
 }
