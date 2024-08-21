@@ -140,6 +140,7 @@ public class DriverFactory
             args.Add(entry.Key, entry.Value);
         }
 
+        args.Add("name", gridSettings.TestName);
         options.AddAdditionalOption(gridSettings.OptionsName, args);
     }
 
