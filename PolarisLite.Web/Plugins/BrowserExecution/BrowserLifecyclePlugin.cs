@@ -19,6 +19,8 @@ public class BrowserLifecyclePlugin : Plugin
     {
         _currentBrowserConfiguration = GetBrowserConfiguration(memberInfo);
         _currentGridConfiguration = GetGridSettingsConfiguration(memberInfo);
+        _currentGridConfiguration.TestName = memberInfo.Name;
+
         bool shouldRestartBrowser = ShouldRestartBrowser(_currentBrowserConfiguration);
         if (shouldRestartBrowser)
         {

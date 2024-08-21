@@ -4,7 +4,7 @@ namespace PolarisLite.Web.Plugins;
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
 public class LambdaTestAttribute : GridAttribute
 {
-    public LambdaTestAttribute(BrowserType browser = BrowserType.Chrome, int browserVersion = 0, DesktopWindowSize desktopWindowSize = DesktopWindowSize._1920_1080, bool enableAutoHealing = false, int smartWait = 0)
+    public LambdaTestAttribute(BrowserType browser = BrowserType.Chrome, int browserVersion = 0, DesktopWindowSize desktopWindowSize = DesktopWindowSize._1920_1080, bool enableAutoHealing = false, int smartWait = 0, bool useTunnel = false)
         : base(browser)
     {
         var buildName = Environment.GetEnvironmentVariable("BUILD_NAME");
@@ -31,7 +31,7 @@ public class LambdaTestAttribute : GridAttribute
             { "video", "true" },
             { "seCdp", "true" },
             { "console", "true" },
-            //{ "tunnel", "true" },
+            { "tunnel", useTunnel },
             { "w3c", "true" },
             { "plugin", "c#-c#" },
             { "build", buildName },
