@@ -49,6 +49,7 @@ public class WebTest : BaseTest
     {
         if (WebSettings.EnableBDDLogging)
         {
+            new BDDLoggingButtonEventHandlers().SubscribeToAll();
             new BDDLoggingTextFieldEventHandlers().SubscribeToAll();
             new BDDLoggingDateEventHandlers().SubscribeToAll();
             new BDDLoggingCheckboxEventHandlers().SubscribeToAll();
