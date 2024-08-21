@@ -7,9 +7,9 @@
   },
   "launch": {
     "name": "E-commerce LT",
-    "description": "Many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected.",
+    //"description": "Many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected.",
     "debugMode": false,
-    "attributes": [ "system-tests", "QA_Environment" ]
+    //"attributes": [ "system-tests", "QA_Environment" ]
   },
   "logging": {
     "level": "Debug"

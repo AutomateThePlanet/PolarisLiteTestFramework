@@ -50,17 +50,17 @@ public class ReportPortalTestLogExtension : ITestEventListener
 
         if (runEnvironment != null)
         {
-            e.StartLaunchRequest.Attributes.Add(new ItemAttribute { Value = $"instance:{runEnvironment}" });
+            e.StartLaunchRequest.Attributes.Add(new ItemAttribute { Key = "instance", Value = runEnvironment });
         }
 
         if (releaseName != null)
         {
-            e.StartLaunchRequest.Attributes.Add(new ItemAttribute { Value = $"release:{releaseName}" });
+            e.StartLaunchRequest.Attributes.Add(new ItemAttribute { Key = "release", Value = releaseName });
         }
 
         if (buildName != null)
         {
-            e.StartLaunchRequest.Attributes.Add(new ItemAttribute { Value = $"build:{buildName}" });
+            e.StartLaunchRequest.Attributes.Add(new ItemAttribute { Key = "build", Value = buildName });
 
             string lambdaTestBuildUrl = $"https://automation.lambdatest.com/build?&searchText={buildName}";
 
