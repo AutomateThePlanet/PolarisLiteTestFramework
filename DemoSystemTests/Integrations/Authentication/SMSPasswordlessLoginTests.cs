@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace DemoSystemTests.Integrations.Authentication;
 [TestFixture]
-[LambdaTest(BrowserType.Chrome, enableAutoHealing: true, smartWait: 30)]
+[LambdaTest(BrowserType.Chrome, useTunnel: true)]
 [ListenForSMS]
 public class SMSPasswordlessLoginTests : WebTest
 {

@@ -6,19 +6,8 @@ namespace PolarisLite.Integrations.LambdaTestAPI;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class TunnelApiClient : ITunnelApiClient
+public class TunnelApiClient : LambdaTestApiClient, ITunnelApiClient
 {
-    private readonly ApiClientAdapter _ApiClientAdapter;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="TunnelApiClient"/> class.
-    /// </summary>
-    /// <param name="ApiClientAdapter">An instance of ApiClientAdapter</param>
-    public TunnelApiClient(ApiClientAdapter ApiClientAdapter)
-    {
-        _ApiClientAdapter = ApiClientAdapter ?? throw new ArgumentNullException(nameof(ApiClientAdapter));
-    }
-
     /// <summary>
     /// Fetch running tunnels of your account. To fetch lists of all tunnels running in an account.
     /// </summary>

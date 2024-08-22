@@ -6,7 +6,7 @@ using PolarisLite.Web.Plugins;
 namespace DemoSystemTests.Integrations.AutoHealing;
 
 [TestFixture]
-[LambdaTest(BrowserType.Chrome, enableAutoHealing: true)]
+[LambdaTest(BrowserType.Chrome, enableAutoHealing: true, useTunnel: true)]
 //[LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
 public class AutoHealingTests : WebTest
 {

@@ -1,16 +1,12 @@
-﻿using OpenQA.Selenium.Remote;
-using PolarisLite.API;
+﻿using PolarisLite.API;
 using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
 using PolarisLite.Integrations;
-using PolarisLite.Web.Configuration.StaticImplementation;
 using PolarisLite.Web.Integrations;
 using PolarisLite.Web.Plugins;
 using RestSharp;
-using RestSharp.Authenticators;
 using System.IO.Compression;
 using System.Reflection;
-using System.Text;
 
 namespace DemoSystemTests.Integrations.Authentication.Plugins.Sms;
 public class TroubleshootingInfoAzurePublisherPlugin : Plugin
@@ -22,8 +18,7 @@ public class TroubleshootingInfoAzurePublisherPlugin : Plugin
 
         if (isLambdaTestRun)
         {
-            var sessionId = ((RemoteWebDriver)DriverFactory.WrappedDriver).SessionId.ToString();
-
+            var sessionId = DriverFactory.CurrentSessionId;
             var apiClient = new ApiClientAdapter();
             var sessionApiClient = new SessionApiClient();
 

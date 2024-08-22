@@ -2,7 +2,7 @@
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
 public class LambdaTestAttribute : GridAttribute
 {
-    public LambdaTestAttribute(BrowserType browser = BrowserType.Chrome, int browserVersion = 0, DesktopWindowSize desktopWindowSize = DesktopWindowSize._1920_1080, bool enableAutoHealing = false, int smartWait = 0)
+    public LambdaTestAttribute(BrowserType browser = BrowserType.Chrome, int browserVersion = 0, DesktopWindowSize desktopWindowSize = DesktopWindowSize._1920_1080, bool enableAutoHealing = false, int smartWait = 0, bool useTunnel = false)
         : base(browser)
     {
         string browserVersionString = browserVersion <= 0 ? "latest" : browserVersion.ToString();
@@ -22,15 +22,14 @@ public class LambdaTestAttribute : GridAttribute
             { "video", "true" },
             { "seCdp", "true" },
             { "console", "true" },
-            { "tunnel", "true" },
+            { "tunnel", useTunnel },
             { "w3c", "true" },
             { "plugin", "c#-c#" },
             { "build", "2.2" },
             { "project", "POLARIS_RUN" },
-            { "selenium_version", "4.22.0" }
+            { "selenium_version", "4.22.0" },
+            { "autoHeal", enableAutoHealing },
+            { "smartWait", enableAutoHealing }
         };
-
-        GridSettings.Arguments.Add("autoHeal", enableAutoHealing);
-        GridSettings.Arguments.Add("smartWait", enableAutoHealing);
     }
 }

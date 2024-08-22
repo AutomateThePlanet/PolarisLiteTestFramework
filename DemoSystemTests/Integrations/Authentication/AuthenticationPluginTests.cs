@@ -12,7 +12,7 @@ namespace DemoSystemTests.Integrations.Authentication;
 [TestFixture]
 [LocalExecution(BrowserType.Chrome, Lifecycle.RestartEveryTime)]
 //[LambdaTest(BrowserType.Chrome, enableAutoHealing: true, smartWait: 30)]
-[Authentication(AuthType.EMAIL_PASSWORD_2FA, useNewUser: true)]
+[Authentication(AuthType.EMAIL_PASSWORD_NO_2FA, useNewUser: true)]
 public class AuthenticationPluginTests : WebTest
 {
     protected override void Configure()

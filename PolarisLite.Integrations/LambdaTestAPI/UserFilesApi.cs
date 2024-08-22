@@ -8,19 +8,8 @@ namespace PolarisLite.Integrations.LambdaTestAPI;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class UserFilesApi : IUserFilesApiClient
+public class UserFilesApi : LambdaTestApiClient, IUserFilesApiClient
 {
-    private readonly ApiClientAdapter _ApiClientAdapter;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="UserFilesApi"/> class.
-    /// </summary>
-    /// <param name="ApiClientAdapter">An instance of ApiClientAdapter</param>
-    public UserFilesApi(ApiClientAdapter ApiClientAdapter)
-    {
-        _ApiClientAdapter = ApiClientAdapter ?? throw new ArgumentNullException(nameof(ApiClientAdapter));
-    }
-
     /// <summary>
     /// Fetch all user files uploaded by the user This API fetches all the user files which are uploaded to our lambda storage.
     /// </summary>

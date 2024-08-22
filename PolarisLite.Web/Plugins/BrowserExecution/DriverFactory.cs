@@ -18,6 +18,7 @@ public class DriverFactory
 
     public static ExecutionType ExecutionType { get; set; }
     public static IWebDriver WrappedDriver { get; set; }
+    public static string CurrentSessionId { get; set; }
 
     public static void Start(BrowserConfiguration browserConfiguration)
     {
@@ -101,6 +102,7 @@ public class DriverFactory
         ExecutionType = browserConfiguration.ExecutionType;
         WrappedDriver = new RemoteWebDriver(new Uri(gridSettings.Url), options);
         WrappedDriver.Manage().Window.Maximize();
+        CurrentSessionId = ((RemoteWebDriver)WrappedDriver).SessionId.ToString();
         Disposed = false;
     }
 

@@ -28,7 +28,7 @@ public static class MailslurpService
 
     public static InboxDto CreateInbox(string name)
     {
-        var inbox = _inboxControllerApi.CreateInbox();
+        var inbox = _inboxControllerApi.CreateInbox(name);
 
         return inbox;
     }

@@ -46,7 +46,6 @@
   <ItemGroup>
     <ProjectReference Include="..\PolarisLite.API\PolarisLite.API.csproj" />
     <ProjectReference Include="..\PolarisLite.Integrations\PolarisLite.Integrations.csproj" />
-    <ProjectReference Include="..\PolarisLite.Integrations\PolarisLite.Integrations\PolarisLite.Integrations.csproj" />
     <ProjectReference Include="..\PolarisLite.Mobile\PolarisLite.Mobile.csproj" />
     <ProjectReference Include="..\PolarisLite.Web\PolarisLite.Web.csproj" />
   </ItemGroup>
@@ -118,5 +117,9 @@
     <None Update="testFrameworkSettings.$(Configuration).json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Integrations\Authentication\Plugins\Auth\" />
   </ItemGroup>
 </Project>

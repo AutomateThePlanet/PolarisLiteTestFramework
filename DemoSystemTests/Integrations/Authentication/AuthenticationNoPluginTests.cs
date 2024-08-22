@@ -102,7 +102,7 @@ public class AuthenticationTests : WebTest
         loginButton.Click();
 
         userNameEditInput = App.Elements.FindById<TextField>("editUsername");
-        Assert.That(userNameEditInput.GetAttribute("value"), Is.EqualTo("newUserName"));
+        Assert.That(userNameEditInput.GetAttribute("value"), Is.EqualTo(testUser.Username + 's'));
     }
 
     [Test]
@@ -231,43 +231,6 @@ public class AuthenticationTests : WebTest
         Assert.That(userName.Text, Is.EqualTo(testUser.Username));
     }
 
-    [Test]
-    public void LoginSuccessfullyUsingEmailAndBypass2FA()
-    {
-        var testUser = TestUserFactory.CreateDefault2FAWithRealEmailAsync().Result;
-        var loginTab = App.Elements.FindByXPath<Button>("//a[text()='Login']");
-        loginTab.Click();
-
-        var emailInput = App.Elements.FindById<TextField>("usernameOrEmail");
-        emailInput.TypeText(testUser.Email);
-
-        var passwordInput = App.Elements.FindById<Password>("password");
-        passwordInput.SetPassword(testUser.Password);
-
-        var rememberMeCheckbox = App.Elements.FindById<CheckBox>("rememberMe");
-        rememberMeCheckbox.Check(true);
-
-        ByPassCaptcha();
-
-        var loginButton = App.Elements.FindByXPath<Button>("//button[text()='Login']");
-        loginButton.Click();
-
-        var twoFaCode = AuthBypassService.Generate2FATokenAsync(testUser.Id).Result;
-        var twoFACodeInput = App.Elements.FindById<TextField>("twoFaToken");
-        twoFACodeInput.TypeText(twoFaCode);
-
-        loginButton = App.Elements.FindByXPath<Button>("//button[text()='Login']");
-        loginButton.Click();
-
-        var userName = App.Elements.FindById<Label>("username");
-        Assert.That(userName.Text, Is.EqualTo(testUser.Username));
-    }
-
-    private void ByPassCaptcha()
-    {
-        var captchaByPass = App.Elements.FindByXPath<TextField>("//input[@name='captcha-bypass']");
-        App.JavaScript.Execute("arguments[0].setAttribute('value', arguments[1]);", captchaByPass, "10685832-cd90-4e91-9224-2ef69ce88f53");
-    }
 
     private string ExtractActivationCode(string message)
     {
@@ -282,4 +245,11 @@ public class AuthenticationTests : WebTest
         var match = Regex.Match(message, pattern);
         return match.Success ? match.Value : null;
     }
+
+    private void ByPassCaptcha()
+    {
+        var captchaByPass = App.Elements.FindByXPath<TextField>("//input[@name='captcha-bypass']");
+        App.JavaScript.Execute("arguments[0].setAttribute('value', arguments[1]);", captchaByPass, "10685832-cd90-4e91-9224-2ef69ce88f53");
+    }
+
 }

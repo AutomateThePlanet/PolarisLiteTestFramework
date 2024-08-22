@@ -6,20 +6,8 @@ namespace PolarisLite.Integrations.LambdaTestAPI;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class ExtensionsApiClient : IExtensionsClientApi
+public class ExtensionsApiClient : LambdaTestApiClient, IExtensionsClientApi
 {
-    private readonly ApiClientAdapter _ApiClientAdapter;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ExtensionsApiClient"/> class.
-    /// </summary>
-    /// <param name="ApiClientAdapter"> an instance of ApiClientAdapter (optional)</param>
-    /// <returns></returns>
-    public ExtensionsApiClient(ApiClientAdapter ApiClientAdapter = null)
-    {
-        _ApiClientAdapter = ApiClientAdapter ?? throw new ArgumentNullException(nameof(ApiClientAdapter));
-    }
-
     /// <summary>
     /// Delete extension from our lambda storage This API deletes extension from lambda storage
     /// </summary>

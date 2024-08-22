@@ -6,15 +6,8 @@ namespace PolarisLite.Integrations.LambdaTestAPI;
 /// <summary>
 /// Represents a collection of functions to interact with the API endpoints
 /// </summary>
-public class SessionApiClient : ISessionApiClient
+public class SessionApiClient : LambdaTestApiClient, ISessionApiClient
 {
-    private readonly ApiClientAdapter _ApiClientAdapter;
-
-    public SessionApiClient(ApiClientAdapter ApiClientAdapter = null)
-    {
-        _ApiClientAdapter = ApiClientAdapter ?? throw new ArgumentNullException(nameof(ApiClientAdapter));
-    }
-
     public async Task<MeasuredResponse<LogResponse>> SessionAsync(string sessionId)
     {
         ValidateSessionId(sessionId);

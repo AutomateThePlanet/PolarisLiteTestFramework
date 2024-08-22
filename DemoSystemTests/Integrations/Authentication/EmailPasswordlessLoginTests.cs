@@ -11,13 +11,9 @@ using System.Text.RegularExpressions;
 
 namespace DemoSystemTests.Integrations.Authentication;
 [TestFixture]
-[LambdaTest(BrowserType.Chrome)]
+[LambdaTest(BrowserType.Chrome, useTunnel: true)]
 public class EmailPasswordlessLoginTests : WebTest
 {
-    private static InboxControllerApi _inboxControllerApi;
-    private static string API_KEY = Environment.GetEnvironmentVariable("MAILSLURP_KEY");
-    private static readonly long TIMEOUT = 30000L;
-
     protected override void TestInitialize()
     {
         ApiSettings.BaseUrl = "https://chesstv.local:3000/";
@@ -32,7 +28,7 @@ public class EmailPasswordlessLoginTests : WebTest
         var emailTab = App.Elements.FindByXPath<Button>("//a[text()='Email']");
         emailTab.Click();
 
-        var inbox = MailslurpService.CreateInbox(Guid.NewGuid().ToString());
+        var inbox = MailslurpService.CreateInbox();
 
         var emailInput = App.Elements.FindById<TextField>("email");
         emailInput.TypeText(inbox.EmailAddress);
