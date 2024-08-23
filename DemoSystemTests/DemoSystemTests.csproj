@@ -122,8 +122,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Results\Plugins\" />
-  </ItemGroup>
 </Project>

@@ -1,20 +1,15 @@
-﻿using Allure.Net.Commons;
-using OpenQA.Selenium.Remote;
+﻿using OpenQA.Selenium.Remote;
 using PolarisLite.API;
 using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
-using PolarisLite.Integrations;
-using PolarisLite.Web.Configuration.StaticImplementation;
 using PolarisLite.Web.Integrations;
 using PolarisLite.Web.Plugins;
 using RestSharp;
-using RestSharp.Authenticators;
 using System.IO.Compression;
 using System.Reflection;
-using System.Text;
 
-namespace DemoSystemTests.Integrations.Plugins.Blob;
-public class TroubleshootingInfoAllurePublisherPlugin : Plugin
+namespace DemoSystemTests.Results.Plugins;
+public class TroubleshootingInfoAzureDevOpsPublisherPlugin : Plugin
 {
     public override void OnAfterTestCleanup(TestOutcome result, MethodInfo memberInfo, Exception failedTestException)
     {
@@ -32,11 +27,15 @@ public class TroubleshootingInfoAllurePublisherPlugin : Plugin
             var request = new RestRequest(videoResponse.Data.Url, Method.Get);
             var downloadedVideoResponse = apiClient.DownloadAsync(request).Result;
 
-            //var blobStorage = new BlobStorageService();
-            var fileName = $"{memberInfo.DeclaringType.Name}.{memberInfo.Name}.{DateTime.Now:MMMMddyyyyhhmmss}.mp4";
-            //var fileUrl = blobStorage.UploadFile(fileName, downloadedVideoResponse, "videos", "video/mp4");
+            var videoFileName = $"{memberInfo.DeclaringType.Name}.{memberInfo.Name}.{DateTime.Now:MMMMddyyyyhhmmss}.mp4";
+            var videoFilePath = Path.Combine(Path.GetTempPath(), videoFileName);
 
-            AllureApi.AddAttachment(fileName, "video/mp4", downloadedVideoResponse, ".mp4");
+            // Save the video to a temporary location
+            File.WriteAllBytes(videoFilePath, downloadedVideoResponse);
+
+            // Add video attachment to Allure and NUnit TestContext
+            TestContext.AddTestAttachment(videoFilePath);
+
             if (result != TestOutcome.Passed)
             {
                 LambdaTestHooks.CaptureScreenshot();
@@ -55,21 +54,22 @@ public class TroubleshootingInfoAllurePublisherPlugin : Plugin
                 Directory.CreateDirectory(extractFolderPath);
                 ZipFile.ExtractToDirectory(tempZipFilePath, extractFolderPath);
 
-                // Upload each screenshot to Blob Storage
+                // Upload each screenshot to Blob Storage and add it to Allure and NUnit TestContext
                 var screenshotFiles = Directory.GetFiles(extractFolderPath);
                 foreach (var screenshotFilePath in screenshotFiles)
                 {
                     var screenshotFileName = $"{memberInfo.DeclaringType.Name}.{memberInfo.Name}.{Path.GetFileNameWithoutExtension(screenshotFilePath)}_{DateTime.Now:MMMMddyyyyhhmmss}.png";
-                    //var screenshotFileUrl = blobStorage.UploadFile(screenshotFileName, screenshotFilePath, "screenshots", "image/png");
-
-                    AllureApi.AddAttachment(screenshotFileName, "image/png", screenshotFilePath);
-                    // OR add link to blob storage + LambdaTest
+                    // Add screenshot attachment to Allure and NUnit TestContext
+                    TestContext.AddTestAttachment(screenshotFilePath);
                 }
 
                 // Clean up temporary files
                 File.Delete(tempZipFilePath);
                 Directory.Delete(extractFolderPath, true);
             }
+
+            // Clean up video file
+            File.Delete(videoFilePath);
         }
     }
 }

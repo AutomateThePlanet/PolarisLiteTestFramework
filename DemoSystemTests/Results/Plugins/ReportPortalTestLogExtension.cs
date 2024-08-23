@@ -7,7 +7,7 @@ using PolarisLite.Integrations.Settings;
 using PolarisLite.Logging;
 using PolarisLite.Web.Plugins;
 
-namespace DemoSystemTests.Integrations.Plugins;
+namespace DemoSystemTests.Results.Plugins;
 
 [NUnit.Engine.Extensibility.Extension]
 public class ReportPortalTestLogExtension : ITestEventListener
@@ -83,13 +83,13 @@ public class ReportPortalTestLogExtension : ITestEventListener
 
                     if (sessionDetailsResponse != null)
                     {
-                        var setExpiryLimitBuildPublicUrl = GetExpiryLimit30Url(sessionDetailsResponse.Data.Data.BuildId.ToString());
+                        var sharedTestUrl = ShareTestUrlExpiryLimit30Days(sessionDetailsResponse.Data.Data.BuildId.ToString());
 
                         e.TestReporter.Log(new CreateLogItemRequest
                         {
                             Level = LogLevel.Debug,
                             Time = DateTime.UtcNow,
-                            Text = $"LambdaTest Video URL = {setExpiryLimitBuildPublicUrl}&testID={sessionDetailsResponse.Data.Data.TestId}"
+                            Text = $"LambdaTest Video URL = {sharedTestUrl}&testID={sessionDetailsResponse.Data.Data.TestId}"
                         });
 
                         var buildName = DriverFactory.GridSettings.BuildName;
@@ -135,7 +135,7 @@ public class ReportPortalTestLogExtension : ITestEventListener
         }
     }
 
-    private string GetExpiryLimit30Url(string buildId)
+    private string ShareTestUrlExpiryLimit30Days(string buildId)
     {
         var buildResponse = _buildApiClient.SinglebuildAsync(int.Parse(buildId), "30").Result;
         if (buildResponse != null)
