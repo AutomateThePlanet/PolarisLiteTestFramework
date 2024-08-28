@@ -34,7 +34,7 @@ public class LambdaTestResultsPluginConfigurationFile : Plugin
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            System.Console.WriteLine(e);
         }
     }
 }

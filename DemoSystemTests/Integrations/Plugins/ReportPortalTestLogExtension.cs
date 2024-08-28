@@ -37,10 +37,10 @@ public class ReportPortalTestLogExtension : ITestEventListener
     private void ReportPortalListener_BeforeRunStarted(object sender, ReportPortal.NUnitExtension.EventArguments.RunStartedEventArgs e)
     {
 
-        var testCategory = Environment.GetEnvironmentVariable("TEST_CATEGORY", EnvironmentVariableTarget.Process);
-        var runEnvironment = Environment.GetEnvironmentVariable("RUN_ENVIRONMENT", EnvironmentVariableTarget.Process);
-        var releaseName = Environment.GetEnvironmentVariable("RELEASE_NAME", EnvironmentVariableTarget.Process);
-        var buildName = Environment.GetEnvironmentVariable("BUILD_NAME", EnvironmentVariableTarget.Process);
+        var testCategory = System.Environment.GetEnvironmentVariable("TEST_CATEGORY", EnvironmentVariableTarget.Process);
+        var runEnvironment = System.Environment.GetEnvironmentVariable("RUN_ENVIRONMENT", EnvironmentVariableTarget.Process);
+        var releaseName = System.Environment.GetEnvironmentVariable("RELEASE_NAME", EnvironmentVariableTarget.Process);
+        var buildName = System.Environment.GetEnvironmentVariable("BUILD_NAME", EnvironmentVariableTarget.Process);
 
         e.StartLaunchRequest.Attributes.Clear();
         if (testCategory != null)
@@ -64,7 +64,7 @@ public class ReportPortalTestLogExtension : ITestEventListener
 
             string lambdaTestBuildUrl = $"https://automation.lambdatest.com/build?&searchText={buildName}";
 
-            e.StartLaunchRequest.Description = Environment.NewLine + lambdaTestBuildUrl;
+            e.StartLaunchRequest.Description = System.Environment.NewLine + lambdaTestBuildUrl;
         }
     }
 
@@ -103,7 +103,7 @@ public class ReportPortalTestLogExtension : ITestEventListener
                         });
 
                         // Azure DevOps Build ID Logging
-                        var azureBuildId = Environment.GetEnvironmentVariable("AZURE_DEVOPS_BUILD_ID", EnvironmentVariableTarget.Process);
+                        var azureBuildId = System.Environment.GetEnvironmentVariable("AZURE_DEVOPS_BUILD_ID", EnvironmentVariableTarget.Process);
                         if (!string.IsNullOrEmpty(azureBuildId))
                         {
                             Console.WriteLine($"Azure Build Id -> {azureBuildId}");

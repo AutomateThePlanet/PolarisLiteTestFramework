@@ -15,7 +15,7 @@ namespace DemoSystemTests.Integrations.Authentication;
 public class EmailPasswordlessLoginTests : WebTest
 {
     private static InboxControllerApi _inboxControllerApi;
-    private static string API_KEY = Environment.GetEnvironmentVariable("MAILSLURP_KEY");
+    private static string API_KEY = System.Environment.GetEnvironmentVariable("MAILSLURP_KEY");
     private static readonly long TIMEOUT = 30000L;
 
     protected override void TestInitialize()

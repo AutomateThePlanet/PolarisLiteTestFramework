@@ -37,7 +37,7 @@ public class HighlightElementPlugin : WebComponentPlugin
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
+            System.Console.WriteLine(ex.Message);
         }
     }
 }

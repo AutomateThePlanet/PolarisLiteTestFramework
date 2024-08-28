@@ -9,11 +9,11 @@ public class LambdaTestAttribute : GridAttribute
     {
         if (string.IsNullOrEmpty(BuildName))
         {
-            BuildName = Environment.GetEnvironmentVariable("BUILD_NAME", EnvironmentVariableTarget.Process);
+            BuildName = System.Environment.GetEnvironmentVariable("BUILD_NAME", EnvironmentVariableTarget.Process);
             if (string.IsNullOrEmpty(BuildName))
             {
                 BuildName = TimestampBuilder.BuildUniqueText("PO_");
-                Environment.SetEnvironmentVariable("BUILD_NAME", BuildName, EnvironmentVariableTarget.Process);
+                System.Environment.SetEnvironmentVariable("BUILD_NAME", BuildName, EnvironmentVariableTarget.Process);
             }
         }
 
@@ -22,8 +22,8 @@ public class LambdaTestAttribute : GridAttribute
         GridSettings = new GridSettings();
         GridSettings.OptionsName = "LT:Options";
         GridSettings.BuildName = BuildName;
-        string userName = Environment.GetEnvironmentVariable("LT_USERNAME");
-        string accessKey = Environment.GetEnvironmentVariable("LT_ACCESSKEY");
+        string userName = System.Environment.GetEnvironmentVariable("LT_USERNAME");
+        string accessKey = System.Environment.GetEnvironmentVariable("LT_ACCESSKEY");
         GridSettings.Url = $"https://{userName}:{accessKey}@hub.lambdatest.com/wd/hub";
 
         string resolution = WindowsSizeResolver.GetWindowSize(desktopWindowSize).ConvertToString();

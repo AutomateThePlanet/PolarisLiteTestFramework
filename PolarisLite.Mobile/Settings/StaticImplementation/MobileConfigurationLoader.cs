@@ -5,7 +5,7 @@ public class MobileConfigurationLoader
 {
     public static void LoadConfiguration()
     {
-        var environment = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? "Development";
+        var environment = System.Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? "Development";
         switch (environment)
         {
             case "Development":

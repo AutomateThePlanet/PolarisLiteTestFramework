@@ -15,6 +15,7 @@ public class DriverFactory
     public static BrowserConfiguration BrowserConfiguration { get; set; } = new BrowserConfiguration();
 
     public static Dictionary<string, string> CustomDriverOptions { get; set; } = new Dictionary<string, string>();
+    public static Dictionary<string, object> CustomGridOptions { get; set; } = new Dictionary<string, object>();
 
     public static ExecutionType ExecutionType { get; set; }
     public static GridSettings GridSettings { get; set; }
@@ -141,6 +142,11 @@ public class DriverFactory
     {
         Dictionary<string, object> args = new();
         foreach (var entry in gridSettings?.Arguments)
+        {
+            args.Add(entry.Key, entry.Value);
+        }
+
+        foreach (var entry in CustomGridOptions)
         {
             args.Add(entry.Key, entry.Value);
         }

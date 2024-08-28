@@ -137,4 +137,9 @@ public static class LambdaTestHooks
     {
         _driverAdapter.Execute($"lambdaUpdateName={testName}");
     }
+
+    public static string GenerateLighthouseReport()
+    {
+        return (string)_driverAdapter.Execute($"lambdatest_executor: {{\"action\": \"generateLighthouseReport\", \"arguments\": {{\"url\": \"{_driverAdapter.Url}\"}}");
+    }
 }

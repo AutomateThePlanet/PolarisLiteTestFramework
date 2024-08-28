@@ -6,7 +6,7 @@ public class WebConfigurationLoader
 {
     public static void LoadConfiguration()
     {
-        var environment = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? "Development";
+        var environment = System.Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? "Development";
         switch (environment)
         {
             case "Development":
@@ -57,7 +57,7 @@ public class WebConfigurationLoader
         WebSettings.ScreenshotsOnFailure = true;
         WebSettings.EnableExceptionAnalysis = true;
 
-        WebSettings.ScreenshotsSaveLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Polaris", "ScreenshotsOnFailure");
+        WebSettings.ScreenshotsSaveLocation = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData), "Polaris", "ScreenshotsOnFailure");
 
         WebSettings.GridSettings = null;
 
@@ -113,7 +113,7 @@ public class WebConfigurationLoader
         WebSettings.ScreenshotsOnFailure = true;
         WebSettings.EnableExceptionAnalysis = true;
 
-        WebSettings.ScreenshotsSaveLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Polaris", "ScreenshotsOnFailure");
+        WebSettings.ScreenshotsSaveLocation = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData), "Polaris", "ScreenshotsOnFailure");
 
         GlobalSettings.LoggingSettings.IsEnabled = true;
         GlobalSettings.LoggingSettings.IsConsoleLoggingEnabled = true;
@@ -167,7 +167,7 @@ public class WebConfigurationLoader
         WebSettings.ScreenshotsOnFailure = false;
         WebSettings.EnableExceptionAnalysis = false;
 
-        WebSettings.ScreenshotsSaveLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Polaris", "ScreenshotsOnFailure");
+        WebSettings.ScreenshotsSaveLocation = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData), "Polaris", "ScreenshotsOnFailure");
 
         GlobalSettings.LoggingSettings.IsEnabled = true;
         GlobalSettings.LoggingSettings.IsConsoleLoggingEnabled = true;

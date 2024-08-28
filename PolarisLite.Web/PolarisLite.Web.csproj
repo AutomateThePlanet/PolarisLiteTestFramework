@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PolarisLite.API\PolarisLite.API.csproj" />
     <ProjectReference Include="..\PolarisLite.Core\PolarisLite.Core.csproj" />
+    <ProjectReference Include="..\PolarisLite.Integrations\PolarisLite.Integrations.csproj" />
   </ItemGroup>
 
   <ItemGroup>
