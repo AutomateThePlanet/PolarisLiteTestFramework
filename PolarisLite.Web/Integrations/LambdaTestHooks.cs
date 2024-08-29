@@ -1,4 +1,6 @@
-﻿using PolarisLite.Web.Services;
+﻿using PolarisLite.Integrations.LambdaTestAPI;
+using PolarisLite.Web.Plugins;
+using PolarisLite.Web.Services;
 
 namespace PolarisLite.Web.Integrations;
 public static class LambdaTestHooks
@@ -138,8 +140,30 @@ public static class LambdaTestHooks
         _driverAdapter.Execute($"lambdaUpdateName={testName}");
     }
 
-    public static string GenerateLighthouseReport()
+    public static Dictionary<string, object> GenerateLighthouseReport()
     {
-        return (string)_driverAdapter.Execute($"lambdatest_executor: {{\"action\": \"generateLighthouseReport\", \"arguments\": {{\"url\": \"{_driverAdapter.Url}\"}}");
+        WebDriverWait wait = new WebDriverWait(_driverAdapter.WrappedDriver, TimeSpan.FromMinutes(3));
+        wait.IgnoreExceptionTypes(typeof(WebDriverException));
+
+        return wait.Until(driver =>
+        {
+            try
+            {
+                var result = _driverAdapter.Execute($"lambdatest_executor: {{\"action\": \"generateLighthouseReport\", \"arguments\": {{\"url\": \"{_driverAdapter.Url}\"}}}}");
+
+                if (result is Dictionary<string, object> report && !report.ContainsKey("error"))
+                {
+                    return report;
+                }
+
+                // Log or handle the "Failed to generate lighthouse report" message if needed.
+                return null;
+            }
+            catch (WebDriverException)
+            {
+                // Returning null will cause WebDriverWait to continue trying until the timeout
+                return null;
+            }
+        });
     }
 }

@@ -10,9 +10,6 @@ public class PerformanceTestingPlugin : Plugin
 {
     public override void OnBeforeTestInitialize(MethodInfo memberInfo) 
     {
-        var driver = DriverFactory.WrappedDriver;
-        bool isLambdaTestRun = DriverFactory.ExecutionType.Equals(ExecutionType.LambdaTest);
-
         var networkEmulationAttribute = GetNetworkEmulationAttribute(memberInfo.DeclaringType);
         var geoLocationAttribute = GetGeoLocationAttribute(memberInfo.DeclaringType);
         var timeZoneAttribute = GetTimeZoneAttribute(memberInfo.DeclaringType);
@@ -20,40 +17,38 @@ public class PerformanceTestingPlugin : Plugin
         var captureNetworkTrafficAttribute = GetCaptureNetworkTrafficAttribute(memberInfo.DeclaringType);
         var captureLighthousePerformanceMetricsAttribute = GetCaptureLighthousePerformanceMetricsAttribute(memberInfo.DeclaringType);
         var captureNativePerformanceMetricsAttribute = GetCaptureNativePerformanceMetricsAttribute(memberInfo.DeclaringType);
-        
-        if (isLambdaTestRun)
+
+        if (geoLocationAttribute != null)
         {
-            if (geoLocationAttribute != null)
-            {
-                DriverFactory.CustomGridOptions.Add("geoLocation", geoLocationAttribute.Location);
-            }
+            DriverFactory.CustomGridOptions.Add("geoLocation", geoLocationAttribute.Location);
+        }
 
-            if (timeZoneAttribute != null)
-            {
-                DriverFactory.CustomGridOptions.Add("timezone", timeZoneAttribute.TimeZoneName);
-            }
+        if (timeZoneAttribute != null)
+        {
+            DriverFactory.CustomGridOptions.Add("timezone", timeZoneAttribute.TimeZoneName);
+        }
 
-            if (localeAttribute != null)
-            {
-                DriverFactory.CustomGridOptions.Add("language", localeAttribute.Locale);
-            }
+        if (localeAttribute != null)
+        {
+            DriverFactory.CustomGridOptions.Add("language", localeAttribute.Locale);
+        }
 
-            if (networkEmulationAttribute != null)
-            {
-                // or use just hooks as bellow
-                DriverFactory.CustomGridOptions.Add("networkThrottling", networkEmulationAttribute.ConnectionTypeName);
-            }
+        if (networkEmulationAttribute != null)
+        {
+            // or use just hooks as bellow
+            DriverFactory.CustomGridOptions.Add("enableNetworkThrottling", true);
+            DriverFactory.CustomGridOptions.Add("networkThrottling", networkEmulationAttribute.ConnectionTypeName);
+        }
 
-            if (captureNetworkTrafficAttribute != null)
-            {
-                DriverFactory.CustomGridOptions.Add("network", true);
-            }
+        if (captureNetworkTrafficAttribute != null)
+        {
+            DriverFactory.CustomGridOptions.Add("network", true);
+        }
 
-            // if use hook to generate lighthouse report turn off
-            if (captureLighthousePerformanceMetricsAttribute != null)
-            {
-                DriverFactory.CustomGridOptions.Add("performance", false);
-            }
+        // if use hook to generate lighthouse report turn off
+        if (captureLighthousePerformanceMetricsAttribute != null)
+        {
+            //DriverFactory.CustomGridOptions.Add("performance", false);
         }
     }
 

@@ -5,7 +5,7 @@ public class TimeoutSettings
     /// Gets or sets the page load timeout in seconds.
     /// </summary>
     public int PageLoadTimeout { get; set; } = 30;
-    public int ScriptTimeout { get; set; } = 30;
+    public int ScriptTimeout { get; set; } = 120;
     public int ValidationsTimeout { get; set; } = 30;
 
     public int WaitForAjaxTimeout { get; set; } = 30;

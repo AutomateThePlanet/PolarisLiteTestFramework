@@ -81,7 +81,11 @@ public partial class DriverAdapter : IElementFindService
     }
 
     public TComponent FindByTag<TComponent>(string tag) where TComponent : WebComponent, new() => throw new NotImplementedException();
-    public TComponent FindByLinkText<TComponent>(string linkText) where TComponent : WebComponent, new() => throw new NotImplementedException();
+    public TComponent FindByLinkText<TComponent>(string linkText) where TComponent : WebComponent, new()
+    {
+        return FindComponent<TComponent>(new LinkTextFindStrategy(linkText));
+    }
+
     public List<TComponent> FindAllById<TComponent>(string id) 
         where TComponent : WebComponent, new() 
     {

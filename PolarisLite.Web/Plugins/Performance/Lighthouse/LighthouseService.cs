@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
+using NUnit.Framework;
 using PolarisLite.Web.Integrations;
-using PolarisLite.Web.Plugins.Performance.Lighthouse;
+using PolarisLite.Web.Plugins.Performance;
+using PolarisLite.Web.Services;
 using System.Linq.Expressions;
 
 namespace PolarisLite.Web.Plugins;
@@ -24,7 +26,7 @@ public static class LighthouseService
         {
             NullValueHandling = NullValueHandling.Ignore
         };
-        PerformanceReport.Value = JsonConvert.DeserializeObject<Root>(jsonResponse, settings);
+        PerformanceReport.Value = JsonConvert.DeserializeObject<Root>(jsonResponse["data"].ToString(), settings);
     }
 
     public static void AssertFirstMeaningfulPaintScoreMoreThan(double expected)
@@ -123,6 +125,14 @@ public static class LighthouseService
         double actualValue = PerformanceReport.Value.Categories.Performance.Score;
         PerformAssertion(actualValue > expected, $"{PerformanceReport.Value.Categories.Performance.Title} should be > {expected} but was {actualValue}");
         AssertedLighthouseReportEvent?.Invoke(null, new LighthouseReportEventArgs(expected.ToString(), actualValue.ToString(), PerformanceReport.Value.Categories.Performance.Title));
+    }
+
+    public static void AssertNativePerformanceMetric(string metricName, double expected)
+    {
+        var driverAdapter = new DriverAdapter();
+        var performanceMetricActualValue = driverAdapter.GetPerformanceMetrics().Result.FirstOrDefault(m => m.Equals(metricName)).Value;
+        PerformAssertion(performanceMetricActualValue > expected, $"{metricName} performance metric should be > {expected} but was {performanceMetricActualValue}");
+        AssertedLighthouseReportEvent?.Invoke(null, new LighthouseReportEventArgs(expected.ToString(), performanceMetricActualValue.ToString(), metricName));
     }
 
     public static MetricPreciseValidationBuilder AssertMetric(Expression<Func<Root, object>> expression)

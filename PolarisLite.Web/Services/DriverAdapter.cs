@@ -6,10 +6,16 @@ namespace PolarisLite.Web.Services;
 public partial class DriverAdapter
 {
     private IWebDriver _webDriver;
-    
+    private Actions _actions;
+
     public DriverAdapter()
     {
         _webDriver = DriverFactory.WrappedDriver;
+        if (_webDriver != null)
+        {
+            _actions = new Actions(_webDriver);
+        }
+   
         if (_webDriver != null)
         {
             if (_webDriver is IDevTools)

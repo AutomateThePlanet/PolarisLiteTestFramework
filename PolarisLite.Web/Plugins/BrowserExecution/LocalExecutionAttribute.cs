@@ -3,7 +3,7 @@
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
 public class LocalExecutionAttribute : Attribute
 {
-    public LocalExecutionAttribute(BrowserType browser, Lifecycle lifecycle)
+    public LocalExecutionAttribute(BrowserType browser = BrowserType.Chrome, Lifecycle lifecycle = Lifecycle.RestartEveryTime)
     {
         BrowserConfiguration = new BrowserConfiguration(browser, lifecycle);
     }

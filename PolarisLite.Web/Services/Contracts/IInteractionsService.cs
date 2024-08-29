@@ -13,5 +13,11 @@ public interface IInteractionsService
         where TComponent : WebComponent;
     IInteractionsService ClickAndHold<TComponent>(TComponent element)
         where TComponent : WebComponent;
+
+    IInteractionsService Click<TComponent>(TComponent element)
+    where TComponent : WebComponent;
+
+    IInteractionsService SendKeys(string keysToSend);
+
     void Perform();
 }

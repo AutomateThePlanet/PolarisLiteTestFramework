@@ -8,7 +8,7 @@ public class GeolocationAttribute : Attribute
         Location = location;
     }
 
-    public GeolocationAttribute(double? latitude, double? longitude, int accuracy)
+    public GeolocationAttribute(double latitude, double longitude, int accuracy)
     {
         Latitude = latitude;
         Longitude = longitude;

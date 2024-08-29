@@ -5,6 +5,11 @@ namespace PolarisLite.Web.Plugins;
 [AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
 public class NetworkEmulationAttribute : Attribute
 {
+    public NetworkEmulationAttribute(string connectionType)
+    {
+        ConnectionTypeName = connectionType;
+    }
+
     public NetworkEmulationAttribute(double offline, double latency, double downloadThroughput, double uploadThroughput, string connectionType)
     {
         Offline = offline;

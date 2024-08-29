@@ -1,5 +1,6 @@
 ﻿using PolarisLite.Web.Plugins;
 using PolarisLite.Web.Services;
+using PolarisLite.Web.Services.Contracts;
 
 namespace PolarisLite.Web;
 public class App
@@ -17,6 +18,7 @@ public class App
     public ICookiesService Cookies => _driver;
     public IInteractionsService Interactions => _driver;
     public IJavaScriptService JavaScript => _driver;
+    public IDevToolsService DevTools => _driver;
 
     public void AddBrowserOptions(string option, string value)
     {

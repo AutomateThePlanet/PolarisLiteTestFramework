@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace PolarisLite.Web.Plugins.Performance.Lighthouse;
+namespace PolarisLite.Web.Plugins.Performance;
 public class Credits
 {
     [JsonProperty("axe-core")]
@@ -352,7 +352,7 @@ public class LargestContentfulPaint
     public string DisplayValue { get; set; }
 }
 
-public class FirstMeaningfulPaint
+public class FirstMeaningfulPaint1
 {
     [JsonProperty("id")]
     public string Id { get; set; }
@@ -3601,7 +3601,7 @@ public class Audits
     public LargestContentfulPaint LargestContentfulPaint { get; set; }
 
     [JsonProperty("first-meaningful-paint")]
-    public FirstMeaningfulPaint FirstMeaningfulPaint { get; set; }
+    public FirstMeaningfulPaint1 FirstMeaningfulPaint { get; set; }
 
     [JsonProperty("speed-index")]
     public SpeedIndex SpeedIndex { get; set; }

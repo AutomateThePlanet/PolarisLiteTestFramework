@@ -40,7 +40,8 @@ public class LambdaTestAttribute : GridAttribute
             { "plugin", "c#-c#" },
             { "build", BuildName },
             { "project", "POLARIS_RUN" },
-            { "selenium_version", "4.22.0" }
+            { "selenium_version", "4.22.0" },
+            { "idleTimeout", "300" }
         };
 
         //GridSettings.Arguments.Add("autoHeal", enableAutoHealing);

@@ -6,6 +6,7 @@ using WebDriverManager.DriverConfigs.Impl;
 using System.Drawing;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Chromium;
+using PolarisLite.Web.Configuration.StaticImplementation;
 
 namespace PolarisLite.Web.Plugins;
 public class DriverFactory
@@ -107,6 +108,9 @@ public class DriverFactory
         WrappedDriver = new RemoteWebDriver(new Uri(gridSettings.Url), options);
         CurrentSessionId = ((RemoteWebDriver)WrappedDriver).SessionId.ToString();
         WrappedDriver.Manage().Window.Maximize();
+
+        WrappedDriver.Manage().Timeouts().AsynchronousJavaScript = TimeSpan.FromSeconds(WebSettings.TimeoutSettings.ScriptTimeout);
+        WrappedDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(WebSettings.TimeoutSettings.PageLoadTimeout);
         Disposed = false;
     }
 

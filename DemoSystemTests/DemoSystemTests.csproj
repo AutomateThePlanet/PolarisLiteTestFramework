@@ -12,10 +12,13 @@
   <ItemGroup>
     <Compile Remove="API\CustomPlugins\**" />
     <Compile Remove="Plugins\**" />
+    <Compile Remove="Results\Plugins\**" />
     <EmbeddedResource Remove="API\CustomPlugins\**" />
     <EmbeddedResource Remove="Plugins\**" />
+    <EmbeddedResource Remove="Results\Plugins\**" />
     <None Remove="API\CustomPlugins\**" />
     <None Remove="Plugins\**" />
+    <None Remove="Results\Plugins\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -121,9 +124,5 @@
     <None Update="testFrameworkSettings.$(Configuration).json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Results\Plugins\" />
   </ItemGroup>
 </Project>

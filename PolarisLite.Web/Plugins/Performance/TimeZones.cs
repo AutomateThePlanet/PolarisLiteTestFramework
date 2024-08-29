@@ -323,7 +323,7 @@ public static class TimeZones
     public const string Athens = "GTB Standard Time";
     public const string Belgrade = "Central Europe Standard Time";
     public const string Berlin = "W. Europe Standard Time";
-    public const string Bratislava = "Central Europe Standard Time";
+    public const string Bratislava = "Bratislava";
     public const string Brussels = "Romance Standard Time";
     public const string Bucharest = "GTB Standard Time";
     public const string Budapest = "Central Europe Standard Time";

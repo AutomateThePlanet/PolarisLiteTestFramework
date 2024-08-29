@@ -136,7 +136,7 @@ public class WebConfigurationLoader
         WebSettings.TimeoutSettings = new TimeoutSettings
         {
             PageLoadTimeout = 45,
-            ScriptTimeout = 45,
+            ScriptTimeout = 180,
             ValidationsTimeout = 45,
             WaitForAjaxTimeout = 45,
             SleepInterval = 12,

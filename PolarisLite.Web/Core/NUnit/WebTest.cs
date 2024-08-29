@@ -22,6 +22,7 @@ public class WebTest : BaseTest
         ApiConfigurationLoader.LoadConfiguration();
         if (!_arePluginsAlreadyInitialized)
         {
+            PluginExecutionEngine.AddPlugin(new PerformanceTestingPlugin());
             //PluginExecutionEngine.AddPlugin(new JavaScriptErrorsPlugin());
             PluginExecutionEngine.AddPlugin(new LambdaTestResultsPlugin());
             //PluginExecutionEngine.AddPlugin(new ExceptionAnalysationPlugin());
@@ -31,16 +32,17 @@ public class WebTest : BaseTest
             PluginExecutionEngine.AddPlugin(new InitializeToastMessagesScriptsPlugin());
             PluginExecutionEngine.AddPlugin(new LogLifecyclePlugin());
           
+
             WebComponentPluginExecutionEngine.AddPlugin(new HighlightElementPlugin());
             WebComponentPluginExecutionEngine.AddPlugin(new ScrollIntoViewPlugin());
 
             AddBddLogging();
             AddToastMessages();
 
-            ExceptionAnalyser.AddExceptionAnalysationHandler(new OutDatedConsoleWarningHandler());
-            ExceptionAnalyser.AddExceptionAnalysationHandler<JavaScriptErrorsHandler>();
-            ExceptionAnalyser.AddExceptionAnalysationHandler<NoFailedRequestsHandler>();
-            ExceptionAnalyser.AddExceptionAnalysationHandler<ServiceUnavailableExceptionHandler>();
+            //ExceptionAnalyser.AddExceptionAnalysationHandler(new OutDatedConsoleWarningHandler());
+            //ExceptionAnalyser.AddExceptionAnalysationHandler<JavaScriptErrorsHandler>();
+            //ExceptionAnalyser.AddExceptionAnalysationHandler<NoFailedRequestsHandler>();
+            //ExceptionAnalyser.AddExceptionAnalysationHandler<ServiceUnavailableExceptionHandler>();
             _arePluginsAlreadyInitialized = true;
         }
     }

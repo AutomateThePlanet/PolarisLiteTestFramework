@@ -57,8 +57,8 @@ public partial class DriverAdapter : IDevToolsService
 
     public void ClearNetworkTrafficHistory()
     {
-        RequestsHistory.Clear();
-        ResponsesHistory.Clear();
+        RequestsHistory?.Clear();
+        ResponsesHistory?.Clear();
     }
 
     public List<string> GetSpecificRequestUrls(string requestName)
@@ -205,7 +205,7 @@ public partial class DriverAdapter : IDevToolsService
 
     public async Task TurnOnPerformanceMetrics()
     {
-        var enableCommand = new Console.EnableCommandSettings();
+        var enableCommand = new Performance.EnableCommandSettings();
         await DevToolsSession.SendCommand(enableCommand);
     }
 
