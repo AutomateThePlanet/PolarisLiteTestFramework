@@ -13,6 +13,7 @@ public interface IDevToolsService
     Task ListenJavaScriptConsoleLogs(EventHandler<JavaScriptConsoleApiCalledEventArgs> javaScriptConsoleApiCalled);
     Task ListenJavaScriptExceptionsThrown(EventHandler<JavaScriptExceptionThrownEventArgs> javaScriptExceptionThrown);
     Task AddInitializationScript(string name, string script);
+
     void StartNetworkTrafficMonitoring();
     void ClearNetworkTrafficHistory();
     List<string> GetSpecificRequestUrls(string requestName);

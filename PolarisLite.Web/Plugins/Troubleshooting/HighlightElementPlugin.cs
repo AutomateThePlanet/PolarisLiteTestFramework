@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium.Support.Extensions;
 
-namespace PolarisLite.Web.Plugins;
+namespace PolarisLite.Web.Plugins.Troubleshooting;
 public class HighlightElementPlugin : WebComponentPlugin
 {
     public override void OnComponentFound(IWebElement webElement)

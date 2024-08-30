@@ -7,6 +7,7 @@ using PolarisLite.Web.Configuration.StaticImplementation;
 using PolarisLite.Web.Troubshoting;
 using PolarisLite.Api.Configuration;
 using PolarisLite.Web.Plugins.Browser;
+using PolarisLite.Web.Plugins.Troubleshooting;
 
 namespace PolarisLite.Web.Core.NUnit;
 public class WebTest : BaseTest

@@ -3,6 +3,7 @@ using PolarisLite.Locators;
 using PolarisLite.Web.Contracts;
 using PolarisLite.Web.Events;
 using PolarisLite.Web.Plugins;
+using PolarisLite.Web.Plugins.Troubleshooting;
 using PolarisLite.Web.Services;
 using System.Drawing;
 

@@ -2,7 +2,7 @@
 using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
 using System.Reflection;
-namespace PolarisLite.Web.Plugins.Browser;
+namespace PolarisLite.Web.Plugins.Troubleshooting;
 
 public class LambdaTestResultsPlugin : Plugin
 {

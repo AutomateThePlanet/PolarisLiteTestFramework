@@ -3,7 +3,7 @@ using PolarisLite.Core;
 using PolarisLite.Core.Plugins;
 using System.Collections.ObjectModel;
 using System.Reflection;
-namespace PolarisLite.Web.Plugins.Browser;
+namespace PolarisLite.Web.Plugins.Troubleshooting;
 
 public class JavaScriptErrorsPlugin : Plugin
 {
@@ -31,7 +31,7 @@ public class JavaScriptErrorsPlugin : Plugin
         var jsErrors = browserLogs?.Where(x => errorStrings.Any(e => !string.IsNullOrEmpty(x.Message) && x.Message.Contains(e)));
         if (jsErrors != null && jsErrors.Any())
         {
-            Assert.Fail($"JavaScript error(s): {System.Environment.NewLine} {jsErrors.Aggregate(string.Empty, (s, entry) => s + entry.Message)}{System.Environment.NewLine}");
+            Assert.Fail($"JavaScript error(s): {Environment.NewLine} {jsErrors.Aggregate(string.Empty, (s, entry) => s + entry.Message)}{Environment.NewLine}");
         }
     }
 }

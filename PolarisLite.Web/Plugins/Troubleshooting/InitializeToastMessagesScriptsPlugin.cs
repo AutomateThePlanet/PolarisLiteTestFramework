@@ -3,7 +3,7 @@ using PolarisLite.Web.Configuration.StaticImplementation;
 using PolarisLite.Web.Services;
 using System.Reflection;
 
-namespace PolarisLite.Web.Plugins;
+namespace PolarisLite.Web.Plugins.Troubleshooting;
 public class InitializeToastMessagesScriptsPlugin : Plugin
 {
     // TODO: Should be added to be executed after BrowserLifecyclePlugin

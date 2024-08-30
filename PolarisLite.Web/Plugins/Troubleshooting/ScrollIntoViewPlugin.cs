@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium.Support.Extensions;
 
-namespace PolarisLite.Web.Plugins;
+namespace PolarisLite.Web.Plugins.Troubleshooting;
 public class ScrollIntoViewPlugin : WebComponentPlugin
 {
     public override void OnComponentFound(IWebElement webElement)
@@ -20,6 +20,6 @@ public class ScrollIntoViewPlugin : WebComponentPlugin
             actions.Perform();
         }
         catch { }
-      
+
     }
 }

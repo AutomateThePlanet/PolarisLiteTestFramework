@@ -4,7 +4,7 @@ using PolarisLite.Core.Plugins;
 using PolarisLite.Web.Plugins;
 using PolarisLite.Web.Settings.FilesImplementation;
 using System.Reflection;
-namespace Bellatrix.Web.Plugins.Browser;
+namespace PolarisLite.Web.Plugins.Troubleshooting;
 
 public class LambdaTestResultsPluginConfigurationFile : Plugin
 {

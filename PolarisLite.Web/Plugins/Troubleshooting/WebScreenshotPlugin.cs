@@ -2,7 +2,7 @@
 using OpenQA.Selenium.Support.Extensions;
 using PolarisLite.Web.Configuration.StaticImplementation;
 
-namespace PolarisLite.Web.Plugins;
+namespace PolarisLite.Web.Plugins.Troubleshooting;
 public class WebScreenshotPlugin : ScreenshotPlugin
 {
     public WebScreenshotPlugin()

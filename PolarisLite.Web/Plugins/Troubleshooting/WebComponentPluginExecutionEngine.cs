@@ -1,4 +1,4 @@
-﻿namespace PolarisLite.Web.Plugins;
+﻿namespace PolarisLite.Web.Plugins.Troubleshooting;
 public static class WebComponentPluginExecutionEngine
 {
     private static readonly HashSet<WebComponentPlugin> Plugins = new();

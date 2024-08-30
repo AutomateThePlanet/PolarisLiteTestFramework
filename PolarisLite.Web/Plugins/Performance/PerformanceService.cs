@@ -27,7 +27,7 @@ public static class PerformanceService
         {
             NullValueHandling = NullValueHandling.Ignore
         };
-        //PerformanceReport.Value = JsonConvert.DeserializeObject<Root>(jsonResponse, settings);
+        PerformanceReport.Value = JsonConvert.DeserializeObject<Root>((string)jsonResponse["data"], settings);
     }
 
     public static void AssertFirstMeaningfulPaintScoreMoreThan(double expected)

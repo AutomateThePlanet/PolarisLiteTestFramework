@@ -1,14 +1,11 @@
-﻿using Allure.NUnit.Attributes;
-using Allure.NUnit;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.DevTools;
-using PolarisLite.Web.Core.NUnit;
+﻿using PolarisLite.Web.Core.NUnit;
 using PolarisLite.Web;
 using PolarisLite.Web.Assertions;
 using PolarisLite.Web.Plugins;
 using PolarisLite.Web.Plugins.Performance;
 using static PolarisLite.Web.Plugins.Performance.PerformanceService;
 using static PolarisLite.Web.Plugins.Performance.PerformanceMetrics;
+using Polaris.Plugins.Common.ExecutionTime;
 
 namespace DemoSystemTests.Web.Performance;
 
@@ -24,14 +21,15 @@ namespace DemoSystemTests.Web.Performance;
 //[CaptureLighthousePerformanceMetrics]
 public class CapturePerformanceMetricsTests : WebTest
 {
-    [Test]    
+    [Test]
+    [ExecutionTimeUnder(2, PolarisLite.TimeUnit.Minutes)]
     public void VerifyToDoListCreatedSuccessfully()
     {
 
             App.Navigation.GoToUrl("https://todomvc.com/");
             OpenTechnologyApp("KnockoutJS");
 
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= 20; i++)
             {
                 string randomString = GenerateRandomString();
                 AddNewToDoItem(randomString);
@@ -46,31 +44,31 @@ public class CapturePerformanceMetricsTests : WebTest
 
         Console.WriteLine("###############################");
 
-        AssertNativePerformanceMetricLessThan(JSHeapTotalSize, 33056000);
-        AssertNativePerformanceMetricLessThan(JSHeapUsedSize, 16027844);
-        AssertNativePerformanceMetricLessThan(LayoutDuration, 0.062);
-        AssertNativePerformanceMetricLessThan(RecalcStyleDuration, 0.054);
-        AssertNativePerformanceMetricLessThan(DevToolsCommandDuration, 0.578);
-        AssertNativePerformanceMetricLessThan(ScriptDuration, 0.545);
-        AssertNativePerformanceMetricLessThan(V8CompileDuration, 0.0501);
-        AssertNativePerformanceMetricLessThan(TaskDuration, 0.980);
-        AssertNativePerformanceMetricLessThan(TaskOtherDuration, 0.579);
-        AssertNativePerformanceMetricLessThan(ThreadTime, 0.929);
-        AssertNativePerformanceMetricLessThan(ProcessTime, 4.137);
-        AssertNativePerformanceMetricLessThan(FirstMeaningfulPaint, 97572.780);
-        AssertNativePerformanceMetricLessThan(DomContentLoaded, 97572.616);
-        AssertNativePerformanceMetricLessThan(NavigationStart, 97572.204);
+        PerformanceService.AssertNativePerformanceMetricLessThan(JSHeapTotalSize, 33056000);
+        PerformanceService.AssertNativePerformanceMetricLessThan(JSHeapUsedSize, 16027844);
+        PerformanceService.AssertNativePerformanceMetricLessThan(LayoutDuration, 0.062);
+        PerformanceService.AssertNativePerformanceMetricLessThan(RecalcStyleDuration, 0.054);
+        PerformanceService.AssertNativePerformanceMetricLessThan(DevToolsCommandDuration, 0.578);
+        PerformanceService.AssertNativePerformanceMetricLessThan(ScriptDuration, 0.545);
+        PerformanceService.AssertNativePerformanceMetricLessThan(V8CompileDuration, 0.0501);
+        PerformanceService.AssertNativePerformanceMetricLessThan(TaskDuration, 0.980);
+        PerformanceService.AssertNativePerformanceMetricLessThan(TaskOtherDuration, 0.579);
+        PerformanceService.AssertNativePerformanceMetricLessThan(ThreadTime, 0.929);
+        PerformanceService.AssertNativePerformanceMetricLessThan(ProcessTime, 4.137);
+        PerformanceService.AssertNativePerformanceMetricLessThan(FirstMeaningfulPaint, 97572.780);
+        PerformanceService.AssertNativePerformanceMetricLessThan(DomContentLoaded, 97572.616);
+        PerformanceService.AssertNativePerformanceMetricLessThan(NavigationStart, 97572.204);
 
 
-        LighthouseService.PerformLighthouseAnalysis();
+        PerformanceService.PerformLighthouseAnalysis();
 
-        AssertMetric(m => m.Audits.FirstContentfulPaint.Score < 4.5);
-        AssertMetric(m => m.Audits.FirstMeaningfulPaint.Score < 4.2);
-        AssertMetric(m => m.Audits.LargestContentfulPaint.Score < 3.78);
-        AssertMetric(m => m.Categories.Performance.Score > 70);
-        AssertMetric(m => m.Categories.Accessibility.Score > 50);
-        AssertMetric(m => m.Categories.BestPractices.Score > 90);
-        AssertMetric(m => m.Categories.Seo.Score > 70);
+        PerformanceService.AssertMetric(m => m.Audits.FirstContentfulPaint.Score < 4.5);
+        PerformanceService.AssertMetric(m => m.Audits.FirstMeaningfulPaint.Score < 4.2);
+        PerformanceService.AssertMetric(m => m.Audits.LargestContentfulPaint.Score < 3.78);
+        PerformanceService.AssertMetric(m => m.Categories.Performance.Score > 70);
+        PerformanceService.AssertMetric(m => m.Categories.Accessibility.Score > 50);
+        PerformanceService.AssertMetric(m => m.Categories.BestPractices.Score > 90);
+        PerformanceService.AssertMetric(m => m.Categories.Seo.Score > 70);
     }
 
     private string GenerateRandomString()
@@ -106,11 +104,7 @@ public class CapturePerformanceMetricsTests : WebTest
         var todoInput = App.Elements.FindByXPath<TextField>("//input[@placeholder='What needs to be done?']");
         var todoInputButton = App.Elements.FindByXPath<Button>("//input[@placeholder='What needs to be done?']");
         todoInput.TypeText(todoItem);
-        //todoInputButton.Click();
-        //todoInput.TypeText(Keys.Enter);
-        //todoInput.TypeText(Keys.Enter);
 
         App.Interactions.Click(todoInput).SendKeys(Keys.Enter).Perform();
-        //new Actions(DriverFactory.WrappedDriver).Click(todoInput.WrappedElement).SendKeys(Keys.Enter).Perform();
     }
 }
