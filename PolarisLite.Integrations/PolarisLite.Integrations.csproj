@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="mailslurp" Version="15.19.22" />
+    <PackageReference Include="Otp.NET" Version="1.4.0" />
     <PackageReference Include="RestSharp" Version="108.0.2" />
     <PackageReference Include="Twilio" Version="7.2.2" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.22.0-beta.1" />

@@ -42,5 +42,6 @@ public class IntegrationsConfigurationLoader
         IntegrationSettings.TwilioSettings.AuthToken = "someAuthToken";
         IntegrationSettings.TwilioSettings.PhoneNumber = "+12312312321312";
         IntegrationSettings.TwilioSettings.AccountSID = "someAccountSID";
+        IntegrationSettings.TwoFASecret = "d#IryuziNby|$z(E<+SW>Gl*Elg{|%";
     }
 }
