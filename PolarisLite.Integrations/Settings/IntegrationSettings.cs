@@ -1,6 +1,8 @@
-﻿namespace PolarisLite.Integrations.Settings;
+﻿using PolarisLite.Secrets;
 
-public class IntegrationSettings
+namespace PolarisLite.Integrations.Settings;
+
+public static class IntegrationSettings
 {
     static IntegrationSettings()
     {
@@ -17,4 +19,5 @@ public class IntegrationSettings
     public static TwilioSettings TwilioSettings { get; set; }
     public static MailslurpSettings MailslurpSettings { get; set; }
     public static AppInsightsSettings AppInsightsSettings { get; set; }
+
 }
