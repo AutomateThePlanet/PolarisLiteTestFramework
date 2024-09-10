@@ -1,5 +1,6 @@
 ﻿using PolarisLite.API;
 using PolarisLite.Core.Settings.StaticSettings;
+using PolarisLite.Secrets;
 
 namespace PolarisLite.Api.Configuration;
 public class ApiConfigurationLoader
@@ -31,6 +32,8 @@ public class ApiConfigurationLoader
         ApiSettings.TimeUnit = TimeUnit.Seconds;
         ApiSettings.MaxRetryAttempts = 2;
         ApiSettings.EnableBDDLogging = true;
+
+        ApiSettings.OAuth2Token = SecretsResolver.GetSecret("MUSIC_API_OAuth2Token");
 
         GlobalSettings.LoggingSettings.IsEnabled = true;
         GlobalSettings.LoggingSettings.IsConsoleLoggingEnabled = true;

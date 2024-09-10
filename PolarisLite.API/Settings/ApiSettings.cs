@@ -9,4 +9,5 @@ public static class ApiSettings
     public static TimeUnit TimeUnit { get; set; }
     public static bool EnableBDDLogging { get; set; }
     public static bool EnableToastMessages { get; set; }
+    public static string OAuth2Token { get; set; }
 }

@@ -1,4 +1,7 @@
-﻿using PolarisLite.Utilities;
+﻿using PolarisLite.Core;
+using PolarisLite.Secrets;
+using PolarisLite.Utilities;
+using PolarisLite.Web.Configuration.StaticImplementation;
 
 namespace PolarisLite.Web.Plugins;
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
@@ -24,6 +27,10 @@ public class LambdaTestAttribute : GridAttribute
         GridSettings.BuildName = BuildName;
         string userName = System.Environment.GetEnvironmentVariable("LT_USERNAME");
         string accessKey = System.Environment.GetEnvironmentVariable("LT_ACCESSKEY");
+        //var webSettings = ConfigurationService.GetSection<Settings.FilesImplementation.WebSettings>();
+        //string userName = SecretsResolver.GetSecret(() => (string)webSettings.GridSettings.Arguments["username"]);
+        //string accessKey = SecretsResolver.GetSecret(() => (string)webSettings.GridSettings.Arguments["accessKey"]);
+
         GridSettings.Url = $"https://{userName}:{accessKey}@hub.lambdatest.com/wd/hub";
 
         string resolution = WindowsSizeResolver.GetWindowSize(desktopWindowSize).ConvertToString();

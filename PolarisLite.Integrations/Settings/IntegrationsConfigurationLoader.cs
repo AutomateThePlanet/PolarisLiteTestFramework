@@ -1,4 +1,5 @@
 ﻿using PolarisLite.Integrations.Settings;
+using PolarisLite.Secrets;
 
 namespace PolarisLite.Web.Configuration.StaticImplementation;
 public class IntegrationsConfigurationLoader
@@ -24,20 +25,22 @@ public class IntegrationsConfigurationLoader
 
     private static void LoadQAConfiguration()
     {
-        IntegrationSettings.BlobStorageSettings.ConnectionString = Environment.GetEnvironmentVariable("BLOB_CS");
+        //IntegrationSettings.BlobStorageSettings.ConnectionString = Environment.GetEnvironmentVariable("BLOB_CS");
+        IntegrationSettings.BlobStorageSettings.ConnectionString = SecretsResolver.GetSecret("BLOB_CS");
     }
 
     private static void LoadStagingConfiguration()
     {
-        IntegrationSettings.BlobStorageSettings.ConnectionString = Environment.GetEnvironmentVariable("BLOB_CS");
+        //IntegrationSettings.BlobStorageSettings.ConnectionString = Environment.GetEnvironmentVariable("BLOB_CS");
+        IntegrationSettings.BlobStorageSettings.ConnectionString = SecretsResolver.GetSecret("BLOB_CS");
     }
 
     private static void LoadDevelopmentConfiguration()
     {
-        IntegrationSettings.BlobStorageSettings.ConnectionString = Environment.GetEnvironmentVariable("BLOB_CS");
-        IntegrationSettings.AppInsightsSettings.ConnectionString = Environment.GetEnvironmentVariable("APPINSIGHTS_CS");
+        IntegrationSettings.BlobStorageSettings.ConnectionString = SecretsResolver.GetSecret("BLOB_CS");
+        IntegrationSettings.AppInsightsSettings.ConnectionString = SecretsResolver.GetSecret("APPINSIGHTS_CS");
         IntegrationSettings.AppInsightsSettings.IsEnabled = true;
-        IntegrationSettings.AzureDevOpsBuildUrl = Environment.GetEnvironmentVariable("AzureDevOpsBuildUrl");
+        IntegrationSettings.AzureDevOpsBuildUrl = SecretsResolver.GetSecret("AzureDevOpsBuildUrl");
         IntegrationSettings.MailslurpSettings.ApiKey = "someKey";
         IntegrationSettings.TwilioSettings.AuthToken = "someAuthToken";
         IntegrationSettings.TwilioSettings.PhoneNumber = "+12312312321312";
