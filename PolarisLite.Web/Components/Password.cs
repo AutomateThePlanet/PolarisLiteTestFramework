@@ -1,4 +1,5 @@
-﻿using PolarisLite.Web.Components;
+﻿using PolarisLite.Core;
+using PolarisLite.Web.Components;
 using PolarisLite.Web.Contracts;
 using PolarisLite.Web.Events;
 
@@ -17,7 +18,7 @@ public class Password : WebComponent, IComponentDisabled, IComponentValue
         WrappedElement?.Clear();
         WrappedElement?.SendKeys(password);
 
-        PasswordSet?.Invoke(this, new ComponentActionEventArgs(this));
+        PasswordSet?.Invoke(this, new ComponentActionEventArgs(this, password, InfoType.SECRET));
     }
 
     public virtual bool? IsAutoComplete => GetAttribute("autocomplete") == "on";

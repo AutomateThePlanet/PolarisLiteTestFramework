@@ -1,4 +1,5 @@
-﻿using PolarisLite.Core.Infrastructure;
+﻿using PolarisLite.Core;
+using PolarisLite.Core.Infrastructure;
 using PolarisLite.Locators;
 using PolarisLite.Web.Contracts;
 using PolarisLite.Web.Events;
@@ -205,12 +206,12 @@ public class WebComponent : IComponent, IComponentVisible
         clicked?.Invoke(this, new ComponentActionEventArgs(this));
     }
 
-    protected void TypeText(string text, EventHandler<ComponentActionEventArgs> textSet = null)
+    protected void TypeText(string text, EventHandler<ComponentActionEventArgs> textSet = null, InfoType infoType = InfoType.INFO)
     {
         WrappedElement?.Clear();
         WrappedElement?.SendKeys(text);
 
-        textSet?.Invoke(this, new ComponentActionEventArgs(this, text));
+        textSet?.Invoke(this, new ComponentActionEventArgs(this, text, infoType));
     }
 
     public bool IsVisible => WrappedElement.Displayed;

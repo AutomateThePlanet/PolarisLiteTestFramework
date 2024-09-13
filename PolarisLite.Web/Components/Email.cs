@@ -1,4 +1,5 @@
-﻿using PolarisLite.Web.Components;
+﻿using PolarisLite.Core;
+using PolarisLite.Web.Components;
 using PolarisLite.Web.Contracts;
 using PolarisLite.Web.Events;
 
@@ -16,7 +17,7 @@ public class Email : WebComponent, IComponentDisabled, IComponentValue
     {
         WrappedElement?.Clear();
         WrappedElement?.SendKeys(email);
-        EmailSet?.Invoke(this, new ComponentActionEventArgs(this));
+        EmailSet?.Invoke(this, new ComponentActionEventArgs(this, email, InfoType.SECRET));
     }
 
     public virtual bool? IsAutoComplete => GetAttribute("autocomplete") == "on";

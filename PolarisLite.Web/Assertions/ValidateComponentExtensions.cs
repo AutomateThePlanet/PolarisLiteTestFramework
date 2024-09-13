@@ -37,18 +37,18 @@ public static class ValidateComponentExtensions
         ValidatedValueIsNullEvent?.Invoke(component, new ComponentActionEventArgs(component));
     }
 
-    public static void ValidateValueIs<T>(this T component, string value, int? timeout = null, int? sleepInterval = null)
+    public static void ValidateValueIs<T>(this T component, string value, InfoType infoType = InfoType.INFO, int? timeout = null, int? sleepInterval = null)
         where T : IComponentValue, IComponent
     {
         WaitUntil(() => component.Value.Equals(value), $"The component's value should be '{value}' but was '{component.Value}'.", timeout, sleepInterval);
-        ValidatedValueIsEvent?.Invoke(component, new ComponentActionEventArgs(component, value));
+        ValidatedValueIsEvent?.Invoke(component, new ComponentActionEventArgs(component, value, infoType));
     }
 
-    public static void ValidateValueContains<T>(this T component, string value, int? timeout = null, int? sleepInterval = null)
+    public static void ValidateValueContains<T>(this T component, string value, InfoType infoType = InfoType.INFO, int? timeout = null, int? sleepInterval = null)
      where T : IComponentValue, IComponent
     {
         WaitUntil(() => component.Value.Contains(value), $"The component's value should contain '{value}' but was '{component.Value}'.", timeout, sleepInterval);
-        ValidatedValueContainsEvent?.Invoke(component, new ComponentActionEventArgs(component, value));
+        ValidatedValueContainsEvent?.Invoke(component, new ComponentActionEventArgs(component, value, infoType));
     }
 
     public static void ValidateIsChecked<T>(this T component, int? timeout = null, int? sleepInterval = null)
@@ -65,25 +65,25 @@ public static class ValidateComponentExtensions
         ValidatedIsNotCheckedEvent?.Invoke(component, new ComponentActionEventArgs(component));
     }
 
-    public static void ValidateInnerTextIs<T>(this T component, string value, int? timeout = null, int? sleepInterval = null)
+    public static void ValidateInnerTextIs<T>(this T component, string value, InfoType infoType = InfoType.INFO, int? timeout = null, int? sleepInterval = null)
         where T : IComponentInnerText, IComponent
     {
         WaitUntil(() => component.Text.Equals(value), $"The component's inner text should be '{value}' but was '{component.Text}'.", timeout, sleepInterval);
-        ValidatedInnerTextIsEvent?.Invoke(component, new ComponentActionEventArgs(component, value));
+        ValidatedInnerTextIsEvent?.Invoke(component, new ComponentActionEventArgs(component, value, infoType));
     }
 
-    public static void ValidateInnerTextIsNot<T>(this T component, string value, int? timeout = null, int? sleepInterval = null)
+    public static void ValidateInnerTextIsNot<T>(this T component, string value, InfoType infoType = InfoType.INFO, int? timeout = null, int? sleepInterval = null)
     where T : IComponentInnerText, IComponent
     {
         WaitUntil(() => !component.Text.Equals(value), $"The component's inner text should not be '{value}' but was '{component.Text}'.", timeout, sleepInterval);
-        ValidatedInnerTextIsNotEvent?.Invoke(component, new ComponentActionEventArgs(component, value));
+        ValidatedInnerTextIsNotEvent?.Invoke(component, new ComponentActionEventArgs(component, value, infoType));
     }
 
-    public static void ValidateInnerTextContains<T>(this T component, string value, int? timeout = null, int? sleepInterval = null)
+    public static void ValidateInnerTextContains<T>(this T component, string value, InfoType infoType = InfoType.INFO, int? timeout = null, int? sleepInterval = null)
         where T : IComponentInnerText, IComponent
     {
         WaitUntil(() => component.Text.Contains(value), $"The component's inner text should contain '{value}' but was '{component.Text}'.", timeout, sleepInterval);
-        ValidatedInnerTextContainsEvent?.Invoke(component, new ComponentActionEventArgs(component, value));
+        ValidatedInnerTextContainsEvent?.Invoke(component, new ComponentActionEventArgs(component, value, infoType));
     }
 
     private static void WaitUntil(Func<bool> waitCondition, string exceptionMessage, int? timeoutInSeconds, int? sleepIntervalInSeconds)

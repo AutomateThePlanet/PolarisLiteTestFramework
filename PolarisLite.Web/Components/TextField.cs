@@ -1,4 +1,5 @@
-﻿using PolarisLite.Web.Components;
+﻿using PolarisLite.Core;
+using PolarisLite.Web.Components;
 using PolarisLite.Web.Contracts;
 using PolarisLite.Web.Events;
 
@@ -23,5 +24,8 @@ public class TextField : WebComponent, IComponentText, IComponentDisabled, IComp
 
     public new string Value => base.Value;
 
-    public void TypeText(string text) => base.TypeText(text, TextSet);
+    public void TypeText(string text, InfoType infoType = InfoType.INFO)
+    {
+        base.TypeText(text, TextSet, infoType);
+    }
 }
