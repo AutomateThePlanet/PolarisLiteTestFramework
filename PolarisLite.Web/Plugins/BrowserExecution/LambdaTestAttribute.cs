@@ -1,4 +1,5 @@
 ﻿using PolarisLite.Core;
+using PolarisLite.Core.Settings.StaticSettings;
 using PolarisLite.Secrets;
 using PolarisLite.Utilities;
 using PolarisLite.Web.Configuration.StaticImplementation;
@@ -50,6 +51,12 @@ public class LambdaTestAttribute : GridAttribute
             { "selenium_version", "4.22.0" },
             { "idleTimeout", "300" }
         };
+
+        if (GlobalSettings.LoggingSettings.ShouldMaskSensitiveInfo)
+        {
+            var maskCommands = new string[] { "setValues", "setCookies", "getCookies" };
+            GridSettings.Arguments.Add("lambdaMaskCommands", maskCommands);
+        }
 
         //GridSettings.Arguments.Add("autoHeal", enableAutoHealing);
         //GridSettings.Arguments.Add("smartWait", enableAutoHealing);
