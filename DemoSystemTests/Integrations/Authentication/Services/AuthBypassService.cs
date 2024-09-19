@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 public static class AuthBypassService
 {
-    public static ApiClientAdapter ApiClientService { get; set; } = new ApiClientAdapter("https://chesstv.local:3000/");
+    public static ApiClientAdapter ApiClientService { get; set; } = new ApiClientAdapter("http://chesstv.local:3000/");
 
     public static async Task<string> GenerateAuthCookieAsync(string displayName, string password, string userid)
     {

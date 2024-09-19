@@ -11,7 +11,7 @@ public static class TestUserFactory
 {
     private static readonly Faker Faker = new Faker();
 
-    public static ApiClientAdapter ApiClient { get; set; } = new ApiClientAdapter("https://chesstv.local:3000/");
+    public static ApiClientAdapter ApiClient { get; set; } = new ApiClientAdapter("http://chesstv.local:3000/");
 
     public static async Task<TestUser> CreateDefaultAsync()
     {

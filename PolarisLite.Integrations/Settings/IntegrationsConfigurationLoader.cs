@@ -41,7 +41,7 @@ public class IntegrationsConfigurationLoader
         IntegrationSettings.AppInsightsSettings.ConnectionString = SecretsResolver.GetSecret("APPINSIGHTS_CS");
         IntegrationSettings.AppInsightsSettings.IsEnabled = true;
         IntegrationSettings.AzureDevOpsBuildUrl = SecretsResolver.GetSecret("AzureDevOpsBuildUrl");
-        IntegrationSettings.MailslurpSettings.ApiKey = "someKey";
+        IntegrationSettings.MailslurpSettings.ApiKey = SecretsResolver.GetSecret("MAILSLURP_KEY");
         IntegrationSettings.TwilioSettings.AuthToken = "someAuthToken";
         IntegrationSettings.TwilioSettings.PhoneNumber = "+12312312321312";
         IntegrationSettings.TwilioSettings.AccountSID = "someAccountSID";
