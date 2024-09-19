@@ -26,7 +26,8 @@ public class ComponentActionEventArgs
         }
         get
         {
-            return GlobalSettings.LoggingSettings.ShouldMaskSensitiveInfo ? "********" : _actionValue;
+            return GlobalSettings.LoggingSettings.ShouldMaskSensitiveInfo && InfoType == InfoType.SECRET
+                ? "********" : _actionValue;
         }
     }
     public InfoType InfoType { get; }

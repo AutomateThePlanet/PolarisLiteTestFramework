@@ -26,11 +26,11 @@ public class LambdaTestAttribute : GridAttribute
         GridSettings = new GridSettings();
         GridSettings.OptionsName = "LT:Options";
         GridSettings.BuildName = BuildName;
-        string userName = System.Environment.GetEnvironmentVariable("LT_USERNAME");
-        string accessKey = System.Environment.GetEnvironmentVariable("LT_ACCESSKEY");
+        string userName = Environment.GetEnvironmentVariable("LT_USERNAME");
+        string accessKey = Environment.GetEnvironmentVariable("LT_ACCESSKEY");
         //var webSettings = ConfigurationService.GetSection<Settings.FilesImplementation.WebSettings>();
-        //string userName = SecretsResolver.GetSecret(() => (string)webSettings.GridSettings.Arguments["username"]);
-        //string accessKey = SecretsResolver.GetSecret(() => (string)webSettings.GridSettings.Arguments["accessKey"]);
+        //string userName = SecretsResolver.GetSecret(() => webSettings.GridSettings.Arguments["username"].ToString());
+        //string accessKey = SecretsResolver.GetSecret(() => webSettings.GridSettings.Arguments["accessKey"].ToString());
 
         GridSettings.Url = $"https://{userName}:{accessKey}@hub.lambdatest.com/wd/hub";
 

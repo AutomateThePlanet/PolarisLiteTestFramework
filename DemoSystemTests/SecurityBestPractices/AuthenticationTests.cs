@@ -7,8 +7,8 @@ using DemoSystemTests.Integrations.Authentication.Services;
 
 namespace DemoSystemTests.SecurityBestPractices;
 [TestFixture]
-//[LocalExecution]
-[LambdaTest(useTunnel:true)]
+[LocalExecution]
+//[LambdaTest(useTunnel:true)]
 public class AuthenticationTests : WebTest
 {
     [Test]

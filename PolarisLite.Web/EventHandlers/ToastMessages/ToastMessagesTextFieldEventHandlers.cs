@@ -8,6 +8,6 @@ public class ToastMessagesTextFieldEventHandlers : TextFieldEventHandlers
 {
     protected override void SettingTextEventHandler(object sender, ComponentActionEventArgs arg)
     {
-        new DriverAdapter().InfoToastMessage($"Type '{arg.ActionValue}' into {arg.Element.FindStrategy.ToString()}");
+        new DriverAdapter().InfoToastMessage($"Type \"{arg.ActionValue}\" into {arg.Element.FindStrategy.ToString()}");
     }
 }

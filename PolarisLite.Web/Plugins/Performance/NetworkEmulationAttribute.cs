@@ -1,4 +1,4 @@
-﻿using OpenQA.Selenium.DevTools.V127.Network;
+﻿using OpenQA.Selenium.DevTools.V128.Network;
 
 namespace PolarisLite.Web.Plugins;
 

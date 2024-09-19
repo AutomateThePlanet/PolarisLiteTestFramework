@@ -3,9 +3,9 @@ using PolarisLite.Web.Events;
 
 namespace Bellatrix.Web.Extensions.Controls.Controls.EventHandlers;
 
-public class BDDLoggingEmailEventHandlers : EmailEventHandlers
+public class BDDLoggingPasswordEventHandlers : PasswordEventHandlers
 {
-    protected override void EmailSetEventHandler(object sender, ComponentActionEventArgs arg) 
+    protected override void PasswordSetEventHandler(object sender, ComponentActionEventArgs arg)
     {
         Logger.LogInfo($"Type '{arg.ActionValue}' into {arg.Element.FindStrategy.ToString()}");
     }

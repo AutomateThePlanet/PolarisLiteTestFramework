@@ -26,7 +26,7 @@ public class WebSettings
     public static bool EnableBDDLogging { get; set; } = true;
     public static bool EnableHighlight { get; set; } = true;
     public static bool EnableScrollIntoView { get; set; } = true;
-    public static bool EnableToastMessages { get; set; } = true;
+    public static bool EnableToastMessages { get; set; } = false;
     public static bool ScreenshotsOnFailure { get; set; } = true;
     public static string ScreenshotsSaveLocation { get; set; } = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData), "Polaris", "ScreenshotsOnFailure");
     public static bool EnableExceptionAnalysis { get; set; } = true;

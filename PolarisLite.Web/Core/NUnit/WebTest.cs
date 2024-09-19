@@ -57,6 +57,7 @@ public class WebTest : BaseTest
             new BDDLoggingDateEventHandlers().SubscribeToAll();
             new BDDLoggingCheckboxEventHandlers().SubscribeToAll();
             new BDDLoggingEmailEventHandlers().SubscribeToAll();
+            new BDDLoggingPasswordEventHandlers().SubscribeToAll();
             new BDDLoggingInputFileEventHandlers().SubscribeToAll();
             new BDDLoggingSelectEventHandlers().SubscribeToAll();
             new BDDLoggingValidateExtensionsService().SubscribeToAll();
@@ -67,10 +68,12 @@ public class WebTest : BaseTest
     {
         if (WebSettings.EnableToastMessages)
         {
+            new ToastMessagesButtonEventHandlers().SubscribeToAll();
             new ToastMessagesTextFieldEventHandlers().SubscribeToAll();
             new ToastMessagesDateEventHandlers().SubscribeToAll();
             new ToastMessagesCheckboxEventHandlers().SubscribeToAll();
             new ToastMessagesEmailEventHandlers().SubscribeToAll();
+            new ToastMessagesPasswordEventHandlers().SubscribeToAll();
             new ToastMessagesInputFileEventHandlers().SubscribeToAll();
             new ToastMessagesSelectEventHandlers().SubscribeToAll();
             new ToastMessagesValidateExtensionsService().SubscribeToAll();

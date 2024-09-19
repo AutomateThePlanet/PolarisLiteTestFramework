@@ -4,9 +4,9 @@ using PolarisLite.Web.Services;
 
 namespace Bellatrix.Web.Extensions.Controls.Controls.EventHandlers;
 
-public class ToastMessagesEmailEventHandlers : EmailEventHandlers
+public class ToastMessagesPasswordEventHandlers : PasswordEventHandlers
 {
-    protected override void EmailSetEventHandler(object sender, ComponentActionEventArgs arg)
+    protected override void PasswordSetEventHandler(object sender, ComponentActionEventArgs arg)
     {
         new DriverAdapter().InfoToastMessage($"Type \"{arg.ActionValue}\" into {arg.Element.FindStrategy.ToString()}");
     }

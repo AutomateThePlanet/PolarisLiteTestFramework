@@ -51,9 +51,13 @@ public partial class DriverAdapter : IBrowserService
         {
             try
             {
-                Execute(string.Format("$.jGrowl('{0}', {{ header: 'Info', theme: 'info' }});", message));
+                string script = string.Format("$.jGrowl('{0}', {{ header: 'Info', theme: 'info' }});", message);
+                Execute(script);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex.ToString());
+            }
         }
     }
 
