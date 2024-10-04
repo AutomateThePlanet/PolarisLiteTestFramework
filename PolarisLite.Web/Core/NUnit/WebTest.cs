@@ -30,7 +30,7 @@ public class WebTest : BaseTest
             //PluginExecutionEngine.AddPlugin(new WebScreenshotPlugin());
             PluginExecutionEngine.AddPlugin(new BrowserLifecyclePlugin());
             PluginExecutionEngine.AddPlugin(new InitializeHighlightScriptsPlugin());
-            PluginExecutionEngine.AddPlugin(new InitializeToastMessagesScriptsPlugin());
+            //PluginExecutionEngine.AddPlugin(new InitializeToastMessagesScriptsPlugin());
             PluginExecutionEngine.AddPlugin(new LogLifecyclePlugin());
           
 
@@ -38,7 +38,7 @@ public class WebTest : BaseTest
             WebComponentPluginExecutionEngine.AddPlugin(new ScrollIntoViewPlugin());
 
             AddBddLogging();
-            AddToastMessages();
+            //AddToastMessages();
 
             //ExceptionAnalyser.AddExceptionAnalysationHandler(new OutDatedConsoleWarningHandler());
             //ExceptionAnalyser.AddExceptionAnalysationHandler<JavaScriptErrorsHandler>();

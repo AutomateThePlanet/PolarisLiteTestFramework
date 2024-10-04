@@ -16,7 +16,7 @@ public static class AwsSecretsManager
 
     public static bool IsAvailable => _secretsManagerClient != null;
 
-    public static async Task<string> GetSecret(string secretName)
+    public static string GetSecret(string secretName)
     {
         if (_secretsManagerClient == null)
         {
@@ -30,7 +30,7 @@ public static class AwsSecretsManager
                 SecretId = secretName
             };
 
-            var response = await _secretsManagerClient.GetSecretValueAsync(request);
+            var response = _secretsManagerClient.GetSecretValueAsync(request).Result;
 
             if (response.SecretString != null)
             {

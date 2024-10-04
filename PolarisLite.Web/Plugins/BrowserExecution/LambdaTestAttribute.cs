@@ -13,11 +13,11 @@ public class LambdaTestAttribute : GridAttribute
     {
         if (string.IsNullOrEmpty(BuildName))
         {
-            BuildName = System.Environment.GetEnvironmentVariable("BUILD_NAME", EnvironmentVariableTarget.Process);
+            BuildName = Environment.GetEnvironmentVariable("BUILD_NAME", EnvironmentVariableTarget.Process);
             if (string.IsNullOrEmpty(BuildName))
             {
                 BuildName = TimestampBuilder.BuildUniqueText("PO_");
-                System.Environment.SetEnvironmentVariable("BUILD_NAME", BuildName, EnvironmentVariableTarget.Process);
+                Environment.SetEnvironmentVariable("BUILD_NAME", BuildName, EnvironmentVariableTarget.Process);
             }
         }
 
@@ -26,12 +26,18 @@ public class LambdaTestAttribute : GridAttribute
         GridSettings = new GridSettings();
         GridSettings.OptionsName = "LT:Options";
         GridSettings.BuildName = BuildName;
+
         string userName = Environment.GetEnvironmentVariable("LT_USERNAME");
         string accessKey = Environment.GetEnvironmentVariable("LT_ACCESSKEY");
+
+        //string userName = SecretsResolver.GetSecret("LT_USERNAME");
+        //string accessKey = SecretsResolver.GetSecret("LT_ACCESSKEY");
+
         //var webSettings = ConfigurationService.GetSection<Settings.FilesImplementation.WebSettings>();
         //string userName = SecretsResolver.GetSecret(() => webSettings.GridSettings.Arguments["username"].ToString());
         //string accessKey = SecretsResolver.GetSecret(() => webSettings.GridSettings.Arguments["accessKey"].ToString());
 
+        // webSettings.GridSettings.Arguments["accessKey"].ToString().GetSecretValue();
         GridSettings.Url = $"https://{userName}:{accessKey}@hub.lambdatest.com/wd/hub";
 
         string resolution = WindowsSizeResolver.GetWindowSize(desktopWindowSize).ConvertToString();
