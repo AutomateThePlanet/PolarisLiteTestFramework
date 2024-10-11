@@ -82,7 +82,8 @@ public class BrowserLifecyclePlugin : Plugin
 
     private BrowserConfiguration GetBrowserConfiguration(MemberInfo testMethod)
     {
-        var classBrowser = GetExecutionBrowserClassLevel(testMethod.DeclaringType);
+        //         var classBrowser = GetExecutionBrowserClassLevel(testMethod.DeclaringType);
+        var classBrowser = GetExecutionBrowserClassLevel(testMethod.ReflectedType);
         var methodBrowser = GetExecutionBrowserMethodLevel(testMethod);
         BrowserConfiguration browserConfiguration = methodBrowser != null ? methodBrowser : classBrowser;
         
@@ -91,7 +92,8 @@ public class BrowserLifecyclePlugin : Plugin
 
     private GridSettings GetGridSettingsConfiguration(MemberInfo testMethod)
     {
-        var classGridSettings = GetLambdaTestClassLevel(testMethod.DeclaringType);
+        //         var classGridSettings = GetLambdaTestClassLevel(testMethod.DeclaringType);
+        var classGridSettings = GetLambdaTestClassLevel(testMethod.ReflectedType);
         var methodGridSettings = GetLambdaTestMethodLevel(testMethod);
         GridSettings gridSettings = methodGridSettings != null ? methodGridSettings : classGridSettings;
 

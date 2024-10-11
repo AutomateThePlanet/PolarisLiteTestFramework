@@ -6,6 +6,8 @@ public class LogLifecyclePlugin : Plugin
 {
     public override void OnBeforeTestInitialize(MethodInfo memberInfo)
     {
-        Logger.LogInfo($"Start Test {memberInfo.GetType().Name}.{memberInfo.Name}");
+        //Logger.CurrentTestFullName.Value = memberInfo.ReflectedType.FullName.ToString();
+
+        Logger.LogInfo($"Start Test {memberInfo.ReflectedType.FullName}.{memberInfo.Name}");
     }
 }

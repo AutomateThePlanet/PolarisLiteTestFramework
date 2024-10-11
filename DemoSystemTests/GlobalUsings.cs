@@ -16,3 +16,4 @@ global using OpenQA.Selenium.Appium.Service.Options;
 global using OpenQA.Selenium.Appium.MultiTouch;
 global using OpenQA.Selenium.Appium.Interfaces;
 global using PolarisLite.Core.Layout;
+global using PolarisLite.Logging;

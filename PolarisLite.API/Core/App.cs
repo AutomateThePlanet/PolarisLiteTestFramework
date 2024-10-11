@@ -4,19 +4,22 @@ namespace PolarisLite.API;
 
 public class App
 {
-    private ApiClientAdapter _apiClientService;
+    // Use ThreadLocal to ensure each thread has its own instance of ApiClientAdapter
+    private static ThreadLocal<ApiClientAdapter> _apiClientService = new ThreadLocal<ApiClientAdapter>(() => CreateNewApiClientService());
 
     public App()
     {
-        _apiClientService = GetApiClientService();
+        // Initialize the ApiClientService for the current thread
+        _apiClientService.Value = GetApiClientService();
     }
 
     public ApiClientAdapter ApiClient
     {
-        get => _apiClientService;
+        get => _apiClientService.Value;
         init
         {
-            _apiClientService = GetApiClientService();
+            // Set a new instance for the current thread
+            _apiClientService.Value = GetApiClientService();
         }
     }
 
@@ -30,7 +33,7 @@ public class App
     }
 
     public void RemoveApiClientExecutionPlugin<TApiClientPlugin>()
-     where TApiClientPlugin : ApiClientPlugin
+        where TApiClientPlugin : ApiClientPlugin
     {
         var apiClientPlugin = (TApiClientPlugin)Activator.CreateInstance(typeof(TApiClientPlugin));
         apiClientPlugin?.Disable();
@@ -52,13 +55,17 @@ public class App
 
     public ApiClientAdapter GetApiClientService(string url = null, bool sharedCookies = true, int maxRetryAttempts = 1, int pauseBetweenFailures = 1, TimeUnit timeUnit = TimeUnit.Seconds)
     {
-        if (!ShouldReuseRestClient || _apiClientService == null)
+        if (!ShouldReuseRestClient || _apiClientService.Value == null)
         {
-            var pauseBetweenFailuresConfig = TimeSpanConverter.Convert(pauseBetweenFailures, timeUnit);
-
-            _apiClientService = new ApiClientAdapter(url ?? ApiSettings.BaseUrl, maxRetryAttempts, pauseBetweenFailuresConfig.Milliseconds);
+            _apiClientService.Value = CreateNewApiClientService(url, maxRetryAttempts, pauseBetweenFailures, timeUnit);
         }
 
-        return _apiClientService;
+        return _apiClientService.Value;
+    }
+
+    private static ApiClientAdapter CreateNewApiClientService(string url = null, int maxRetryAttempts = 1, int pauseBetweenFailures = 1, TimeUnit timeUnit = TimeUnit.Seconds)
+    {
+        var pauseBetweenFailuresConfig = TimeSpanConverter.Convert(pauseBetweenFailures, timeUnit);
+        return new ApiClientAdapter(url ?? ApiSettings.BaseUrl, maxRetryAttempts, pauseBetweenFailuresConfig.Milliseconds);
     }
 }

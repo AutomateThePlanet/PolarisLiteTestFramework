@@ -23,22 +23,23 @@ public class WebTest : BaseTest
         ApiConfigurationLoader.LoadConfiguration();
         if (!_arePluginsAlreadyInitialized)
         {
-            PluginExecutionEngine.AddPlugin(new PerformanceTestingPlugin());
+            //PluginExecutionEngine.AddPlugin(new PerformanceTestingPlugin());
             //PluginExecutionEngine.AddPlugin(new JavaScriptErrorsPlugin());
             PluginExecutionEngine.AddPlugin(new LambdaTestResultsPlugin());
             //PluginExecutionEngine.AddPlugin(new ExceptionAnalysationPlugin());
             //PluginExecutionEngine.AddPlugin(new WebScreenshotPlugin());
             PluginExecutionEngine.AddPlugin(new BrowserLifecyclePlugin());
-            PluginExecutionEngine.AddPlugin(new InitializeHighlightScriptsPlugin());
-            PluginExecutionEngine.AddPlugin(new InitializeToastMessagesScriptsPlugin());
+            //PluginExecutionEngine.AddPlugin(new InitializeHighlightScriptsPlugin());
+            //PluginExecutionEngine.AddPlugin(new InitializeToastMessagesScriptsPlugin());
             PluginExecutionEngine.AddPlugin(new LogLifecyclePlugin());
+            PluginExecutionEngine.AddPlugin(new LoggerFlushPlugin());
           
 
-            WebComponentPluginExecutionEngine.AddPlugin(new HighlightElementPlugin());
-            WebComponentPluginExecutionEngine.AddPlugin(new ScrollIntoViewPlugin());
+            //WebComponentPluginExecutionEngine.AddPlugin(new HighlightElementPlugin());
+            //WebComponentPluginExecutionEngine.AddPlugin(new ScrollIntoViewPlugin());
 
             AddBddLogging();
-            AddToastMessages();
+            //AddToastMessages();
 
             //ExceptionAnalyser.AddExceptionAnalysationHandler(new OutDatedConsoleWarningHandler());
             //ExceptionAnalyser.AddExceptionAnalysationHandler<JavaScriptErrorsHandler>();
@@ -53,6 +54,7 @@ public class WebTest : BaseTest
         if (WebSettings.EnableBDDLogging)
         {
             new BDDLoggingButtonEventHandlers().SubscribeToAll();
+            new BDDLoggingAnchorEventHandlers().SubscribeToAll();
             new BDDLoggingTextFieldEventHandlers().SubscribeToAll();
             new BDDLoggingDateEventHandlers().SubscribeToAll();
             new BDDLoggingCheckboxEventHandlers().SubscribeToAll();

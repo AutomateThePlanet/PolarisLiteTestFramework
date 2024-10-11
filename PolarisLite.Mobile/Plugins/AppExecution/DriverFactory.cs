@@ -3,13 +3,36 @@
 namespace PolarisLite.Mobile.Plugins.AppExecution;
 public class DriverFactory
 {
-    public static bool Disposed { get; set; }
+    // Internal ThreadLocal fields to ensure thread safety
+    private static ThreadLocal<bool> _disposed = new ThreadLocal<bool>(() => true);
+    private static ThreadLocal<AppConfiguration> _appConfiguration = new ThreadLocal<AppConfiguration>();
+    private static ThreadLocal<Dictionary<string, string>> _customDriverOptions = new ThreadLocal<Dictionary<string, string>>(() => new Dictionary<string, string>());
+    private static ThreadLocal<AndroidDriver> _wrappedAndroidDriver = new ThreadLocal<AndroidDriver>();
 
-    public static AppConfiguration AppConfiguration { get; set; }
+    // Public static properties for external access
+    public static bool Disposed
+    {
+        get => _disposed.Value;
+        set => _disposed.Value = value;
+    }
 
-    public static Dictionary<string, string> CustomDriverOptions { get; set; } = new Dictionary<string, string>();
+    public static AppConfiguration AppConfiguration
+    {
+        get => _appConfiguration.Value;
+        set => _appConfiguration.Value = value;
+    }
 
-    public static AndroidDriver WrappedAndroidDriver { get; set; }
+    public static Dictionary<string, string> CustomDriverOptions
+    {
+        get => _customDriverOptions.Value;
+        set => _customDriverOptions.Value = value;
+    }
+
+    public static AndroidDriver WrappedAndroidDriver
+    {
+        get => _wrappedAndroidDriver.Value;
+        set => _wrappedAndroidDriver.Value = value;
+    }
 
     public static AndroidDriver StartApp(AppConfiguration configuration)
     {
@@ -40,7 +63,7 @@ public class DriverFactory
             { "platformName", "android" },
             { "platformVersion", AppConfiguration.AndroidVersion },
             { "deviceName", AppConfiguration.DeviceName },
-            { "automationName", "UiAutomator2"}
+            { "automationName", "UiAutomator2" }
         };
 
         if (AppConfiguration.IsMobileWebExecution)
@@ -76,11 +99,13 @@ public class DriverFactory
     private static AndroidDriver InitializeDriverRegularMode()
     {
         var gridUrl = AppConfiguration.GridSettings.OptionsName;
-        var caps = new AppiumOptions();
-        caps.PlatformName = "Android";
-        caps.AutomationName = "UiAutomator2";
-        caps.PlatformVersion = AppConfiguration.AndroidVersion;
-        caps.DeviceName = AppConfiguration.DeviceName;
+        var caps = new AppiumOptions
+        {
+            PlatformName = "Android",
+            AutomationName = "UiAutomator2",
+            PlatformVersion = AppConfiguration.AndroidVersion,
+            DeviceName = AppConfiguration.DeviceName
+        };
 
         if (AppConfiguration.IsMobileWebExecution)
         {
@@ -132,3 +157,5 @@ public class DriverFactory
         Disposed = true;
     }
 }
+
+

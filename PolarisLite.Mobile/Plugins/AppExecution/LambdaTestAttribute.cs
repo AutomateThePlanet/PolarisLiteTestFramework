@@ -1,4 +1,6 @@
-﻿namespace PolarisLite.Mobile.Plugins;
+﻿using PolarisLite.Core.Settings.StaticSettings;
+
+namespace PolarisLite.Mobile.Plugins;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
 public class LambdaTestAttribute : GridAttribute
@@ -23,5 +25,16 @@ public class LambdaTestAttribute : GridAttribute
             { "project", "POLARIS_ANDROID_RUN" },
             { "appiumVersion", "1.22.0" }
         };
+
+        if (GlobalSettings.LoggingSettings.ShouldMaskSensitiveInfo)
+        {
+            var maskCommands = new string[] { "setValues", "setCookies", "getCookies" };
+            GridSettings.Arguments.Add("lambdaMaskCommands", maskCommands);
+        }
+
+        if (GridSettings.Tags.Any())
+        {
+            GridSettings.Arguments.Add("tags", GridSettings.Tags.ToArray());
+        }
     }
 }

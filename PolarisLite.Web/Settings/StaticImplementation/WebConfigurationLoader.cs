@@ -173,6 +173,7 @@ public class WebConfigurationLoader
         GlobalSettings.LoggingSettings.IsConsoleLoggingEnabled = true;
         GlobalSettings.LoggingSettings.IsFileLoggingEnabled = false;
         GlobalSettings.LoggingSettings.IsDebugLoggingEnabled = false;
+        GlobalSettings.LoggingSettings.ShouldMaskSensitiveInfo = false;
         GlobalSettings.LoggingSettings.IsReportPortalLoggingEnabled = false;
     }
 }

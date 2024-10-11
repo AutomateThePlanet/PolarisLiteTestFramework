@@ -1,4 +1,6 @@
-﻿using PolarisLite.Core.Settings.StaticSettings;
+﻿using Amazon.Runtime.Internal.Transform;
+using NUnit.Framework;
+using PolarisLite.Core.Settings.StaticSettings;
 using ReportPortal.Serilog;
 using Serilog;
 
@@ -52,3 +54,4 @@ public static class Logger
         s_logger.Warning(message, args);
     }
 }
+

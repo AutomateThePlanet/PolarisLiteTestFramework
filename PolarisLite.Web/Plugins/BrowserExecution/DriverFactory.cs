@@ -11,17 +11,78 @@ using PolarisLite.Web.Configuration.StaticImplementation;
 namespace PolarisLite.Web.Plugins;
 public class DriverFactory
 {
-    public static bool Disposed { get; set; } = true;
+    //public static bool Disposed { get; set; } = true;
+    //public static BrowserConfiguration BrowserConfiguration { get; set; } = new BrowserConfiguration();
+    //public static Dictionary<string, string> CustomDriverOptions { get; set; } = new Dictionary<string, string>();
+    //public static Dictionary<string, object> CustomGridOptions { get; set; } = new Dictionary<string, object>();
+    //public static ExecutionType ExecutionType { get; set; }
+    //public static GridSettings GridSettings { get; set; }
+    //public static IWebDriver WrappedDriver { get; set; }
+    //public static string CurrentSessionId { get; set; }
 
-    public static BrowserConfiguration BrowserConfiguration { get; set; } = new BrowserConfiguration();
+    private static ThreadLocal<bool> _disposed = new ThreadLocal<bool>(() => true);
+    private static ThreadLocal<BrowserConfiguration> _browserConfiguration = new ThreadLocal<BrowserConfiguration>(() => new BrowserConfiguration());
+    private static ThreadLocal<Dictionary<string, string>> _customDriverOptions = new ThreadLocal<Dictionary<string, string>>(() => new Dictionary<string, string>());
+    private static ThreadLocal<Dictionary<string, object>> _customGridOptions = new ThreadLocal<Dictionary<string, object>>(() => new Dictionary<string, object>());
+    private static ThreadLocal<ExecutionType> _executionType = new ThreadLocal<ExecutionType>();
+    private static ThreadLocal<GridSettings> _gridSettings = new ThreadLocal<GridSettings>();
+    private static ThreadLocal<IWebDriver> _wrappedDriver = new ThreadLocal<IWebDriver>();
+    private static ThreadLocal<string> _currentSessionId = new ThreadLocal<string>();
+    private static ThreadLocal<HashSet<string>> _tags = new ThreadLocal<HashSet<string>>(() => new HashSet<string>());
+   
+    public static bool Disposed
+    {
+        get => _disposed.Value;
+        set => _disposed.Value = value;
+    }
 
-    public static Dictionary<string, string> CustomDriverOptions { get; set; } = new Dictionary<string, string>();
-    public static Dictionary<string, object> CustomGridOptions { get; set; } = new Dictionary<string, object>();
+    public static BrowserConfiguration BrowserConfiguration
+    {
+        get => _browserConfiguration.Value;
+        set => _browserConfiguration.Value = value;
+    }
 
-    public static ExecutionType ExecutionType { get; set; }
-    public static GridSettings GridSettings { get; set; }
-    public static IWebDriver WrappedDriver { get; set; }
-    public static string CurrentSessionId { get; set; }
+    public static Dictionary<string, string> CustomDriverOptions
+    {
+        get => _customDriverOptions.Value;
+        set => _customDriverOptions.Value = value;
+    }
+
+    public static Dictionary<string, object> CustomGridOptions
+    {
+        get => _customGridOptions.Value;
+        set => _customGridOptions.Value = value;
+    }
+
+    public static ExecutionType ExecutionType
+    {
+        get => _executionType.Value;
+        set => _executionType.Value = value;
+    }
+
+    public static GridSettings GridSettings
+    {
+        get => _gridSettings.Value;
+        set => _gridSettings.Value = value;
+    }
+
+    public static IWebDriver WrappedDriver
+    {
+        get => _wrappedDriver.Value;
+        set => _wrappedDriver.Value = value;
+    }
+
+    public static string CurrentSessionId
+    {
+        get => _currentSessionId.Value;
+        set => _currentSessionId.Value = value;
+    }
+
+    public static HashSet<string> Tags
+    {
+        get => _tags.Value;
+        set => _tags.Value = value;
+    }
 
     public static void Start(BrowserConfiguration browserConfiguration)
     {
@@ -66,18 +127,8 @@ public class DriverFactory
                 throw new ArgumentOutOfRangeException(nameof(browserConfiguration.Browser), browserConfiguration.Browser, null);
         }
 
-        // change window size
-        if (browserConfiguration.Size != default)
-        {
-            WrappedDriver.Manage().Window.Size = browserConfiguration.Size;
-        }
-        else
-        {
-            WrappedDriver.Manage().Window.Maximize();
-        }
-
-        WrappedDriver.Manage().Window.Maximize();
-
+        // Change window size
+        ChangeWindowSize(browserConfiguration.Size, WrappedDriver);
 
         Disposed = false;
     }
@@ -87,12 +138,14 @@ public class DriverFactory
         ChromiumMobileEmulationDeviceSettings deviceOptions = default;
         if (browserConfiguration.MobileEmulation)
         {
-            deviceOptions = new ChromiumMobileEmulationDeviceSettings();
-            deviceOptions.UserAgent = browserConfiguration.UserAgent;
-            deviceOptions.Width = browserConfiguration.Size.Width;
-            deviceOptions.Height = browserConfiguration.Size.Height;
-            deviceOptions.EnableTouchEvents = true;
-            deviceOptions.PixelRatio = browserConfiguration.PixelRation;
+            deviceOptions = new ChromiumMobileEmulationDeviceSettings
+            {
+                UserAgent = browserConfiguration.UserAgent,
+                Width = browserConfiguration.Size.Width,
+                Height = browserConfiguration.Size.Height,
+                EnableTouchEvents = true,
+                PixelRatio = browserConfiguration.PixelRation
+            };
         }
 
         return deviceOptions;
@@ -107,10 +160,11 @@ public class DriverFactory
         ExecutionType = browserConfiguration.ExecutionType;
         WrappedDriver = new RemoteWebDriver(new Uri(gridSettings.Url), options);
         CurrentSessionId = ((RemoteWebDriver)WrappedDriver).SessionId.ToString();
-        WrappedDriver.Manage().Window.Maximize();
 
+        WrappedDriver.Manage().Window.Maximize();
         WrappedDriver.Manage().Timeouts().AsynchronousJavaScript = TimeSpan.FromSeconds(WebSettings.TimeoutSettings.ScriptTimeout);
         WrappedDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(WebSettings.TimeoutSettings.PageLoadTimeout);
+
         Disposed = false;
     }
 
@@ -120,16 +174,20 @@ public class DriverFactory
         switch (browserType)
         {
             case BrowserType.Chrome:
-                options = new ChromeOptions();
-                options.AcceptInsecureCertificates = true;
+                options = new ChromeOptions
+                {
+                    AcceptInsecureCertificates = true
+                };
                 break;
             case BrowserType.Firefox:
                 options = new FirefoxOptions();
                 break;
 
             case BrowserType.Edge:
-                options = new EdgeOptions();
-                options.AcceptInsecureCertificates = true;
+                options = new EdgeOptions
+                {
+                    AcceptInsecureCertificates = true
+                };
                 break;
 
             case BrowserType.Safari:
@@ -141,7 +199,7 @@ public class DriverFactory
         return options;
     }
 
-    private static void AddGridOptions<TOptions>(TOptions options, GridSettings gridSettings) 
+    private static void AddGridOptions<TOptions>(TOptions options, GridSettings gridSettings)
         where TOptions : DriverOptions
     {
         Dictionary<string, object> args = new();
@@ -188,3 +246,5 @@ public class DriverFactory
         }
     }
 }
+
+

@@ -13,6 +13,7 @@ public abstract class ValidateExtensionsEventHandlers
         ValidateComponentExtensions.ValidatedIsCheckedEvent += ValidatedIsCheckedEventHandler;
         ValidateComponentExtensions.ValidatedIsNotCheckedEvent += ValidatedIsNotCheckedEventHandler;
         ValidateComponentExtensions.ValidatedInnerTextIsEvent += ValidatedInnerTextIsEventHandler;
+        ValidateComponentExtensions.ValidatedInnerTextContainsEvent += ValidatedInnerTextContainsEventHandler;
         ValidateComponentExtensions.ValidatedValueIsNullEvent += ValidatedValueIsNullEventHandler;
         ValidateComponentExtensions.ValidatedValueIsEvent += ValidatedValueIsEventHandler;
         ValidateComponentExtensions.ValidatedIsVisibleEvent += ValidatedIsVisibleEventHandler;
@@ -36,6 +37,10 @@ public abstract class ValidateExtensionsEventHandlers
     }
 
     protected virtual void ValidatedInnerTextIsEventHandler(object sender, ComponentActionEventArgs arg)
+    {
+    }
+
+    protected virtual void ValidatedInnerTextContainsEventHandler(object sender, ComponentActionEventArgs arg)
     {
     }
 

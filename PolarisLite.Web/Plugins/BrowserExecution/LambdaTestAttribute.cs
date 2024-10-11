@@ -49,13 +49,20 @@ public class LambdaTestAttribute : GridAttribute
             { "build", BuildName },
             { "project", "POLARIS_RUN" },
             { "selenium_version", "4.22.0" },
-            { "idleTimeout", "300" }
+            //{ "idleTimeout", "300" }
         };
 
         if (GlobalSettings.LoggingSettings.ShouldMaskSensitiveInfo)
         {
             var maskCommands = new string[] { "setValues", "setCookies", "getCookies" };
             GridSettings.Arguments.Add("lambdaMaskCommands", maskCommands);
+        }
+
+        DriverFactory.Tags.Add($"{browser.GetDescription()} {browserVersionString}");
+
+        if (DriverFactory.Tags.Any())
+        {
+            GridSettings.Arguments.Add("tags", DriverFactory.Tags.ToArray());
         }
 
         //GridSettings.Arguments.Add("autoHeal", enableAutoHealing);

@@ -7,7 +7,7 @@ namespace PolarisLite.Core.Infrastructure.NUnit;
 [TestFixture]
 public abstract class BaseTest
 {
-    private Exception _thrownException;
+    private static readonly ThreadLocal<Exception> _thrownException = new ThreadLocal<Exception>();
 
     public TestContext TestContext => TestContext.CurrentContext;
 
@@ -24,9 +24,10 @@ public abstract class BaseTest
     [SetUp]
     public void CoreTestInitialize()
     {
+        // Thread-safe exception capture
         AppDomain.CurrentDomain.FirstChanceException += (sender, eventArgs) =>
         {
-            _thrownException = eventArgs.Exception;
+            _thrownException.Value = eventArgs.Exception;
         };
 
         var testMethod = GetCurrentTestMethod();
@@ -39,9 +40,11 @@ public abstract class BaseTest
     public void CoreTestCleanup()
     {
         var testMethod = GetCurrentTestMethod();
-        PluginExecutionEngine.OnBeforeTestCleanup((TestOutcome)TestContext.Result.Outcome.Status, testMethod);
+        var testOutcome = (TestOutcome)TestContext.Result.Outcome.Status;
+
+        PluginExecutionEngine.OnBeforeTestCleanup(testOutcome, testMethod);
         TestCleanup();
-        PluginExecutionEngine.OnAfterTestCleanup((TestOutcome)TestContext.Result.Outcome.Status, testMethod, _thrownException);
+        PluginExecutionEngine.OnAfterTestCleanup(testOutcome, testMethod, _thrownException.Value);
     }
 
     [OneTimeTearDown]
@@ -51,10 +54,13 @@ public abstract class BaseTest
         PluginExecutionEngine.OnBeforeTestClassCleanup(testClassType);
         ClassCleanup();
         PluginExecutionEngine.OnAfterTestClassCleanup(testClassType);
+
+        _thrownException.Dispose();
     }
 
     protected virtual void Configure()
     {
+        // Custom configuration logic
     }
 
     protected virtual void ClassInitialize()
@@ -79,6 +85,7 @@ public abstract class BaseTest
 
     private MethodInfo GetCurrentTestMethod()
     {
-        return GetType().GetMethod(TestContext.CurrentContext.Test.Name);
+        // This could potentially cause issues with overloaded methods, so you may want to improve the method retrieval logic.
+        return GetType().GetMethod(TestContext.CurrentContext.Test.Name) ?? GetType().BaseType.GetMethod(TestContext.CurrentContext.Test.Name);
     }
 }

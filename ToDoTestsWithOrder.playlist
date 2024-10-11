@@ -1,0 +1,42 @@
+<Playlist Version="2.0">
+  <Rule Name="Includes" Match="Any">
+    <Rule Match="All">
+      <Property Name="Solution" />
+      <Rule Match="Any">
+        <Rule Match="All">
+          <Property Name="Project" Value="DemoSystemTests" />
+          <Rule Match="Any">
+            <Rule Match="All">
+              <Property Name="Namespace" Value="DemoSystemTests.Scalability" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ToDoTestsWithOrder" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="DemoSystemTests.Scalability.ToDoTestsWithOrder.AddToDoItems" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="AddToDoItems" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="DemoSystemTests.Scalability.ToDoTestsWithOrder.VerifyToDoItems" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="VerifyToDoItems" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="DemoSystemTests.Scalability.ToDoTestsWithOrder.DeleteToDoItems" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="DeleteToDoItems" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
+</Playlist>
